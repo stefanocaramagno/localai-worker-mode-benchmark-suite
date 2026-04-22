@@ -1,0 +1,9 @@
+{
+  "scenarioId": "M1",
+  "purpose": "Pilot Model Sweep - Baseline Llama 3.2 1B q4_k_m",
+  "modelName": "llama-3.2-1b-instruct:q4_k_m",
+  "outputSubdir": "M1_llama32_1b_q4km",
+  "referenceBaselineId": "B0",
+  "serverManifest": "infra/k8s/compositions/server/models/m1",
+  "notes": "Model-only variation anchored to the official locked baseline B0. This scenario reproduces the official baseline model and inherits the fixed worker scenario, placement scenario, workload scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Model Sweep family is the resolved model and its derived server manifest."
+}

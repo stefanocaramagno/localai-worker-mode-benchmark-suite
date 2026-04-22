@@ -1,0 +1,83 @@
+﻿=============================================
+ Standard Execution Protocol
+=============================================
+Protocol profile : EP1
+Description      : Standard benchmark execution protocol for LocalAI benchmark runs. The launcher must always resolve and publish the same ordered sequence: controlled cleanup, scenario deployment, technical pre-check, API smoke validation, optional warm-up, measurement, client-side artifact collection, automated required cluster-side collection, automated required final snapshot, and controlled cleanup or restore placeholder.
+Launcher         : Start-PilotPlacementSweep
+Run ID           : PL2_runA
+
+[S01] cleanup_controlled
+  Note: Ensure the namespace is in the expected state before applying manifests and running the benchmark.
+
+[S02] deploy_scenario
+  Recommended apply order:
+   - kubectl apply -k C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\infra\k8s\compositions\foundation\namespace
+   - kubectl apply -k C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\infra\k8s\compositions\shared\rpc-workers-services
+   - kubectl apply -k C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\infra\k8s\compositions\foundation\storage
+   - kubectl apply -k C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\infra\k8s\compositions\topology\distributed-two-node-w2
+   - kubectl apply -k C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\infra\k8s\compositions\server\models\m1
+
+[S03] technical_precheck
+  Enabled: true
+  Command: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\validation\precheck\Invoke-BenchmarkPrecheck.ps1 -ProfileConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\precheck\TC1.json -OutputPrefix C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_precheck -BaseUrl http://localhost:8080 -Model llama-3.2-1b-instruct:q4_k_m -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+  JSON artifact: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_precheck.json
+  Text artifact: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_precheck.txt
+
+[S04] api_smoke_validation
+  Enabled: true
+  Command: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\validation\smoke\Test-LocalAIWorkerMode.ps1 -BaseUrl http://localhost:8080 -Model llama-3.2-1b-instruct:q4_k_m
+  Model: llama-3.2-1b-instruct:q4_k_m
+
+[S05] warm_up
+  Enabled: true
+  Command: locust -f C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\load-tests\locust\locustfile.py -H http://localhost:8080 --headless -u 2 -r 1 --run-time 45s --csv C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_warmup --csv-full-history
+  CSV prefix: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_warmup
+
+[S06] measurement
+  Command: locust -f C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\load-tests\locust\locustfile.py -H http://localhost:8080 --headless -u 2 -r 1 --run-time 3m --csv C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA --csv-full-history
+  CSV prefix: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA
+
+[S07] collect_client_metrics
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_warmup_stats.csv
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_warmup_stats_history.csv
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_warmup_failures.csv
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_warmup_exceptions.csv
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_stats.csv
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_stats_history.csv
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_failures.csv
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_exceptions.csv
+
+[S08] collect_cluster_metrics
+  Enabled: true
+  Command: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\validation\cluster-side\Collect-ClusterSideArtifacts.ps1 -ProfileConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-capture\CS1.json -OutputPrefix C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre -Stage pre -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_manifest.json
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_summary.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_nodes-wide.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_top-nodes.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_pods-wide.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_top-pods.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_services.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_events.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_pre_pods-describe.txt
+
+[S09] final_snapshot
+  Enabled: true
+  Command: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\validation\cluster-side\Collect-ClusterSideArtifacts.ps1 -ProfileConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-capture\CS1.json -OutputPrefix C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post -Stage post -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_manifest.json
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_summary.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_nodes-wide.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_top-nodes.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_pods-wide.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_top-pods.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_services.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_events.txt
+   - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_cluster_post_pods-describe.txt
+
+[S10] cleanup_or_restore
+  Placeholder: apply controlled cleanup or restore policy.
+
+Phase manifest: C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_phases.json
+Extra artifacts:
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_phases.json
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_metric-set.json
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement\PL2_distributed_two_node\PL2_runA_metric-set.txt

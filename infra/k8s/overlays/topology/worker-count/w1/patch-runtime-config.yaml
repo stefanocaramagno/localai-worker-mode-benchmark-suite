@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: localai-runtime-config
+  namespace: genai-thesis
+data:
+  LLAMACPP_GRPC_SERVERS: localai-rpc-a:50051

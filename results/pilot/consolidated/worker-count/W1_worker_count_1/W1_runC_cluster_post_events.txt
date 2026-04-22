@@ -1,0 +1,4 @@
+﻿LAST SEEN   TYPE     REASON              OBJECT                                MESSAGE
+19m         Normal   Killing             pod/localai-rpc-b-78b966fc7c-rx5sw    Stopping container rpc-worker
+19m         Normal   SuccessfulDelete    replicaset/localai-rpc-b-78b966fc7c   Deleted pod: localai-rpc-b-78b966fc7c-rx5sw
+19m         Normal   ScalingReplicaSet   deployment/localai-rpc-b              Scaled down replica set localai-rpc-b-78b966fc7c from 1 to 0

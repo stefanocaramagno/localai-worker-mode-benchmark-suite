@@ -1,0 +1,355 @@
+{
+  "diagnosisProfile": {
+    "profileId": "TD1",
+    "description": "Initial technical diagnosis profile aligned with the consolidated pilot benchmark campaigns and focused on a first evidence-based interpretation of the officially rerun results.",
+    "outputRoot": "results/diagnosis",
+    "diagnosisManifestSuffix": "_diagnosis.json",
+    "diagnosisTextSuffix": "_diagnosis.txt",
+    "requestTargetType": "POST",
+    "requestTargetName": "POST /v1/chat/completions",
+    "fallbackToAggregated": true,
+    "validationSummaryRelativePath": "results/validation/b0-summary.json",
+    "pilotResultsRoots": {
+      "worker-count": "results/pilot/consolidated/worker-count",
+      "workload": "results/pilot/consolidated/workload",
+      "models": "results/pilot/consolidated/models",
+      "placement": "results/pilot/consolidated/placement"
+    },
+    "scenarioConfigRoots": {
+      "worker-count": "config/scenarios/pilot/worker-count",
+      "workload": "config/scenarios/pilot/workload",
+      "models": "config/scenarios/pilot/models",
+      "placement": "config/scenarios/pilot/placement"
+    },
+    "clusterCpuPressureThresholdPercent": 85,
+    "clusterMemoryPressureThresholdPercent": 85,
+    "workerImprovementThresholdPercent": 5,
+    "diminishingReturnThresholdPercent": 3,
+    "workloadStressThresholdPercent": 25,
+    "modelPenaltyThresholdPercent": 50,
+    "placementDifferenceThresholdPercent": 10,
+    "minimumScenarioSamples": 1,
+    "minimumFamiliesWithCoverageForClosure": 2,
+    "minimumFindingsForClosure": 2,
+    "acceptUnsupportedScenariosAsObserved": true,
+    "minimumUnsupportedReplicasPerScenario": 2
+  },
+  "diagnosis": {
+    "diagnosisId": "analysis_diagnosis_placement_NA_20260422T144621Z",
+    "createdAtUtc": "2026-04-22T14:46:21.381717+00:00",
+    "familyScope": "placement",
+    "closureStatus": "not_enough_data"
+  },
+  "validationSummaryPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\validation\\b0-summary.json",
+  "validationSummaryAvailable": true,
+  "validationSummary": {
+    "timestamp_utc": "2026-04-21T14:20:51.1542679Z",
+    "base_url": "http://localhost:8080",
+    "model": "llama-3.2-1b-instruct:q4_k_m",
+    "metric_set_profile_id": "MS1",
+    "iterations": 10,
+    "request_count": 10,
+    "successful_requests": 10,
+    "failed_requests": 0,
+    "failure_count": 0,
+    "success_rate_percent": 100,
+    "mean_response_time_ms": 1586.03,
+    "p50_response_time_ms": 1568.63,
+    "p95_response_time_ms": 1652.25,
+    "p99_response_time_ms": 1679.64,
+    "throughput_rps": 0.2941,
+    "avg_latency_ms": 1586.03,
+    "min_latency_ms": 1555.77,
+    "max_latency_ms": 1686.49,
+    "p50_latency_ms": 1568.63,
+    "p95_latency_ms": 1652.25,
+    "total_prompt_tokens": 330,
+    "total_completion_tokens": 20,
+    "total_tokens": 350
+  },
+  "coverage": {
+    "placement": {
+      "resultsRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement",
+      "scenarioRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\scenarios\\pilot\\placement",
+      "available": true,
+      "scenarioCount": 2,
+      "scenariosWithSamples": 2,
+      "scenariosWithUnsupportedEvidence": 0,
+      "scenariosObserved": 2,
+      "sampleCount": 6,
+      "unsupportedReplicaCount": 0,
+      "unsupportedScenarioIds": []
+    }
+  },
+  "familyData": {
+    "placement": {
+      "PL1": {
+        "scenario": {
+          "scenarioId": "PL1",
+          "purpose": "Pilot Placement Sweep - Co-Located on sc-app-02",
+          "placementType": "colocated_sc_app_02",
+          "outputSubdir": "PL1_colocated_scapp02",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+          "notes": "Placement-only variation anchored to the official locked baseline B0. This scenario reproduces the official baseline co-located placement on sc-app-02 while inheriting the fixed model, worker count, workload, prompt, temperature, and request timeout directly from B0. The only intended experimental delta within the Placement Sweep family is the resolved placement policy and its derived topology directory."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1487.8068,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5742,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 33.0
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1481.4639,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.5752,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 33.0
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1481.987,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.5752,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 32.0
+          }
+        ],
+        "unsupportedReports": [],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 102,
+              "min": 102,
+              "max": 102,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1483.7526,
+              "min": 1481.4639,
+              "max": 1487.8068,
+              "stddev": 2.8747,
+              "coefficientOfVariationPercent": 0.1937
+            },
+            "p50_response_time_ms": {
+              "mean": 1500.0,
+              "min": 1500.0,
+              "max": 1500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1500.0,
+              "min": 1500.0,
+              "max": 1500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 1633.3333,
+              "min": 1600.0,
+              "max": 1700.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.8862
+            },
+            "throughput_rps": {
+              "mean": 0.5749,
+              "min": 0.5742,
+              "max": 0.5752,
+              "stddev": 0.0005,
+              "coefficientOfVariationPercent": 0.082
+            }
+          },
+          "maxNodeCpuPercentObserved": 35.0,
+          "maxNodeMemoryPercentObserved": 33.0
+        },
+        "unsupportedSummary": null
+      },
+      "PL2": {
+        "scenario": {
+          "scenarioId": "PL2",
+          "purpose": "Pilot Placement Sweep - Distributed Two-Node Placement",
+          "placementType": "distributed",
+          "outputSubdir": "PL2_distributed_two_node",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/distributed-two-node-w2",
+          "notes": "Placement-only variation anchored to the official locked baseline B0. This scenario keeps the baseline model, worker count, workload, prompt, temperature, and request timeout fixed while switching only the worker topology to the distributed two-node layout. The only intended experimental delta within the Placement Sweep family is the resolved placement policy and its derived topology directory."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 101,
+            "failure_count": 0,
+            "mean_response_time_ms": 1534.4208,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.566,
+            "maxNodeCpuPercent": 20.0,
+            "maxNodeMemoryPercent": 34.0
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 101,
+            "failure_count": 0,
+            "mean_response_time_ms": 1539.8228,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.5655,
+            "maxNodeCpuPercent": 21.0,
+            "maxNodeMemoryPercent": 33.0
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 101,
+            "failure_count": 0,
+            "mean_response_time_ms": 1540.7128,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5652,
+            "maxNodeCpuPercent": 22.0,
+            "maxNodeMemoryPercent": 34.0
+          }
+        ],
+        "unsupportedReports": [],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 101,
+              "min": 101,
+              "max": 101,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1538.3188,
+              "min": 1534.4208,
+              "max": 1540.7128,
+              "stddev": 2.7801,
+              "coefficientOfVariationPercent": 0.1807
+            },
+            "p50_response_time_ms": {
+              "mean": 1500.0,
+              "min": 1500.0,
+              "max": 1500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1600.0,
+              "min": 1600.0,
+              "max": 1600.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 1633.3333,
+              "min": 1600.0,
+              "max": 1700.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.8862
+            },
+            "throughput_rps": {
+              "mean": 0.5656,
+              "min": 0.5652,
+              "max": 0.566,
+              "stddev": 0.0003,
+              "coefficientOfVariationPercent": 0.0583
+            }
+          },
+          "maxNodeCpuPercentObserved": 22.0,
+          "maxNodeMemoryPercentObserved": 34.0
+        },
+        "unsupportedSummary": null
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "validation_baseline_ready",
+      "title": "La validazione minima end-to-end risulta disponibile come base di affidabilit\u00e0 funzionale.",
+      "confidence": "high",
+      "evidence": {
+        "successRatePercent": 100,
+        "meanResponseTimeMs": 1586.03,
+        "throughputRps": 0.2941
+      },
+      "implication": "La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico."
+    }
+  ],
+  "familyJudgments": [
+    {
+      "family": "placement",
+      "status": "weak_signal",
+      "confidence": "low",
+      "title": "Nel perimetro osservato la famiglia placement non mostra ancora un effetto abbastanza marcato da essere considerato dominante.",
+      "implication": "Le configurazioni di placement sono state confrontate, ma la differenza di latenza resta sotto la soglia diagnostica configurata; nel cluster corrente il placement non emerge ancora come driver principale delle performance.",
+      "evidence": {
+        "PL1_mean_response_time_ms": 1483.7526,
+        "PL2_mean_response_time_ms": 1538.3188,
+        "differencePercentVsPL2": -3.55,
+        "placementDifferenceThresholdPercent": 10
+      }
+    }
+  ],
+  "gaps": []
+}

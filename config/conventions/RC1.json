@@ -1,0 +1,31 @@
+{
+  "runConventionId": "RC1",
+  "version": "1.0.0",
+  "timezone": "UTC",
+  "runIdFormat": "RID-<UTC_TIMESTAMP_COMPACT>-<CAMPAIGN>-<PRIMARY_SCENARIO>-R<REPLICA>",
+  "utcTimestampCompactPattern": "YYYYMMDDTHHMMSSZ",
+  "runManifestSuffix": ".run.json",
+  "csvPrefixFormat": "<outputDir>/<runId>",
+  "replicaPolicy": {
+    "replicatedRuns": ["A", "B", "C"],
+    "nonReplicatedRuns": ["NA"]
+  },
+  "requiredRunMetadata": [
+    "runId",
+    "startedAtUtc",
+    "campaign",
+    "primaryScenario",
+    "replica",
+    "scenarioPurpose",
+    "baseUrl",
+    "locustFile",
+    "modelName",
+    "workerCount",
+    "placementType",
+    "users",
+    "spawnRate",
+    "warmUpDuration",
+    "measurementDuration"
+  ],
+  "notes": "All load-test launcher scripts must generate run identifiers and run manifests through the shared helper so that each execution is uniquely traceable and directly comparable."
+}

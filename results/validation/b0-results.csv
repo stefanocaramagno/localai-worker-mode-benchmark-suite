@@ -1,0 +1,11 @@
+﻿"iteration","timestamp","success","latency_ms","model","finish_reason","prompt_tokens","completion_tokens","total_tokens","prompt","response_content","error_message"
+"1","2026-04-21T16:20:17.1235658+02:00","True","1686,49","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-1.","Ready",
+"2","2026-04-21T16:20:20.8425737+02:00","True","1570,45","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-2.","READY",
+"3","2026-04-21T16:20:24.4309962+02:00","True","1566,74","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-3.","Ready",
+"4","2026-04-21T16:20:28.0121405+02:00","True","1566,46","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-4.","Ready",
+"5","2026-04-21T16:20:31.5801979+02:00","True","1610,4","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-5.","Ready",
+"6","2026-04-21T16:20:35.1994220+02:00","True","1591,48","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-6.","Ready",
+"7","2026-04-21T16:20:38.7998832+02:00","True","1586,72","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-7.","Ready",
+"8","2026-04-21T16:20:42.4002471+02:00","True","1555,77","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-8.","Ready",
+"9","2026-04-21T16:20:45.9705020+02:00","True","1566,81","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-9.","Ready",
+"10","2026-04-21T16:20:49.5542102+02:00","True","1558,97","llama-3.2-1b-instruct:q4_k_m","stop","33","2","35","Reply with only READY-10.","Ready",

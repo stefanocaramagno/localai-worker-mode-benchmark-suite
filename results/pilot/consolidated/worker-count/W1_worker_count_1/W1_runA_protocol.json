@@ -1,0 +1,165 @@
+﻿{
+    "protocolProfile":  {
+                            "profileFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json",
+                            "profileId":  "EP1",
+                            "description":  "Standard benchmark execution protocol for LocalAI benchmark runs. The launcher must always resolve and publish the same ordered sequence: controlled cleanup, scenario deployment, technical pre-check, API smoke validation, optional warm-up, measurement, client-side artifact collection, automated required cluster-side collection, automated required final snapshot, and controlled cleanup or restore placeholder.",
+                            "steps":  [
+                                          {
+                                              "stepId":  "S01",
+                                              "name":  "cleanup_controlled",
+                                              "mode":  "manual"
+                                          },
+                                          {
+                                              "stepId":  "S02",
+                                              "name":  "deploy_scenario",
+                                              "mode":  "manual"
+                                          },
+                                          {
+                                              "stepId":  "S03",
+                                              "name":  "technical_precheck",
+                                              "mode":  "automated"
+                                          },
+                                          {
+                                              "stepId":  "S04",
+                                              "name":  "api_smoke_validation",
+                                              "mode":  "automated"
+                                          },
+                                          {
+                                              "stepId":  "S05",
+                                              "name":  "warm_up",
+                                              "mode":  "automated_optional"
+                                          },
+                                          {
+                                              "stepId":  "S06",
+                                              "name":  "measurement",
+                                              "mode":  "automated"
+                                          },
+                                          {
+                                              "stepId":  "S07",
+                                              "name":  "collect_client_metrics",
+                                              "mode":  "automatic_artifact"
+                                          },
+                                          {
+                                              "stepId":  "S08",
+                                              "name":  "collect_cluster_metrics",
+                                              "mode":  "automated_required"
+                                          },
+                                          {
+                                              "stepId":  "S09",
+                                              "name":  "final_snapshot",
+                                              "mode":  "automated_required"
+                                          },
+                                          {
+                                              "stepId":  "S10",
+                                              "name":  "cleanup_or_restore",
+                                              "mode":  "manual_controlled_placeholder"
+                                          }
+                                      ]
+                        },
+    "launcher":  "Start-PilotWorkerCountSweep",
+    "runId":  "W1_runA",
+    "steps":  {
+                  "cleanupControlled":  {
+                                            "required":  true,
+                                            "mode":  "manual",
+                                            "note":  "Ensure the namespace is in the expected state before applying manifests and running the benchmark."
+                                        },
+                  "deployScenario":  {
+                                         "required":  true,
+                                         "mode":  "manual",
+                                         "recommendedApplyOrder":  [
+                                                                       "kubectl apply -k C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\infra\\k8s\\compositions\\foundation\\namespace",
+                                                                       "kubectl apply -k C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\infra\\k8s\\compositions\\shared\\rpc-workers-services",
+                                                                       "kubectl apply -k C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\infra\\k8s\\compositions\\foundation\\storage",
+                                                                       "kubectl apply -k C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\infra\\k8s\\compositions\\topology\\colocated-sc-app-02-w1",
+                                                                       "kubectl apply -k C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\infra\\k8s\\compositions\\server\\models\\m1"
+                                                                   ]
+                                     },
+                  "technicalPrecheck":  {
+                                            "enabled":  true,
+                                            "mode":  "automated",
+                                            "command":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\validation\\precheck\\Invoke-BenchmarkPrecheck.ps1 -ProfileConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -OutputPrefix C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_precheck -BaseUrl http://localhost:8080 -Model llama-3.2-1b-instruct:q4_k_m -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                                            "artifacts":  {
+                                                              "json":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_precheck.json",
+                                                              "text":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_precheck.txt"
+                                                          }
+                                        },
+                  "apiSmokeValidation":  {
+                                             "enabled":  true,
+                                             "mode":  "automated",
+                                             "command":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\validation\\smoke\\Test-LocalAIWorkerMode.ps1 -BaseUrl http://localhost:8080 -Model llama-3.2-1b-instruct:q4_k_m",
+                                             "model":  "llama-3.2-1b-instruct:q4_k_m"
+                                         },
+                  "warmUp":  {
+                                 "enabled":  true,
+                                 "mode":  "automated_optional",
+                                 "command":  "locust -f C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\load-tests\\locust\\locustfile.py -H http://localhost:8080 --headless -u 2 -r 1 --run-time 45s --csv C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_warmup --csv-full-history",
+                                 "csvPrefix":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_warmup"
+                             },
+                  "measurement":  {
+                                      "enabled":  true,
+                                      "mode":  "automated",
+                                      "command":  "locust -f C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\load-tests\\locust\\locustfile.py -H http://localhost:8080 --headless -u 2 -r 1 --run-time 3m --csv C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA --csv-full-history",
+                                      "csvPrefix":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA"
+                                  },
+                  "collectClientMetrics":  {
+                                               "enabled":  true,
+                                               "mode":  "automatic_artifact",
+                                               "artifacts":  [
+                                                                 "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_warmup_stats.csv",
+                                                                 "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_warmup_stats_history.csv",
+                                                                 "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_warmup_failures.csv",
+                                                                 "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_warmup_exceptions.csv",
+                                                                 "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_stats.csv",
+                                                                 "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_stats_history.csv",
+                                                                 "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_failures.csv",
+                                                                 "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_exceptions.csv"
+                                                             ]
+                                           },
+                  "collectClusterMetrics":  {
+                                                "enabled":  true,
+                                                "mode":  "automated_required",
+                                                "command":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\validation\\cluster-side\\Collect-ClusterSideArtifacts.ps1 -ProfileConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -OutputPrefix C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre -Stage pre -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                                                "artifacts":  [
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_manifest.json",
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_summary.txt",
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_nodes-wide.txt",
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_top-nodes.txt",
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_pods-wide.txt",
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_top-pods.txt",
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_services.txt",
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_events.txt",
+                                                                  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_pre_pods-describe.txt"
+                                                              ]
+                                            },
+                  "finalSnapshot":  {
+                                        "enabled":  true,
+                                        "mode":  "automated_required",
+                                        "command":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\validation\\cluster-side\\Collect-ClusterSideArtifacts.ps1 -ProfileConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -OutputPrefix C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post -Stage post -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                                        "artifacts":  [
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_manifest.json",
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_summary.txt",
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_nodes-wide.txt",
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_top-nodes.txt",
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_pods-wide.txt",
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_top-pods.txt",
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_services.txt",
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_events.txt",
+                                                          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_cluster_post_pods-describe.txt"
+                                                      ]
+                                    },
+                  "cleanupOrRestore":  {
+                                           "enabled":  false,
+                                           "mode":  "manual_placeholder",
+                                           "note":  "Placeholder for controlled cleanup or restore to baseline state."
+                                       }
+              },
+    "artifacts":  {
+                      "phaseManifest":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_phases.json",
+                      "extra":  [
+                                    "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_phases.json",
+                                    "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_metric-set.json",
+                                    "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_metric-set.txt"
+                                ]
+                  }
+}

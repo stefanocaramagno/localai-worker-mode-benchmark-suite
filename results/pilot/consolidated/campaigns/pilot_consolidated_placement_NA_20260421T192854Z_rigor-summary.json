@@ -1,0 +1,254 @@
+{
+  "statisticalRigorProfile": {
+    "profileFile": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\statistical-rigor\\SR1.json",
+    "profileId": "SR1",
+    "description": "Light statistical rigor profile for consolidated pilot benchmark campaigns. The profile keeps the controlled A/B/C replica regime, adds short cool-down intervals between executions, and requires a scenario-level summary over the primary measurement CSV artifacts.",
+    "targetRequestType": "POST",
+    "targetRequestName": "POST /v1/chat/completions",
+    "fallbackToAggregated": true,
+    "requiredReplicaCount": 3,
+    "minimumSuccessfulReplicaCount": 3,
+    "trackedMetrics": [
+      "request_count",
+      "failure_count",
+      "mean_response_time_ms",
+      "p50_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps"
+    ],
+    "variabilityThresholds": {
+      "mean_response_time_cv_percent": 10.0,
+      "p95_response_time_cv_percent": 12.5,
+      "throughput_cv_percent": 12.5
+    }
+  },
+  "campaign": {
+    "campaignId": "pilot_consolidated_placement_NA_20260421T192854Z",
+    "familyScope": "placement",
+    "createdAtUtc": "20260421T192854Z",
+    "status": "passed"
+  },
+  "scenarioSummaries": [
+    {
+      "family": "placement",
+      "scenario": "PL1",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 3,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runA_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1487.8068068628636,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5742280837331288
+          }
+        },
+        {
+          "replica": "B",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runB_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1481.4638980392463,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.5751744590445251
+          }
+        },
+        {
+          "replica": "C",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runC_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1481.9870362746003,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.5752395057832216
+          }
+        }
+      ],
+      "aggregate": {
+        "request_count": {
+          "mean": 102.0,
+          "min": 102.0,
+          "max": 102.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "failure_count": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "mean_response_time_ms": {
+          "mean": 1483.752580392237,
+          "min": 1481.4638980392463,
+          "max": 1487.8068068628636,
+          "stdev": 3.5207928950267804,
+          "cvPercent": 0.2372897571707031
+        },
+        "p50_response_time_ms": {
+          "mean": 1500.0,
+          "min": 1500.0,
+          "max": 1500.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p95_response_time_ms": {
+          "mean": 1500.0,
+          "min": 1500.0,
+          "max": 1500.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p99_response_time_ms": {
+          "mean": 1633.3333333333333,
+          "min": 1600.0,
+          "max": 1700.0,
+          "stdev": 57.735026918962575,
+          "cvPercent": 3.534797566467097
+        },
+        "throughput_rps": {
+          "mean": 0.5748806828536251,
+          "min": 0.5742280837331288,
+          "max": 0.5752395057832216,
+          "stdev": 0.0005661024453296561,
+          "cvPercent": 0.09847303313786869
+        }
+      },
+      "flags": []
+    },
+    {
+      "family": "placement",
+      "scenario": "PL2",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 3,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runA_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 101.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1534.4207742575127,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.5660321298086222
+          }
+        },
+        {
+          "replica": "B",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runB_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 101.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1539.8227702968538,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.5655350406169852
+          }
+        },
+        {
+          "replica": "C",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runC_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 101.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1540.7128009899698,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5651879083236168
+          }
+        }
+      ],
+      "aggregate": {
+        "request_count": {
+          "mean": 101.0,
+          "min": 101.0,
+          "max": 101.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "failure_count": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "mean_response_time_ms": {
+          "mean": 1538.3187818481122,
+          "min": 1534.4207742575127,
+          "max": 1540.7128009899698,
+          "stdev": 3.4049795947920303,
+          "cvPercent": 0.22134421258910592
+        },
+        "p50_response_time_ms": {
+          "mean": 1500.0,
+          "min": 1500.0,
+          "max": 1500.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p95_response_time_ms": {
+          "mean": 1600.0,
+          "min": 1600.0,
+          "max": 1600.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p99_response_time_ms": {
+          "mean": 1633.3333333333333,
+          "min": 1600.0,
+          "max": 1700.0,
+          "stdev": 57.735026918962575,
+          "cvPercent": 3.534797566467097
+        },
+        "throughput_rps": {
+          "mean": 0.5655850262497414,
+          "min": 0.5651879083236168,
+          "max": 0.5660321298086222,
+          "stdev": 0.00042432464169278095,
+          "cvPercent": 0.07502402326779686
+        }
+      },
+      "flags": []
+    }
+  ]
+}

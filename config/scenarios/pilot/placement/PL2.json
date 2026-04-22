@@ -1,0 +1,9 @@
+{
+  "scenarioId": "PL2",
+  "purpose": "Pilot Placement Sweep - Distributed Two-Node Placement",
+  "placementType": "distributed",
+  "outputSubdir": "PL2_distributed_two_node",
+  "referenceBaselineId": "B0",
+  "topologyDir": "infra/k8s/compositions/topology/distributed-two-node-w2",
+  "notes": "Placement-only variation anchored to the official locked baseline B0. This scenario keeps the baseline model, worker count, workload, prompt, temperature, and request timeout fixed while switching only the worker topology to the distributed two-node layout. The only intended experimental delta within the Placement Sweep family is the resolved placement policy and its derived topology directory."
+}

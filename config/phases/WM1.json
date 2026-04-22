@@ -1,0 +1,12 @@
+{
+  "profileId": "WM1",
+  "description": "Formal phase-separation profile for Locust-based benchmarks. Warm-up is executed first and measurement is executed afterwards using a distinct CSV prefix.",
+  "warmUpEnabled": true,
+  "warmUpDuration": "30s",
+  "warmUpUsersMode": "match_measurement",
+  "warmUpSpawnRateMode": "match_measurement",
+  "startupModelCheckDuringWarmUp": true,
+  "startupModelCheckDuringMeasurement": false,
+  "warmUpCsvSuffix": "_warmup",
+  "phaseManifestSuffix": "_phases.json"
+}

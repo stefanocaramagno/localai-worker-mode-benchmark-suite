@@ -1,0 +1,52 @@
+﻿{
+    "family":  "worker-count",
+    "scenario":  "W4",
+    "replica":  "C",
+    "status":  "unsupported_under_current_constraints",
+    "namespace":  "genai-thesis",
+    "placementType":  "colocated_sc_app_02",
+    "expectedWorkerCount":  4,
+    "reason":  "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement \u0027colocated_sc_app_02\u0027 deve restare invariato e, dopo l\u0027auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+    "diagnostics":  [
+                        {
+                            "podName":  "localai-rpc-a-6cd76fc98-l5z8l",
+                            "phase":  "Running",
+                            "reason":  "",
+                            "nodeName":  "sc-app-02",
+                            "events":  [
+
+                                       ]
+                        },
+                        {
+                            "podName":  "localai-rpc-b-78b966fc7c-lp7hb",
+                            "phase":  "Running",
+                            "reason":  "",
+                            "nodeName":  "sc-app-02",
+                            "events":  [
+                                           "[Scheduled] Successfully assigned genai-thesis/localai-rpc-b-78b966fc7c-lp7hb to sc-app-02",
+                                           "[Pulled] Container image \"quay.io/go-skynet/local-ai:v4.1.0\" already present on machine and can be accessed by the pod",
+                                           "[Created] Container created",
+                                           "[Started] Container started"
+                                       ]
+                        },
+                        {
+                            "podName":  "localai-rpc-c-7c45cbd784-bslwv",
+                            "phase":  "Pending",
+                            "reason":  "",
+                            "nodeName":  "",
+                            "events":  [
+                                           "[FailedScheduling] 0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn\u0027t match Pod\u0027s node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling.",
+                                           "[FailedScheduling] 0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn\u0027t match Pod\u0027s node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling."
+                                       ]
+                        },
+                        {
+                            "podName":  "localai-rpc-d-684847f7f9-vq5ks",
+                            "phase":  "Pending",
+                            "reason":  "",
+                            "nodeName":  "",
+                            "events":  [
+                                           "[FailedScheduling] 0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn\u0027t match Pod\u0027s node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling."
+                                       ]
+                        }
+                    ]
+}

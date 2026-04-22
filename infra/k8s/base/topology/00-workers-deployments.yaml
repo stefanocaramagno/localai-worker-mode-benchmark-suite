@@ -1,0 +1,203 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-a
+  namespace: genai-thesis
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: localai-rpc-a
+  template:
+    metadata:
+      labels:
+        app: localai-rpc-a
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - sc-app-02
+              - key: node-role.kubernetes.io/control-plane
+                operator: DoesNotExist
+      containers:
+      - name: rpc-worker
+        image: quay.io/go-skynet/local-ai:v4.1.0
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -lc
+        args:
+        - '/local-ai backends install llama-cpp && \
+
+          /local-ai p2p-worker llama-cpp-rpc --llama-cpp-args="-H 0.0.0.0 -p 50051"
+
+          '
+        ports:
+        - name: rpc
+          containerPort: 50051
+          protocol: TCP
+        resources:
+          requests:
+            cpu: '2'
+            memory: 4Gi
+          limits:
+            cpu: '4'
+            memory: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-b
+  namespace: genai-thesis
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: localai-rpc-b
+  template:
+    metadata:
+      labels:
+        app: localai-rpc-b
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - sc-app-02
+              - key: node-role.kubernetes.io/control-plane
+                operator: DoesNotExist
+      containers:
+      - name: rpc-worker
+        image: quay.io/go-skynet/local-ai:v4.1.0
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -lc
+        args:
+        - '/local-ai backends install llama-cpp && \
+
+          /local-ai p2p-worker llama-cpp-rpc --llama-cpp-args="-H 0.0.0.0 -p 50051"
+
+          '
+        ports:
+        - name: rpc
+          containerPort: 50051
+          protocol: TCP
+        resources:
+          requests:
+            cpu: '2'
+            memory: 4Gi
+          limits:
+            cpu: '4'
+            memory: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-c
+  namespace: genai-thesis
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: localai-rpc-c
+  template:
+    metadata:
+      labels:
+        app: localai-rpc-c
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - sc-app-02
+              - key: node-role.kubernetes.io/control-plane
+                operator: DoesNotExist
+      containers:
+      - name: rpc-worker
+        image: quay.io/go-skynet/local-ai:v4.1.0
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -lc
+        args:
+        - '/local-ai backends install llama-cpp && \
+
+          /local-ai p2p-worker llama-cpp-rpc --llama-cpp-args="-H 0.0.0.0 -p 50051"
+
+          '
+        ports:
+        - name: rpc
+          containerPort: 50051
+          protocol: TCP
+        resources:
+          requests:
+            cpu: '2'
+            memory: 4Gi
+          limits:
+            cpu: '4'
+            memory: 8Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-d
+  namespace: genai-thesis
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: localai-rpc-d
+  template:
+    metadata:
+      labels:
+        app: localai-rpc-d
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - sc-app-02
+              - key: node-role.kubernetes.io/control-plane
+                operator: DoesNotExist
+      containers:
+      - name: rpc-worker
+        image: quay.io/go-skynet/local-ai:v4.1.0
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -lc
+        args:
+        - '/local-ai backends install llama-cpp && \
+
+          /local-ai p2p-worker llama-cpp-rpc --llama-cpp-args="-H 0.0.0.0 -p 50051"
+
+          '
+        ports:
+        - name: rpc
+          containerPort: 50051
+          protocol: TCP
+        resources:
+          requests:
+            cpu: '2'
+            memory: 4Gi
+          limits:
+            cpu: '4'
+            memory: 8Gi

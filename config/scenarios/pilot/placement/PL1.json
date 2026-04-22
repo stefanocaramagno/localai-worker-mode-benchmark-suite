@@ -1,0 +1,9 @@
+{
+  "scenarioId": "PL1",
+  "purpose": "Pilot Placement Sweep - Co-Located on sc-app-02",
+  "placementType": "colocated_sc_app_02",
+  "outputSubdir": "PL1_colocated_scapp02",
+  "referenceBaselineId": "B0",
+  "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+  "notes": "Placement-only variation anchored to the official locked baseline B0. This scenario reproduces the official baseline co-located placement on sc-app-02 while inheriting the fixed model, worker count, workload, prompt, temperature, and request timeout directly from B0. The only intended experimental delta within the Placement Sweep family is the resolved placement policy and its derived topology directory."
+}

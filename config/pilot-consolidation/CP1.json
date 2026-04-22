@@ -1,0 +1,79 @@
+{
+  "profileId": "CP1",
+  "description": "Consolidated pilot benchmark profile for the four pilot sweeps. The profile fixes the controlled replica set, the mandatory execution stack already defined in previous points, and stricter phase durations for re-running the pilot campaigns in a comparable way.",
+  "outputRoot": "results/pilot/consolidated",
+  "campaignManifestSuffix": "_campaign.json",
+  "campaignTextSuffix": "_campaign.txt",
+  "stopOnFirstFailure": true,
+  "precheckConfig": "config/precheck/TC1.json",
+  "phaseConfig": "config/phases/WM1.json",
+  "protocolConfig": "config/protocol/EP1.json",
+  "clusterCaptureConfig": "config/cluster-capture/CS1.json",
+  "metricSetConfig": "config/metric-set/MS1.json",
+  "statisticalRigorConfig": "config/statistical-rigor/SR1.json",
+  "warmUpDuration": "45s",
+  "measurementDuration": "3m",
+  "families": {
+    "worker-count": {
+      "launcherBash": "scripts/load/pilot/start-pilot-worker-count-sweep.sh",
+      "launcherPowerShell": "scripts/load/pilot/Start-PilotWorkerCountSweep.ps1",
+      "outputRoot": "results/pilot/consolidated/worker-count",
+      "scenarios": [
+        "W1",
+        "W2",
+        "W3",
+        "W4"
+      ],
+      "replicas": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "workload": {
+      "launcherBash": "scripts/load/pilot/start-pilot-workload-sweep.sh",
+      "launcherPowerShell": "scripts/load/pilot/Start-PilotWorkloadSweep.ps1",
+      "outputRoot": "results/pilot/consolidated/workload",
+      "scenarios": [
+        "WL1",
+        "WL2",
+        "WL3"
+      ],
+      "replicas": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "models": {
+      "launcherBash": "scripts/load/pilot/start-pilot-model-sweep.sh",
+      "launcherPowerShell": "scripts/load/pilot/Start-PilotModelSweep.ps1",
+      "outputRoot": "results/pilot/consolidated/models",
+      "scenarios": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "replicas": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    "placement": {
+      "launcherBash": "scripts/load/pilot/start-pilot-placement-sweep.sh",
+      "launcherPowerShell": "scripts/load/pilot/Start-PilotPlacementSweep.ps1",
+      "outputRoot": "results/pilot/consolidated/placement",
+      "scenarios": [
+        "PL1",
+        "PL2"
+      ],
+      "replicas": [
+        "A",
+        "B",
+        "C"
+      ]
+    }
+  }
+}

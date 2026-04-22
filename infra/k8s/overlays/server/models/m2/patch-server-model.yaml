@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-server
+  namespace: genai-thesis
+spec:
+  template:
+    spec:
+      containers:
+        - name: localai
+          args:
+            - run
+            - llama-3.2-1b-instruct:q8_0

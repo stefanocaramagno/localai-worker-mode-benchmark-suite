@@ -1,0 +1,22 @@
+﻿=============================================
+ Benchmark Technical Pre-Check
+=============================================
+Profile ID          : TC1
+Timestamp (UTC)     : 2026-04-21T14:01:24Z
+Kubeconfig          : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-access\kubeconfig
+Namespace           : genai-thesis
+Base URL            : -
+Model               : -
+JSON report         : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\precheck\precheck_precheck.json
+Overall result      : FAIL
+
+Checks:
+ - cluster_nodes_ready: PASS
+ - namespace_active: PASS
+ - namespace_pods_healthy: FAIL
+ - worker_nodes_expected: PASS
+ - metrics_api_and_capacity: PASS
+ - service_endpoint_and_model: PASS
+
+Failed checks:
+ - namespace_pods_healthy

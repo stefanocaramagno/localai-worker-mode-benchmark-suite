@@ -1,0 +1,115 @@
+﻿{
+    "profile":  {
+                    "profileFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json",
+                    "profileId":  "TC1",
+                    "description":  "Technical pre-check profile to be executed before every benchmark run."
+                },
+    "execution":  {
+                      "timestampUtc":  "2026-04-21T14:01:24Z",
+                      "kubeconfig":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-access\\kubeconfig",
+                      "namespace":  "genai-thesis",
+                      "outputPrefix":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\precheck\\precheck",
+                      "baseUrl":  null,
+                      "model":  null
+                  },
+    "summary":  {
+                    "success":  false,
+                    "failedChecks":  [
+                                         "namespace_pods_healthy"
+                                     ],
+                    "checkCount":  6
+                },
+    "checks":  [
+                   {
+                       "name":  "cluster_nodes_ready",
+                       "success":  true,
+                       "details":  {
+                                       "notReadyNodes":  [
+
+                                                         ],
+                                       "discoveredNodes":  [
+                                                               "sc-app-01",
+                                                               "sc-app-02",
+                                                               "sc-master-01"
+                                                           ],
+                                       "expectedReadyNodes":  [
+                                                                  "sc-master-01",
+                                                                  "sc-app-01",
+                                                                  "sc-app-02"
+                                                              ],
+                                       "missingNodes":  [
+
+                                                        ]
+                                   }
+                   },
+                   {
+                       "name":  "namespace_active",
+                       "success":  true,
+                       "details":  {
+                                       "namespace":  "genai-thesis",
+                                       "phase":  "Active"
+                                   }
+                   },
+                   {
+                       "name":  "namespace_pods_healthy",
+                       "success":  false,
+                       "details":  {
+                                       "note":  "Namespace exists but currently contains no workload pods.",
+                                       "invalidPhasePodsCount":  0,
+                                       "podCount":  0,
+                                       "hasMinimumNamespacePods":  false,
+                                       "criticalWaitingCount":  0,
+                                       "minimumNamespacePods":  1,
+                                       "namespace":  "genai-thesis",
+                                       "totalRestarts":  0,
+                                       "maxTotalRestarts":  0
+                                   }
+                   },
+                   {
+                       "name":  "worker_nodes_expected",
+                       "success":  true,
+                       "details":  {
+                                       "unexpectedWorkerNodes":  [
+
+                                                                 ],
+                                       "expectedWorkerNodes":  [
+                                                                   "sc-app-01",
+                                                                   "sc-app-02"
+                                                               ],
+                                       "observedWorkerPodNodes":  {
+
+                                                                  }
+                                   }
+                   },
+                   {
+                       "name":  "metrics_api_and_capacity",
+                       "success":  true,
+                       "details":  {
+                                       "note":  "Namespace contains no workload pods, so pod-level metrics are intentionally empty.",
+                                       "maxAllowedNodeCpuPercent":  95,
+                                       "namespacePodMetricsCount":  0,
+                                       "maxNodeCpuPercent":  4,
+                                       "nodeMetricsCount":  3,
+                                       "maxAllowedNodeMemoryPercent":  95,
+                                       "maxNodeMemoryPercent":  32
+                                   }
+                   },
+                   {
+                       "name":  "service_endpoint_and_model",
+                       "success":  true,
+                       "details":  {
+                                       "guidance":  null,
+                                       "endpointReady":  true,
+                                       "serviceReadinessRequestTimeoutSeconds":  10,
+                                       "lastError":  null,
+                                       "serviceReadinessTimeoutSeconds":  300,
+                                       "attempts":  0,
+                                       "availableModels":  [
+
+                                                           ],
+                                       "baseUrl":  null,
+                                       "requiredModel":  null
+                                   }
+                   }
+               ]
+}

@@ -1,0 +1,94 @@
+﻿{
+    "profileFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\pilot-consolidation\\CP1.json",
+    "profileId":  "CP1",
+    "description":  "Consolidated pilot benchmark profile for the four pilot sweeps. The profile fixes the controlled replica set, the mandatory execution stack already defined in previous points, and stricter phase durations for re-running the pilot campaigns in a comparable way.",
+    "campaignId":  "pilot_consolidated_workload_NA_20260421T175045Z",
+    "campaignScope":  "workload",
+    "createdAtUtc":  "20260421T175045Z",
+    "baseUrl":  "http://localhost:8080",
+    "outputRoot":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated",
+    "status":  "success",
+    "entries":  [
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL1",
+                        "replica":  "A",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL1 -Replica A -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL1_smoke_single_user\\WL1_runA_stats.csv"
+                    },
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL1",
+                        "replica":  "B",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL1 -Replica B -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL1_smoke_single_user\\WL1_runB_stats.csv"
+                    },
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL1",
+                        "replica":  "C",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL1 -Replica C -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL1_smoke_single_user\\WL1_runC_stats.csv"
+                    },
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL2",
+                        "replica":  "A",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL2 -Replica A -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runA_stats.csv"
+                    },
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL2",
+                        "replica":  "B",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL2 -Replica B -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runB_stats.csv"
+                    },
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL2",
+                        "replica":  "C",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL2 -Replica C -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_stats.csv"
+                    },
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL3",
+                        "replica":  "A",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL3 -Replica A -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL3_small_concurrency_four_users\\WL3_runA_stats.csv"
+                    },
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL3",
+                        "replica":  "B",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL3 -Replica B -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL3_small_concurrency_four_users\\WL3_runB_stats.csv"
+                    },
+                    {
+                        "family":  "workload",
+                        "scenario":  "WL3",
+                        "replica":  "C",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotWorkloadSweep.ps1\" -Scenario WL3 -Replica C -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL3_small_concurrency_four_users\\WL3_runC_stats.csv"
+                    }
+                ]
+}

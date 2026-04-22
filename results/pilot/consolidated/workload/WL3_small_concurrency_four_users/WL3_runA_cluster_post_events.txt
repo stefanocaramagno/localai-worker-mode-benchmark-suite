@@ -1,0 +1,19 @@
+﻿LAST SEEN   TYPE      REASON              OBJECT                                MESSAGE
+57m         Normal    ScalingReplicaSet   deployment/localai-rpc-b              Scaled up replica set localai-rpc-b-78b966fc7c from 0 to 1
+57m         Normal    Scheduled           pod/localai-rpc-b-78b966fc7c-lp7hb    Successfully assigned genai-thesis/localai-rpc-b-78b966fc7c-lp7hb to sc-app-02
+57m         Normal    Pulled              pod/localai-rpc-b-78b966fc7c-lp7hb    Container image "quay.io/go-skynet/local-ai:v4.1.0" already present on machine and can be accessed by the pod
+57m         Normal    Created             pod/localai-rpc-b-78b966fc7c-lp7hb    Container created
+57m         Normal    Started             pod/localai-rpc-b-78b966fc7c-lp7hb    Container started
+57m         Normal    SuccessfulCreate    replicaset/localai-rpc-b-78b966fc7c   Created pod: localai-rpc-b-78b966fc7c-lp7hb
+43m         Normal    SuccessfulCreate    replicaset/localai-rpc-c-7c45cbd784   Created pod: localai-rpc-c-7c45cbd784-bslwv
+43m         Warning   FailedScheduling    pod/localai-rpc-c-7c45cbd784-bslwv    0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling.
+43m         Normal    ScalingReplicaSet   deployment/localai-rpc-c              Scaled up replica set localai-rpc-c-7c45cbd784 from 0 to 1
+33m         Warning   FailedScheduling    pod/localai-rpc-c-7c45cbd784-bslwv    0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling.
+38m         Normal    ScalingReplicaSet   deployment/localai-rpc-d              Scaled up replica set localai-rpc-d-684847f7f9 from 0 to 1
+38m         Warning   FailedScheduling    pod/localai-rpc-d-684847f7f9-vq5ks    0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling.
+38m         Normal    SuccessfulCreate    replicaset/localai-rpc-d-684847f7f9   Created pod: localai-rpc-d-684847f7f9-vq5ks
+32m         Warning   FailedScheduling    pod/localai-rpc-d-684847f7f9-vq5ks    0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling.
+31m         Normal    SuccessfulDelete    replicaset/localai-rpc-c-7c45cbd784   Deleted pod: localai-rpc-c-7c45cbd784-bslwv
+31m         Normal    ScalingReplicaSet   deployment/localai-rpc-c              Scaled down replica set localai-rpc-c-7c45cbd784 from 1 to 0
+31m         Normal    SuccessfulDelete    replicaset/localai-rpc-d-684847f7f9   Deleted pod: localai-rpc-d-684847f7f9-vq5ks
+31m         Normal    ScalingReplicaSet   deployment/localai-rpc-d              Scaled down replica set localai-rpc-d-684847f7f9 from 1 to 0

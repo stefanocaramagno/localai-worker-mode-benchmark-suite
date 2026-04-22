@@ -1,0 +1,45 @@
+=============================================
+ Statistical Rigor Summary
+=============================================
+Profile               : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\statistical-rigor\SR1.json
+Profile ID            : SR1
+Campaign ID           : pilot_consolidated_workload_NA_20260421T175045Z
+Family scope          : workload
+Created at UTC        : 20260421T175045Z
+
+Family/Scenario       : workload/WL1
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=52.0000 min=52.0000 max=52.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=1457.7860 min=1452.9482 max=1462.9397 stdev=5.0032 cv%=0.34
+ - p50_response_time_ms: mean=1466.6667 min=1400.0000 max=1500.0000 stdev=57.7350 cv%=3.94
+ - p95_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=1533.3333 min=1500.0000 max=1600.0000 stdev=57.7350 cv%=3.77
+ - throughput_rps: mean=0.2918 min=0.2914 max=0.2922 stdev=0.0004 cv%=0.14
+ Flags                : none
+
+Family/Scenario       : workload/WL2
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=102.3333 min=102.0000 max=103.0000 stdev=0.5774 cv%=0.56
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=1493.4422 min=1491.8897 max=1496.0013 stdev=2.2330 cv%=0.15
+ - p50_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=1600.0000 min=1600.0000 max=1600.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=1700.0000 min=1700.0000 max=1700.0000 stdev=0.0000 cv%=0.00
+ - throughput_rps: mean=0.5732 min=0.5728 max=0.5734 stdev=0.0003 cv%=0.05
+ Flags                : none
+
+Family/Scenario       : workload/WL3
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=135.0000 min=135.0000 max=135.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=3269.6865 min=3262.0408 max=3276.2063 stdev=7.1495 cv%=0.22
+ - p50_response_time_ms: mean=3300.0000 min=3300.0000 max=3300.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=3300.0000 min=3300.0000 max=3300.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=3633.3333 min=3400.0000 max=3800.0000 stdev=208.1666 cv%=5.73
+ - throughput_rps: mean=0.7559 min=0.7550 max=0.7569 stdev=0.0010 cv%=0.13
+ Flags                : none
+

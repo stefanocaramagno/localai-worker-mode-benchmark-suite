@@ -1,0 +1,4 @@
+﻿NAME                              READY   STATUS    RESTARTS   AGE    IP           NODE        NOMINATED NODE   READINESS GATES
+localai-rpc-a-6cd76fc98-l5z8l     1/1     Running   0          153m   10.42.1.78   sc-app-02   <none>           <none>
+localai-rpc-b-78b966fc7c-rx5sw    1/1     Running   0          153m   10.42.1.79   sc-app-02   <none>           <none>
+localai-server-74fccf5cb7-bbxl2   1/1     Running   0          153m   10.42.1.80   sc-app-02   <none>           <none>

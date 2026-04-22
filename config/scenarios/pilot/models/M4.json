@@ -1,0 +1,9 @@
+{
+  "scenarioId": "M4",
+  "purpose": "Pilot Model Sweep - Llama 3.2 3B Instruct q8_0",
+  "modelName": "llama-3.2-3b-instruct:q8_0",
+  "outputSubdir": "M4_llama32_3b_q8_0",
+  "referenceBaselineId": "B0",
+  "serverManifest": "infra/k8s/compositions/server/models/m4",
+  "notes": "Model-only variation anchored to the official locked baseline B0. This scenario changes the model family member to the 3B q8_0 variant while inheriting the fixed worker scenario, placement scenario, workload scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Model Sweep family is the resolved model and its derived server manifest."
+}

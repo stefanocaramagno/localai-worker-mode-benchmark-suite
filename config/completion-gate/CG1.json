@@ -1,0 +1,43 @@
+{
+  "profileId": "CG1",
+  "description": "Explicit completion gate for declaring the current exploratory characterization cycle completed after validation, consolidated pilot coverage, repeatability evidence and a first technical diagnosis.",
+  "outputRoot": "results/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "acceptedDiagnosisClosureStatuses": [
+    "preliminary_diagnosis_available"
+  ],
+  "requiredFamilies": [
+    "worker-count",
+    "workload",
+    "models",
+    "placement"
+  ],
+  "strictScenarioCoverage": true,
+  "minimumReplicasPerScenario": 2,
+  "maximumMeanResponseTimeCvPercent": 35,
+  "minimumFindings": 3,
+  "requiredFindingGroups": {
+    "worker_count_signal": [
+      "worker_count_initial_gain",
+      "worker_count_diminishing_returns"
+    ],
+    "workload_stress_signal": [
+      "workload_saturation_signal"
+    ],
+    "model_penalty_signal": [
+      "model_size_penalty"
+    ],
+    "placement_signal": [
+      "placement_effect"
+    ]
+  },
+  "minimumFindingGroupsSatisfied": 2,
+  "requireClusterSideEvidence": true,
+  "clusterSideGapPatterns": [
+    "cluster-side",
+    "artefatti cluster-side"
+  ],
+  "acceptUnsupportedScenariosAsCovered": true,
+  "minimumUnsupportedReplicasPerScenario": 2
+}

@@ -1,0 +1,68 @@
+=============================================
+ Technical Diagnosis
+=============================================
+Diagnosis ID          : analysis_diagnosis_all_NA_20260422T144624Z
+Family scope          : all
+Closure status        : preliminary_diagnosis_available
+Validation summary    : available
+
+Coverage overview
+-----------------
+- worker-count: scenariosWithSamples=2/4, scenariosWithUnsupportedEvidence=2, scenariosObserved=4, sampleCount=6, unsupportedReplicaCount=6, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\worker-count
+- workload: scenariosWithSamples=3/3, scenariosWithUnsupportedEvidence=0, scenariosObserved=3, sampleCount=9, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\workload
+- models: scenariosWithSamples=4/4, scenariosWithUnsupportedEvidence=0, scenariosObserved=4, sampleCount=12, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\models
+- placement: scenariosWithSamples=2/2, scenariosWithUnsupportedEvidence=0, scenariosObserved=2, sampleCount=6, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement
+
+Findings
+--------
+1. [high] La validazione minima end-to-end risulta disponibile come base di affidabilità funzionale.
+   Implicazione: La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico.
+   Evidenza: {"successRatePercent": 100, "meanResponseTimeMs": 1586.03, "throughputRps": 0.2941}
+2. [medium] Il workload più intenso aumenta sensibilmente la latenza, segnalando possibile saturazione del sistema.
+   Implicazione: Il cluster appare più fragile quando cresce la concorrenza; la sola crescita del carico non si traduce necessariamente in aumento proporzionale del throughput utile.
+   Evidenza: {"WL1_mean_response_time_ms": 1457.786, "WL3_mean_response_time_ms": 3269.6865, "latencyIncreasePercent": 124.29, "WL1_throughput_rps": 0.2918, "WL3_throughput_rps": 0.7559, "throughputIncreasePercent": 159.05}
+3. [high] La dimensione del modello emerge come driver dominante della latenza media.
+   Implicazione: Nel cluster CPU-only attuale il passaggio a modelli più grandi sembra incidere molto più della variazione fine di topologia o workload leggero.
+   Evidenza: {"smallModelMeanResponseTimeMs": 1439.175, "largeModelMeanResponseTimeMs": 4757.0145, "penaltyPercent": 230.54}
+
+Family-level judgments
+---------------------
+- worker-count: [weak_signal] Nel confronto iniziale tra configurazioni misurate il numero di worker non produce un miglioramento abbastanza marcato.
+  Implicazione: Il passaggio da W1 a W2 è stato osservato, ma il beneficio sulla latenza media resta sotto la soglia diagnostica configurata; eventuali scenari superiori unsupported limitano inoltre la valutazione oltre il perimetro misurato.
+  Evidenza: {"W1_mean_response_time_ms": 1507.3645, "W2_mean_response_time_ms": 1504.1032, "improvementPercent": 0.22, "workerImprovementThresholdPercent": 5, "unsupportedScenarios": ["W3", "W4"]}
+- workload: [strong_signal] La famiglia workload mostra un segnale netto di deterioramento prestazionale all'aumentare del carico.
+  Implicazione: Nel cluster corrente il workload è un driver rilevante della latenza e suggerisce una soglia di fragilità più evidente nelle configurazioni più spinte.
+  Evidenza: {"WL1_mean_response_time_ms": 1457.786, "WL3_mean_response_time_ms": 3269.6865, "latencyIncreasePercent": 124.29, "WL1_throughput_rps": 0.2918, "WL3_throughput_rps": 0.7559, "throughputIncreasePercent": 159.05}
+- models: [strong_signal] La famiglia models mostra una penalità dimensionale netta e dominante sulla latenza media.
+  Implicazione: Nel cluster corrente la scelta del modello incide fortemente sul comportamento del servizio e rappresenta uno dei driver principali della performance osservata.
+  Evidenza: {"smallModelMeanResponseTimeMs": 1439.175, "largeModelMeanResponseTimeMs": 4757.0145, "penaltyPercent": 230.54}
+- placement: [weak_signal] Nel perimetro osservato la famiglia placement non mostra ancora un effetto abbastanza marcato da essere considerato dominante.
+  Implicazione: Le configurazioni di placement sono state confrontate, ma la differenza di latenza resta sotto la soglia diagnostica configurata; nel cluster corrente il placement non emerge ancora come driver principale delle performance.
+  Evidenza: {"PL1_mean_response_time_ms": 1483.7526, "PL2_mean_response_time_ms": 1538.3188, "differencePercentVsPL2": -3.55, "placementDifferenceThresholdPercent": 10}
+
+Per-family scenario averages
+--------------------------
+Family: worker-count
+- W1: samples=3, mean=1507.3645, p95=1600.0, throughput=0.5709, maxNodeCpu=34.0, maxNodeMemory=38.0
+- W2: samples=3, mean=1504.1032, p95=1600.0, throughput=0.5715, maxNodeCpu=35.0, maxNodeMemory=38.0
+- W3: unsupportedEvidence=3, replicas=['A', 'B', 'C'], evidenceKinds=['failed_scheduling', 'insufficient_cpu', 'insufficient_memory', 'no_preemption_victims_found', 'node_affinity_selector_mismatch', 'pending_pod', 'preemption_not_helpful']
+- W4: unsupportedEvidence=3, replicas=['A', 'B', 'C'], evidenceKinds=['failed_scheduling', 'insufficient_cpu', 'insufficient_memory', 'no_preemption_victims_found', 'node_affinity_selector_mismatch', 'pending_pod', 'preemption_not_helpful']
+
+Family: workload
+- WL1: samples=3, mean=1457.786, p95=1500.0, throughput=0.2918, maxNodeCpu=18.0, maxNodeMemory=38.0
+- WL2: samples=3, mean=1493.4422, p95=1600.0, throughput=0.5732, maxNodeCpu=35.0, maxNodeMemory=38.0
+- WL3: samples=3, mean=3269.6865, p95=3300.0, throughput=0.7559, maxNodeCpu=50.0, maxNodeMemory=37.0
+
+Family: models
+- M1: samples=3, mean=1497.1326, p95=1600.0, throughput=0.5725, maxNodeCpu=35.0, maxNodeMemory=38.0
+- M2: samples=3, mean=1381.2175, p95=1400.0, throughput=0.5927, maxNodeCpu=33.0, maxNodeMemory=35.0
+- M3: samples=3, mean=5168.8147, p95=5100.0, throughput=0.2782, maxNodeCpu=52.0, maxNodeMemory=43.0
+- M4: samples=3, mean=4345.2143, p95=4400.0, throughput=0.3146, maxNodeCpu=52.0, maxNodeMemory=52.0
+
+Family: placement
+- PL1: samples=3, mean=1483.7526, p95=1500.0, throughput=0.5749, maxNodeCpu=35.0, maxNodeMemory=33.0
+- PL2: samples=3, mean=1538.3188, p95=1600.0, throughput=0.5656, maxNodeCpu=22.0, maxNodeMemory=34.0
+
+Gaps
+----
+- Nessun gap critico rilevato per la diagnosi preliminare.

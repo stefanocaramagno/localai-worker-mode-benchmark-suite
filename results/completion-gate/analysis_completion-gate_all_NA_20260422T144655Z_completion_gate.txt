@@ -1,0 +1,37 @@
+=============================================
+ Completion Gate
+=============================================
+Evaluation ID         : analysis_completion-gate_all_NA_20260422T144655Z
+Diagnosis ID          : analysis_diagnosis_all_NA_20260422T144624Z
+Diagnosis file        : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\diagnosis\analysis_diagnosis_all_NA_20260422T144624Z_diagnosis.json
+Completion status     : completed
+Passed gates          : 6/6
+
+Gates
+-----
+- [PASS] validation_baseline_available :: La baseline di validazione minima è disponibile.
+  Implicazione: Il ciclo di caratterizzazione deve poggiare su una baseline funzionale salvata e non solo su benchmark pilota.
+  Evidenza: {"validationSummaryAvailable": true, "validationSummaryPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\validation\\b0-summary.json"}
+- [PASS] diagnosis_status_accepted :: La diagnosi tecnica preliminare ha uno stato di chiusura accettato.
+  Implicazione: Il completamento può considerarsi dichiarabile solo se la diagnosi preliminare è già disponibile in forma strutturata.
+  Evidenza: {"diagnosisClosureStatus": "preliminary_diagnosis_available", "acceptedDiagnosisClosureStatuses": ["preliminary_diagnosis_available"]}
+- [PASS] family_coverage_complete :: Tutte le famiglie richieste hanno copertura sufficiente e repliche minime per scenario.
+  Implicazione: La chiusura richiede copertura esplicita di worker-count, workload, models e placement.
+  Evidenza: {"worker-count": {"scenarioCount": 4, "scenariosWithSamples": 2, "scenariosWithAcceptedUnsupported": 2, "sampleCount": 6, "unsupportedReplicaCount": 6, "effectiveEvidenceCount": 12, "minimumExpectedSamples": 8, "minimumExpectedEvidence": 8, "acceptUnsupportedScenariosAsCovered": true, "minimumUnsupportedReplicasPerScenario": 2, "scenariosMeetingReplicaGate": ["W1", "W2"], "scenariosMeetingUnsupportedGate": [{"scenarioId": "W3", "unsupportedReplicaCount": 3, "requiredUnsupportedReplicas": 2}, {"scenarioId": "W4", "unsupportedReplicaCount": 3, "requiredUnsupportedReplicas": 2}], "scenariosFailingReplicaGate": [], "passed": true}, "workload": {"scenarioCount": 3, "scenariosWithSamples": 3, "scenariosWithAcceptedUnsupported": 0, "sampleCount": 9, "unsupportedReplicaCount": 0, "effectiveEvidenceCount": 9, "minimumExpectedSamples": 6, "minimumExpectedEvidence": 6, "acceptUnsupportedScenariosAsCovered": true, "minimumUnsupportedReplicasPerScenario": 2, "scenariosMeetingReplicaGate": ["WL1", "WL2", "WL3"], "scenariosMeetingUnsupportedGate": [], "scenariosFailingReplicaGate": [], "passed": true}, "models": {"scenarioCount": 4, "scenariosWithSamples": 4, "scenariosWithAcceptedUnsupported": 0, "sampleCount": 12, "unsupportedReplicaCount": 0, "effectiveEvidenceCount": 12, "minimumExpectedSamples": 8, "minimumExpectedEvidence": 8, "acceptUnsupportedScenariosAsCovered": true, "minimumUnsupportedReplicasPerScenario": 2, "scenariosMeetingReplicaGate": ["M1", "M2", "M3", "M4"], "scenariosMeetingUnsupportedGate": [], "scenariosFailingReplicaGate": [], "passed": true}, "placement": {"scenarioCount": 2, "scenariosWithSamples": 2, "scenariosWithAcceptedUnsupported": 0, "sampleCount": 6, "unsupportedReplicaCount": 0, "effectiveEvidenceCount": 6, "minimumExpectedSamples": 4, "minimumExpectedEvidence": 4, "acceptUnsupportedScenariosAsCovered": true, "minimumUnsupportedReplicasPerScenario": 2, "scenariosMeetingReplicaGate": ["PL1", "PL2"], "scenariosMeetingUnsupportedGate": [], "scenariosFailingReplicaGate": [], "passed": true}}
+- [PASS] repeatability_signal_present :: Ogni famiglia richiesta mostra almeno uno scenario con ripetibilità accettabile.
+  Implicazione: Il completamento non può dirsi raggiunto se le evidenze raccolte sono solo episodiche o troppo rumorose.
+  Evidenza: {"worker-count": {"passed": true, "qualifyingScenarios": [{"scenarioId": "W1", "sampleCount": 3, "cvPercent": 0.692}, {"scenarioId": "W2", "sampleCount": 3, "cvPercent": 0.3756}], "rejectedScenarios": [{"scenarioId": "W3", "sampleCount": 0, "cvPercent": null}, {"scenarioId": "W4", "sampleCount": 0, "cvPercent": null}]}, "workload": {"passed": true, "qualifyingScenarios": [{"scenarioId": "WL1", "sampleCount": 3, "cvPercent": 0.2802}, {"scenarioId": "WL2", "sampleCount": 3, "cvPercent": 0.1221}, {"scenarioId": "WL3", "sampleCount": 3, "cvPercent": 0.1785}], "rejectedScenarios": []}, "models": {"passed": true, "qualifyingScenarios": [{"scenarioId": "M1", "sampleCount": 3, "cvPercent": 0.3156}, {"scenarioId": "M2", "sampleCount": 3, "cvPercent": 0.1732}, {"scenarioId": "M3", "sampleCount": 3, "cvPercent": 0.0833}, {"scenarioId": "M4", "sampleCount": 3, "cvPercent": 0.0514}], "rejectedScenarios": []}, "placement": {"passed": true, "qualifyingScenarios": [{"scenarioId": "PL1", "sampleCount": 3, "cvPercent": 0.1937}, {"scenarioId": "PL2", "sampleCount": 3, "cvPercent": 0.1807}], "rejectedScenarios": []}}
+- [PASS] minimum_findings_and_groups :: La diagnosi contiene un numero minimo di finding e copre abbastanza gruppi interpretativi.
+  Implicazione: La chiusura richiede almeno una prima lettura tecnica non banale dei benchmark, non solo raccolta grezza di numeri.
+  Evidenza: {"findingCount": 3, "minimumFindingsRequired": 3, "findingCountGatePassed": true, "satisfiedGroupCount": 2, "minimumFindingGroupsSatisfied": 2, "groupGatePassed": true, "groups": {"worker_count_signal": {"matchedFindingIds": [], "passed": false}, "workload_stress_signal": {"matchedFindingIds": ["workload_saturation_signal"], "passed": true}, "model_penalty_signal": {"matchedFindingIds": ["model_size_penalty"], "passed": true}, "placement_signal": {"matchedFindingIds": [], "passed": false}}}
+- [PASS] cluster_side_evidence_present :: Gli artefatti cluster-side non risultano mancanti nella diagnosi valutata.
+  Implicazione: Le evidenze infrastrutturali devono accompagnare i risultati client-side nella chiusura del ciclo.
+  Evidenza: {"required": true, "gapPatterns": ["cluster-side", "artefatti cluster-side"], "matchedGaps": []}
+
+Decision
+--------
+- Il ciclo corrente può essere considerato completato secondo il profilo CG1.
+
+Source gaps from diagnosis
+--------------------------
+- Nessun gap riportato nella diagnosi tecnica di origine.

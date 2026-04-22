@@ -1,0 +1,22 @@
+﻿{
+    "phaseProfile":  {
+                         "profileFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json",
+                         "profileId":  "WM1",
+                         "description":  "Formal phase-separation profile for Locust-based benchmarks. Warm-up is executed first and measurement is executed afterwards using a distinct CSV prefix."
+                     },
+    "warmUp":  {
+                   "enabled":  true,
+                   "duration":  "45s",
+                   "users":  2,
+                   "spawnRate":  1,
+                   "startupModelCheckEnabled":  true,
+                   "csvPrefix":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runA_warmup"
+               },
+    "measurement":  {
+                        "duration":  "3m",
+                        "users":  2,
+                        "spawnRate":  1,
+                        "startupModelCheckEnabled":  false,
+                        "csvPrefix":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runA"
+                    }
+}

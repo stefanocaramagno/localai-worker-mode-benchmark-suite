@@ -1,0 +1,10 @@
+{
+  "scenarioId": "WL1",
+  "purpose": "Pilot Workload Sweep - Smoke Single User",
+  "users": 1,
+  "spawnRate": 1,
+  "runTime": "2m",
+  "outputSubdir": "WL1_smoke_single_user",
+  "referenceBaselineId": "B0",
+  "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the single-user smoke workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile."
+}

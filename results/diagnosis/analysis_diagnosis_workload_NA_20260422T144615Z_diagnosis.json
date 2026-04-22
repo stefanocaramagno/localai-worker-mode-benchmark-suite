@@ -1,0 +1,493 @@
+{
+  "diagnosisProfile": {
+    "profileId": "TD1",
+    "description": "Initial technical diagnosis profile aligned with the consolidated pilot benchmark campaigns and focused on a first evidence-based interpretation of the officially rerun results.",
+    "outputRoot": "results/diagnosis",
+    "diagnosisManifestSuffix": "_diagnosis.json",
+    "diagnosisTextSuffix": "_diagnosis.txt",
+    "requestTargetType": "POST",
+    "requestTargetName": "POST /v1/chat/completions",
+    "fallbackToAggregated": true,
+    "validationSummaryRelativePath": "results/validation/b0-summary.json",
+    "pilotResultsRoots": {
+      "worker-count": "results/pilot/consolidated/worker-count",
+      "workload": "results/pilot/consolidated/workload",
+      "models": "results/pilot/consolidated/models",
+      "placement": "results/pilot/consolidated/placement"
+    },
+    "scenarioConfigRoots": {
+      "worker-count": "config/scenarios/pilot/worker-count",
+      "workload": "config/scenarios/pilot/workload",
+      "models": "config/scenarios/pilot/models",
+      "placement": "config/scenarios/pilot/placement"
+    },
+    "clusterCpuPressureThresholdPercent": 85,
+    "clusterMemoryPressureThresholdPercent": 85,
+    "workerImprovementThresholdPercent": 5,
+    "diminishingReturnThresholdPercent": 3,
+    "workloadStressThresholdPercent": 25,
+    "modelPenaltyThresholdPercent": 50,
+    "placementDifferenceThresholdPercent": 10,
+    "minimumScenarioSamples": 1,
+    "minimumFamiliesWithCoverageForClosure": 2,
+    "minimumFindingsForClosure": 2,
+    "acceptUnsupportedScenariosAsObserved": true,
+    "minimumUnsupportedReplicasPerScenario": 2
+  },
+  "diagnosis": {
+    "diagnosisId": "analysis_diagnosis_workload_NA_20260422T144615Z",
+    "createdAtUtc": "2026-04-22T14:46:15.438060+00:00",
+    "familyScope": "workload",
+    "closureStatus": "not_enough_data"
+  },
+  "validationSummaryPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\validation\\b0-summary.json",
+  "validationSummaryAvailable": true,
+  "validationSummary": {
+    "timestamp_utc": "2026-04-21T14:20:51.1542679Z",
+    "base_url": "http://localhost:8080",
+    "model": "llama-3.2-1b-instruct:q4_k_m",
+    "metric_set_profile_id": "MS1",
+    "iterations": 10,
+    "request_count": 10,
+    "successful_requests": 10,
+    "failed_requests": 0,
+    "failure_count": 0,
+    "success_rate_percent": 100,
+    "mean_response_time_ms": 1586.03,
+    "p50_response_time_ms": 1568.63,
+    "p95_response_time_ms": 1652.25,
+    "p99_response_time_ms": 1679.64,
+    "throughput_rps": 0.2941,
+    "avg_latency_ms": 1586.03,
+    "min_latency_ms": 1555.77,
+    "max_latency_ms": 1686.49,
+    "p50_latency_ms": 1568.63,
+    "p95_latency_ms": 1652.25,
+    "total_prompt_tokens": 330,
+    "total_completion_tokens": 20,
+    "total_tokens": 350
+  },
+  "coverage": {
+    "workload": {
+      "resultsRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload",
+      "scenarioRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\scenarios\\pilot\\workload",
+      "available": true,
+      "scenarioCount": 3,
+      "scenariosWithSamples": 3,
+      "scenariosWithUnsupportedEvidence": 0,
+      "scenariosObserved": 3,
+      "sampleCount": 9,
+      "unsupportedReplicaCount": 0,
+      "unsupportedScenarioIds": []
+    }
+  },
+  "familyData": {
+    "workload": {
+      "WL1": {
+        "scenario": {
+          "scenarioId": "WL1",
+          "purpose": "Pilot Workload Sweep - Smoke Single User",
+          "users": 1,
+          "spawnRate": 1,
+          "runTime": "2m",
+          "outputSubdir": "WL1_smoke_single_user",
+          "referenceBaselineId": "B0",
+          "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the single-user smoke workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL1_smoke_single_user",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL1_smoke_single_user\\WL1_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 52,
+            "failure_count": 0,
+            "mean_response_time_ms": 1462.9397,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1500.0,
+            "throughput_rps": 0.2914,
+            "maxNodeCpuPercent": 18.0,
+            "maxNodeMemoryPercent": 37.0
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL1_smoke_single_user\\WL1_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 52,
+            "failure_count": 0,
+            "mean_response_time_ms": 1457.4702,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1500.0,
+            "throughput_rps": 0.2918,
+            "maxNodeCpuPercent": 17.0,
+            "maxNodeMemoryPercent": 37.0
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL1_smoke_single_user\\WL1_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 52,
+            "failure_count": 0,
+            "mean_response_time_ms": 1452.9482,
+            "p50_response_time_ms": 1400.0,
+            "p95_response_time_ms": 1500.0,
+            "p99_response_time_ms": 1600.0,
+            "throughput_rps": 0.2922,
+            "maxNodeCpuPercent": 17.0,
+            "maxNodeMemoryPercent": 38.0
+          }
+        ],
+        "unsupportedReports": [],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 52,
+              "min": 52,
+              "max": 52,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1457.786,
+              "min": 1452.9482,
+              "max": 1462.9397,
+              "stddev": 4.0851,
+              "coefficientOfVariationPercent": 0.2802
+            },
+            "p50_response_time_ms": {
+              "mean": 1466.6667,
+              "min": 1400.0,
+              "max": 1500.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 3.2141
+            },
+            "p95_response_time_ms": {
+              "mean": 1500.0,
+              "min": 1500.0,
+              "max": 1500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 1533.3333,
+              "min": 1500.0,
+              "max": 1600.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 3.0744
+            },
+            "throughput_rps": {
+              "mean": 0.2918,
+              "min": 0.2914,
+              "max": 0.2922,
+              "stddev": 0.0003,
+              "coefficientOfVariationPercent": 0.1119
+            }
+          },
+          "maxNodeCpuPercentObserved": 18.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedSummary": null
+      },
+      "WL2": {
+        "scenario": {
+          "scenarioId": "WL2",
+          "purpose": "Pilot Workload Sweep - Low Load Two Users",
+          "users": 2,
+          "spawnRate": 1,
+          "runTime": "2m",
+          "outputSubdir": "WL2_low_load_two_users",
+          "referenceBaselineId": "B0",
+          "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the low-load two-user reference workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1496.0013,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5728,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 37.0
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 103,
+            "failure_count": 0,
+            "mean_response_time_ms": 1491.8897,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5734,
+            "maxNodeCpuPercent": 34.0,
+            "maxNodeMemoryPercent": 38.0
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1492.4356,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5733,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 37.0
+          }
+        ],
+        "unsupportedReports": [],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 102.3333,
+              "min": 102,
+              "max": 103,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 0.4607
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1493.4422,
+              "min": 1491.8897,
+              "max": 1496.0013,
+              "stddev": 1.8232,
+              "coefficientOfVariationPercent": 0.1221
+            },
+            "p50_response_time_ms": {
+              "mean": 1500.0,
+              "min": 1500.0,
+              "max": 1500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1600.0,
+              "min": 1600.0,
+              "max": 1600.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "throughput_rps": {
+              "mean": 0.5732,
+              "min": 0.5728,
+              "max": 0.5734,
+              "stddev": 0.0003,
+              "coefficientOfVariationPercent": 0.0458
+            }
+          },
+          "maxNodeCpuPercentObserved": 35.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedSummary": null
+      },
+      "WL3": {
+        "scenario": {
+          "scenarioId": "WL3",
+          "purpose": "Pilot Workload Sweep - Small Concurrency Four Users",
+          "users": 4,
+          "spawnRate": 2,
+          "runTime": "2m",
+          "outputSubdir": "WL3_small_concurrency_four_users",
+          "referenceBaselineId": "B0",
+          "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the small-concurrency four-user workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL3_small_concurrency_four_users",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL3_small_concurrency_four_users\\WL3_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 135,
+            "failure_count": 0,
+            "mean_response_time_ms": 3262.0408,
+            "p50_response_time_ms": 3300.0,
+            "p95_response_time_ms": 3300.0,
+            "p99_response_time_ms": 3400.0,
+            "throughput_rps": 0.7569,
+            "maxNodeCpuPercent": 50.0,
+            "maxNodeMemoryPercent": 37.0
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL3_small_concurrency_four_users\\WL3_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 135,
+            "failure_count": 0,
+            "mean_response_time_ms": 3270.8125,
+            "p50_response_time_ms": 3300.0,
+            "p95_response_time_ms": 3300.0,
+            "p99_response_time_ms": 3700.0,
+            "throughput_rps": 0.7557,
+            "maxNodeCpuPercent": 50.0,
+            "maxNodeMemoryPercent": 37.0
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL3_small_concurrency_four_users\\WL3_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 135,
+            "failure_count": 0,
+            "mean_response_time_ms": 3276.2063,
+            "p50_response_time_ms": 3300.0,
+            "p95_response_time_ms": 3300.0,
+            "p99_response_time_ms": 3800.0,
+            "throughput_rps": 0.755,
+            "maxNodeCpuPercent": 50.0,
+            "maxNodeMemoryPercent": 37.0
+          }
+        ],
+        "unsupportedReports": [],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 135,
+              "min": 135,
+              "max": 135,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 3269.6865,
+              "min": 3262.0408,
+              "max": 3276.2063,
+              "stddev": 5.8376,
+              "coefficientOfVariationPercent": 0.1785
+            },
+            "p50_response_time_ms": {
+              "mean": 3300.0,
+              "min": 3300.0,
+              "max": 3300.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 3300.0,
+              "min": 3300.0,
+              "max": 3300.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 3633.3333,
+              "min": 3400.0,
+              "max": 3800.0,
+              "stddev": 169.9673,
+              "coefficientOfVariationPercent": 4.678
+            },
+            "throughput_rps": {
+              "mean": 0.7559,
+              "min": 0.755,
+              "max": 0.7569,
+              "stddev": 0.0008,
+              "coefficientOfVariationPercent": 0.1038
+            }
+          },
+          "maxNodeCpuPercentObserved": 50.0,
+          "maxNodeMemoryPercentObserved": 37.0
+        },
+        "unsupportedSummary": null
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "validation_baseline_ready",
+      "title": "La validazione minima end-to-end risulta disponibile come base di affidabilit\u00e0 funzionale.",
+      "confidence": "high",
+      "evidence": {
+        "successRatePercent": 100,
+        "meanResponseTimeMs": 1586.03,
+        "throughputRps": 0.2941
+      },
+      "implication": "La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico."
+    },
+    {
+      "id": "workload_saturation_signal",
+      "title": "Il workload pi\u00f9 intenso aumenta sensibilmente la latenza, segnalando possibile saturazione del sistema.",
+      "confidence": "medium",
+      "evidence": {
+        "WL1_mean_response_time_ms": 1457.786,
+        "WL3_mean_response_time_ms": 3269.6865,
+        "latencyIncreasePercent": 124.29,
+        "WL1_throughput_rps": 0.2918,
+        "WL3_throughput_rps": 0.7559,
+        "throughputIncreasePercent": 159.05
+      },
+      "implication": "Il cluster appare pi\u00f9 fragile quando cresce la concorrenza; la sola crescita del carico non si traduce necessariamente in aumento proporzionale del throughput utile."
+    }
+  ],
+  "familyJudgments": [
+    {
+      "family": "workload",
+      "status": "strong_signal",
+      "confidence": "medium",
+      "title": "La famiglia workload mostra un segnale netto di deterioramento prestazionale all'aumentare del carico.",
+      "implication": "Nel cluster corrente il workload \u00e8 un driver rilevante della latenza e suggerisce una soglia di fragilit\u00e0 pi\u00f9 evidente nelle configurazioni pi\u00f9 spinte.",
+      "evidence": {
+        "WL1_mean_response_time_ms": 1457.786,
+        "WL3_mean_response_time_ms": 3269.6865,
+        "latencyIncreasePercent": 124.29,
+        "WL1_throughput_rps": 0.2918,
+        "WL3_throughput_rps": 0.7559,
+        "throughputIncreasePercent": 159.05
+      }
+    }
+  ],
+  "gaps": []
+}

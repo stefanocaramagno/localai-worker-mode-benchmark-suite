@@ -1,0 +1,48 @@
+{
+  "baselineId": "B0",
+  "status": "official_locked_baseline",
+  "purpose": "Official baseline for consolidated LocalAI worker-mode characterization on the current two-worker CPU-only Kubernetes cluster.",
+  "workerMode": "worker",
+  "modelScenario": "M1",
+  "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "workerScenario": "W2",
+  "resolvedWorkerCount": 2,
+  "placementScenario": "PL1",
+  "resolvedPlacementType": "colocated_sc_app_02",
+  "workloadScenario": "WL2",
+  "resolvedWorkload": {
+    "users": 2,
+    "spawnRate": 1,
+    "runTime": "2m"
+  },
+  "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+  "serverManifest": "infra/k8s/compositions/server/models/m1",
+  "namespaceManifest": "infra/k8s/compositions/foundation/namespace",
+  "storageManifest": "infra/k8s/compositions/foundation/storage",
+  "baseUrl": "http://localhost:8080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "resultsRoot": "results/baseline/official",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b"
+  ],
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "sc-app-02",
+    "localai-rpc-b": "sc-app-02"
+  },
+  "selectionCriteria": [
+    "Keep the initial baseline lightweight and reproducible on the current CPU-only cluster.",
+    "Freeze the worker count at two because pilot evidence indicated a clear improvement over a single worker without the added complexity of larger topologies.",
+    "Freeze the model at the smallest validated family member (Llama 3.2 1B q4_k_m) to minimize footprint and preserve operational headroom for repeated characterization runs.",
+    "Freeze the workload at the controlled low-load scenario WL2 so that subsequent sweeps can vary one dimension at a time from a stable reference point.",
+    "Freeze the placement at PL1 because current pilot evidence indicates lower average latency than the distributed two-node alternative in this specific cluster configuration."
+  ],
+  "lockRules": [
+    "Do not override model, worker count, placement, or workload from launcher parameters.",
+    "Use this baseline as the unique reference configuration until the consolidated characterization phase is complete.",
+    "Treat all future deltas as controlled variations from this file."
+  ],
+  "notes": "This baseline intentionally prioritizes stability, reproducibility, and low resource pressure over aggressive scale. The distributed placement scenario PL2 remains available as an experimental comparison, but it is not the locked reference configuration."
+}

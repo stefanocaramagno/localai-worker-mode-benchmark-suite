@@ -1,0 +1,36 @@
+{
+  "profileId": "TC1",
+  "description": "Technical pre-check profile to be executed before every benchmark run.",
+  "kubeconfig": "config/cluster-access/kubeconfig",
+  "namespace": "genai-thesis",
+  "expectedReadyNodes": [
+    "sc-master-01",
+    "sc-app-01",
+    "sc-app-02"
+  ],
+  "expectedWorkerNodes": [
+    "sc-app-01",
+    "sc-app-02"
+  ],
+  "allowedPodPhases": [
+    "Running",
+    "Succeeded"
+  ],
+  "minimumNamespacePods": 1,
+  "criticalWaitingReasons": [
+    "CrashLoopBackOff",
+    "ImagePullBackOff",
+    "ErrImagePull",
+    "CreateContainerConfigError",
+    "CreateContainerError",
+    "InvalidImageName"
+  ],
+  "maxTotalRestartsInNamespace": 0,
+  "requireMetricsApi": true,
+  "maxNodeCpuPercent": 95,
+  "maxNodeMemoryPercent": 95,
+  "defaultOutputRoot": "results/precheck",
+  "serviceReadinessTimeoutSeconds": 300,
+  "serviceReadinessPollIntervalMilliseconds": 2000,
+  "serviceReadinessRequestTimeoutSeconds": 10
+}

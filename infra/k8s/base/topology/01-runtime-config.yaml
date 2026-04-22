@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: localai-runtime-config
+  namespace: genai-thesis
+data:
+  LOCALAI_MODELS_PATH: /models
+  LOCALAI_THREADS: "4"
+  LOCALAI_CONTEXT_SIZE: "1024"
+  LLAMACPP_GRPC_SERVERS: ""

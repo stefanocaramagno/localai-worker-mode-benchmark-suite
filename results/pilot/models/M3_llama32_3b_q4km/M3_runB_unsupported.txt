@@ -1,0 +1,11 @@
+﻿=============================================
+ Unsupported Scenario Report
+=============================================
+Family                : model
+Scenario              : M3
+Replica               : B
+Status                : unsupported_under_current_constraints
+Namespace             : genai-thesis
+Model                 : llama-3.2-3b-instruct:q4_k_m
+Timeout (s)           : 120
+Reason                : Scenario model non supportato operativamente sotto i vincoli correnti della baseline fissata: il modello 'llama-3.2-3b-instruct:q4_k_m' non ha restituito una risposta di smoke test entro 120 secondi nella configurazione corrente di LocalAI worker mode.

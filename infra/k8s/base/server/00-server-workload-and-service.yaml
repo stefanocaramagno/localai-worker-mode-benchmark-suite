@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-server
+  namespace: genai-thesis
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: localai-server
+  template:
+    metadata:
+      labels:
+        app: localai-server
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: sc-app-02
+      containers:
+        - name: localai
+          image: quay.io/go-skynet/local-ai:v4.1.0
+          imagePullPolicy: IfNotPresent
+          args:
+            - run
+            - llama-3.2-1b-instruct:q4_k_m
+          envFrom:
+            - configMapRef:
+                name: localai-runtime-config
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - name: models
+              mountPath: /models
+          resources:
+            requests:
+              cpu: "2"
+              memory: "4Gi"
+            limits:
+              cpu: "4"
+              memory: "8Gi"
+      volumes:
+        - name: models
+          persistentVolumeClaim:
+            claimName: localai-models-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-server
+  namespace: genai-thesis
+spec:
+  selector:
+    app: localai-server
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP

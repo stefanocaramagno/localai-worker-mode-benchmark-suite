@@ -1,0 +1,43 @@
+=============================================
+ Statistical Rigor Summary
+=============================================
+Profile               : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\statistical-rigor\SR1.json
+Profile ID            : SR1
+Campaign ID           : pilot_consolidated_worker-count_NA_20260421T171130Z
+Family scope          : worker-count
+Created at UTC        : 20260421T171130Z
+
+Family/Scenario       : worker-count/W1
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=101.6667 min=101.0000 max=102.0000 stdev=0.5774 cv%=0.57
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=1507.3645 min=1499.9631 max=1522.1153 stdev=12.7746 cv%=0.85
+ - p50_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=1600.0000 min=1600.0000 max=1600.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=1700.0000 min=1700.0000 max=1700.0000 stdev=0.0000 cv%=0.00
+ - throughput_rps: mean=0.5709 min=0.5685 max=0.5722 stdev=0.0021 cv%=0.37
+ Flags                : none
+
+Family/Scenario       : worker-count/W2
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=102.0000 min=102.0000 max=102.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=1504.1032 min=1496.2807 max=1509.4204 stdev=6.9189 cv%=0.46
+ - p50_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=1600.0000 min=1600.0000 max=1600.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=1700.0000 min=1700.0000 max=1700.0000 stdev=0.0000 cv%=0.00
+ - throughput_rps: mean=0.5716 min=0.5708 max=0.5728 stdev=0.0011 cv%=0.20
+ Flags                : none
+
+Family/Scenario       : worker-count/W3
+Observed replicas     : 3
+Successful replicas   : 0
+ ! INSUFFICIENT_SUCCESSFUL_REPLICAS: Successful replicas 0 below minimum 3.
+
+Family/Scenario       : worker-count/W4
+Observed replicas     : 3
+Successful replicas   : 0
+ ! INSUFFICIENT_SUCCESSFUL_REPLICAS: Successful replicas 0 below minimum 3.
+

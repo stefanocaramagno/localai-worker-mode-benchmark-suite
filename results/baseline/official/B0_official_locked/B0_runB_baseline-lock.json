@@ -1,0 +1,25 @@
+﻿{
+    "baselineConfig":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\scenarios\\baseline\\B0.json",
+    "baselineId":  "B0",
+    "resolvedConfiguration":  {
+                                  "modelScenario":  "M1",
+                                  "modelName":  "llama-3.2-1b-instruct:q4_k_m",
+                                  "workerScenario":  "W2",
+                                  "workerCount":  2,
+                                  "placementScenario":  "PL1",
+                                  "placementType":  "colocated_sc_app_02",
+                                  "workloadScenario":  "WL2",
+                                  "users":  2,
+                                  "spawnRate":  1,
+                                  "scenarioRunTime":  "2m",
+                                  "topologyDir":  "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+                                  "serverManifest":  "infra/k8s/compositions/server/models/m1",
+                                  "baseUrl":  "http://localhost:8080",
+                                  "prompt":  "Reply with only READY.",
+                                  "requestTimeoutSeconds":  120,
+                                  "temperature":  0.1,
+                                  "warmUpDuration":  "30s",
+                                  "measurementDuration":  "2m"
+                              },
+    "runId":  "B0_runB"
+}

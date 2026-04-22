@@ -1,0 +1,11 @@
+﻿{
+    "family":  "model",
+    "scenario":  "M3",
+    "replica":  "A",
+    "status":  "unsupported_under_current_constraints",
+    "namespace":  "genai-thesis",
+    "model":  "llama-3.2-3b-instruct:q4_k_m",
+    "timeoutSeconds":  120,
+    "reason":  "Scenario model non supportato operativamente sotto i vincoli correnti della baseline fissata: il modello \u0027llama-3.2-3b-instruct:q4_k_m\u0027 non ha restituito una risposta di smoke test entro 120 secondi nella configurazione corrente di LocalAI worker mode.",
+    "evidence":  "api_smoke_timeout"
+}

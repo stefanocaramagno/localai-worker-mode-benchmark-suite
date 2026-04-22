@@ -1,0 +1,41 @@
+﻿=============================================
+ Consolidated Pilot Benchmarks Launcher
+=============================================
+Repository              : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite
+Profile                 : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\pilot-consolidation\CP1.json
+Profile ID              : CP1
+Campaign ID             : pilot_consolidated_placement_NA_20260421T192854Z
+Family scope            : placement
+Base URL                : http://localhost:8080
+Output root             : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated
+Statistical rigor       : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\statistical-rigor\SR1.json
+Replica cooldown (s)    : 10
+Scenario cooldown (s)   : 20
+Stabilization timeout   : 180
+Stabilization poll (s)  : 5
+Dry run                 : False
+Continue on failure     : False
+
+Family                : placement
+Launcher              : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\load\pilot\Start-PilotPlacementSweep.ps1
+Output root           : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement
+Scenarios             : PL1 PL2
+Replicas              : A B C
+
+Run command           : & "C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\load\pilot\Start-PilotPlacementSweep.ps1" -Scenario PL1 -Replica A -BaseUrl http://localhost:8080 -OutputRoot C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement -PrecheckConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\precheck\TC1.json -PhaseConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\phases\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\protocol\EP1.json -ClusterCaptureConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-capture\CS1.json -MetricSetConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\metric-set\MS1.json -AutoApplyK8s -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+Cluster stabilization : family=placement scenario=PL1 replica=A deployments=5 pods=3
+Replica cooldown      : 10s after placement/PL1/A
+Run command           : & "C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\load\pilot\Start-PilotPlacementSweep.ps1" -Scenario PL1 -Replica B -BaseUrl http://localhost:8080 -OutputRoot C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement -PrecheckConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\precheck\TC1.json -PhaseConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\phases\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\protocol\EP1.json -ClusterCaptureConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-capture\CS1.json -MetricSetConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\metric-set\MS1.json -AutoApplyK8s -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+Cluster stabilization : family=placement scenario=PL1 replica=B deployments=5 pods=3
+Replica cooldown      : 10s after placement/PL1/B
+Run command           : & "C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\load\pilot\Start-PilotPlacementSweep.ps1" -Scenario PL1 -Replica C -BaseUrl http://localhost:8080 -OutputRoot C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement -PrecheckConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\precheck\TC1.json -PhaseConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\phases\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\protocol\EP1.json -ClusterCaptureConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-capture\CS1.json -MetricSetConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\metric-set\MS1.json -AutoApplyK8s -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+Cluster stabilization : family=placement scenario=PL1 replica=C deployments=5 pods=3
+Scenario cooldown     : 20s after placement/PL1
+Run command           : & "C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\load\pilot\Start-PilotPlacementSweep.ps1" -Scenario PL2 -Replica A -BaseUrl http://localhost:8080 -OutputRoot C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement -PrecheckConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\precheck\TC1.json -PhaseConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\phases\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\protocol\EP1.json -ClusterCaptureConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-capture\CS1.json -MetricSetConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\metric-set\MS1.json -AutoApplyK8s -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+Cluster stabilization : family=placement scenario=PL2 replica=A deployments=5 pods=3
+Replica cooldown      : 10s after placement/PL2/A
+Run command           : & "C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\load\pilot\Start-PilotPlacementSweep.ps1" -Scenario PL2 -Replica B -BaseUrl http://localhost:8080 -OutputRoot C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement -PrecheckConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\precheck\TC1.json -PhaseConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\phases\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\protocol\EP1.json -ClusterCaptureConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-capture\CS1.json -MetricSetConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\metric-set\MS1.json -AutoApplyK8s -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+Cluster stabilization : family=placement scenario=PL2 replica=B deployments=5 pods=3
+Replica cooldown      : 10s after placement/PL2/B
+Run command           : & "C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\scripts\load\pilot\Start-PilotPlacementSweep.ps1" -Scenario PL2 -Replica C -BaseUrl http://localhost:8080 -OutputRoot C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement -PrecheckConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\precheck\TC1.json -PhaseConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\phases\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\protocol\EP1.json -ClusterCaptureConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-capture\CS1.json -MetricSetConfig C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\metric-set\MS1.json -AutoApplyK8s -Kubeconfig .\config\cluster-access\kubeconfig -Namespace genai-thesis
+Cluster stabilization : family=placement scenario=PL2 replica=C deployments=5 pods=3

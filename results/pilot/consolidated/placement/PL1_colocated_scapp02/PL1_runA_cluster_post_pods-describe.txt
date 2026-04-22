@@ -1,0 +1,193 @@
+﻿Name:             localai-rpc-a-6cd76fc98-l5z8l
+Namespace:        genai-thesis
+Priority:         0
+Service Account:  default
+Node:             sc-app-02/192.168.1.213
+Start Time:       Tue, 21 Apr 2026 16:07:30 +0200
+Labels:           app=localai-rpc-a
+                  pod-template-hash=6cd76fc98
+Annotations:      <none>
+Status:           Running
+IP:               10.42.1.78
+IPs:
+  IP:           10.42.1.78
+Controlled By:  ReplicaSet/localai-rpc-a-6cd76fc98
+Containers:
+  rpc-worker:
+    Container ID:  containerd://358519383882ae5ea44eef4da11dda0b10fd4fa243b24d87d6bb71c6f5cd81a9
+    Image:         quay.io/go-skynet/local-ai:v4.1.0
+    Image ID:      quay.io/go-skynet/local-ai@sha256:736fa3f92dc292108b27a4f68d7441ff7b0baf95e7ee11990411d372d454f895
+    Port:          50051/TCP (rpc)
+    Host Port:     0/TCP (rpc)
+    Command:
+      sh
+      -lc
+    Args:
+      /local-ai backends install llama-cpp && \
+      /local-ai p2p-worker llama-cpp-rpc --llama-cpp-args="-H 0.0.0.0 -p 50051"
+      
+    State:          Running
+      Started:      Tue, 21 Apr 2026 16:07:32 +0200
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     4
+      memory:  8Gi
+    Requests:
+      cpu:        2
+      memory:     4Gi
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-zfvvx (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-zfvvx:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             localai-rpc-b-78b966fc7c-lp7hb
+Namespace:        genai-thesis
+Priority:         0
+Service Account:  default
+Node:             sc-app-02/192.168.1.213
+Start Time:       Tue, 21 Apr 2026 19:25:11 +0200
+Labels:           app=localai-rpc-b
+                  pod-template-hash=78b966fc7c
+Annotations:      <none>
+Status:           Running
+IP:               10.42.1.81
+IPs:
+  IP:           10.42.1.81
+Controlled By:  ReplicaSet/localai-rpc-b-78b966fc7c
+Containers:
+  rpc-worker:
+    Container ID:  containerd://9e1faefd0623ebb3a2b041be4ed2f53a487770e255d4cffdba5a6d50418a6888
+    Image:         quay.io/go-skynet/local-ai:v4.1.0
+    Image ID:      quay.io/go-skynet/local-ai@sha256:736fa3f92dc292108b27a4f68d7441ff7b0baf95e7ee11990411d372d454f895
+    Port:          50051/TCP (rpc)
+    Host Port:     0/TCP (rpc)
+    Command:
+      sh
+      -lc
+    Args:
+      /local-ai backends install llama-cpp && \
+      /local-ai p2p-worker llama-cpp-rpc --llama-cpp-args="-H 0.0.0.0 -p 50051"
+      
+    State:          Running
+      Started:      Tue, 21 Apr 2026 19:25:11 +0200
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     4
+      memory:  8Gi
+    Requests:
+      cpu:        2
+      memory:     4Gi
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-c9w8x (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-c9w8x:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+
+
+Name:             localai-server-74fccf5cb7-5g4gn
+Namespace:        genai-thesis
+Priority:         0
+Service Account:  default
+Node:             sc-app-02/192.168.1.213
+Start Time:       Tue, 21 Apr 2026 21:29:01 +0200
+Labels:           app=localai-server
+                  pod-template-hash=74fccf5cb7
+Annotations:      <none>
+Status:           Running
+IP:               10.42.1.85
+IPs:
+  IP:           10.42.1.85
+Controlled By:  ReplicaSet/localai-server-74fccf5cb7
+Containers:
+  localai:
+    Container ID:  containerd://7d958c0589f4f864d9c8198245446b5cc9f512d76d27e3537f517aad939a7fdf
+    Image:         quay.io/go-skynet/local-ai:v4.1.0
+    Image ID:      quay.io/go-skynet/local-ai@sha256:736fa3f92dc292108b27a4f68d7441ff7b0baf95e7ee11990411d372d454f895
+    Port:          8080/TCP (http)
+    Host Port:     0/TCP (http)
+    Args:
+      run
+      llama-3.2-1b-instruct:q4_k_m
+    State:          Running
+      Started:      Tue, 21 Apr 2026 21:29:01 +0200
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:     4
+      memory:  8Gi
+    Requests:
+      cpu:     2
+      memory:  4Gi
+    Environment Variables from:
+      localai-runtime-config  ConfigMap  Optional: false
+    Environment:              <none>
+    Mounts:
+      /models from models (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-j7jxx (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  models:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  localai-models-pvc
+    ReadOnly:   false
+  kube-api-access-j7jxx:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              kubernetes.io/hostname=sc-app-02
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  4m25s  default-scheduler  Successfully assigned genai-thesis/localai-server-74fccf5cb7-5g4gn to sc-app-02
+  Normal  Pulled     4m25s  kubelet            Container image "quay.io/go-skynet/local-ai:v4.1.0" already present on machine and can be accessed by the pod
+  Normal  Created    4m25s  kubelet            Container created
+  Normal  Started    4m25s  kubelet            Container started

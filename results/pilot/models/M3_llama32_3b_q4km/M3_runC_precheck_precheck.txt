@@ -1,0 +1,19 @@
+﻿=============================================
+ Benchmark Technical Pre-Check
+=============================================
+Profile ID          : TC1
+Timestamp (UTC)     : 2026-04-21T16:15:06Z
+Kubeconfig          : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-access\kubeconfig
+Namespace           : genai-thesis
+Base URL            : http://localhost:8080
+Model               : llama-3.2-3b-instruct:q4_k_m
+JSON report         : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M3_llama32_3b_q4km\M3_runC_precheck_precheck.json
+Overall result      : PASS
+
+Checks:
+ - cluster_nodes_ready: PASS
+ - namespace_active: PASS
+ - namespace_pods_healthy: PASS
+ - worker_nodes_expected: PASS
+ - metrics_api_and_capacity: PASS
+ - service_endpoint_and_model: PASS

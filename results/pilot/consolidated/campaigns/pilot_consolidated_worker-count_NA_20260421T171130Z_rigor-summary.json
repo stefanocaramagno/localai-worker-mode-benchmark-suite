@@ -1,0 +1,352 @@
+{
+  "statisticalRigorProfile": {
+    "profileFile": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\statistical-rigor\\SR1.json",
+    "profileId": "SR1",
+    "description": "Light statistical rigor profile for consolidated pilot benchmark campaigns. The profile keeps the controlled A/B/C replica regime, adds short cool-down intervals between executions, and requires a scenario-level summary over the primary measurement CSV artifacts.",
+    "targetRequestType": "POST",
+    "targetRequestName": "POST /v1/chat/completions",
+    "fallbackToAggregated": true,
+    "requiredReplicaCount": 3,
+    "minimumSuccessfulReplicaCount": 3,
+    "trackedMetrics": [
+      "request_count",
+      "failure_count",
+      "mean_response_time_ms",
+      "p50_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps"
+    ],
+    "variabilityThresholds": {
+      "mean_response_time_cv_percent": 10.0,
+      "p95_response_time_cv_percent": 12.5,
+      "throughput_cv_percent": 12.5
+    }
+  },
+  "campaign": {
+    "campaignId": "pilot_consolidated_worker-count_NA_20260421T171130Z",
+    "familyScope": "worker-count",
+    "createdAtUtc": "20260421T171130Z",
+    "status": "failed"
+  },
+  "scenarioSummaries": [
+    {
+      "family": "worker-count",
+      "scenario": "W1",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 3,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 101.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1522.1153009899876,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5684664519226924
+          }
+        },
+        {
+          "replica": "B",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runB_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1499.963108823495,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5721599452856441
+          }
+        },
+        {
+          "replica": "C",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runC_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1500.015188235243,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5721464857384662
+          }
+        }
+      ],
+      "aggregate": {
+        "request_count": {
+          "mean": 101.66666666666667,
+          "min": 101.0,
+          "max": 102.0,
+          "stdev": 0.5773502691896257,
+          "cvPercent": 0.5678855106783204
+        },
+        "failure_count": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "mean_response_time_ms": {
+          "mean": 1507.3645326829085,
+          "min": 1499.963108823495,
+          "max": 1522.1153009899876,
+          "stdev": 12.774566618994507,
+          "cvPercent": 0.8474769269154473
+        },
+        "p50_response_time_ms": {
+          "mean": 1500.0,
+          "min": 1500.0,
+          "max": 1500.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p95_response_time_ms": {
+          "mean": 1600.0,
+          "min": 1600.0,
+          "max": 1600.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p99_response_time_ms": {
+          "mean": 1700.0,
+          "min": 1700.0,
+          "max": 1700.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "throughput_rps": {
+          "mean": 0.5709242943156009,
+          "min": 0.5684664519226924,
+          "max": 0.5721599452856441,
+          "stdev": 0.0021285645893738083,
+          "cvPercent": 0.3728278180779535
+        }
+      },
+      "flags": []
+    },
+    {
+      "family": "worker-count",
+      "scenario": "W2",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 3,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W2_worker_count_2\\W2_runA_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1509.4204392156041,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5707876053889872
+          }
+        },
+        {
+          "replica": "B",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W2_worker_count_2\\W2_runB_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1506.6085352939933,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5710402690944679
+          }
+        },
+        {
+          "replica": "C",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W2_worker_count_2\\W2_runC_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1496.2807127452406,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5728450506595065
+          }
+        }
+      ],
+      "aggregate": {
+        "request_count": {
+          "mean": 102.0,
+          "min": 102.0,
+          "max": 102.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "failure_count": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "mean_response_time_ms": {
+          "mean": 1504.103229084946,
+          "min": 1496.2807127452406,
+          "max": 1509.4204392156041,
+          "stdev": 6.918852674382576,
+          "cvPercent": 0.4599985254065182
+        },
+        "p50_response_time_ms": {
+          "mean": 1500.0,
+          "min": 1500.0,
+          "max": 1500.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p95_response_time_ms": {
+          "mean": 1600.0,
+          "min": 1600.0,
+          "max": 1600.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p99_response_time_ms": {
+          "mean": 1700.0,
+          "min": 1700.0,
+          "max": 1700.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "throughput_rps": {
+          "mean": 0.5715576417143206,
+          "min": 0.5707876053889872,
+          "max": 0.5728450506595065,
+          "stdev": 0.0011220633142231592,
+          "cvPercent": 0.19631673733862798
+        }
+      },
+      "flags": []
+    },
+    {
+      "family": "worker-count",
+      "scenario": "W3",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 0,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "unsupported_under_current_constraints",
+          "exitCode": 42,
+          "statsCsvPath": ".",
+          "metricSource": null,
+          "metrics": {}
+        },
+        {
+          "replica": "B",
+          "status": "unsupported_under_current_constraints",
+          "exitCode": 42,
+          "statsCsvPath": ".",
+          "metricSource": null,
+          "metrics": {}
+        },
+        {
+          "replica": "C",
+          "status": "unsupported_under_current_constraints",
+          "exitCode": 42,
+          "statsCsvPath": ".",
+          "metricSource": null,
+          "metrics": {}
+        }
+      ],
+      "aggregate": {
+        "request_count": null,
+        "failure_count": null,
+        "mean_response_time_ms": null,
+        "p50_response_time_ms": null,
+        "p95_response_time_ms": null,
+        "p99_response_time_ms": null,
+        "throughput_rps": null
+      },
+      "flags": [
+        {
+          "code": "INSUFFICIENT_SUCCESSFUL_REPLICAS",
+          "message": "Successful replicas 0 below minimum 3."
+        }
+      ]
+    },
+    {
+      "family": "worker-count",
+      "scenario": "W4",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 0,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "unsupported_under_current_constraints",
+          "exitCode": 42,
+          "statsCsvPath": ".",
+          "metricSource": null,
+          "metrics": {}
+        },
+        {
+          "replica": "B",
+          "status": "unsupported_under_current_constraints",
+          "exitCode": 42,
+          "statsCsvPath": ".",
+          "metricSource": null,
+          "metrics": {}
+        },
+        {
+          "replica": "C",
+          "status": "unsupported_under_current_constraints",
+          "exitCode": 42,
+          "statsCsvPath": ".",
+          "metricSource": null,
+          "metrics": {}
+        }
+      ],
+      "aggregate": {
+        "request_count": null,
+        "failure_count": null,
+        "mean_response_time_ms": null,
+        "p50_response_time_ms": null,
+        "p95_response_time_ms": null,
+        "p99_response_time_ms": null,
+        "throughput_rps": null
+      },
+      "flags": [
+        {
+          "code": "INSUFFICIENT_SUCCESSFUL_REPLICAS",
+          "message": "Successful replicas 0 below minimum 3."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+﻿{
+    "profile":  {
+                    "profileFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json",
+                    "profileId":  "CS1",
+                    "description":  "Mandatory cluster-side collection profile for every benchmark run."
+                },
+    "execution":  {
+                      "timestampUtc":  "2026-04-21T15:24:20Z",
+                      "kubeconfig":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-access\\kubeconfig",
+                      "namespace":  "genai-thesis",
+                      "outputPrefix":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\workload\\WL1_smoke_single_user\\WL1_runA_cluster_pre",
+                      "stage":  "pre",
+                      "exitCode":  0
+                  },
+    "artifacts":  [
+                      {
+                          "name":  "nodes_wide",
+                          "outputFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\workload\\WL1_smoke_single_user\\WL1_runA_cluster_pre_nodes-wide.txt"
+                      },
+                      {
+                          "name":  "top_nodes",
+                          "outputFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\workload\\WL1_smoke_single_user\\WL1_runA_cluster_pre_top-nodes.txt"
+                      },
+                      {
+                          "name":  "pods_wide",
+                          "outputFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\workload\\WL1_smoke_single_user\\WL1_runA_cluster_pre_pods-wide.txt"
+                      },
+                      {
+                          "name":  "top_pods",
+                          "outputFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\workload\\WL1_smoke_single_user\\WL1_runA_cluster_pre_top-pods.txt"
+                      },
+                      {
+                          "name":  "services",
+                          "outputFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\workload\\WL1_smoke_single_user\\WL1_runA_cluster_pre_services.txt"
+                      },
+                      {
+                          "name":  "events",
+                          "outputFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\workload\\WL1_smoke_single_user\\WL1_runA_cluster_pre_events.txt"
+                      },
+                      {
+                          "name":  "pods_describe",
+                          "outputFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\workload\\WL1_smoke_single_user\\WL1_runA_cluster_pre_pods-describe.txt"
+                      }
+                  ]
+}

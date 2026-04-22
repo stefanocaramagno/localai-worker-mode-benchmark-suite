@@ -1,0 +1,9 @@
+{
+  "scenarioId": "W1",
+  "purpose": "Pilot Worker Count Sweep - Single RPC Worker",
+  "workerCount": 1,
+  "outputSubdir": "W1_worker_count_1",
+  "referenceBaselineId": "B0",
+  "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w1",
+  "notes": "Worker-count-only variation anchored to the official locked baseline B0. All non-worker-count dimensions are inherited from B0 and the active RPC worker set remains fully co-located on sc-app-02, exactly following the baseline placement mode. The only intended experimental delta is the active worker count."
+}

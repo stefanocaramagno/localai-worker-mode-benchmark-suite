@@ -1,0 +1,4 @@
+﻿NAME                              CPU(cores)   MEMORY(bytes)   
+localai-rpc-a-6cd76fc98-l5z8l     0m           492Mi           
+localai-rpc-b-78b966fc7c-rx5sw    132m         592Mi           
+localai-server-74fccf5cb7-bbxl2   6m           195Mi           

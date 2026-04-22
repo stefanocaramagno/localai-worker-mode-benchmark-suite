@@ -1,0 +1,30 @@
+﻿=============================================
+ Unsupported Scenario Report
+=============================================
+Family                : worker-count
+Scenario              : W3
+Replica               : C
+Status                : unsupported_under_current_constraints
+Namespace             : genai-thesis
+Placement             : colocated_sc_app_02
+Expected worker count : 3
+Reason                : Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.
+
+Worker scheduling diagnostics:
+ - Pod: localai-rpc-a-6cd76fc98-l5z8l
+   Phase   : Running
+   Node    : sc-app-02
+
+ - Pod: localai-rpc-b-78b966fc7c-lp7hb
+   Phase   : Running
+   Node    : sc-app-02
+   Event   : [Scheduled] Successfully assigned genai-thesis/localai-rpc-b-78b966fc7c-lp7hb to sc-app-02
+   Event   : [Pulled] Container image "quay.io/go-skynet/local-ai:v4.1.0" already present on machine and can be accessed by the pod
+   Event   : [Created] Container created
+   Event   : [Started] Container started
+
+ - Pod: localai-rpc-c-7c45cbd784-bslwv
+   Phase   : Pending
+   Node    : <not-assigned>
+   Event   : [FailedScheduling] 0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling.
+

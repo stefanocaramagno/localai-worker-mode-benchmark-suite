@@ -1,0 +1,47 @@
+{
+  "profileId": "CS1",
+  "description": "Mandatory cluster-side collection profile for every benchmark run.",
+  "collectorScriptRelativePathBash": "scripts/validation/cluster-side/collect-cluster-side-artifacts.sh",
+  "collectorScriptRelativePathPowerShell": "scripts/validation/cluster-side/Collect-ClusterSideArtifacts.ps1",
+  "preStageSuffix": "_cluster_pre",
+  "postStageSuffix": "_cluster_post",
+  "manifestSuffix": "_manifest.json",
+  "textSuffix": "_summary.txt",
+  "artifacts": [
+    {
+      "name": "nodes_wide",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get nodes -o wide",
+      "outputSuffix": "nodes-wide.txt"
+    },
+    {
+      "name": "top_nodes",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" top nodes",
+      "outputSuffix": "top-nodes.txt"
+    },
+    {
+      "name": "pods_wide",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get pods -n {namespace} -o wide",
+      "outputSuffix": "pods-wide.txt"
+    },
+    {
+      "name": "top_pods",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" top pods -n {namespace}",
+      "outputSuffix": "top-pods.txt"
+    },
+    {
+      "name": "services",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get svc -n {namespace}",
+      "outputSuffix": "services.txt"
+    },
+    {
+      "name": "events",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get events -n {namespace} --sort-by=.metadata.creationTimestamp",
+      "outputSuffix": "events.txt"
+    },
+    {
+      "name": "pods_describe",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" describe pods -n {namespace}",
+      "outputSuffix": "pods-describe.txt"
+    }
+  ]
+}

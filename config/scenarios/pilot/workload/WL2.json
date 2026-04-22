@@ -1,0 +1,10 @@
+{
+  "scenarioId": "WL2",
+  "purpose": "Pilot Workload Sweep - Low Load Two Users",
+  "users": 2,
+  "spawnRate": 1,
+  "runTime": "2m",
+  "outputSubdir": "WL2_low_load_two_users",
+  "referenceBaselineId": "B0",
+  "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the low-load two-user reference workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile."
+}

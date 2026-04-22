@@ -1,0 +1,53 @@
+﻿=============================================
+ Minimum Mandatory Metric Set
+=============================================
+Metric set profile : MS1
+Description        : Minimum mandatory metric set for all benchmark and validation runs. The profile fixes the canonical client-side and cluster-side metrics that must always be collected or derivable from run artifacts.
+Launcher           : Start-PilotModelSweep
+Run ID             : M4_runA
+Measurement prefix : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA
+
+Client-side metrics:
+ - request_count
+ - success_rate_percent
+ - failure_count
+ - mean_response_time_ms
+ - p50_response_time_ms
+ - p95_response_time_ms
+ - p99_response_time_ms
+ - throughput_rps
+
+Cluster-side metrics:
+ - node_cpu_percent
+ - node_memory_percent
+ - pod_cpu_millicores
+ - pod_memory_mib
+ - pod_placement
+ - pod_restart_count
+ - pod_readiness
+
+Client-side source artifacts:
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_stats.csv
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_stats_history.csv
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_failures.csv
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_exceptions.csv
+
+Cluster-side source artifacts:
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_manifest.json
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_summary.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_nodes-wide.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_top-nodes.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_pods-wide.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_top-pods.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_services.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_events.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_pre_pods-describe.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_manifest.json
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_summary.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_nodes-wide.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_top-nodes.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_pods-wide.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_top-pods.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_services.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_events.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\models\M4_llama32_3b_q8_0\M4_runA_cluster_post_pods-describe.txt

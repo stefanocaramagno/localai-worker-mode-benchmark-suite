@@ -1,0 +1,474 @@
+{
+  "statisticalRigorProfile": {
+    "profileFile": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\statistical-rigor\\SR1.json",
+    "profileId": "SR1",
+    "description": "Light statistical rigor profile for consolidated pilot benchmark campaigns. The profile keeps the controlled A/B/C replica regime, adds short cool-down intervals between executions, and requires a scenario-level summary over the primary measurement CSV artifacts.",
+    "targetRequestType": "POST",
+    "targetRequestName": "POST /v1/chat/completions",
+    "fallbackToAggregated": true,
+    "requiredReplicaCount": 3,
+    "minimumSuccessfulReplicaCount": 3,
+    "trackedMetrics": [
+      "request_count",
+      "failure_count",
+      "mean_response_time_ms",
+      "p50_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps"
+    ],
+    "variabilityThresholds": {
+      "mean_response_time_cv_percent": 10.0,
+      "p95_response_time_cv_percent": 12.5,
+      "throughput_cv_percent": 12.5
+    }
+  },
+  "campaign": {
+    "campaignId": "pilot_consolidated_models_NA_20260421T183158Z",
+    "familyScope": "models",
+    "createdAtUtc": "20260421T183158Z",
+    "status": "passed"
+  },
+  "scenarioSummaries": [
+    {
+      "family": "models",
+      "scenario": "M1",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 3,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M1_llama32_1b_q4km\\M1_runA_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1503.3828911765145,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.571527050786575
+          }
+        },
+        {
+          "replica": "B",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M1_llama32_1b_q4km\\M1_runB_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1491.9584176471235,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5733389032381414
+          }
+        },
+        {
+          "replica": "C",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M1_llama32_1b_q4km\\M1_runC_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 102.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1496.0564735292257,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5727992793000317
+          }
+        }
+      ],
+      "aggregate": {
+        "request_count": {
+          "mean": 102.0,
+          "min": 102.0,
+          "max": 102.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "failure_count": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "mean_response_time_ms": {
+          "mean": 1497.1325941176212,
+          "min": 1491.9584176471235,
+          "max": 1503.3828911765145,
+          "stdev": 5.787760836153763,
+          "cvPercent": 0.38658972885196907
+        },
+        "p50_response_time_ms": {
+          "mean": 1500.0,
+          "min": 1500.0,
+          "max": 1500.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p95_response_time_ms": {
+          "mean": 1600.0,
+          "min": 1600.0,
+          "max": 1600.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p99_response_time_ms": {
+          "mean": 1700.0,
+          "min": 1700.0,
+          "max": 1700.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "throughput_rps": {
+          "mean": 0.5725550777749161,
+          "min": 0.571527050786575,
+          "max": 0.5733389032381414,
+          "stdev": 0.0009302838895807366,
+          "cvPercent": 0.1624793711019102
+        }
+      },
+      "flags": []
+    },
+    {
+      "family": "models",
+      "scenario": "M2",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 3,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M2_llama32_1b_q8_0\\M2_runA_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 106.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1379.274128301953,
+            "p50_response_time_ms": 1400.0,
+            "p95_response_time_ms": 1400.0,
+            "p99_response_time_ms": 1500.0,
+            "throughput_rps": 0.5929701342453774
+          }
+        },
+        {
+          "replica": "B",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M2_llama32_1b_q8_0\\M2_runB_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 106.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1379.7920433961444,
+            "p50_response_time_ms": 1400.0,
+            "p95_response_time_ms": 1400.0,
+            "p99_response_time_ms": 1500.0,
+            "throughput_rps": 0.5929975071898991
+          }
+        },
+        {
+          "replica": "C",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M2_llama32_1b_q8_0\\M2_runC_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 106.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 1384.5865122640942,
+            "p50_response_time_ms": 1400.0,
+            "p95_response_time_ms": 1400.0,
+            "p99_response_time_ms": 1500.0,
+            "throughput_rps": 0.5921770625200785
+          }
+        }
+      ],
+      "aggregate": {
+        "request_count": {
+          "mean": 106.0,
+          "min": 106.0,
+          "max": 106.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "failure_count": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "mean_response_time_ms": {
+          "mean": 1381.2175613207303,
+          "min": 1379.274128301953,
+          "max": 1384.5865122640942,
+          "stdev": 2.929066720867063,
+          "cvPercent": 0.21206410944169204
+        },
+        "p50_response_time_ms": {
+          "mean": 1400.0,
+          "min": 1400.0,
+          "max": 1400.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p95_response_time_ms": {
+          "mean": 1400.0,
+          "min": 1400.0,
+          "max": 1400.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p99_response_time_ms": {
+          "mean": 1500.0,
+          "min": 1500.0,
+          "max": 1500.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "throughput_rps": {
+          "mean": 0.5927149013184517,
+          "min": 0.5921770625200785,
+          "max": 0.5929975071898991,
+          "stdev": 0.0004659830998003513,
+          "cvPercent": 0.07861842156554616
+        }
+      },
+      "flags": []
+    },
+    {
+      "family": "models",
+      "scenario": "M3",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 3,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M3_llama32_3b_q4km\\M3_runA_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 49.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 5166.987779592054,
+            "p50_response_time_ms": 5000.0,
+            "p95_response_time_ms": 5100.0,
+            "p99_response_time_ms": 9200.0,
+            "throughput_rps": 0.2783285555792509
+          }
+        },
+        {
+          "replica": "B",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M3_llama32_3b_q4km\\M3_runB_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 49.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 5174.75801428573,
+            "p50_response_time_ms": 5000.0,
+            "p95_response_time_ms": 5100.0,
+            "p99_response_time_ms": 9400.0,
+            "throughput_rps": 0.2780211160635308
+          }
+        },
+        {
+          "replica": "C",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M3_llama32_3b_q4km\\M3_runC_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 49.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 5164.698381632939,
+            "p50_response_time_ms": 5000.0,
+            "p95_response_time_ms": 5100.0,
+            "p99_response_time_ms": 9300.0,
+            "throughput_rps": 0.27844288400143463
+          }
+        }
+      ],
+      "aggregate": {
+        "request_count": {
+          "mean": 49.0,
+          "min": 49.0,
+          "max": 49.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "failure_count": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "mean_response_time_ms": {
+          "mean": 5168.81472517024,
+          "min": 5164.698381632939,
+          "max": 5174.75801428573,
+          "stdev": 5.272793366567096,
+          "cvPercent": 0.10201165348199691
+        },
+        "p50_response_time_ms": {
+          "mean": 5000.0,
+          "min": 5000.0,
+          "max": 5000.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p95_response_time_ms": {
+          "mean": 5100.0,
+          "min": 5100.0,
+          "max": 5100.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p99_response_time_ms": {
+          "mean": 9300.0,
+          "min": 9200.0,
+          "max": 9400.0,
+          "stdev": 100.0,
+          "cvPercent": 1.0752688172043012
+        },
+        "throughput_rps": {
+          "mean": 0.2782641852147388,
+          "min": 0.2780211160635308,
+          "max": 0.27844288400143463,
+          "stdev": 0.00021812772916683337,
+          "cvPercent": 0.07838871861950268
+        }
+      },
+      "flags": []
+    },
+    {
+      "family": "models",
+      "scenario": "M4",
+      "requiredReplicaCount": 3,
+      "minimumSuccessfulReplicaCount": 3,
+      "observedReplicaCount": 3,
+      "successfulReplicaCount": 3,
+      "replicas": [
+        {
+          "replica": "A",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M4_llama32_3b_q8_0\\M4_runA_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 56.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 4344.728917857018,
+            "p50_response_time_ms": 4300.0,
+            "p95_response_time_ms": 4400.0,
+            "p99_response_time_ms": 6300.0,
+            "throughput_rps": 0.31470612412553534
+          }
+        },
+        {
+          "replica": "B",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M4_llama32_3b_q8_0\\M4_runB_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 56.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 4348.15860535699,
+            "p50_response_time_ms": 4300.0,
+            "p95_response_time_ms": 4400.0,
+            "p99_response_time_ms": 6600.0,
+            "throughput_rps": 0.3144830782585613
+          }
+        },
+        {
+          "replica": "C",
+          "status": "success",
+          "exitCode": 0,
+          "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\models\\M4_llama32_3b_q8_0\\M4_runC_stats.csv",
+          "metricSource": "target_request",
+          "metrics": {
+            "request_count": 56.0,
+            "failure_count": 0.0,
+            "mean_response_time_ms": 4342.755357142648,
+            "p50_response_time_ms": 4300.0,
+            "p95_response_time_ms": 4400.0,
+            "p99_response_time_ms": 6300.0,
+            "throughput_rps": 0.3147431987360575
+          }
+        }
+      ],
+      "aggregate": {
+        "request_count": {
+          "mean": 56.0,
+          "min": 56.0,
+          "max": 56.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "failure_count": {
+          "mean": 0.0,
+          "min": 0.0,
+          "max": 0.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "mean_response_time_ms": {
+          "mean": 4345.214293452219,
+          "min": 4342.755357142648,
+          "max": 4348.15860535699,
+          "stdev": 2.7341296453825756,
+          "cvPercent": 0.06292278034486404
+        },
+        "p50_response_time_ms": {
+          "mean": 4300.0,
+          "min": 4300.0,
+          "max": 4300.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p95_response_time_ms": {
+          "mean": 4400.0,
+          "min": 4400.0,
+          "max": 4400.0,
+          "stdev": 0.0,
+          "cvPercent": 0.0
+        },
+        "p99_response_time_ms": {
+          "mean": 6400.0,
+          "min": 6300.0,
+          "max": 6600.0,
+          "stdev": 173.20508075688772,
+          "cvPercent": 2.7063293868263707
+        },
+        "throughput_rps": {
+          "mean": 0.31464413370671807,
+          "min": 0.3144830782585613,
+          "max": 0.3147431987360575,
+          "stdev": 0.00014070456539170244,
+          "cvPercent": 0.04471863617290704
+        }
+      },
+      "flags": []
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+﻿NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)     AGE
+localai-rpc-a    ClusterIP   10.43.77.90     <none>        50051/TCP   6d
+localai-rpc-b    ClusterIP   10.43.130.75    <none>        50051/TCP   6d
+localai-rpc-c    ClusterIP   10.43.190.131   <none>        50051/TCP   6d
+localai-rpc-d    ClusterIP   10.43.223.254   <none>        50051/TCP   6d
+localai-server   ClusterIP   10.43.189.86    <none>        8080/TCP    5d23h

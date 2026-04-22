@@ -1,0 +1,19 @@
+﻿=============================================
+ Cluster-side collection
+=============================================
+Profile ID          : CS1
+Stage               : pre
+Kubeconfig          : .\config\cluster-access\kubeconfig
+Namespace           : genai-thesis
+Manifest            : .\results\exploratory\manual_run\custom-E4_cluster_pre_manifest.json
+Summary             : .\results\exploratory\manual_run\custom-E4_cluster_pre_summary.txt
+Exit code           : 0
+
+Artifacts:
+ - .\results\exploratory\manual_run\custom-E4_cluster_pre_nodes-wide.txt
+ - .\results\exploratory\manual_run\custom-E4_cluster_pre_top-nodes.txt
+ - .\results\exploratory\manual_run\custom-E4_cluster_pre_pods-wide.txt
+ - .\results\exploratory\manual_run\custom-E4_cluster_pre_top-pods.txt
+ - .\results\exploratory\manual_run\custom-E4_cluster_pre_services.txt
+ - .\results\exploratory\manual_run\custom-E4_cluster_pre_events.txt
+ - .\results\exploratory\manual_run\custom-E4_cluster_pre_pods-describe.txt

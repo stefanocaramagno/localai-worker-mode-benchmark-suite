@@ -1,0 +1,33 @@
+=============================================
+ Statistical Rigor Summary
+=============================================
+Profile               : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\statistical-rigor\SR1.json
+Profile ID            : SR1
+Campaign ID           : pilot_consolidated_placement_NA_20260421T192854Z
+Family scope          : placement
+Created at UTC        : 20260421T192854Z
+
+Family/Scenario       : placement/PL1
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=102.0000 min=102.0000 max=102.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=1483.7526 min=1481.4639 max=1487.8068 stdev=3.5208 cv%=0.24
+ - p50_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=1633.3333 min=1600.0000 max=1700.0000 stdev=57.7350 cv%=3.53
+ - throughput_rps: mean=0.5749 min=0.5742 max=0.5752 stdev=0.0006 cv%=0.10
+ Flags                : none
+
+Family/Scenario       : placement/PL2
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=101.0000 min=101.0000 max=101.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=1538.3188 min=1534.4208 max=1540.7128 stdev=3.4050 cv%=0.22
+ - p50_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=1600.0000 min=1600.0000 max=1600.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=1633.3333 min=1600.0000 max=1700.0000 stdev=57.7350 cv%=3.53
+ - throughput_rps: mean=0.5656 min=0.5652 max=0.5660 stdev=0.0004 cv%=0.08
+ Flags                : none
+

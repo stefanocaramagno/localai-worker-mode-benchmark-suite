@@ -1,0 +1,22 @@
+﻿LAST SEEN   TYPE     REASON              OBJECT                                 MESSAGE
+38m         Normal   Killing             pod/localai-server-74fccf5cb7-fmkjc    Stopping container localai
+38m         Normal   Killing             pod/localai-rpc-b-78b966fc7c-c5d9s     Stopping container rpc-worker
+38m         Normal   Killing             pod/localai-rpc-a-6cd76fc98-4xvgs      Stopping container rpc-worker
+26m         Normal   SuccessfulCreate    replicaset/localai-rpc-b-78b966fc7c    Created pod: localai-rpc-b-78b966fc7c-rx5sw
+26m         Normal   Scheduled           pod/localai-rpc-a-6cd76fc98-l5z8l      Successfully assigned genai-thesis/localai-rpc-a-6cd76fc98-l5z8l to sc-app-02
+26m         Normal   ScalingReplicaSet   deployment/localai-rpc-b               Scaled up replica set localai-rpc-b-78b966fc7c from 0 to 1
+26m         Normal   SuccessfulCreate    replicaset/localai-rpc-a-6cd76fc98     Created pod: localai-rpc-a-6cd76fc98-l5z8l
+26m         Normal   ScalingReplicaSet   deployment/localai-rpc-a               Scaled up replica set localai-rpc-a-6cd76fc98 from 0 to 1
+26m         Normal   Scheduled           pod/localai-rpc-b-78b966fc7c-rx5sw     Successfully assigned genai-thesis/localai-rpc-b-78b966fc7c-rx5sw to sc-app-02
+26m         Normal   Pulled              pod/localai-rpc-a-6cd76fc98-l5z8l      Container image "quay.io/go-skynet/local-ai:v4.1.0" already present on machine and can be accessed by the pod
+26m         Normal   Pulled              pod/localai-rpc-b-78b966fc7c-rx5sw     Container image "quay.io/go-skynet/local-ai:v4.1.0" already present on machine and can be accessed by the pod
+26m         Normal   Created             pod/localai-rpc-b-78b966fc7c-rx5sw     Container created
+26m         Normal   Started             pod/localai-rpc-a-6cd76fc98-l5z8l      Container started
+26m         Normal   Created             pod/localai-rpc-a-6cd76fc98-l5z8l      Container created
+25m         Normal   Started             pod/localai-rpc-b-78b966fc7c-rx5sw     Container started
+25m         Normal   Scheduled           pod/localai-server-74fccf5cb7-bbxl2    Successfully assigned genai-thesis/localai-server-74fccf5cb7-bbxl2 to sc-app-02
+25m         Normal   SuccessfulCreate    replicaset/localai-server-74fccf5cb7   Created pod: localai-server-74fccf5cb7-bbxl2
+25m         Normal   ScalingReplicaSet   deployment/localai-server              Scaled up replica set localai-server-74fccf5cb7 from 0 to 1
+25m         Normal   Pulled              pod/localai-server-74fccf5cb7-bbxl2    Container image "quay.io/go-skynet/local-ai:v4.1.0" already present on machine and can be accessed by the pod
+25m         Normal   Created             pod/localai-server-74fccf5cb7-bbxl2    Container created
+25m         Normal   Started             pod/localai-server-74fccf5cb7-bbxl2    Container started

@@ -1,0 +1,10 @@
+{
+  "scenarioId": "WL3",
+  "purpose": "Pilot Workload Sweep - Small Concurrency Four Users",
+  "users": 4,
+  "spawnRate": 2,
+  "runTime": "2m",
+  "outputSubdir": "WL3_small_concurrency_four_users",
+  "referenceBaselineId": "B0",
+  "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the small-concurrency four-user workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile."
+}

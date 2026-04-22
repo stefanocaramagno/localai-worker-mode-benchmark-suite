@@ -1,0 +1,59 @@
+﻿{
+    "metricSetProfile":  {
+                             "profileFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json",
+                             "profileId":  "MS1",
+                             "description":  "Minimum mandatory metric set for all benchmark and validation runs. The profile fixes the canonical client-side and cluster-side metrics that must always be collected or derivable from run artifacts."
+                         },
+    "launcher":  "Start-PilotWorkloadSweep",
+    "runId":  "WL2_runC",
+    "measurementCsvPrefix":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC",
+    "minimumMetrics":  {
+                           "clientSide":  [
+                                              "request_count",
+                                              "success_rate_percent",
+                                              "failure_count",
+                                              "mean_response_time_ms",
+                                              "p50_response_time_ms",
+                                              "p95_response_time_ms",
+                                              "p99_response_time_ms",
+                                              "throughput_rps"
+                                          ],
+                           "clusterSide":  [
+                                               "node_cpu_percent",
+                                               "node_memory_percent",
+                                               "pod_cpu_millicores",
+                                               "pod_memory_mib",
+                                               "pod_placement",
+                                               "pod_restart_count",
+                                               "pod_readiness"
+                                           ]
+                       },
+    "sourceArtifacts":  {
+                            "clientSide":  [
+                                               "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_stats.csv",
+                                               "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_stats_history.csv",
+                                               "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_failures.csv",
+                                               "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_exceptions.csv"
+                                           ],
+                            "clusterSide":  [
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_manifest.json",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_summary.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_nodes-wide.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_top-nodes.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_pods-wide.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_top-pods.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_services.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_events.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_pre_pods-describe.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_manifest.json",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_summary.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_nodes-wide.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_top-nodes.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_pods-wide.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_top-pods.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_services.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_events.txt",
+                                                "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\workload\\WL2_low_load_two_users\\WL2_runC_cluster_post_pods-describe.txt"
+                                            ]
+                        }
+}

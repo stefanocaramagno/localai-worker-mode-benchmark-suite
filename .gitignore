@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+
+# Local Kubernetes access file containing sensitive data.
+config/cluster-access/kubeconfig
+
+# Ephemeral runtime benchmark artifacts.
+results/_runtime/

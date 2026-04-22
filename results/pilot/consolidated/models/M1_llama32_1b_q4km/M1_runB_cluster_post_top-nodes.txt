@@ -1,0 +1,4 @@
+﻿NAME           CPU(cores)   CPU(%)   MEMORY(bytes)   MEMORY(%)   
+sc-app-01      56m          0%       1577Mi          9%          
+sc-app-02      2812m        35%      6087Mi          38%         
+sc-master-01   73m          3%       1284Mi          32%         

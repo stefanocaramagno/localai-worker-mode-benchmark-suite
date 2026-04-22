@@ -1,0 +1,67 @@
+﻿{
+    "profileFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\pilot-consolidation\\CP1.json",
+    "profileId":  "CP1",
+    "description":  "Consolidated pilot benchmark profile for the four pilot sweeps. The profile fixes the controlled replica set, the mandatory execution stack already defined in previous points, and stricter phase durations for re-running the pilot campaigns in a comparable way.",
+    "campaignId":  "pilot_consolidated_placement_NA_20260421T192854Z",
+    "campaignScope":  "placement",
+    "createdAtUtc":  "20260421T192854Z",
+    "baseUrl":  "http://localhost:8080",
+    "outputRoot":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated",
+    "status":  "success",
+    "entries":  [
+                    {
+                        "family":  "placement",
+                        "scenario":  "PL1",
+                        "replica":  "A",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotPlacementSweep.ps1\" -Scenario PL1 -Replica A -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runA_stats.csv"
+                    },
+                    {
+                        "family":  "placement",
+                        "scenario":  "PL1",
+                        "replica":  "B",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotPlacementSweep.ps1\" -Scenario PL1 -Replica B -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runB_stats.csv"
+                    },
+                    {
+                        "family":  "placement",
+                        "scenario":  "PL1",
+                        "replica":  "C",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotPlacementSweep.ps1\" -Scenario PL1 -Replica C -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL1_colocated_scapp02\\PL1_runC_stats.csv"
+                    },
+                    {
+                        "family":  "placement",
+                        "scenario":  "PL2",
+                        "replica":  "A",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotPlacementSweep.ps1\" -Scenario PL2 -Replica A -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runA_stats.csv"
+                    },
+                    {
+                        "family":  "placement",
+                        "scenario":  "PL2",
+                        "replica":  "B",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotPlacementSweep.ps1\" -Scenario PL2 -Replica B -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runB_stats.csv"
+                    },
+                    {
+                        "family":  "placement",
+                        "scenario":  "PL2",
+                        "replica":  "C",
+                        "status":  "success",
+                        "exitCode":  0,
+                        "command":  "\u0026 \"C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\scripts\\load\\pilot\\Start-PilotPlacementSweep.ps1\" -Scenario PL2 -Replica C -BaseUrl http://localhost:8080 -OutputRoot C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement -PrecheckConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json -PhaseConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\phases\\WM1.json -WarmUpDuration 45s -MeasurementDuration 3m -ProtocolConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\protocol\\EP1.json -ClusterCaptureConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\cluster-capture\\CS1.json -MetricSetConfig C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\metric-set\\MS1.json -AutoApplyK8s -Kubeconfig .\\config\\cluster-access\\kubeconfig -Namespace genai-thesis",
+                        "statsCsvPath":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\placement\\PL2_distributed_two_node\\PL2_runC_stats.csv"
+                    }
+                ]
+}

@@ -1,0 +1,7 @@
+﻿LAST SEEN   TYPE      REASON              OBJECT                                MESSAGE
+56m         Warning   FailedScheduling    pod/localai-rpc-c-7c45cbd784-bslwv    0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling.
+55m         Warning   FailedScheduling    pod/localai-rpc-d-684847f7f9-vq5ks    0/3 nodes are available: 1 Insufficient cpu, 1 Insufficient memory, 2 node(s) didn't match Pod's node affinity/selector. no new claims to deallocate, preemption: 0/3 nodes are available: 1 No preemption victims found for incoming pod, 2 Preemption is not helpful for scheduling.
+54m         Normal    SuccessfulDelete    replicaset/localai-rpc-c-7c45cbd784   Deleted pod: localai-rpc-c-7c45cbd784-bslwv
+54m         Normal    ScalingReplicaSet   deployment/localai-rpc-c              Scaled down replica set localai-rpc-c-7c45cbd784 from 1 to 0
+54m         Normal    SuccessfulDelete    replicaset/localai-rpc-d-684847f7f9   Deleted pod: localai-rpc-d-684847f7f9-vq5ks
+54m         Normal    ScalingReplicaSet   deployment/localai-rpc-d              Scaled down replica set localai-rpc-d-684847f7f9 from 1 to 0

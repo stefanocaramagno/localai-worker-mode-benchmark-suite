@@ -1,0 +1,4 @@
+﻿NAME           STATUS   ROLES           AGE    VERSION        INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+sc-app-01      Ready    <none>          6d4h   v1.35.3+k3s1   192.168.1.211   <none>        Ubuntu 24.04.4 LTS   6.8.0-106-generic   containerd://2.2.2-k3s1
+sc-app-02      Ready    <none>          6d4h   v1.35.3+k3s1   192.168.1.213   <none>        Ubuntu 24.04.4 LTS   6.8.0-106-generic   containerd://2.2.2-k3s1
+sc-master-01   Ready    control-plane   6d5h   v1.35.3+k3s1   192.168.1.210   <none>        Ubuntu 24.04.4 LTS   6.8.0-106-generic   containerd://2.2.2-k3s1

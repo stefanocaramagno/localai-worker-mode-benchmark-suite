@@ -1,0 +1,57 @@
+=============================================
+ Statistical Rigor Summary
+=============================================
+Profile               : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\statistical-rigor\SR1.json
+Profile ID            : SR1
+Campaign ID           : pilot_consolidated_models_NA_20260421T183158Z
+Family scope          : models
+Created at UTC        : 20260421T183158Z
+
+Family/Scenario       : models/M1
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=102.0000 min=102.0000 max=102.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=1497.1326 min=1491.9584 max=1503.3829 stdev=5.7878 cv%=0.39
+ - p50_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=1600.0000 min=1600.0000 max=1600.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=1700.0000 min=1700.0000 max=1700.0000 stdev=0.0000 cv%=0.00
+ - throughput_rps: mean=0.5726 min=0.5715 max=0.5733 stdev=0.0009 cv%=0.16
+ Flags                : none
+
+Family/Scenario       : models/M2
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=106.0000 min=106.0000 max=106.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=1381.2176 min=1379.2741 max=1384.5865 stdev=2.9291 cv%=0.21
+ - p50_response_time_ms: mean=1400.0000 min=1400.0000 max=1400.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=1400.0000 min=1400.0000 max=1400.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=1500.0000 min=1500.0000 max=1500.0000 stdev=0.0000 cv%=0.00
+ - throughput_rps: mean=0.5927 min=0.5922 max=0.5930 stdev=0.0005 cv%=0.08
+ Flags                : none
+
+Family/Scenario       : models/M3
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=49.0000 min=49.0000 max=49.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=5168.8147 min=5164.6984 max=5174.7580 stdev=5.2728 cv%=0.10
+ - p50_response_time_ms: mean=5000.0000 min=5000.0000 max=5000.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=5100.0000 min=5100.0000 max=5100.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=9300.0000 min=9200.0000 max=9400.0000 stdev=100.0000 cv%=1.08
+ - throughput_rps: mean=0.2783 min=0.2780 max=0.2784 stdev=0.0002 cv%=0.08
+ Flags                : none
+
+Family/Scenario       : models/M4
+Observed replicas     : 3
+Successful replicas   : 3
+ - request_count: mean=56.0000 min=56.0000 max=56.0000 stdev=0.0000 cv%=0.00
+ - failure_count: mean=0.0000 min=0.0000 max=0.0000 stdev=0.0000 cv%=0.00
+ - mean_response_time_ms: mean=4345.2143 min=4342.7554 max=4348.1586 stdev=2.7341 cv%=0.06
+ - p50_response_time_ms: mean=4300.0000 min=4300.0000 max=4300.0000 stdev=0.0000 cv%=0.00
+ - p95_response_time_ms: mean=4400.0000 min=4400.0000 max=4400.0000 stdev=0.0000 cv%=0.00
+ - p99_response_time_ms: mean=6400.0000 min=6300.0000 max=6600.0000 stdev=173.2051 cv%=2.71
+ - throughput_rps: mean=0.3146 min=0.3145 max=0.3147 stdev=0.0001 cv%=0.04
+ Flags                : none
+

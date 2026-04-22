@@ -1,0 +1,38 @@
+=============================================
+ Technical Diagnosis
+=============================================
+Diagnosis ID          : analysis_diagnosis_models_NA_20260422T144617Z
+Family scope          : models
+Closure status        : not_enough_data
+Validation summary    : available
+
+Coverage overview
+-----------------
+- models: scenariosWithSamples=4/4, scenariosWithUnsupportedEvidence=0, scenariosObserved=4, sampleCount=12, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\models
+
+Findings
+--------
+1. [high] La validazione minima end-to-end risulta disponibile come base di affidabilità funzionale.
+   Implicazione: La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico.
+   Evidenza: {"successRatePercent": 100, "meanResponseTimeMs": 1586.03, "throughputRps": 0.2941}
+2. [high] La dimensione del modello emerge come driver dominante della latenza media.
+   Implicazione: Nel cluster CPU-only attuale il passaggio a modelli più grandi sembra incidere molto più della variazione fine di topologia o workload leggero.
+   Evidenza: {"smallModelMeanResponseTimeMs": 1439.175, "largeModelMeanResponseTimeMs": 4757.0145, "penaltyPercent": 230.54}
+
+Family-level judgments
+---------------------
+- models: [strong_signal] La famiglia models mostra una penalità dimensionale netta e dominante sulla latenza media.
+  Implicazione: Nel cluster corrente la scelta del modello incide fortemente sul comportamento del servizio e rappresenta uno dei driver principali della performance osservata.
+  Evidenza: {"smallModelMeanResponseTimeMs": 1439.175, "largeModelMeanResponseTimeMs": 4757.0145, "penaltyPercent": 230.54}
+
+Per-family scenario averages
+--------------------------
+Family: models
+- M1: samples=3, mean=1497.1326, p95=1600.0, throughput=0.5725, maxNodeCpu=35.0, maxNodeMemory=38.0
+- M2: samples=3, mean=1381.2175, p95=1400.0, throughput=0.5927, maxNodeCpu=33.0, maxNodeMemory=35.0
+- M3: samples=3, mean=5168.8147, p95=5100.0, throughput=0.2782, maxNodeCpu=52.0, maxNodeMemory=43.0
+- M4: samples=3, mean=4345.2143, p95=4400.0, throughput=0.3146, maxNodeCpu=52.0, maxNodeMemory=52.0
+
+Gaps
+----
+- Nessun gap critico rilevato per la diagnosi preliminare.

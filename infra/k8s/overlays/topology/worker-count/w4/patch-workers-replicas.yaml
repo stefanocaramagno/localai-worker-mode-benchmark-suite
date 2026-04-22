@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-a
+  namespace: genai-thesis
+spec:
+  replicas: 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-b
+  namespace: genai-thesis
+spec:
+  replicas: 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-c
+  namespace: genai-thesis
+spec:
+  replicas: 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-d
+  namespace: genai-thesis
+spec:
+  replicas: 1

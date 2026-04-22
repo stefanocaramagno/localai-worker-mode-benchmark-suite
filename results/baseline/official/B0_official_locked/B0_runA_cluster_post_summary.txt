@@ -1,0 +1,19 @@
+﻿=============================================
+ Cluster-side collection
+=============================================
+Profile ID          : CS1
+Stage               : post
+Kubeconfig          : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\config\cluster-access\kubeconfig
+Namespace           : genai-thesis
+Manifest            : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_manifest.json
+Summary             : C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_summary.txt
+Exit code           : 0
+
+Artifacts:
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_nodes-wide.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_top-nodes.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_pods-wide.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_top-pods.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_services.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_events.txt
+ - C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\baseline\official\B0_official_locked\B0_runA_cluster_post_pods-describe.txt

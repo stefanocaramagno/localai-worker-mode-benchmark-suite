@@ -1,0 +1,9 @@
+{
+  "scenarioId": "W4",
+  "purpose": "Pilot Worker Count Sweep - Four RPC Workers",
+  "workerCount": 4,
+  "outputSubdir": "W4_worker_count_4",
+  "referenceBaselineId": "B0",
+  "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w4",
+  "notes": "Worker-count-only variation anchored to the official locked baseline B0. Model, workload, prompt, server manifest, and placement mode are all inherited from B0; the fourth active RPC worker is added while preserving the same co-located placement on sc-app-02 so that only the active worker count varies."
+}

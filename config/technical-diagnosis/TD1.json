@@ -1,0 +1,35 @@
+{
+  "profileId": "TD1",
+  "description": "Initial technical diagnosis profile aligned with the consolidated pilot benchmark campaigns and focused on a first evidence-based interpretation of the officially rerun results.",
+  "outputRoot": "results/diagnosis",
+  "diagnosisManifestSuffix": "_diagnosis.json",
+  "diagnosisTextSuffix": "_diagnosis.txt",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "validationSummaryRelativePath": "results/validation/b0-summary.json",
+  "pilotResultsRoots": {
+    "worker-count": "results/pilot/consolidated/worker-count",
+    "workload": "results/pilot/consolidated/workload",
+    "models": "results/pilot/consolidated/models",
+    "placement": "results/pilot/consolidated/placement"
+  },
+  "scenarioConfigRoots": {
+    "worker-count": "config/scenarios/pilot/worker-count",
+    "workload": "config/scenarios/pilot/workload",
+    "models": "config/scenarios/pilot/models",
+    "placement": "config/scenarios/pilot/placement"
+  },
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "workerImprovementThresholdPercent": 5,
+  "diminishingReturnThresholdPercent": 3,
+  "workloadStressThresholdPercent": 25,
+  "modelPenaltyThresholdPercent": 50,
+  "placementDifferenceThresholdPercent": 10,
+  "minimumScenarioSamples": 1,
+  "minimumFamiliesWithCoverageForClosure": 2,
+  "minimumFindingsForClosure": 2,
+  "acceptUnsupportedScenariosAsObserved": true,
+  "minimumUnsupportedReplicasPerScenario": 2
+}

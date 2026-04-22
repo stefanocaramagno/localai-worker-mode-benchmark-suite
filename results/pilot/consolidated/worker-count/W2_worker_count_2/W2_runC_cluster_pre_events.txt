@@ -1,0 +1,10 @@
+﻿LAST SEEN   TYPE     REASON              OBJECT                                MESSAGE
+29m         Normal   Killing             pod/localai-rpc-b-78b966fc7c-rx5sw    Stopping container rpc-worker
+29m         Normal   SuccessfulDelete    replicaset/localai-rpc-b-78b966fc7c   Deleted pod: localai-rpc-b-78b966fc7c-rx5sw
+29m         Normal   ScalingReplicaSet   deployment/localai-rpc-b              Scaled down replica set localai-rpc-b-78b966fc7c from 1 to 0
+9m22s       Normal   ScalingReplicaSet   deployment/localai-rpc-b              Scaled up replica set localai-rpc-b-78b966fc7c from 0 to 1
+9m21s       Normal   Scheduled           pod/localai-rpc-b-78b966fc7c-lp7hb    Successfully assigned genai-thesis/localai-rpc-b-78b966fc7c-lp7hb to sc-app-02
+9m21s       Normal   Pulled              pod/localai-rpc-b-78b966fc7c-lp7hb    Container image "quay.io/go-skynet/local-ai:v4.1.0" already present on machine and can be accessed by the pod
+9m21s       Normal   Created             pod/localai-rpc-b-78b966fc7c-lp7hb    Container created
+9m21s       Normal   Started             pod/localai-rpc-b-78b966fc7c-lp7hb    Container started
+9m21s       Normal   SuccessfulCreate    replicaset/localai-rpc-b-78b966fc7c   Created pod: localai-rpc-b-78b966fc7c-lp7hb

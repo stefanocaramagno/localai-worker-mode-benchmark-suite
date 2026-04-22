@@ -1,0 +1,118 @@
+﻿{
+    "profile":  {
+                    "profileFile":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\precheck\\TC1.json",
+                    "profileId":  "TC1",
+                    "description":  "Technical pre-check profile to be executed before every benchmark run."
+                },
+    "execution":  {
+                      "timestampUtc":  "2026-04-21T17:16:21Z",
+                      "kubeconfig":  ".\\config\\cluster-access\\kubeconfig",
+                      "namespace":  "genai-thesis",
+                      "outputPrefix":  "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runB_precheck",
+                      "baseUrl":  "http://localhost:8080",
+                      "model":  "llama-3.2-1b-instruct:q4_k_m"
+                  },
+    "summary":  {
+                    "success":  true,
+                    "failedChecks":  [
+
+                                     ],
+                    "checkCount":  6
+                },
+    "checks":  [
+                   {
+                       "name":  "cluster_nodes_ready",
+                       "success":  true,
+                       "details":  {
+                                       "notReadyNodes":  [
+
+                                                         ],
+                                       "discoveredNodes":  [
+                                                               "sc-app-01",
+                                                               "sc-app-02",
+                                                               "sc-master-01"
+                                                           ],
+                                       "expectedReadyNodes":  [
+                                                                  "sc-master-01",
+                                                                  "sc-app-01",
+                                                                  "sc-app-02"
+                                                              ],
+                                       "missingNodes":  [
+
+                                                        ]
+                                   }
+                   },
+                   {
+                       "name":  "namespace_active",
+                       "success":  true,
+                       "details":  {
+                                       "namespace":  "genai-thesis",
+                                       "phase":  "Active"
+                                   }
+                   },
+                   {
+                       "name":  "namespace_pods_healthy",
+                       "success":  true,
+                       "details":  {
+                                       "note":  null,
+                                       "invalidPhasePodsCount":  0,
+                                       "podCount":  2,
+                                       "hasMinimumNamespacePods":  true,
+                                       "criticalWaitingCount":  0,
+                                       "minimumNamespacePods":  1,
+                                       "namespace":  "genai-thesis",
+                                       "totalRestarts":  0,
+                                       "maxTotalRestarts":  0
+                                   }
+                   },
+                   {
+                       "name":  "worker_nodes_expected",
+                       "success":  true,
+                       "details":  {
+                                       "unexpectedWorkerNodes":  [
+
+                                                                 ],
+                                       "expectedWorkerNodes":  [
+                                                                   "sc-app-01",
+                                                                   "sc-app-02"
+                                                               ],
+                                       "observedWorkerPodNodes":  {
+                                                                      "localai-rpc-a-6cd76fc98-l5z8l":  "sc-app-02"
+                                                                  }
+                                   }
+                   },
+                   {
+                       "name":  "metrics_api_and_capacity",
+                       "success":  true,
+                       "details":  {
+                                       "note":  null,
+                                       "maxAllowedNodeCpuPercent":  95,
+                                       "namespacePodMetricsCount":  2,
+                                       "maxNodeCpuPercent":  3,
+                                       "nodeMetricsCount":  3,
+                                       "maxAllowedNodeMemoryPercent":  95,
+                                       "maxNodeMemoryPercent":  38
+                                   }
+                   },
+                   {
+                       "name":  "service_endpoint_and_model",
+                       "success":  true,
+                       "details":  {
+                                       "guidance":  null,
+                                       "endpointReady":  true,
+                                       "serviceReadinessRequestTimeoutSeconds":  10,
+                                       "lastError":  null,
+                                       "serviceReadinessTimeoutSeconds":  300,
+                                       "attempts":  1,
+                                       "availableModels":  [
+                                                               "llama-3.2-1b-instruct:q8_0",
+                                                               "llama-3.2-3b-instruct:q4_k_m",
+                                                               "llama-3.2-3b-instruct:q8_0",
+                                                               "llama-3.2-1b-instruct:q4_k_m"
+                                                           ],
+                                       "baseUrl":  "http://localhost:8080",
+                                       "requiredModel":  "llama-3.2-1b-instruct:q4_k_m"
+                                   }
+                   }
+               ]
+}

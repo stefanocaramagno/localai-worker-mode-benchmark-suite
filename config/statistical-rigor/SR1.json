@@ -1,0 +1,29 @@
+{
+  "profileId": "SR1",
+  "description": "Light statistical rigor profile for consolidated pilot benchmark campaigns. The profile keeps the controlled A/B/C replica regime, adds short cool-down intervals between executions, and requires a scenario-level summary over the primary measurement CSV artifacts.",
+  "targetRequestType": "POST",
+  "targetRequestName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "requiredReplicaCount": 3,
+  "minimumSuccessfulReplicaCount": 3,
+  "coolDownBetweenReplicasSeconds": 10,
+  "coolDownBetweenScenariosSeconds": 20,
+  "summaryManifestSuffix": "_rigor-summary.json",
+  "summaryTextSuffix": "_rigor-summary.txt",
+  "trackedMetrics": [
+    "request_count",
+    "failure_count",
+    "mean_response_time_ms",
+    "p50_response_time_ms",
+    "p95_response_time_ms",
+    "p99_response_time_ms",
+    "throughput_rps"
+  ],
+  "variabilityThresholds": {
+    "mean_response_time_cv_percent": 10.0,
+    "p95_response_time_cv_percent": 12.5,
+    "throughput_cv_percent": 12.5
+  },
+  "stabilizationTimeoutSeconds": 180,
+  "stabilizationPollIntervalSeconds": 5
+}
