@@ -2,7 +2,7 @@ param(
     [string]$ProfileConfig,
     [string]$DiagnosisJson,
     [string]$OutputRoot,
-    [string]$ResultsRoot,
+    [string]$RepositoryRoot,
     [switch]$DryRun
 )
 
@@ -44,6 +44,42 @@ function Resolve-PythonCommand {
     throw "Nessun interprete Python compatibile e' disponibile nel PATH. Verificare la disponibilita' di 'python', 'py -3' oppure 'python3'."
 }
 
+function Get-DiagnosisSortKey {
+    param(
+        [System.IO.FileInfo]$Path,
+        [object]$Payload
+    )
+
+    $createdAtUtc = $Payload.diagnosis.createdAtUtc
+    if (-not [string]::IsNullOrWhiteSpace($createdAtUtc)) {
+        try {
+            return [datetime]::Parse($createdAtUtc).ToUniversalTime()
+        }
+        catch {
+            # Fall back to file-name based ordering below.
+        }
+    }
+
+    $diagnosisId = [string]$Payload.diagnosis.diagnosisId
+    $combined = "$diagnosisId $($Path.Name)"
+    $match = [regex]::Match($combined, '(?<ts>\d{8}T\d{6}Z)')
+    if ($match.Success) {
+        try {
+            return [datetime]::ParseExact(
+                $match.Groups['ts'].Value,
+                'yyyyMMddTHHmmssZ',
+                [System.Globalization.CultureInfo]::InvariantCulture,
+                [System.Globalization.DateTimeStyles]::AssumeUniversal
+            ).ToUniversalTime()
+        }
+        catch {
+            # Fall back to filesystem timestamp below.
+        }
+    }
+
+    return $Path.LastWriteTimeUtc
+}
+
 function Get-LatestAllDiagnosis {
     param([string]$RepositoryRoot)
 
@@ -57,7 +93,10 @@ function Get-LatestAllDiagnosis {
         try {
             $raw = Get-Content -Path $path.FullName -Raw -Encoding UTF8 | ConvertFrom-Json
             if ($raw.diagnosis.familyScope -eq "all") {
-                $candidates += $path
+                $candidates += [pscustomobject]@{
+                    Path    = $path.FullName
+                    SortKey = Get-DiagnosisSortKey -Path $path -Payload $raw
+                }
             }
         }
         catch {
@@ -66,18 +105,18 @@ function Get-LatestAllDiagnosis {
     }
 
     if ($candidates.Count -eq 0) {
-        throw "Impossibile individuare automaticamente una diagnosi tecnica 'all' in results/diagnosis."
+        throw "Impossibile individuare automaticamente una diagnosi tecnica 'all' in results/diagnosis. Eseguire prima la technical diagnosis oppure passare -DiagnosisJson con un file esplicito."
     }
 
-    return ($candidates | Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1).FullName
+    return ($candidates | Sort-Object SortKey -Descending | Select-Object -First 1).Path
 }
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot = (Resolve-Path (Join-Path $scriptDir "..\..\..")).Path
 . (Join-Path $repoRoot "scripts\load\lib\powershell\RunConvention.ps1")
 
-if ([string]::IsNullOrWhiteSpace($ResultsRoot) -eq $false) {
-    $repoRoot = (Resolve-Path $ResultsRoot).Path
+if ([string]::IsNullOrWhiteSpace($RepositoryRoot) -eq $false) {
+    $repoRoot = (Resolve-Path $RepositoryRoot).Path
 }
 
 if ([string]::IsNullOrWhiteSpace($ProfileConfig)) {
@@ -87,7 +126,9 @@ if (-not (Test-Path $ProfileConfig)) {
     throw "Il file di profilo completion gate non esiste: $ProfileConfig"
 }
 
+$diagnosisSelectionMode = "explicit"
 if ([string]::IsNullOrWhiteSpace($DiagnosisJson)) {
+    $diagnosisSelectionMode = "auto-detected latest all diagnosis"
     $DiagnosisJson = Get-LatestAllDiagnosis -RepositoryRoot $repoRoot
 }
 if (-not (Test-Path $DiagnosisJson)) {
@@ -131,6 +172,7 @@ Write-Host " Completion Gate Launcher" -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan
 Write-Host "Repository            : $repoRoot"
 Write-Host "Profile config        : $ProfileConfig"
+Write-Host "Diagnosis selection   : $diagnosisSelectionMode"
 Write-Host "Diagnosis JSON        : $DiagnosisJson"
 Write-Host "Evaluation ID         : $evaluationId"
 Write-Host "Output JSON           : $outputJson"

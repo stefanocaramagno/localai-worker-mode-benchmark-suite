@@ -1,0 +1,572 @@
+{
+  "diagnosisProfile": {
+    "profileId": "TD1",
+    "description": "Initial technical diagnosis profile aligned with the consolidated pilot benchmark campaigns and focused on a first evidence-based interpretation of the officially rerun results.",
+    "outputRoot": "results/diagnosis",
+    "diagnosisManifestSuffix": "_diagnosis.json",
+    "diagnosisTextSuffix": "_diagnosis.txt",
+    "requestTargetType": "POST",
+    "requestTargetName": "POST /v1/chat/completions",
+    "fallbackToAggregated": true,
+    "validationSummaryRelativePath": "results/validation/b0-summary.json",
+    "pilotResultsRoots": {
+      "worker-count": "results/pilot/consolidated/worker-count",
+      "workload": "results/pilot/consolidated/workload",
+      "models": "results/pilot/consolidated/models",
+      "placement": "results/pilot/consolidated/placement"
+    },
+    "scenarioConfigRoots": {
+      "worker-count": "config/scenarios/pilot/worker-count",
+      "workload": "config/scenarios/pilot/workload",
+      "models": "config/scenarios/pilot/models",
+      "placement": "config/scenarios/pilot/placement"
+    },
+    "clusterCpuPressureThresholdPercent": 85,
+    "clusterMemoryPressureThresholdPercent": 85,
+    "workerImprovementThresholdPercent": 5,
+    "diminishingReturnThresholdPercent": 3,
+    "workloadStressThresholdPercent": 25,
+    "modelPenaltyThresholdPercent": 50,
+    "placementDifferenceThresholdPercent": 10,
+    "minimumScenarioSamples": 1,
+    "minimumFamiliesWithCoverageForClosure": 2,
+    "minimumFindingsForClosure": 2,
+    "acceptUnsupportedScenariosAsObserved": true,
+    "minimumUnsupportedReplicasPerScenario": 2
+  },
+  "diagnosis": {
+    "diagnosisId": "analysis_diagnosis_worker-count_NA_20260429T032040Z",
+    "createdAtUtc": "2026-04-29T03:20:41.232846+00:00",
+    "familyScope": "worker-count",
+    "closureStatus": "not_enough_data"
+  },
+  "validationSummaryPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\validation\\b0-summary.json",
+  "validationSummaryAvailable": true,
+  "validationSummary": {
+    "timestamp_utc": "2026-04-21T14:20:51.1542679Z",
+    "base_url": "http://localhost:8080",
+    "model": "llama-3.2-1b-instruct:q4_k_m",
+    "metric_set_profile_id": "MS1",
+    "iterations": 10,
+    "request_count": 10,
+    "successful_requests": 10,
+    "failed_requests": 0,
+    "failure_count": 0,
+    "success_rate_percent": 100,
+    "mean_response_time_ms": 1586.03,
+    "p50_response_time_ms": 1568.63,
+    "p95_response_time_ms": 1652.25,
+    "p99_response_time_ms": 1679.64,
+    "throughput_rps": 0.2941,
+    "avg_latency_ms": 1586.03,
+    "min_latency_ms": 1555.77,
+    "max_latency_ms": 1686.49,
+    "p50_latency_ms": 1568.63,
+    "p95_latency_ms": 1652.25,
+    "total_prompt_tokens": 330,
+    "total_completion_tokens": 20,
+    "total_tokens": 350
+  },
+  "metricUnits": {
+    "request_count": "requests",
+    "failure_count": "failures",
+    "mean_response_time_ms": "ms",
+    "p50_response_time_ms": "ms",
+    "p95_response_time_ms": "ms",
+    "p99_response_time_ms": "ms",
+    "throughput_rps": "requests/s",
+    "success_rate_percent": "%",
+    "maxNodeCpuPercentObserved": "%",
+    "maxNodeMemoryPercentObserved": "%"
+  },
+  "coverage": {
+    "worker-count": {
+      "resultsRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count",
+      "scenarioRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\config\\scenarios\\pilot\\worker-count",
+      "available": true,
+      "scenarioCount": 4,
+      "scenariosWithSamples": 2,
+      "scenariosWithUnsupportedEvidence": 2,
+      "scenariosObserved": 4,
+      "sampleCount": 6,
+      "unsupportedReplicaCount": 6,
+      "unsupportedScenarioIds": [
+        "W3",
+        "W4"
+      ]
+    }
+  },
+  "familyData": {
+    "worker-count": {
+      "W1": {
+        "scenario": {
+          "scenarioId": "W1",
+          "purpose": "Pilot Worker Count Sweep - Single RPC Worker",
+          "workerCount": 1,
+          "outputSubdir": "W1_worker_count_1",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w1",
+          "notes": "Worker-count-only variation anchored to the official locked baseline B0. All non-worker-count dimensions are inherited from B0 and the active RPC worker set remains fully co-located on sc-app-02, exactly following the baseline placement mode. The only intended experimental delta is the active worker count."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 101,
+            "failure_count": 0,
+            "mean_response_time_ms": 1522.1153,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5685,
+            "maxNodeCpuPercent": 34.0,
+            "maxNodeMemoryPercent": 37.0
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1499.9631,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5722,
+            "maxNodeCpuPercent": 34.0,
+            "maxNodeMemoryPercent": 37.0
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W1_worker_count_1\\W1_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1500.0152,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5721,
+            "maxNodeCpuPercent": 33.0,
+            "maxNodeMemoryPercent": 38.0
+          }
+        ],
+        "unsupportedReports": [],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 101.6667,
+              "min": 101,
+              "max": 102,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 0.4637
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1507.3645,
+              "min": 1499.9631,
+              "max": 1522.1153,
+              "stddev": 10.4304,
+              "coefficientOfVariationPercent": 0.692
+            },
+            "p50_response_time_ms": {
+              "mean": 1500.0,
+              "min": 1500.0,
+              "max": 1500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1600.0,
+              "min": 1600.0,
+              "max": 1600.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "throughput_rps": {
+              "mean": 0.5709,
+              "min": 0.5685,
+              "max": 0.5722,
+              "stddev": 0.0017,
+              "coefficientOfVariationPercent": 0.3015
+            }
+          },
+          "maxNodeCpuPercentObserved": 34.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedSummary": null
+      },
+      "W2": {
+        "scenario": {
+          "scenarioId": "W2",
+          "purpose": "Pilot Worker Count Sweep - Two RPC Workers",
+          "workerCount": 2,
+          "outputSubdir": "W2_worker_count_2",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+          "notes": "Worker-count-only variation anchored to the official locked baseline B0. This scenario reproduces the official two-worker baseline layout and keeps both active RPC workers fully co-located on sc-app-02. The only intended experimental delta within the Worker Count Sweep family is the active worker count."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W2_worker_count_2",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W2_worker_count_2\\W2_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1509.4204,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5708,
+            "maxNodeCpuPercent": 34.0,
+            "maxNodeMemoryPercent": 37.0
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W2_worker_count_2\\W2_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1506.6085,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.571,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 38.0
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W2_worker_count_2\\W2_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 102,
+            "failure_count": 0,
+            "mean_response_time_ms": 1496.2807,
+            "p50_response_time_ms": 1500.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.5728,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 37.0
+          }
+        ],
+        "unsupportedReports": [],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 102,
+              "min": 102,
+              "max": 102,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1504.1032,
+              "min": 1496.2807,
+              "max": 1509.4204,
+              "stddev": 5.6492,
+              "coefficientOfVariationPercent": 0.3756
+            },
+            "p50_response_time_ms": {
+              "mean": 1500.0,
+              "min": 1500.0,
+              "max": 1500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1600.0,
+              "min": 1600.0,
+              "max": 1600.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "throughput_rps": {
+              "mean": 0.5715,
+              "min": 0.5708,
+              "max": 0.5728,
+              "stddev": 0.0009,
+              "coefficientOfVariationPercent": 0.1574
+            }
+          },
+          "maxNodeCpuPercentObserved": 35.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedSummary": null
+      },
+      "W3": {
+        "scenario": {
+          "scenarioId": "W3",
+          "purpose": "Pilot Worker Count Sweep - Three RPC Workers",
+          "workerCount": 3,
+          "outputSubdir": "W3_worker_count_3",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w3",
+          "notes": "Worker-count-only variation anchored to the official locked baseline B0. Model, workload, prompt, server manifest, and placement mode are all inherited from B0; the third active RPC worker is added while preserving the same co-located placement on sc-app-02 so that only the active worker count varies."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W3_worker_count_3",
+        "samples": [],
+        "unsupportedReports": [
+          {
+            "replica": "A",
+            "unsupportedJsonPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W3_worker_count_3\\W3_runA_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          },
+          {
+            "replica": "B",
+            "unsupportedJsonPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W3_worker_count_3\\W3_runB_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          },
+          {
+            "replica": "C",
+            "unsupportedJsonPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W3_worker_count_3\\W3_runC_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          }
+        ],
+        "summary": null,
+        "unsupportedSummary": {
+          "unsupportedReplicaCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "acceptedStatusValues": [
+            "unsupported_under_current_constraints"
+          ],
+          "evidenceKinds": [
+            "failed_scheduling",
+            "insufficient_cpu",
+            "insufficient_memory",
+            "no_preemption_victims_found",
+            "node_affinity_selector_mismatch",
+            "pending_pod",
+            "preemption_not_helpful"
+          ],
+          "reasons": [
+            "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity."
+          ]
+        }
+      },
+      "W4": {
+        "scenario": {
+          "scenarioId": "W4",
+          "purpose": "Pilot Worker Count Sweep - Four RPC Workers",
+          "workerCount": 4,
+          "outputSubdir": "W4_worker_count_4",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w4",
+          "notes": "Worker-count-only variation anchored to the official locked baseline B0. Model, workload, prompt, server manifest, and placement mode are all inherited from B0; the fourth active RPC worker is added while preserving the same co-located placement on sc-app-02 so that only the active worker count varies."
+        },
+        "searchRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W4_worker_count_4",
+        "samples": [],
+        "unsupportedReports": [
+          {
+            "replica": "A",
+            "unsupportedJsonPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W4_worker_count_4\\W4_runA_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          },
+          {
+            "replica": "B",
+            "unsupportedJsonPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W4_worker_count_4\\W4_runB_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          },
+          {
+            "replica": "C",
+            "unsupportedJsonPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\pilot\\consolidated\\worker-count\\W4_worker_count_4\\W4_runC_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          }
+        ],
+        "summary": null,
+        "unsupportedSummary": {
+          "unsupportedReplicaCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "acceptedStatusValues": [
+            "unsupported_under_current_constraints"
+          ],
+          "evidenceKinds": [
+            "failed_scheduling",
+            "insufficient_cpu",
+            "insufficient_memory",
+            "no_preemption_victims_found",
+            "node_affinity_selector_mismatch",
+            "pending_pod",
+            "preemption_not_helpful"
+          ],
+          "reasons": [
+            "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity.",
+            "Scenario worker-count non supportato sotto i vincoli correnti della baseline fissata: il placement 'colocated_sc_app_02' deve restare invariato e, dopo l'auto-apply e il tempo di stabilizzazione previsto, almeno un pod RPC richiesto dallo scenario rimane non schedulabile sul cluster corrente per vincoli di risorse e/o affinity."
+          ]
+        }
+      }
+    }
+  },
+  "findings": [
+    {
+      "id": "validation_baseline_ready",
+      "title": "La validazione minima end-to-end risulta disponibile come base di affidabilit\u00e0 funzionale.",
+      "confidence": "high",
+      "evidence": {
+        "success_rate_percent": 100,
+        "mean_response_time_ms": 1586.03,
+        "throughput_rps": 0.2941,
+        "units": {
+          "success_rate_percent": "%",
+          "mean_response_time_ms": "ms",
+          "throughput_rps": "requests/s"
+        }
+      },
+      "implication": "La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico."
+    }
+  ],
+  "familyJudgments": [
+    {
+      "family": "worker-count",
+      "status": "weak_signal",
+      "confidence": "low",
+      "title": "Nel confronto iniziale tra configurazioni misurate il numero di worker non produce un miglioramento abbastanza marcato.",
+      "implication": "Il passaggio da W1 a W2 \u00e8 stato osservato, ma il beneficio sulla latenza media resta sotto la soglia diagnostica configurata; eventuali scenari superiori unsupported limitano inoltre la valutazione oltre il perimetro misurato.",
+      "evidence": {
+        "W1_mean_response_time_ms": 1507.3645,
+        "W2_mean_response_time_ms": 1504.1032,
+        "W1_throughput_rps": 0.5709,
+        "W2_throughput_rps": 0.5715,
+        "throughputChangePercent": 0.11,
+        "improvementPercent": 0.22,
+        "workerImprovementThresholdPercent": 5,
+        "unsupportedScenarios": [
+          "W3",
+          "W4"
+        ]
+      }
+    }
+  ],
+  "gaps": []
+}

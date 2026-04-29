@@ -56,6 +56,7 @@ This runbook does **not** cover:
 - pilot sweep execution;
 - consolidated benchmark execution;
 - raw metrics collection;
+- reporting and visualization;
 - completion-gate evaluation.
 
 Those phases are documented in separate runbooks.
@@ -128,7 +129,7 @@ This profile governs:
 
 - `scripts/analysis/generate-technical-diagnosis.py`
 
-This script reads benchmark outputs, inspects the relevant metrics, computes per-family summaries, and emits both machine-readable and operator-readable diagnosis artifacts.
+This script reads benchmark outputs, inspects the relevant metrics, computes per-family summaries, and emits both machine-readable and operator-readable diagnosis artifacts. The current metric vocabulary explicitly includes response-time percentiles, throughput, request/failure counts, success rate, and cluster-side resource snapshots with units.
 
 ### Upstream Artifacts Consumed
 
@@ -251,6 +252,40 @@ Across all families, the engine also inspects cluster-side node pressure to dete
 
 - CPU pressure was materially high;
 - memory pressure was materially high.
+
+---
+
+
+## Metric Vocabulary and Units
+
+The diagnosis phase must preserve units explicitly so that later reporting and completion-gate evaluation do not need to infer the meaning of numeric values.
+
+The current diagnosis output uses the following metric vocabulary:
+
+| Metric field | Meaning | Unit |
+|---|---|---|
+| `request_count` | Number of measured requests | requests |
+| `failure_count` | Number of failed requests | failures |
+| `mean_response_time_ms` | Mean response time | ms |
+| `p50_response_time_ms` | Median response time | ms |
+| `p95_response_time_ms` | 95th-percentile response time | ms |
+| `p99_response_time_ms` | 99th-percentile response time | ms |
+| `throughput_rps` | Client-observed throughput | requests/s |
+| `success_rate_percent` | Successful request percentage | % |
+| `max_node_cpu_percent` | Maximum node CPU snapshot observed in the run context | % |
+| `max_node_memory_percent` | Maximum node memory snapshot observed in the run context | % |
+
+The JSON diagnosis output keeps machine-readable field names. The text diagnosis output prints the same key metrics with explicit units, for example:
+
+```text
+mean_response_time_ms=1504.1032 ms
+p50_response_time_ms=1492.0000 ms
+p95_response_time_ms=1620.0000 ms
+p99_response_time_ms=1850.0000 ms
+throughput_rps=0.5715 requests/s
+```
+
+This convention intentionally aligns the diagnosis layer with the reporting layer, where the same metrics are displayed with human-readable labels such as `Mean response time (ms)` and `Throughput (requests/s)`.
 
 ---
 
@@ -886,7 +921,7 @@ The technical diagnosis phase can be considered successfully completed when all 
 - the coverage section is interpretable;
 - the gap section is reviewed explicitly;
 - the findings and family-level judgments are understood and cross-checked;
-- a decision is made about whether the campaign can move to completion-gate evaluation.
+- a decision is made about whether the campaign can move to reporting and visualization.
 
 ---
 
@@ -894,7 +929,9 @@ The technical diagnosis phase can be considered successfully completed when all 
 
 If the diagnosis is strong enough and the campaign is considered analytically usable, proceed to:
 
-- `12-completion-gate-and-phase-closure.md`
+- `12-reporting-and-visualization.md`
+
+The reporting phase will transform the diagnosis context and benchmark measurements into advisor-facing global and per-sweep reports before completion-gate evaluation.
 
 If the diagnosis reveals insufficient coverage, missing evidence, weak findings, or family-level judgments dominated by weak signal / insufficient evidence, return to the appropriate upstream phase and rerun only what is necessary:
 

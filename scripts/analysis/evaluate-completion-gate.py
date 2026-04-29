@@ -33,15 +33,7 @@ def add_gate(gates, gate_id, title, passed, evidence, implication):
     })
 
 
-
-
 def count_unsupported_replicas(entry):
-    """Read unsupported evidence only from the technical diagnosis payload.
-
-    The completion gate must not rediscover raw ``*_unsupported.json`` artifacts
-    from the filesystem. Unsupported scenarios are considered only if they have
-    already been consolidated by the technical diagnosis step.
-    """
     unsupported_summary = entry.get("unsupportedSummary") or {}
     if unsupported_summary:
         count = unsupported_summary.get("unsupportedReplicaCount")
@@ -54,6 +46,7 @@ def count_unsupported_replicas(entry):
 
 def scenario_is_accepted_unsupported(unsupported_count, minimum_unsupported_replicas):
     return unsupported_count >= int(minimum_unsupported_replicas)
+
 
 def evaluate_family_coverage(profile, diagnosis_payload):
     coverage = diagnosis_payload.get("coverage", {})
@@ -234,9 +227,119 @@ def evaluate_cluster_side(profile, diagnosis_payload):
     }
 
 
+def infer_repo_root(profile_config_path: Path) -> Path:
+    profile_config_path = profile_config_path.resolve()
+    try:
+        if profile_config_path.parent.name == "completion-gate" and profile_config_path.parent.parent.name == "config":
+            return profile_config_path.parent.parent.parent
+    except Exception:
+        pass
+    return Path.cwd().resolve()
+
+
+def evaluate_reporting(profile, repo_root: Path):
+    reporting_profile = profile.get("requiredReportingArtifacts") or {}
+    if not reporting_profile.get("enabled", False):
+        return True, {
+            "required": False,
+            "reason": "Reporting artifact gate disabled in completion profile.",
+        }
+
+    reporting_root_value = reporting_profile.get("reportingRoot", "results/reporting")
+    reporting_root = Path(reporting_root_value)
+    if not reporting_root.is_absolute():
+        reporting_root = repo_root / reporting_root
+
+    manifest_name = reporting_profile.get("manifestName", "reporting-manifest.json")
+    markdown_name = reporting_profile.get("markdownReportName", "report.md")
+    html_name = reporting_profile.get("htmlReportName", "index.html")
+    summary_name = reporting_profile.get("scenarioSummaryCsvName", "scenario-summary.csv")
+    charts_dir_name = reporting_profile.get("chartsDirectoryName", "charts")
+    sweeps_dir_name = reporting_profile.get("sweepsDirectoryName", "sweeps")
+
+    required_files = [
+        reporting_root / manifest_name,
+        reporting_root / markdown_name,
+        reporting_root / html_name,
+        reporting_root / summary_name,
+    ]
+    missing_files = [str(path) for path in required_files if not path.is_file()]
+
+    required_chart_families = reporting_profile.get("requiredChartFamilies", [])
+    required_chart_metrics = reporting_profile.get("requiredChartMetrics", [])
+    missing_charts = []
+    chart_evidence = []
+    for family in required_chart_families:
+        family_dir = reporting_root / charts_dir_name / family
+        for metric in required_chart_metrics:
+            expected_chart = family_dir / f"{metric}.svg"
+            if expected_chart.is_file():
+                chart_evidence.append({
+                    "family": family,
+                    "metric": metric,
+                    "path": str(expected_chart),
+                })
+            else:
+                missing_charts.append({
+                    "family": family,
+                    "metric": metric,
+                    "path": str(expected_chart),
+                })
+
+    required_sweep_reports = reporting_profile.get("requiredSweepReports", required_chart_families)
+    missing_sweep_reports = []
+    sweep_report_evidence = []
+    for family in required_sweep_reports:
+        sweep_dir = reporting_root / sweeps_dir_name / family
+        expected_markdown = sweep_dir / markdown_name
+        expected_html = sweep_dir / html_name
+        family_missing = []
+        if not expected_markdown.is_file():
+            family_missing.append(str(expected_markdown))
+        if not expected_html.is_file():
+            family_missing.append(str(expected_html))
+        if family_missing:
+            missing_sweep_reports.append({
+                "family": family,
+                "missingFiles": family_missing,
+            })
+        else:
+            sweep_report_evidence.append({
+                "family": family,
+                "markdownReport": str(expected_markdown),
+                "htmlReport": str(expected_html),
+            })
+
+    manifest_payload = None
+    manifest_path = reporting_root / manifest_name
+    if manifest_path.is_file():
+        try:
+            manifest_payload = load_json(manifest_path)
+        except Exception as exc:
+            missing_files.append(f"{manifest_path} (invalid JSON: {exc})")
+
+    passed = len(missing_files) == 0 and len(missing_charts) == 0 and len(missing_sweep_reports) == 0
+    return passed, {
+        "required": True,
+        "reportingRoot": str(reporting_root),
+        "requiredFiles": [str(path) for path in required_files],
+        "missingFiles": missing_files,
+        "requiredChartFamilies": required_chart_families,
+        "requiredChartMetrics": required_chart_metrics,
+        "missingCharts": missing_charts,
+        "chartEvidenceCount": len(chart_evidence),
+        "requiredSweepReports": required_sweep_reports,
+        "missingSweepReports": missing_sweep_reports,
+        "sweepReportEvidenceCount": len(sweep_report_evidence),
+        "reportingId": (manifest_payload or {}).get("reporting", {}).get("reportingId") if isinstance(manifest_payload, dict) else None,
+        "createdAtUtc": (manifest_payload or {}).get("reporting", {}).get("createdAtUtc") if isinstance(manifest_payload, dict) else None,
+    }
+
 def main():
     args = parse_args()
-    profile = load_json(Path(args.profile_config))
+    profile_config_path = Path(args.profile_config)
+    repo_root = infer_repo_root(profile_config_path)
+    profile = load_json(profile_config_path)
     diagnosis_payload = load_json(Path(args.diagnosis_json))
     output_json = Path(args.output_json)
     output_text = Path(args.output_text)
@@ -254,6 +357,7 @@ def main():
     repeatability_gate_passed, repeatability = evaluate_repeatability(profile, diagnosis_payload)
     findings_eval = evaluate_findings(profile, diagnosis_payload)
     cluster_gate_passed, cluster_eval = evaluate_cluster_side(profile, diagnosis_payload)
+    reporting_gate_passed, reporting_eval = evaluate_reporting(profile, repo_root)
 
     gates = []
     add_gate(
@@ -310,6 +414,14 @@ def main():
         cluster_eval,
         "Le evidenze infrastrutturali devono accompagnare i risultati client-side nella chiusura del ciclo.",
     )
+    add_gate(
+        gates,
+        "reporting_artifacts_available",
+        "Il report advisor-facing e i grafici richiesti sono disponibili nella directory results/reporting.",
+        reporting_gate_passed,
+        reporting_eval,
+        "La chiusura formale deve avvenire solo dopo che i risultati sono stati resi leggibili tramite report, tabelle e visualizzazioni.",
+    )
 
     passed_gate_count = sum(1 for gate in gates if gate["passed"])
     failed_gates = [gate["id"] for gate in gates if not gate["passed"]]
@@ -333,6 +445,7 @@ def main():
             "diagnosisClosureStatus": diagnosis_status,
             "familyScope": diagnosis_meta.get("familyScope"),
         },
+        "reportingReference": reporting_eval,
         "gates": gates,
         "sourceGaps": diagnosis_payload.get("gaps", []),
     }

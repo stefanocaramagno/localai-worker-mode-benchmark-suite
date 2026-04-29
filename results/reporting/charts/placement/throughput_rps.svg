@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="490.0" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold">Placement sweep - Throughput</text>
+  <text x="490.0" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="13">Unit: requests/s</text>
+  <g font-family="Arial, sans-serif" fill="#222">
+<line x1="86" y1="434" x2="948" y2="434" stroke="#222"/>
+<line x1="86" y1="74" x2="86" y2="434" stroke="#222"/>
+<line x1="81" y1="434.00" x2="948" y2="434.00" stroke="#ddd"/>
+<text x="76" y="438.00" text-anchor="end" font-size="12">0.00</text>
+<line x1="81" y1="362.00" x2="948" y2="362.00" stroke="#ddd"/>
+<text x="76" y="366.00" text-anchor="end" font-size="12">0.14</text>
+<line x1="81" y1="290.00" x2="948" y2="290.00" stroke="#ddd"/>
+<text x="76" y="294.00" text-anchor="end" font-size="12">0.28</text>
+<line x1="81" y1="218.00" x2="948" y2="218.00" stroke="#ddd"/>
+<text x="76" y="222.00" text-anchor="end" font-size="12">0.42</text>
+<line x1="81" y1="146.00" x2="948" y2="146.00" stroke="#ddd"/>
+<text x="76" y="150.00" text-anchor="end" font-size="12">0.56</text>
+<line x1="81" y1="74.00" x2="948" y2="74.00" stroke="#ddd"/>
+<text x="76" y="78.00" text-anchor="end" font-size="12">0.70</text>
+<rect x="264.50" y="138.34" width="74.00" height="295.66" fill="#666"/>
+<text x="301.50" y="131.34" text-anchor="middle" font-size="12">0.57</text>
+<text x="301.50" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 301.50,452.00)">PL1 (colocated_sc_app_02)</text>
+<rect x="695.50" y="143.12" width="74.00" height="290.88" fill="#666"/>
+<text x="732.50" y="136.12" text-anchor="middle" font-size="12">0.57</text>
+<text x="732.50" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 732.50,452.00)">PL2 (distributed)</text>
+  </g>
+</svg>

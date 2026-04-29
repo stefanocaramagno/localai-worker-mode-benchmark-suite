@@ -1,0 +1,444 @@
+{
+  "completionProfile": {
+    "profileId": "CG1",
+    "description": "Explicit completion gate for declaring the current exploratory characterization cycle completed after validation, consolidated pilot coverage, repeatability evidence, first technical diagnosis, and advisor-facing reporting/visualization.",
+    "outputRoot": "results/completion-gate",
+    "manifestSuffix": "_completion_gate.json",
+    "textSuffix": "_completion_gate.txt",
+    "acceptedDiagnosisClosureStatuses": [
+      "preliminary_diagnosis_available"
+    ],
+    "requiredFamilies": [
+      "worker-count",
+      "workload",
+      "models",
+      "placement"
+    ],
+    "strictScenarioCoverage": true,
+    "minimumReplicasPerScenario": 2,
+    "maximumMeanResponseTimeCvPercent": 35,
+    "minimumFindings": 3,
+    "requiredFindingGroups": {
+      "worker_count_signal": [
+        "worker_count_initial_gain",
+        "worker_count_diminishing_returns"
+      ],
+      "workload_stress_signal": [
+        "workload_saturation_signal"
+      ],
+      "model_penalty_signal": [
+        "model_size_penalty"
+      ],
+      "placement_signal": [
+        "placement_effect"
+      ]
+    },
+    "minimumFindingGroupsSatisfied": 2,
+    "requireClusterSideEvidence": true,
+    "clusterSideGapPatterns": [
+      "cluster-side",
+      "artefatti cluster-side"
+    ],
+    "acceptUnsupportedScenariosAsCovered": true,
+    "minimumUnsupportedReplicasPerScenario": 2,
+    "requiredReportingArtifacts": {
+      "enabled": true,
+      "reportingRoot": "results/reporting",
+      "manifestName": "reporting-manifest.json",
+      "markdownReportName": "report.md",
+      "htmlReportName": "index.html",
+      "scenarioSummaryCsvName": "scenario-summary.csv",
+      "chartsDirectoryName": "charts",
+      "requiredChartFamilies": [
+        "worker-count",
+        "workload",
+        "models",
+        "placement"
+      ],
+      "requiredChartMetrics": [
+        "mean_response_time_ms",
+        "p50_response_time_ms",
+        "p95_response_time_ms",
+        "p99_response_time_ms",
+        "throughput_rps"
+      ],
+      "description": "Required advisor-facing reporting artifacts generated after technical diagnosis and before completion-gate evaluation, including one consolidated report and one dedicated report per sweep.",
+      "sweepsDirectoryName": "sweeps",
+      "requiredSweepReports": [
+        "worker-count",
+        "workload",
+        "models",
+        "placement"
+      ]
+    },
+    "recommendedPipelineOrder": [
+      "technical_diagnosis",
+      "reporting_and_visualization",
+      "completion_gate"
+    ]
+  },
+  "completionGate": {
+    "evaluationId": "analysis_completion-gate_all_NA_20260429T032141Z",
+    "createdAtUtc": "2026-04-29T03:21:41.737048+00:00",
+    "status": "completed",
+    "completed": true,
+    "passedGateCount": 7,
+    "totalGateCount": 7,
+    "failedGateIds": []
+  },
+  "diagnosisReference": {
+    "diagnosisJson": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\diagnosis\\analysis_diagnosis_all_NA_20260429T032056Z_diagnosis.json",
+    "diagnosisId": "analysis_diagnosis_all_NA_20260429T032056Z",
+    "diagnosisClosureStatus": "preliminary_diagnosis_available",
+    "familyScope": "all"
+  },
+  "reportingReference": {
+    "required": true,
+    "reportingRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting",
+    "requiredFiles": [
+      "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting\\reporting-manifest.json",
+      "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting\\report.md",
+      "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting\\index.html",
+      "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting\\scenario-summary.csv"
+    ],
+    "missingFiles": [],
+    "requiredChartFamilies": [
+      "worker-count",
+      "workload",
+      "models",
+      "placement"
+    ],
+    "requiredChartMetrics": [
+      "mean_response_time_ms",
+      "p50_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps"
+    ],
+    "missingCharts": [],
+    "chartEvidenceCount": 20,
+    "requiredSweepReports": [
+      "worker-count",
+      "workload",
+      "models",
+      "placement"
+    ],
+    "missingSweepReports": [],
+    "sweepReportEvidenceCount": 4,
+    "reportingId": "analysis_reporting_all_NA_20260429T032103Z",
+    "createdAtUtc": "2026-04-29T03:21:03.257749+00:00"
+  },
+  "gates": [
+    {
+      "id": "validation_baseline_available",
+      "title": "La baseline di validazione minima è disponibile.",
+      "passed": true,
+      "evidence": {
+        "validationSummaryAvailable": true,
+        "validationSummaryPath": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\validation\\b0-summary.json"
+      },
+      "implication": "Il ciclo di caratterizzazione deve poggiare su una baseline funzionale salvata e non solo su benchmark pilota."
+    },
+    {
+      "id": "diagnosis_status_accepted",
+      "title": "La diagnosi tecnica preliminare ha uno stato di chiusura accettato.",
+      "passed": true,
+      "evidence": {
+        "diagnosisClosureStatus": "preliminary_diagnosis_available",
+        "acceptedDiagnosisClosureStatuses": [
+          "preliminary_diagnosis_available"
+        ]
+      },
+      "implication": "Il completamento può considerarsi dichiarabile solo se la diagnosi preliminare è già disponibile in forma strutturata."
+    },
+    {
+      "id": "family_coverage_complete",
+      "title": "Tutte le famiglie richieste hanno copertura sufficiente e repliche minime per scenario.",
+      "passed": true,
+      "evidence": {
+        "worker-count": {
+          "scenarioCount": 4,
+          "scenariosWithSamples": 2,
+          "scenariosWithAcceptedUnsupported": 2,
+          "sampleCount": 6,
+          "unsupportedReplicaCount": 6,
+          "effectiveEvidenceCount": 12,
+          "minimumExpectedSamples": 8,
+          "minimumExpectedEvidence": 8,
+          "acceptUnsupportedScenariosAsCovered": true,
+          "minimumUnsupportedReplicasPerScenario": 2,
+          "scenariosMeetingReplicaGate": [
+            "W1",
+            "W2"
+          ],
+          "scenariosMeetingUnsupportedGate": [
+            {
+              "scenarioId": "W3",
+              "unsupportedReplicaCount": 3,
+              "requiredUnsupportedReplicas": 2
+            },
+            {
+              "scenarioId": "W4",
+              "unsupportedReplicaCount": 3,
+              "requiredUnsupportedReplicas": 2
+            }
+          ],
+          "scenariosFailingReplicaGate": [],
+          "passed": true
+        },
+        "workload": {
+          "scenarioCount": 3,
+          "scenariosWithSamples": 3,
+          "scenariosWithAcceptedUnsupported": 0,
+          "sampleCount": 9,
+          "unsupportedReplicaCount": 0,
+          "effectiveEvidenceCount": 9,
+          "minimumExpectedSamples": 6,
+          "minimumExpectedEvidence": 6,
+          "acceptUnsupportedScenariosAsCovered": true,
+          "minimumUnsupportedReplicasPerScenario": 2,
+          "scenariosMeetingReplicaGate": [
+            "WL1",
+            "WL2",
+            "WL3"
+          ],
+          "scenariosMeetingUnsupportedGate": [],
+          "scenariosFailingReplicaGate": [],
+          "passed": true
+        },
+        "models": {
+          "scenarioCount": 4,
+          "scenariosWithSamples": 4,
+          "scenariosWithAcceptedUnsupported": 0,
+          "sampleCount": 12,
+          "unsupportedReplicaCount": 0,
+          "effectiveEvidenceCount": 12,
+          "minimumExpectedSamples": 8,
+          "minimumExpectedEvidence": 8,
+          "acceptUnsupportedScenariosAsCovered": true,
+          "minimumUnsupportedReplicasPerScenario": 2,
+          "scenariosMeetingReplicaGate": [
+            "M1",
+            "M2",
+            "M3",
+            "M4"
+          ],
+          "scenariosMeetingUnsupportedGate": [],
+          "scenariosFailingReplicaGate": [],
+          "passed": true
+        },
+        "placement": {
+          "scenarioCount": 2,
+          "scenariosWithSamples": 2,
+          "scenariosWithAcceptedUnsupported": 0,
+          "sampleCount": 6,
+          "unsupportedReplicaCount": 0,
+          "effectiveEvidenceCount": 6,
+          "minimumExpectedSamples": 4,
+          "minimumExpectedEvidence": 4,
+          "acceptUnsupportedScenariosAsCovered": true,
+          "minimumUnsupportedReplicasPerScenario": 2,
+          "scenariosMeetingReplicaGate": [
+            "PL1",
+            "PL2"
+          ],
+          "scenariosMeetingUnsupportedGate": [],
+          "scenariosFailingReplicaGate": [],
+          "passed": true
+        }
+      },
+      "implication": "La chiusura richiede copertura esplicita di worker-count, workload, models e placement."
+    },
+    {
+      "id": "repeatability_signal_present",
+      "title": "Ogni famiglia richiesta mostra almeno uno scenario con ripetibilità accettabile.",
+      "passed": true,
+      "evidence": {
+        "worker-count": {
+          "passed": true,
+          "qualifyingScenarios": [
+            {
+              "scenarioId": "W1",
+              "sampleCount": 3,
+              "cvPercent": 0.692
+            },
+            {
+              "scenarioId": "W2",
+              "sampleCount": 3,
+              "cvPercent": 0.3756
+            }
+          ],
+          "rejectedScenarios": [
+            {
+              "scenarioId": "W3",
+              "sampleCount": 0,
+              "cvPercent": null
+            },
+            {
+              "scenarioId": "W4",
+              "sampleCount": 0,
+              "cvPercent": null
+            }
+          ]
+        },
+        "workload": {
+          "passed": true,
+          "qualifyingScenarios": [
+            {
+              "scenarioId": "WL1",
+              "sampleCount": 3,
+              "cvPercent": 0.2802
+            },
+            {
+              "scenarioId": "WL2",
+              "sampleCount": 3,
+              "cvPercent": 0.1221
+            },
+            {
+              "scenarioId": "WL3",
+              "sampleCount": 3,
+              "cvPercent": 0.1785
+            }
+          ],
+          "rejectedScenarios": []
+        },
+        "models": {
+          "passed": true,
+          "qualifyingScenarios": [
+            {
+              "scenarioId": "M1",
+              "sampleCount": 3,
+              "cvPercent": 0.3156
+            },
+            {
+              "scenarioId": "M2",
+              "sampleCount": 3,
+              "cvPercent": 0.1732
+            },
+            {
+              "scenarioId": "M3",
+              "sampleCount": 3,
+              "cvPercent": 0.0833
+            },
+            {
+              "scenarioId": "M4",
+              "sampleCount": 3,
+              "cvPercent": 0.0514
+            }
+          ],
+          "rejectedScenarios": []
+        },
+        "placement": {
+          "passed": true,
+          "qualifyingScenarios": [
+            {
+              "scenarioId": "PL1",
+              "sampleCount": 3,
+              "cvPercent": 0.1937
+            },
+            {
+              "scenarioId": "PL2",
+              "sampleCount": 3,
+              "cvPercent": 0.1807
+            }
+          ],
+          "rejectedScenarios": []
+        }
+      },
+      "implication": "Il completamento non può dirsi raggiunto se le evidenze raccolte sono solo episodiche o troppo rumorose."
+    },
+    {
+      "id": "minimum_findings_and_groups",
+      "title": "La diagnosi contiene un numero minimo di finding e copre abbastanza gruppi interpretativi.",
+      "passed": true,
+      "evidence": {
+        "findingCount": 3,
+        "minimumFindingsRequired": 3,
+        "findingCountGatePassed": true,
+        "satisfiedGroupCount": 2,
+        "minimumFindingGroupsSatisfied": 2,
+        "groupGatePassed": true,
+        "groups": {
+          "worker_count_signal": {
+            "matchedFindingIds": [],
+            "passed": false
+          },
+          "workload_stress_signal": {
+            "matchedFindingIds": [
+              "workload_saturation_signal"
+            ],
+            "passed": true
+          },
+          "model_penalty_signal": {
+            "matchedFindingIds": [
+              "model_size_penalty"
+            ],
+            "passed": true
+          },
+          "placement_signal": {
+            "matchedFindingIds": [],
+            "passed": false
+          }
+        }
+      },
+      "implication": "La chiusura richiede almeno una prima lettura tecnica non banale dei benchmark, non solo raccolta grezza di numeri."
+    },
+    {
+      "id": "cluster_side_evidence_present",
+      "title": "Gli artefatti cluster-side non risultano mancanti nella diagnosi valutata.",
+      "passed": true,
+      "evidence": {
+        "required": true,
+        "gapPatterns": [
+          "cluster-side",
+          "artefatti cluster-side"
+        ],
+        "matchedGaps": []
+      },
+      "implication": "Le evidenze infrastrutturali devono accompagnare i risultati client-side nella chiusura del ciclo."
+    },
+    {
+      "id": "reporting_artifacts_available",
+      "title": "Il report advisor-facing e i grafici richiesti sono disponibili nella directory results/reporting.",
+      "passed": true,
+      "evidence": {
+        "required": true,
+        "reportingRoot": "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting",
+        "requiredFiles": [
+          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting\\reporting-manifest.json",
+          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting\\report.md",
+          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting\\index.html",
+          "C:\\Users\\stefa\\Desktop\\localai-worker-mode-benchmark-suite\\results\\reporting\\scenario-summary.csv"
+        ],
+        "missingFiles": [],
+        "requiredChartFamilies": [
+          "worker-count",
+          "workload",
+          "models",
+          "placement"
+        ],
+        "requiredChartMetrics": [
+          "mean_response_time_ms",
+          "p50_response_time_ms",
+          "p95_response_time_ms",
+          "p99_response_time_ms",
+          "throughput_rps"
+        ],
+        "missingCharts": [],
+        "chartEvidenceCount": 20,
+        "requiredSweepReports": [
+          "worker-count",
+          "workload",
+          "models",
+          "placement"
+        ],
+        "missingSweepReports": [],
+        "sweepReportEvidenceCount": 4,
+        "reportingId": "analysis_reporting_all_NA_20260429T032103Z",
+        "createdAtUtc": "2026-04-29T03:21:03.257749+00:00"
+      },
+      "implication": "La chiusura formale deve avvenire solo dopo che i risultati sono stati resi leggibili tramite report, tabelle e visualizzazioni."
+    }
+  ],
+  "sourceGaps": []
+}

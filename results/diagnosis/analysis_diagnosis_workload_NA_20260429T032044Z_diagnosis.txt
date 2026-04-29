@@ -1,0 +1,47 @@
+=============================================
+ Technical Diagnosis
+=============================================
+Diagnosis ID          : analysis_diagnosis_workload_NA_20260429T032044Z
+Family scope          : workload
+Closure status        : not_enough_data
+Validation summary    : available
+
+Metric units
+------------
+- mean_response_time_ms, p50_response_time_ms, p95_response_time_ms, p99_response_time_ms: ms
+- throughput_rps: requests/s
+- success_rate_percent: %
+- maxNodeCpuPercentObserved: %
+- maxNodeMemoryPercentObserved: %
+- request_count: requests
+- failure_count: failures
+
+Coverage overview
+-----------------
+- workload: scenariosWithSamples=3/3, scenariosWithUnsupportedEvidence=0, scenariosObserved=3, sampleCount=9, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\workload
+
+Findings
+--------
+1. [high] La validazione minima end-to-end risulta disponibile come base di affidabilità funzionale.
+   Implicazione: La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico.
+   Evidenza: {"success_rate_percent": 100, "mean_response_time_ms": 1586.03, "throughput_rps": 0.2941, "units": {"success_rate_percent": "%", "mean_response_time_ms": "ms", "throughput_rps": "requests/s"}}
+2. [medium] Il workload più intenso aumenta sensibilmente la latenza, segnalando possibile saturazione del sistema.
+   Implicazione: Il cluster appare più fragile quando cresce la concorrenza; la sola crescita del carico non si traduce necessariamente in aumento proporzionale del throughput utile.
+   Evidenza: {"WL1_mean_response_time_ms": 1457.786, "WL3_mean_response_time_ms": 3269.6865, "latencyIncreasePercent": 124.29, "WL1_throughput_rps": 0.2918, "WL3_throughput_rps": 0.7559, "throughputIncreasePercent": 159.05}
+
+Family-level judgments
+---------------------
+- workload: [strong_signal] La famiglia workload mostra un segnale netto di deterioramento prestazionale all'aumentare del carico.
+  Implicazione: Nel cluster corrente il workload è un driver rilevante della latenza e suggerisce una soglia di fragilità più evidente nelle configurazioni più spinte.
+  Evidenza: {"WL1_mean_response_time_ms": 1457.786, "WL3_mean_response_time_ms": 3269.6865, "latencyIncreasePercent": 124.29, "WL1_throughput_rps": 0.2918, "WL3_throughput_rps": 0.7559, "throughputIncreasePercent": 159.05}
+
+Per-family scenario averages
+--------------------------
+Family: workload
+- WL1: samples=3, mean_response_time_ms=1457.786 ms, p50_response_time_ms=1466.6667 ms, p95_response_time_ms=1500.0 ms, p99_response_time_ms=1533.3333 ms, throughput_rps=0.2918 requests/s, max_node_cpu_percent=18.0 %, max_node_memory_percent=38.0 %
+- WL2: samples=3, mean_response_time_ms=1493.4422 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1700.0 ms, throughput_rps=0.5732 requests/s, max_node_cpu_percent=35.0 %, max_node_memory_percent=38.0 %
+- WL3: samples=3, mean_response_time_ms=3269.6865 ms, p50_response_time_ms=3300.0 ms, p95_response_time_ms=3300.0 ms, p99_response_time_ms=3633.3333 ms, throughput_rps=0.7559 requests/s, max_node_cpu_percent=50.0 %, max_node_memory_percent=37.0 %
+
+Gaps
+----
+- Nessun gap critico rilevato per la diagnosi preliminare.

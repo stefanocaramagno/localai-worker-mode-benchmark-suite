@@ -1,0 +1,60 @@
+name: Deploy Reporting to GitHub Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "results/reporting/**"
+      - ".github/workflows/deploy-reporting-pages.yml"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages-reporting
+  cancel-in-progress: true
+
+jobs:
+  deploy-reporting:
+    name: Deploy reporting site
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate reporting entry point
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f results/reporting/index.html
+          test -f results/reporting/reporting-manifest.json
+          test -d results/reporting/sweeps
+          test -d results/reporting/charts
+
+      - name: Stage current reporting site
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .pages-reporting-site
+          mkdir -p .pages-reporting-site
+          cp -R results/reporting/. .pages-reporting-site/
+          rm -rf .pages-reporting-site/archive
+          touch .pages-reporting-site/.nojekyll
+
+      - name: Upload reporting site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .pages-reporting-site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

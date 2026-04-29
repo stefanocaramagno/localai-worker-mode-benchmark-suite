@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="490.0" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold">Model sweep - P99 response time</text>
+  <text x="490.0" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="13">Unit: ms</text>
+  <g font-family="Arial, sans-serif" fill="#222">
+<line x1="86" y1="434" x2="948" y2="434" stroke="#222"/>
+<line x1="86" y1="74" x2="86" y2="434" stroke="#222"/>
+<line x1="81" y1="434.00" x2="948" y2="434.00" stroke="#ddd"/>
+<text x="76" y="438.00" text-anchor="end" font-size="12">0.00</text>
+<line x1="81" y1="362.00" x2="948" y2="362.00" stroke="#ddd"/>
+<text x="76" y="366.00" text-anchor="end" font-size="12">2200.00</text>
+<line x1="81" y1="290.00" x2="948" y2="290.00" stroke="#ddd"/>
+<text x="76" y="294.00" text-anchor="end" font-size="12">4400.00</text>
+<line x1="81" y1="218.00" x2="948" y2="218.00" stroke="#ddd"/>
+<text x="76" y="222.00" text-anchor="end" font-size="12">6600.00</text>
+<line x1="81" y1="146.00" x2="948" y2="146.00" stroke="#ddd"/>
+<text x="76" y="150.00" text-anchor="end" font-size="12">8800.00</text>
+<line x1="81" y1="74.00" x2="948" y2="74.00" stroke="#ddd"/>
+<text x="76" y="78.00" text-anchor="end" font-size="12">11000.00</text>
+<rect x="156.75" y="378.36" width="74.00" height="55.64" fill="#666"/>
+<text x="193.75" y="371.36" text-anchor="middle" font-size="12">1700.00</text>
+<text x="193.75" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 193.75,452.00)">M1 (llama-3.2-1b-instruct:q4_k_m)</text>
+<rect x="372.25" y="384.91" width="74.00" height="49.09" fill="#666"/>
+<text x="409.25" y="377.91" text-anchor="middle" font-size="12">1500.00</text>
+<text x="409.25" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 409.25,452.00)">M2 (llama-3.2-1b-instruct:q8_0)</text>
+<rect x="587.75" y="129.64" width="74.00" height="304.36" fill="#666"/>
+<text x="624.75" y="122.64" text-anchor="middle" font-size="12">9300.00</text>
+<text x="624.75" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 624.75,452.00)">M3 (llama-3.2-3b-instruct:q4_k_m)</text>
+<rect x="803.25" y="224.55" width="74.00" height="209.45" fill="#666"/>
+<text x="840.25" y="217.55" text-anchor="middle" font-size="12">6400.00</text>
+<text x="840.25" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 840.25,452.00)">M4 (llama-3.2-3b-instruct:q8_0)</text>
+  </g>
+</svg>

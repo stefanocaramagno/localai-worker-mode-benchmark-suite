@@ -81,6 +81,7 @@ config/conventions/RC1.json
 config/pilot-consolidation/CP1.json
 config/statistical-rigor/SR1.json
 config/technical-diagnosis/TD1.json
+config/reporting/RP1.json
 config/completion-gate/CG1.json
 ```
 
@@ -198,6 +199,7 @@ scripts/load/pilot/Start-PilotModelSweep.ps1
 scripts/load/pilot/Start-PilotPlacementSweep.ps1
 scripts/load/post/Start-ConsolidatedPilotBenchmarks.ps1
 scripts/load/post/Start-TechnicalDiagnosis.ps1
+scripts/load/post/Start-Reporting.ps1
 scripts/load/post/Start-CompletionGate.ps1
 ```
 
@@ -223,6 +225,7 @@ scripts/load/pilot/start-pilot-model-sweep.sh
 scripts/load/pilot/start-pilot-placement-sweep.sh
 scripts/load/post/start-consolidated-pilot-benchmarks.sh
 scripts/load/post/start-technical-diagnosis.sh
+scripts/load/post/start-reporting.sh
 scripts/load/post/start-completion-gate.sh
 ```
 
@@ -255,6 +258,7 @@ The following files must exist and remain readable:
 | `config/pilot-consolidation/CP1.json` | Consolidated pilot benchmark profile. |
 | `config/statistical-rigor/SR1.json` | Repeatability and statistical rigor profile. |
 | `config/technical-diagnosis/TD1.json` | Technical diagnosis profile. |
+| `config/reporting/RP1.json` | Reporting and visualization profile. |
 | `config/completion-gate/CG1.json` | Completion gate profile. |
 | `config/cluster-access/kubeconfig` | Project Kubernetes access file. |
 

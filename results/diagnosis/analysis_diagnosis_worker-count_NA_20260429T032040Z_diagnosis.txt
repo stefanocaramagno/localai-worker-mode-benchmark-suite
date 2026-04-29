@@ -1,0 +1,45 @@
+=============================================
+ Technical Diagnosis
+=============================================
+Diagnosis ID          : analysis_diagnosis_worker-count_NA_20260429T032040Z
+Family scope          : worker-count
+Closure status        : not_enough_data
+Validation summary    : available
+
+Metric units
+------------
+- mean_response_time_ms, p50_response_time_ms, p95_response_time_ms, p99_response_time_ms: ms
+- throughput_rps: requests/s
+- success_rate_percent: %
+- maxNodeCpuPercentObserved: %
+- maxNodeMemoryPercentObserved: %
+- request_count: requests
+- failure_count: failures
+
+Coverage overview
+-----------------
+- worker-count: scenariosWithSamples=2/4, scenariosWithUnsupportedEvidence=2, scenariosObserved=4, sampleCount=6, unsupportedReplicaCount=6, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\worker-count
+
+Findings
+--------
+1. [high] La validazione minima end-to-end risulta disponibile come base di affidabilità funzionale.
+   Implicazione: La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico.
+   Evidenza: {"success_rate_percent": 100, "mean_response_time_ms": 1586.03, "throughput_rps": 0.2941, "units": {"success_rate_percent": "%", "mean_response_time_ms": "ms", "throughput_rps": "requests/s"}}
+
+Family-level judgments
+---------------------
+- worker-count: [weak_signal] Nel confronto iniziale tra configurazioni misurate il numero di worker non produce un miglioramento abbastanza marcato.
+  Implicazione: Il passaggio da W1 a W2 è stato osservato, ma il beneficio sulla latenza media resta sotto la soglia diagnostica configurata; eventuali scenari superiori unsupported limitano inoltre la valutazione oltre il perimetro misurato.
+  Evidenza: {"W1_mean_response_time_ms": 1507.3645, "W2_mean_response_time_ms": 1504.1032, "W1_throughput_rps": 0.5709, "W2_throughput_rps": 0.5715, "throughputChangePercent": 0.11, "improvementPercent": 0.22, "workerImprovementThresholdPercent": 5, "unsupportedScenarios": ["W3", "W4"]}
+
+Per-family scenario averages
+--------------------------
+Family: worker-count
+- W1: samples=3, mean_response_time_ms=1507.3645 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1700.0 ms, throughput_rps=0.5709 requests/s, max_node_cpu_percent=34.0 %, max_node_memory_percent=38.0 %
+- W2: samples=3, mean_response_time_ms=1504.1032 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1700.0 ms, throughput_rps=0.5715 requests/s, max_node_cpu_percent=35.0 %, max_node_memory_percent=38.0 %
+- W3: unsupportedEvidence=3, replicas=['A', 'B', 'C'], evidenceKinds=['failed_scheduling', 'insufficient_cpu', 'insufficient_memory', 'no_preemption_victims_found', 'node_affinity_selector_mismatch', 'pending_pod', 'preemption_not_helpful']
+- W4: unsupportedEvidence=3, replicas=['A', 'B', 'C'], evidenceKinds=['failed_scheduling', 'insufficient_cpu', 'insufficient_memory', 'no_preemption_victims_found', 'node_affinity_selector_mismatch', 'pending_pod', 'preemption_not_helpful']
+
+Gaps
+----
+- Nessun gap critico rilevato per la diagnosi preliminare.

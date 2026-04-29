@@ -28,6 +28,19 @@ CSV_FIELD_MAP = {
     "throughput_rps": "Requests/s",
 }
 
+METRIC_UNITS = {
+    "request_count": "requests",
+    "failure_count": "failures",
+    "mean_response_time_ms": "ms",
+    "p50_response_time_ms": "ms",
+    "p95_response_time_ms": "ms",
+    "p99_response_time_ms": "ms",
+    "throughput_rps": "requests/s",
+    "success_rate_percent": "%",
+    "maxNodeCpuPercentObserved": "%",
+    "maxNodeMemoryPercentObserved": "%",
+}
+
 FAMILY_ORDER = ["worker-count", "workload", "models", "placement"]
 
 
@@ -38,6 +51,28 @@ def to_number(value):
         return float(value)
     except Exception:
         return None
+
+
+def metric_mean(summary, metric_key):
+    if not summary:
+        return None
+    return (summary.get("metrics") or {}).get(metric_key, {}).get("mean")
+
+
+def scenario_metric_snapshot(summary):
+    return {
+        "mean_response_time_ms": metric_mean(summary, "mean_response_time_ms"),
+        "p50_response_time_ms": metric_mean(summary, "p50_response_time_ms"),
+        "p95_response_time_ms": metric_mean(summary, "p95_response_time_ms"),
+        "p99_response_time_ms": metric_mean(summary, "p99_response_time_ms"),
+        "throughput_rps": metric_mean(summary, "throughput_rps"),
+        "max_node_cpu_percent": summary.get("maxNodeCpuPercentObserved") if summary else None,
+        "max_node_memory_percent": summary.get("maxNodeMemoryPercentObserved") if summary else None,
+    }
+
+
+def compact_metric_snapshot(snapshot):
+    return {key: value for key, value in snapshot.items() if value is not None}
 
 
 def load_json(path: Path):
@@ -342,9 +377,15 @@ def diagnose_worker_count(profile, family_data, findings):
     for scenario_id, entry in sorted(family_data.items(), key=lambda item: item[1]["scenario"].get("workerCount", 0)):
         summary = entry.get("summary")
         if summary and "mean_response_time_ms" in summary["metrics"]:
-            scenario_means.append((scenario_id, entry["scenario"].get("workerCount"), summary["metrics"]["mean_response_time_ms"]["mean"]))
+            scenario_means.append((
+                scenario_id,
+                entry["scenario"].get("workerCount"),
+                summary["metrics"]["mean_response_time_ms"]["mean"],
+                metric_mean(summary, "throughput_rps"),
+            ))
         elif entry.get("unsupportedSummary"):
             unsupported_scenarios.append(scenario_id)
+    throughput_by_scenario = {item[0]: item[3] for item in scenario_means if item[3] is not None}
     if len(scenario_means) < 2:
         return build_family_judgment(
             "worker-count",
@@ -354,6 +395,7 @@ def diagnose_worker_count(profile, family_data, findings):
             "Senza almeno due configurazioni misurate comparabili non è ancora possibile attribuire un segnale affidabile al numero di worker; gli scenari unsupported restano comunque tracciati come osservati sotto i vincoli correnti.",
             {
                 "measuredScenarios": [item[0] for item in scenario_means],
+                "throughputRpsByScenario": throughput_by_scenario,
                 "unsupportedScenarios": unsupported_scenarios,
             },
         )
@@ -366,6 +408,7 @@ def diagnose_worker_count(profile, family_data, findings):
         "Il worker-count è stato analizzato, ma il segnale misurato nel cluster attuale non è ancora abbastanza marcato per essere considerato driver principale delle performance.",
         {
             "measuredScenarios": [item[0] for item in scenario_means],
+            "throughputRpsByScenario": throughput_by_scenario,
             "unsupportedScenarios": unsupported_scenarios,
         },
     )
@@ -383,6 +426,9 @@ def diagnose_worker_count(profile, family_data, findings):
                 {
                     "W1_mean_response_time_ms": w1[2],
                     "W2_mean_response_time_ms": w2[2],
+                    "W1_throughput_rps": w1[3],
+                    "W2_throughput_rps": w2[3],
+                    "throughputChangePercent": round(percent_change(w1[3], w2[3]), 2) if w1[3] is not None and w2[3] is not None else None,
                     "improvementPercent": round(improvement, 2),
                 },
                 "Il passaggio da uno a due worker sembra utile nel cluster corrente e suggerisce che una parte del collo di bottiglia iniziale sia mitigabile con parallelismo aggiuntivo.",
@@ -396,6 +442,9 @@ def diagnose_worker_count(profile, family_data, findings):
                 {
                     "W1_mean_response_time_ms": w1[2],
                     "W2_mean_response_time_ms": w2[2],
+                    "W1_throughput_rps": w1[3],
+                    "W2_throughput_rps": w2[3],
+                    "throughputChangePercent": round(percent_change(w1[3], w2[3]), 2) if w1[3] is not None and w2[3] is not None else None,
                     "improvementPercent": round(improvement, 2),
                     "unsupportedScenarios": unsupported_scenarios,
                 },
@@ -410,6 +459,9 @@ def diagnose_worker_count(profile, family_data, findings):
                 {
                     "W1_mean_response_time_ms": w1[2],
                     "W2_mean_response_time_ms": w2[2],
+                    "W1_throughput_rps": w1[3],
+                    "W2_throughput_rps": w2[3],
+                    "throughputChangePercent": round(percent_change(w1[3], w2[3]), 2) if w1[3] is not None and w2[3] is not None else None,
                     "improvementPercent": round(improvement, 2),
                     "workerImprovementThresholdPercent": profile["workerImprovementThresholdPercent"],
                     "unsupportedScenarios": unsupported_scenarios,
@@ -430,6 +482,7 @@ def diagnose_worker_count(profile, family_data, findings):
                     "bestScenario": best[0],
                     "bestWorkerCount": best[1],
                     "bestMeanResponseTimeMs": best[2],
+                    "throughputRpsByScenario": throughput_by_scenario,
                     "largerScenarioDeltasPercent": {item[0]: round(percent_change(best[2], item[2]), 2) for item in larger if percent_change(best[2], item[2]) is not None},
                 },
                 "Aumentare ulteriormente il numero di worker nel cluster attuale potrebbe introdurre overhead o comunque non ripagare in termini di latenza media.",
@@ -445,6 +498,7 @@ def diagnose_worker_count(profile, family_data, findings):
                         "bestScenario": best[0],
                         "bestWorkerCount": best[1],
                         "bestMeanResponseTimeMs": best[2],
+                        "throughputRpsByScenario": throughput_by_scenario,
                         "largerScenarioDeltasPercent": {item[0]: round(percent_change(best[2], item[2]), 2) for item in larger if percent_change(best[2], item[2]) is not None},
                         "unsupportedScenarios": unsupported_scenarios,
                     },
@@ -528,6 +582,8 @@ def diagnose_workload(profile, family_data, findings):
 def diagnose_models(profile, family_data, findings):
     small = []
     large = []
+    small_throughput = []
+    large_throughput = []
     observed_models = []
     for _, entry in family_data.items():
         summary = entry.get("summary")
@@ -535,11 +591,16 @@ def diagnose_models(profile, family_data, findings):
         if not summary or "mean_response_time_ms" not in summary["metrics"]:
             continue
         value = summary["metrics"]["mean_response_time_ms"]["mean"]
+        throughput_value = metric_mean(summary, "throughput_rps")
         observed_models.append(entry["scenario"].get("modelName"))
         if "1b" in model_name:
             small.append(value)
+            if throughput_value is not None:
+                small_throughput.append(throughput_value)
         elif "3b" in model_name:
             large.append(value)
+            if throughput_value is not None:
+                large_throughput.append(throughput_value)
     if not small or not large:
         return build_family_judgment(
             "models",
@@ -551,6 +612,9 @@ def diagnose_models(profile, family_data, findings):
         )
     small_mean = mean(small)
     large_mean = mean(large)
+    small_throughput_mean = mean(small_throughput) if small_throughput else None
+    large_throughput_mean = mean(large_throughput) if large_throughput else None
+    throughput_penalty = percent_change(small_throughput_mean, large_throughput_mean) if small_throughput_mean is not None and large_throughput_mean is not None else None
     penalty = percent_change(small_mean, large_mean)
     if penalty is not None and penalty >= profile["modelPenaltyThresholdPercent"]:
         add_finding(
@@ -561,6 +625,9 @@ def diagnose_models(profile, family_data, findings):
             {
                 "smallModelMeanResponseTimeMs": round(small_mean, 4),
                 "largeModelMeanResponseTimeMs": round(large_mean, 4),
+                "smallModelMeanThroughputRps": round(small_throughput_mean, 4) if small_throughput_mean is not None else None,
+                "largeModelMeanThroughputRps": round(large_throughput_mean, 4) if large_throughput_mean is not None else None,
+                "throughputChangePercent": round(throughput_penalty, 2) if throughput_penalty is not None else None,
                 "penaltyPercent": round(penalty, 2),
             },
             "Nel cluster CPU-only attuale il passaggio a modelli più grandi sembra incidere molto più della variazione fine di topologia o workload leggero.",
@@ -574,6 +641,9 @@ def diagnose_models(profile, family_data, findings):
             {
                 "smallModelMeanResponseTimeMs": round(small_mean, 4),
                 "largeModelMeanResponseTimeMs": round(large_mean, 4),
+                "smallModelMeanThroughputRps": round(small_throughput_mean, 4) if small_throughput_mean is not None else None,
+                "largeModelMeanThroughputRps": round(large_throughput_mean, 4) if large_throughput_mean is not None else None,
+                "throughputChangePercent": round(throughput_penalty, 2) if throughput_penalty is not None else None,
                 "penaltyPercent": round(penalty, 2),
             },
         )
@@ -593,9 +663,9 @@ def diagnose_models(profile, family_data, findings):
 
 
 def diagnose_placement(profile, family_data, findings):
-    pl1 = family_data.get("PL1", {}).get("summary")
-    pl2 = family_data.get("PL2", {}).get("summary")
-    if not pl1 or not pl2:
+    colocated = family_data.get("PL1", {}).get("summary")
+    distributed = family_data.get("PL2", {}).get("summary")
+    if not colocated or not distributed:
         return build_family_judgment(
             "placement",
             "insufficient_evidence",
@@ -604,7 +674,7 @@ def diagnose_placement(profile, family_data, findings):
             "Senza entrambe le configurazioni di placement misurate con metriche omogenee non è possibile stimare in modo affidabile l'effetto della collocazione dei worker.",
             {"availableScenarios": sorted([scenario_id for scenario_id, entry in family_data.items() if entry.get("summary")])},
         )
-    if "mean_response_time_ms" not in pl1["metrics"] or "mean_response_time_ms" not in pl2["metrics"]:
+    if "mean_response_time_ms" not in colocated["metrics"] or "mean_response_time_ms" not in distributed["metrics"]:
         return build_family_judgment(
             "placement",
             "insufficient_evidence",
@@ -613,30 +683,45 @@ def diagnose_placement(profile, family_data, findings):
             "Le configurazioni di placement sono presenti, ma l'assenza delle metriche chiave impedisce una valutazione affidabile dell'effetto di collocazione.",
             {"availableScenarios": sorted([scenario_id for scenario_id, entry in family_data.items() if entry.get("summary")])},
         )
-    pl1_mean = pl1["metrics"]["mean_response_time_ms"]["mean"]
-    pl2_mean = pl2["metrics"]["mean_response_time_ms"]["mean"]
-    diff = percent_change(pl2_mean, pl1_mean)
+
+    # PL1 is the locked baseline placement defined by B0: co-located on sc-app-02.
+    # PL2 is the experimental distributed two-node placement. Deltas must therefore
+    # be computed as PL2 relative to PL1, not the other way around.
+    colocated_mean = colocated["metrics"]["mean_response_time_ms"]["mean"]
+    distributed_mean = distributed["metrics"]["mean_response_time_ms"]["mean"]
+    colocated_throughput = metric_mean(colocated, "throughput_rps")
+    distributed_throughput = metric_mean(distributed, "throughput_rps")
+    throughput_diff = percent_change(colocated_throughput, distributed_throughput) if colocated_throughput is not None and distributed_throughput is not None else None
+    diff = percent_change(colocated_mean, distributed_mean)
+
+    evidence = {
+        "referencePlacementScenario": "PL1",
+        "candidatePlacementScenario": "PL2",
+        "PL1_mean_response_time_ms": colocated_mean,
+        "PL2_mean_response_time_ms": distributed_mean,
+        "PL1_throughput_rps": colocated_throughput,
+        "PL2_throughput_rps": distributed_throughput,
+        "throughputDifferencePercentVsPL1": round(throughput_diff, 2) if throughput_diff is not None else None,
+        "differencePercentVsPL1": round(diff, 2) if diff is not None else None,
+    }
+
     if diff is not None and abs(diff) >= profile["placementDifferenceThresholdPercent"]:
-        if pl1_mean > pl2_mean:
+        if distributed_mean > colocated_mean:
             title = "Il placement distribuito risulta più costoso del placement co-locato nel cluster corrente."
             implication = "L'overhead inter-nodo o di coordinamento potrebbe superare i benefici del bilanciamento, almeno nella topologia attuale a due worker node."
-            judgment_title = "La famiglia placement mostra un segnale misurabile: nel cluster corrente il placement distribuito risulta penalizzante."
+            judgment_title = "La famiglia placement mostra un segnale misurabile: nel cluster corrente il placement distribuito risulta penalizzante rispetto alla baseline co-located."
             judgment_implication = "La collocazione dei worker incide in modo leggibile sulle performance osservate e suggerisce che l'overhead inter-nodo non sia trascurabile nella topologia attuale."
         else:
             title = "Il placement distribuito mostra un vantaggio misurabile rispetto al placement co-locato."
             implication = "Distribuire i worker sui nodi disponibili potrebbe aiutare a ridurre contention locale e migliorare il comportamento del servizio."
-            judgment_title = "La famiglia placement mostra un segnale misurabile: nel cluster corrente il placement distribuito offre un vantaggio leggibile."
+            judgment_title = "La famiglia placement mostra un segnale misurabile: nel cluster corrente il placement distribuito offre un vantaggio leggibile rispetto alla baseline co-located."
             judgment_implication = "La collocazione dei worker incide in modo osservabile sulla latenza e suggerisce che la riduzione della contention locale superi l'overhead di coordinamento nel perimetro attuale."
         add_finding(
             findings,
             "placement_effect",
             title,
             "medium",
-            {
-                "PL1_mean_response_time_ms": pl1_mean,
-                "PL2_mean_response_time_ms": pl2_mean,
-                "differencePercentVsPL2": round(diff, 2),
-            },
+            evidence,
             implication,
         )
         return build_family_judgment(
@@ -645,22 +730,16 @@ def diagnose_placement(profile, family_data, findings):
             "medium",
             judgment_title,
             judgment_implication,
-            {
-                "PL1_mean_response_time_ms": pl1_mean,
-                "PL2_mean_response_time_ms": pl2_mean,
-                "differencePercentVsPL2": round(diff, 2),
-            },
+            evidence,
         )
     return build_family_judgment(
         "placement",
         "weak_signal",
         "low",
         "Nel perimetro osservato la famiglia placement non mostra ancora un effetto abbastanza marcato da essere considerato dominante.",
-        "Le configurazioni di placement sono state confrontate, ma la differenza di latenza resta sotto la soglia diagnostica configurata; nel cluster corrente il placement non emerge ancora come driver principale delle performance.",
+        "Le configurazioni di placement sono state confrontate rispetto alla baseline co-located PL1, ma la differenza di latenza resta sotto la soglia diagnostica configurata; nel cluster corrente il placement non emerge ancora come driver principale delle performance.",
         {
-            "PL1_mean_response_time_ms": pl1_mean,
-            "PL2_mean_response_time_ms": pl2_mean,
-            "differencePercentVsPL2": round(diff, 2) if diff is not None else None,
+            **evidence,
             "placementDifferenceThresholdPercent": profile["placementDifferenceThresholdPercent"],
         },
     )
@@ -727,9 +806,14 @@ def main():
             "La validazione minima end-to-end risulta disponibile come base di affidabilità funzionale.",
             "high",
             {
-                "successRatePercent": validation_summary.get("success_rate_percent"),
-                "meanResponseTimeMs": validation_summary.get("mean_response_time_ms"),
-                "throughputRps": validation_summary.get("throughput_rps"),
+                "success_rate_percent": validation_summary.get("success_rate_percent"),
+                "mean_response_time_ms": validation_summary.get("mean_response_time_ms"),
+                "throughput_rps": validation_summary.get("throughput_rps"),
+                "units": {
+                    "success_rate_percent": METRIC_UNITS["success_rate_percent"],
+                    "mean_response_time_ms": METRIC_UNITS["mean_response_time_ms"],
+                    "throughput_rps": METRIC_UNITS["throughput_rps"],
+                },
             },
             "La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico.",
         )
@@ -784,6 +868,7 @@ def main():
         "validationSummaryPath": str(validation_summary_path),
         "validationSummaryAvailable": validation_summary is not None,
         "validationSummary": validation_summary,
+        "metricUnits": METRIC_UNITS,
         "coverage": coverage,
         "familyData": all_family_data,
         "findings": findings,
@@ -800,6 +885,16 @@ def main():
     lines.append(f"Family scope          : {args.family}")
     lines.append(f"Closure status        : {closure_status}")
     lines.append(f"Validation summary    : {'available' if validation_summary is not None else 'missing'}")
+    lines.append("")
+    lines.append("Metric units")
+    lines.append("------------")
+    lines.append("- mean_response_time_ms, p50_response_time_ms, p95_response_time_ms, p99_response_time_ms: ms")
+    lines.append("- throughput_rps: requests/s")
+    lines.append("- success_rate_percent: %")
+    lines.append("- maxNodeCpuPercentObserved: %")
+    lines.append("- maxNodeMemoryPercentObserved: %")
+    lines.append("- request_count: requests")
+    lines.append("- failure_count: failures")
     lines.append("")
     lines.append("Coverage overview")
     lines.append("-----------------")
@@ -842,7 +937,17 @@ def main():
                     lines.append(f"- {scenario_id}: no samples")
                 continue
             metric_summary = summary.get("metrics", {})
-            lines.append(f"- {scenario_id}: samples={summary.get('sampleCount', 0)}, mean={metric_summary.get('mean_response_time_ms', {}).get('mean')}, p95={metric_summary.get('p95_response_time_ms', {}).get('mean')}, throughput={metric_summary.get('throughput_rps', {}).get('mean')}, maxNodeCpu={summary.get('maxNodeCpuPercentObserved')}, maxNodeMemory={summary.get('maxNodeMemoryPercentObserved')}")
+            lines.append(
+                f"- {scenario_id}: "
+                f"samples={summary.get('sampleCount', 0)}, "
+                f"mean_response_time_ms={metric_summary.get('mean_response_time_ms', {}).get('mean')} ms, "
+                f"p50_response_time_ms={metric_summary.get('p50_response_time_ms', {}).get('mean')} ms, "
+                f"p95_response_time_ms={metric_summary.get('p95_response_time_ms', {}).get('mean')} ms, "
+                f"p99_response_time_ms={metric_summary.get('p99_response_time_ms', {}).get('mean')} ms, "
+                f"throughput_rps={metric_summary.get('throughput_rps', {}).get('mean')} requests/s, "
+                f"max_node_cpu_percent={summary.get('maxNodeCpuPercentObserved')} %, "
+                f"max_node_memory_percent={summary.get('maxNodeMemoryPercentObserved')} %"
+            )
         lines.append("")
     lines.append("Gaps")
     lines.append("----")

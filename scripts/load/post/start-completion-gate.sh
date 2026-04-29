@@ -4,7 +4,7 @@ set -euo pipefail
 PROFILE_CONFIG=""
 DIAGNOSIS_JSON=""
 OUTPUT_ROOT=""
-RESULTS_ROOT=""
+REPOSITORY_ROOT=""
 DRY_RUN=false
 
 print_usage() {
@@ -16,7 +16,7 @@ Options:
   --profile-config PATH | -ProfileConfig PATH
   --diagnosis-json PATH | -DiagnosisJson PATH
   --output-root PATH | -OutputRoot PATH
-  --results-root PATH | -ResultsRoot PATH
+  --repository-root PATH | -RepositoryRoot PATH
   --dry-run | -DryRun
   --help | -Help
 USAGE
@@ -51,24 +51,55 @@ resolve_repo_root() {
 
 find_latest_all_diagnosis() {
   local repo_root="$1"
-  $PYTHON_CMD - <<'PY' "$repo_root"
+  $PYTHON_CMD - "$repo_root" <<'PY'
 import json
+import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
+
 repo_root = Path(sys.argv[1])
+diagnosis_root = repo_root / "results" / "diagnosis"
 candidates = []
-for path in (repo_root / "results" / "diagnosis").glob("*_diagnosis.json"):
+
+if not diagnosis_root.exists():
+    sys.exit(1)
+
+
+def parse_sort_key(path, payload):
+    created_at = payload.get("diagnosis", {}).get("createdAtUtc")
+    if created_at:
+        try:
+            normalized = created_at.replace("Z", "+00:00")
+            return datetime.fromisoformat(normalized).astimezone(timezone.utc).timestamp()
+        except Exception:
+            pass
+
+    diagnosis_id = str(payload.get("diagnosis", {}).get("diagnosisId", ""))
+    combined = f"{diagnosis_id} {path.name}"
+    match = re.search(r"(\d{8}T\d{6}Z)", combined)
+    if match:
+        try:
+            return datetime.strptime(match.group(1), "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc).timestamp()
+        except Exception:
+            pass
+
+    return path.stat().st_mtime
+
+for path in diagnosis_root.glob("*_diagnosis.json"):
     try:
         with path.open("r", encoding="utf-8-sig") as fh:
             data = json.load(fh)
         family_scope = data.get("diagnosis", {}).get("familyScope")
         if family_scope == "all":
-            candidates.append(path)
+            candidates.append((parse_sort_key(path, data), path))
     except Exception:
         continue
+
 if not candidates:
     sys.exit(1)
-latest = max(candidates, key=lambda p: p.stat().st_mtime)
+
+latest = max(candidates, key=lambda item: item[0])[1]
 print(str(latest))
 PY
 }
@@ -87,8 +118,8 @@ while [[ $# -gt 0 ]]; do
       OUTPUT_ROOT="$2"
       shift 2
       ;;
-    --results-root|-ResultsRoot)
-      RESULTS_ROOT="$2"
+    --repository-root|-RepositoryRoot)
+      REPOSITORY_ROOT="$2"
       shift 2
       ;;
     --dry-run|-DryRun)
@@ -111,8 +142,8 @@ PYTHON_CMD="$(resolve_python_command)"
 REPO_ROOT="$(resolve_repo_root)"
 source "$REPO_ROOT/scripts/load/lib/bash/run-convention.sh"
 
-if [[ -n "$RESULTS_ROOT" ]]; then
-  REPO_ROOT="$RESULTS_ROOT"
+if [[ -n "$REPOSITORY_ROOT" ]]; then
+  REPO_ROOT="$REPOSITORY_ROOT"
 fi
 
 if [[ -z "$PROFILE_CONFIG" ]]; then
@@ -124,9 +155,11 @@ if [[ ! -f "$PROFILE_CONFIG" ]]; then
   exit 1
 fi
 
+DIAGNOSIS_SELECTION_MODE="explicit"
 if [[ -z "$DIAGNOSIS_JSON" ]]; then
+  DIAGNOSIS_SELECTION_MODE="auto-detected latest all diagnosis"
   if ! DIAGNOSIS_JSON="$(find_latest_all_diagnosis "$REPO_ROOT")"; then
-    echo "Impossibile individuare automaticamente una diagnosi tecnica 'all' in results/diagnosis." >&2
+    echo "Impossibile individuare automaticamente una diagnosi tecnica 'all' in results/diagnosis. Eseguire prima la technical diagnosis oppure passare --diagnosis-json con un file esplicito." >&2
     exit 1
   fi
 fi
@@ -136,7 +169,7 @@ if [[ ! -f "$DIAGNOSIS_JSON" ]]; then
   exit 1
 fi
 
-OUTPUT_ROOT_REL="$($PYTHON_CMD - <<'PY' "$PROFILE_CONFIG"
+OUTPUT_ROOT_REL="$($PYTHON_CMD - "$PROFILE_CONFIG" <<'PY'
 import json, sys
 with open(sys.argv[1], 'r', encoding='utf-8-sig') as fh:
     data = json.load(fh)
@@ -151,14 +184,14 @@ fi
 mkdir -p -- "$OUTPUT_ROOT"
 RUN_TIMESTAMP_UTC="$(rc_build_timestamp_utc)"
 EVALUATION_ID="$(rc_build_run_id "analysis" "completion-gate" "all" "NA" "$RUN_TIMESTAMP_UTC")"
-MANIFEST_SUFFIX="$($PYTHON_CMD - <<'PY' "$PROFILE_CONFIG"
+MANIFEST_SUFFIX="$($PYTHON_CMD - "$PROFILE_CONFIG" <<'PY'
 import json, sys
 with open(sys.argv[1], 'r', encoding='utf-8-sig') as fh:
     data = json.load(fh)
 print(data['manifestSuffix'])
 PY
 )"
-TEXT_SUFFIX="$($PYTHON_CMD - <<'PY' "$PROFILE_CONFIG"
+TEXT_SUFFIX="$($PYTHON_CMD - "$PROFILE_CONFIG" <<'PY'
 import json, sys
 with open(sys.argv[1], 'r', encoding='utf-8-sig') as fh:
     data = json.load(fh)
@@ -188,6 +221,7 @@ echo " Completion Gate Launcher"
 echo "============================================="
 echo "Repository            : $REPO_ROOT"
 echo "Profile config        : $PROFILE_CONFIG"
+echo "Diagnosis selection   : $DIAGNOSIS_SELECTION_MODE"
 echo "Diagnosis JSON        : $DIAGNOSIS_JSON"
 echo "Evaluation ID         : $EVALUATION_ID"
 echo "Output JSON           : $OUTPUT_JSON"

@@ -94,7 +94,8 @@ Recommended pipeline order:
 9. consolidated pilot benchmarks;
 10. statistical rigor assessment;
 11. technical diagnosis;
-12. completion gate and phase closure.
+12. reporting and visualization;
+13. completion gate and phase closure.
 
 ---
 

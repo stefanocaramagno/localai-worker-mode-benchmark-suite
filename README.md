@@ -1,14 +1,15 @@
 # LocalAI Worker-Mode Benchmark Suite
 
-A professional benchmarking, evidence-collection, and diagnostic framework for **characterizing LocalAI distributed inference on Kubernetes**, with a specific focus on **worker mode / model sharding**, controlled pilot sweeps, disciplined **client-side and cluster-side evidence capture**, technical diagnosis, and formal phase-closure evaluation.
+A professional benchmarking, evidence-collection, diagnosis, reporting, and phase-closure framework for **characterizing LocalAI distributed inference on Kubernetes**, with a specific focus on **worker mode / model sharding**, controlled pilot sweeps, disciplined **client-side and cluster-side evidence capture**, technical diagnosis, advisor-facing visualization, and formal completion-gate evaluation.
 
 The repository is designed to support disciplined experimentation rather than ad-hoc testing. It provides a structured execution pipeline for answering questions such as:
 
-- How does latency change as the number of workers changes?
+- How does latency change as the number of LocalAI RPC workers changes?
 - When does additional worker count stop producing meaningful gains?
 - How strongly does model size affect performance on a CPU-only cluster?
 - Does placement materially influence response time and throughput in the current topology?
 - Which scenarios are measurably supported, and which are **unsupported under current constraints**?
+- How can benchmark evidence be summarized through diagnosis outputs, charts, and sweep-level reports before deciding whether a characterization phase can be closed?
 
 ---
 
@@ -22,14 +23,18 @@ This project standardizes the execution of LocalAI worker-mode experiments acros
 - **automatic client-side artifact collection**;
 - **automatic cluster-side artifact collection**;
 - **technical diagnosis generation**;
+- **reporting and visualization generation**;
 - **formal completion-gate evaluation**.
 
-The result is a benchmark suite that produces not only raw measurements, but also a two-layer evidence trail that combines:
+The result is a benchmark suite that produces not only raw measurements, but also a multi-layer evidence trail that combines:
 
-- **client-observed service behavior** such as latency, throughput, failures, and percentile distributions;
-- **cluster-observed infrastructure behavior** such as pod placement, node pressure, readiness state, restarts, and scheduling signals.
+- **client-observed service behavior**, such as response time, percentile latency, throughput, failure count, and success rate;
+- **cluster-observed infrastructure behavior**, such as pod placement, node pressure, readiness state, restarts, and scheduling signals;
+- **diagnosis-level interpretation**, such as family-level judgments, strong findings, unsupported-scenario evidence, and preliminary closure status;
+- **advisor-facing reporting**, such as global reports, per-sweep reports, charts, and parameter matrices;
+- **formal closure evaluation**, such as completion-gate JSON and text outputs.
 
-This dual perspective makes it possible to interpret results in a disciplined way, instead of treating performance numbers as isolated client-side outputs or isolated infrastructure snapshots.
+This layered perspective makes it possible to interpret results in a disciplined way, instead of treating performance numbers as isolated client-side outputs or isolated infrastructure snapshots.
 
 ---
 
@@ -37,17 +42,18 @@ This dual perspective makes it possible to interpret results in a disciplined wa
 
 The suite currently supports a first disciplined characterization cycle across four main experimental dimensions:
 
-- **worker-count sweep**
-- **workload sweep**
-- **model sweep**
-- **placement sweep**
+- **worker-count sweep**;
+- **workload sweep**;
+- **model sweep**;
+- **placement sweep**.
 
 It also provides:
 
 - an **official locked baseline** for controlled comparisons;
-- exploratory smoke, low-load and small concurrency validation flows;
+- exploratory smoke, low-load, and small-concurrency validation flows;
 - structured support for scenarios classified as `unsupported_under_current_constraints`;
 - technical diagnosis with both **strong findings** and **family-level judgments**;
+- reporting and visualization outputs with both a **global report** and **dedicated sweep reports**;
 - completion-gate logic for deciding whether a benchmark cycle is strong enough to be considered closed.
 
 ---
@@ -89,8 +95,8 @@ Each benchmark run follows a common execution model:
 
 The suite collects both:
 
-- **client-side benchmark metrics** such as response times, throughput, failure count, success rate, and percentile distributions;
-- **cluster-side evidence** such as node pressure, pod placement, events, pod descriptions, services, restarts, and readiness state.
+- **client-side benchmark metrics**, such as request count, response time, throughput, failure count, success rate, and percentile distributions;
+- **cluster-side evidence**, such as node pressure, pod placement, events, pod descriptions, services, restarts, and readiness state.
 
 ### 5. Technical Diagnosis
 
@@ -99,12 +105,31 @@ The diagnosis phase converts benchmark outputs into structured interpretation, i
 - coverage overview by family;
 - scenario averages;
 - explicit support for unsupported scenarios;
+- metric values with explicit units, including mean response time, P50, P95, P99, throughput, request count, failure count, success rate, CPU, and memory;
 - strong findings when the signal is dominant;
 - family-level judgments when the signal is weak or evidence is incomplete.
 
-### 6. Completion Gate
+### 6. Reporting and Visualization
 
-A post-analysis completion gate evaluates whether the current characterization cycle is sufficiently strong to justify phase closure.
+The reporting phase runs after technical diagnosis and before completion-gate evaluation. It generates a stable advisor-facing report directory under:
+
+```text
+results/reporting/
+```
+
+The reporting phase combines:
+
+- quantitative values from measurement CSV files;
+- context and interpretation from the latest technical diagnosis;
+- scenario configuration metadata;
+- charts for latency, throughput, CPU, and memory;
+- explicit fixed and varied parameter summaries.
+
+It produces both a global report and one dedicated report for each sweep family.
+
+### 7. Completion Gate
+
+A post-reporting completion gate evaluates whether the current characterization cycle is sufficiently strong to justify phase closure. It is diagnosis-driven and reporting-aware: it checks not only whether benchmark evidence and diagnosis outputs exist, but also whether the required reporting artifacts have been generated.
 
 ---
 
@@ -115,12 +140,12 @@ A post-analysis completion gate evaluates whether the current characterization c
 ├── config/
 │   ├── baseline, pilot scenarios, protocol, metric-set
 │   ├── cluster-capture, precheck, statistical rigor
-│   ├── technical diagnosis, completion gate
+│   ├── technical diagnosis, reporting, completion gate
 │   └── conventions and phase profiles
 ├── docs/runbooks/
 │   ├── cluster bootstrap and access
 │   ├── deployment, validation, baseline, pilot sweeps
-│   ├── evidence collection, diagnosis, completion gate
+│   ├── evidence collection, diagnosis, reporting, completion gate
 │   └── cleanup and rerun guidance
 ├── infra/k8s/
 │   ├── base/
@@ -134,6 +159,7 @@ A post-analysis completion gate evaluates whether the current characterization c
 │   ├── baseline/
 │   ├── pilot/
 │   ├── diagnosis/
+│   ├── reporting/
 │   └── completion-gate/
 └── scripts/
     ├── validation/
@@ -156,6 +182,7 @@ The repository is intentionally profile-driven. The most relevant configuration 
 | Precheck | `config/precheck/TC1.json` | Technical readiness checks before a run |
 | Statistical rigor | `config/statistical-rigor/SR1.json` | Repeatability and coefficient-of-variation rules |
 | Technical diagnosis | `config/technical-diagnosis/TD1.json` | Evidence interpretation rules |
+| Reporting | `config/reporting/RP1.json` | Advisor-facing reporting and visualization profile |
 | Completion gate | `config/completion-gate/CG1.json` | Formal phase-closure criteria |
 
 ---
@@ -222,12 +249,57 @@ Available launcher groups include:
 - `scripts/load/pilot/`
 - `scripts/load/post/`
 
-### 5. Collect, Diagnose, and Evaluate
+### 5. Diagnose, Report, and Evaluate
 
-After execution, use:
+After consolidated execution, the canonical post-processing sequence is:
 
-- technical-diagnosis launchers to generate structured interpretation;
-- completion-gate launchers to decide whether the benchmark cycle is formally complete.
+1. **technical diagnosis**;
+2. **reporting and visualization**;
+3. **completion gate**.
+
+The corresponding launchers are available under `scripts/load/post/`. Detailed PowerShell and Bash commands, optional overrides, and rerun guidance are documented in:
+
+- `docs/runbooks/11-technical-diagnosis.md`;
+- `docs/runbooks/12-reporting-and-visualization.md`;
+- `docs/runbooks/13-completion-gate-and-phase-closure.md`.
+
+The completion-gate launcher can auto-detect the latest `all` diagnosis under `results/diagnosis/`, while explicit diagnosis paths remain available for retrospective evaluation.
+
+---
+
+## Reporting Outputs
+
+The reporting phase writes its current advisor-facing outputs under:
+
+```text
+results/reporting/
+```
+
+The main entry point is:
+
+```text
+results/reporting/index.html
+```
+
+The directory also contains the Markdown report, scenario summary CSV, reporting manifest, charts, and dedicated per-sweep reports. The report is static, not live: after new benchmark or diagnosis outputs are produced, rerun the reporting launcher to refresh the generated artifacts.
+
+The default behavior keeps `results/reporting/` as the stable current report location. Historical snapshots can optionally be stored under:
+
+```text
+results/reporting/archive/<reporting-id>/
+```
+
+For the complete output layout, archive modes, and execution commands, see `docs/runbooks/12-reporting-and-visualization.md`.
+
+---
+
+## Optional GitHub Pages Publication
+
+The generated HTML reporting package can optionally be published as a static GitHub Pages site through `.github/workflows/deploy-reporting-pages.yml`.
+
+GitHub Pages is only a publication layer for the current report under `results/reporting/`: it does not replace the local reporting workflow, it is not required by the completion gate, and it does not change the canonical post-processing order. Archived reporting snapshots under `results/reporting/archive/` are deliberately excluded from the published Pages artifact.
+
+For setup and publication details, see `docs/runbooks/12-reporting-and-visualization.md`.
 
 ---
 
@@ -263,6 +335,7 @@ A meaningful run is expected to produce more than a single CSV file. The suite i
 - cluster-side snapshots;
 - validation summaries;
 - diagnosis outputs;
+- reporting outputs;
 - completion-gate outputs.
 
 This structure makes it possible to explain *why* a run behaved in a certain way, not just *what* its average latency was.
@@ -275,6 +348,7 @@ This structure makes it possible to explain *why* a run behaved in a certain way
 - Detailed execution guidance lives in `docs/runbooks/`.
 - Cluster-access handling is documented separately in `config/cluster-access/README.md`.
 - The repository is designed around disciplined execution and evidence preservation, not around one-off manual benchmarking.
+- Generated reports under `results/reporting/` are refreshed by rerunning the reporting launcher after new benchmark and diagnosis outputs are produced.
 
 ---
 
@@ -287,6 +361,7 @@ The repository already supports a full first characterization cycle with:
 - pilot sweeps;
 - consolidated benchmark evidence;
 - technical diagnosis;
+- reporting and visualization;
 - formal completion-gate evaluation.
 
 The next stages can therefore build on an existing structured benchmark foundation rather than on an ungoverned experimental setup.

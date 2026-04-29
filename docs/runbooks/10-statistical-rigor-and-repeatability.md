@@ -454,6 +454,21 @@ The statistical rigor phase is the quality filter between execution and interpre
 
 ---
 
+## Relationship with the Reporting and Visualization Phase
+
+The reporting phase should consume evidence that has already passed through technical diagnosis. Its purpose is to make the consolidated benchmark campaign readable through charts, parameter matrices, and sweep-level summaries.
+
+If repeatability is weak, reporting should still expose the available evidence, but the resulting charts must not be interpreted as stable proof of an architectural effect. In that case, the report is useful for inspection and discussion, while the completion gate should remain conservative.
+
+In practical terms, reporting should preserve the distinction between:
+
+- measured scenarios;
+- unsupported scenarios;
+- missing scenarios;
+- sweep families that were not executed.
+
+---
+
 ## Relationship with the Completion Gate
 
 The completion gate should consume scenario families that have already passed a minimum repeatability review.
@@ -465,6 +480,7 @@ In practical terms, the completion gate should rely on:
 - scenario coverage;
 - artifact completeness;
 - diagnosis availability;
+- reporting availability;
 - repeatability status;
 - explicit handling of unsupported scenarios where applicable.
 

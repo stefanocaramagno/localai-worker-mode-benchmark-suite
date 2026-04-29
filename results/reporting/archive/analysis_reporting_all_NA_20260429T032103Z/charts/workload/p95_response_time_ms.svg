@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="490.0" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold">Workload sweep - P95 response time</text>
+  <text x="490.0" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="13">Unit: ms</text>
+  <g font-family="Arial, sans-serif" fill="#222">
+<line x1="86" y1="434" x2="948" y2="434" stroke="#222"/>
+<line x1="86" y1="74" x2="86" y2="434" stroke="#222"/>
+<line x1="81" y1="434.00" x2="948" y2="434.00" stroke="#ddd"/>
+<text x="76" y="438.00" text-anchor="end" font-size="12">0.00</text>
+<line x1="81" y1="362.00" x2="948" y2="362.00" stroke="#ddd"/>
+<text x="76" y="366.00" text-anchor="end" font-size="12">800.00</text>
+<line x1="81" y1="290.00" x2="948" y2="290.00" stroke="#ddd"/>
+<text x="76" y="294.00" text-anchor="end" font-size="12">1600.00</text>
+<line x1="81" y1="218.00" x2="948" y2="218.00" stroke="#ddd"/>
+<text x="76" y="222.00" text-anchor="end" font-size="12">2400.00</text>
+<line x1="81" y1="146.00" x2="948" y2="146.00" stroke="#ddd"/>
+<text x="76" y="150.00" text-anchor="end" font-size="12">3200.00</text>
+<line x1="81" y1="74.00" x2="948" y2="74.00" stroke="#ddd"/>
+<text x="76" y="78.00" text-anchor="end" font-size="12">4000.00</text>
+<rect x="192.67" y="299.00" width="74.00" height="135.00" fill="#666"/>
+<text x="229.67" y="292.00" text-anchor="middle" font-size="12">1500.00</text>
+<text x="229.67" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 229.67,452.00)">WL1 (1 users, spawn 1)</text>
+<rect x="480.00" y="290.00" width="74.00" height="144.00" fill="#666"/>
+<text x="517.00" y="283.00" text-anchor="middle" font-size="12">1600.00</text>
+<text x="517.00" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 517.00,452.00)">WL2 (2 users, spawn 1)</text>
+<rect x="767.33" y="137.00" width="74.00" height="297.00" fill="#666"/>
+<text x="804.33" y="130.00" text-anchor="middle" font-size="12">3300.00</text>
+<text x="804.33" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 804.33,452.00)">WL3 (4 users, spawn 2)</text>
+  </g>
+</svg>

@@ -57,7 +57,7 @@ Recommended pipeline order:
 6. **exploratory load validation**;
 7. official baseline execution or pilot sweep execution;
 8. consolidated pilot benchmark campaigns;
-9. technical diagnosis and phase closure.
+9. technical diagnosis, reporting, and phase closure.
 
 ---
 

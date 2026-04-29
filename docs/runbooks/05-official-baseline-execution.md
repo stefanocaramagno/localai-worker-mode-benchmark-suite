@@ -49,6 +49,7 @@ This runbook does **not** cover:
 - manual topology design;
 - pilot sweeps;
 - technical diagnosis;
+- reporting and visualization;
 - completion gate evaluation.
 
 ---

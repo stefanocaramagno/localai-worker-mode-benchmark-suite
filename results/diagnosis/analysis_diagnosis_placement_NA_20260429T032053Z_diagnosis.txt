@@ -1,0 +1,43 @@
+=============================================
+ Technical Diagnosis
+=============================================
+Diagnosis ID          : analysis_diagnosis_placement_NA_20260429T032053Z
+Family scope          : placement
+Closure status        : not_enough_data
+Validation summary    : available
+
+Metric units
+------------
+- mean_response_time_ms, p50_response_time_ms, p95_response_time_ms, p99_response_time_ms: ms
+- throughput_rps: requests/s
+- success_rate_percent: %
+- maxNodeCpuPercentObserved: %
+- maxNodeMemoryPercentObserved: %
+- request_count: requests
+- failure_count: failures
+
+Coverage overview
+-----------------
+- placement: scenariosWithSamples=2/2, scenariosWithUnsupportedEvidence=0, scenariosObserved=2, sampleCount=6, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement
+
+Findings
+--------
+1. [high] La validazione minima end-to-end risulta disponibile come base di affidabilità funzionale.
+   Implicazione: La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico.
+   Evidenza: {"success_rate_percent": 100, "mean_response_time_ms": 1586.03, "throughput_rps": 0.2941, "units": {"success_rate_percent": "%", "mean_response_time_ms": "ms", "throughput_rps": "requests/s"}}
+
+Family-level judgments
+---------------------
+- placement: [weak_signal] Nel perimetro osservato la famiglia placement non mostra ancora un effetto abbastanza marcato da essere considerato dominante.
+  Implicazione: Le configurazioni di placement sono state confrontate rispetto alla baseline co-located PL1, ma la differenza di latenza resta sotto la soglia diagnostica configurata; nel cluster corrente il placement non emerge ancora come driver principale delle performance.
+  Evidenza: {"referencePlacementScenario": "PL1", "candidatePlacementScenario": "PL2", "PL1_mean_response_time_ms": 1483.7526, "PL2_mean_response_time_ms": 1538.3188, "PL1_throughput_rps": 0.5749, "PL2_throughput_rps": 0.5656, "throughputDifferencePercentVsPL1": -1.62, "differencePercentVsPL1": 3.68, "placementDifferenceThresholdPercent": 10}
+
+Per-family scenario averages
+--------------------------
+Family: placement
+- PL1: samples=3, mean_response_time_ms=1483.7526 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1500.0 ms, p99_response_time_ms=1633.3333 ms, throughput_rps=0.5749 requests/s, max_node_cpu_percent=35.0 %, max_node_memory_percent=33.0 %
+- PL2: samples=3, mean_response_time_ms=1538.3188 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1633.3333 ms, throughput_rps=0.5656 requests/s, max_node_cpu_percent=22.0 %, max_node_memory_percent=34.0 %
+
+Gaps
+----
+- Nessun gap critico rilevato per la diagnosi preliminare.

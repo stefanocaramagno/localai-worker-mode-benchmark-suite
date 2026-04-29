@@ -574,4 +574,5 @@ If the consolidated family has already produced the expected artifacts and clust
 
 - statistical rigor review;
 - technical diagnosis;
+- reporting and visualization;
 - completion gate evaluation.

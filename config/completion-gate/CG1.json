@@ -1,6 +1,6 @@
 {
   "profileId": "CG1",
-  "description": "Explicit completion gate for declaring the current exploratory characterization cycle completed after validation, consolidated pilot coverage, repeatability evidence and a first technical diagnosis.",
+  "description": "Explicit completion gate for declaring the current exploratory characterization cycle completed after validation, consolidated pilot coverage, repeatability evidence, first technical diagnosis, and advisor-facing reporting/visualization.",
   "outputRoot": "results/completion-gate",
   "manifestSuffix": "_completion_gate.json",
   "textSuffix": "_completion_gate.txt",
@@ -39,5 +39,40 @@
     "artefatti cluster-side"
   ],
   "acceptUnsupportedScenariosAsCovered": true,
-  "minimumUnsupportedReplicasPerScenario": 2
+  "minimumUnsupportedReplicasPerScenario": 2,
+  "requiredReportingArtifacts": {
+    "enabled": true,
+    "reportingRoot": "results/reporting",
+    "manifestName": "reporting-manifest.json",
+    "markdownReportName": "report.md",
+    "htmlReportName": "index.html",
+    "scenarioSummaryCsvName": "scenario-summary.csv",
+    "chartsDirectoryName": "charts",
+    "requiredChartFamilies": [
+      "worker-count",
+      "workload",
+      "models",
+      "placement"
+    ],
+    "requiredChartMetrics": [
+      "mean_response_time_ms",
+      "p50_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps"
+    ],
+    "description": "Required advisor-facing reporting artifacts generated after technical diagnosis and before completion-gate evaluation, including one consolidated report and one dedicated report per sweep.",
+    "sweepsDirectoryName": "sweeps",
+    "requiredSweepReports": [
+      "worker-count",
+      "workload",
+      "models",
+      "placement"
+    ]
+  },
+  "recommendedPipelineOrder": [
+    "technical_diagnosis",
+    "reporting_and_visualization",
+    "completion_gate"
+  ]
 }

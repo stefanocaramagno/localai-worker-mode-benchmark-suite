@@ -1,0 +1,78 @@
+=============================================
+ Technical Diagnosis
+=============================================
+Diagnosis ID          : analysis_diagnosis_all_NA_20260429T032056Z
+Family scope          : all
+Closure status        : preliminary_diagnosis_available
+Validation summary    : available
+
+Metric units
+------------
+- mean_response_time_ms, p50_response_time_ms, p95_response_time_ms, p99_response_time_ms: ms
+- throughput_rps: requests/s
+- success_rate_percent: %
+- maxNodeCpuPercentObserved: %
+- maxNodeMemoryPercentObserved: %
+- request_count: requests
+- failure_count: failures
+
+Coverage overview
+-----------------
+- worker-count: scenariosWithSamples=2/4, scenariosWithUnsupportedEvidence=2, scenariosObserved=4, sampleCount=6, unsupportedReplicaCount=6, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\worker-count
+- workload: scenariosWithSamples=3/3, scenariosWithUnsupportedEvidence=0, scenariosObserved=3, sampleCount=9, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\workload
+- models: scenariosWithSamples=4/4, scenariosWithUnsupportedEvidence=0, scenariosObserved=4, sampleCount=12, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\models
+- placement: scenariosWithSamples=2/2, scenariosWithUnsupportedEvidence=0, scenariosObserved=2, sampleCount=6, unsupportedReplicaCount=0, resultsRoot=C:\Users\stefa\Desktop\localai-worker-mode-benchmark-suite\results\pilot\consolidated\placement
+
+Findings
+--------
+1. [high] La validazione minima end-to-end risulta disponibile come base di affidabilità funzionale.
+   Implicazione: La pipeline di benchmark parte da una base funzionale verificata e non da un setup puramente teorico.
+   Evidenza: {"success_rate_percent": 100, "mean_response_time_ms": 1586.03, "throughput_rps": 0.2941, "units": {"success_rate_percent": "%", "mean_response_time_ms": "ms", "throughput_rps": "requests/s"}}
+2. [medium] Il workload più intenso aumenta sensibilmente la latenza, segnalando possibile saturazione del sistema.
+   Implicazione: Il cluster appare più fragile quando cresce la concorrenza; la sola crescita del carico non si traduce necessariamente in aumento proporzionale del throughput utile.
+   Evidenza: {"WL1_mean_response_time_ms": 1457.786, "WL3_mean_response_time_ms": 3269.6865, "latencyIncreasePercent": 124.29, "WL1_throughput_rps": 0.2918, "WL3_throughput_rps": 0.7559, "throughputIncreasePercent": 159.05}
+3. [high] La dimensione del modello emerge come driver dominante della latenza media.
+   Implicazione: Nel cluster CPU-only attuale il passaggio a modelli più grandi sembra incidere molto più della variazione fine di topologia o workload leggero.
+   Evidenza: {"smallModelMeanResponseTimeMs": 1439.175, "largeModelMeanResponseTimeMs": 4757.0145, "smallModelMeanThroughputRps": 0.5826, "largeModelMeanThroughputRps": 0.2964, "throughputChangePercent": -49.12, "penaltyPercent": 230.54}
+
+Family-level judgments
+---------------------
+- worker-count: [weak_signal] Nel confronto iniziale tra configurazioni misurate il numero di worker non produce un miglioramento abbastanza marcato.
+  Implicazione: Il passaggio da W1 a W2 è stato osservato, ma il beneficio sulla latenza media resta sotto la soglia diagnostica configurata; eventuali scenari superiori unsupported limitano inoltre la valutazione oltre il perimetro misurato.
+  Evidenza: {"W1_mean_response_time_ms": 1507.3645, "W2_mean_response_time_ms": 1504.1032, "W1_throughput_rps": 0.5709, "W2_throughput_rps": 0.5715, "throughputChangePercent": 0.11, "improvementPercent": 0.22, "workerImprovementThresholdPercent": 5, "unsupportedScenarios": ["W3", "W4"]}
+- workload: [strong_signal] La famiglia workload mostra un segnale netto di deterioramento prestazionale all'aumentare del carico.
+  Implicazione: Nel cluster corrente il workload è un driver rilevante della latenza e suggerisce una soglia di fragilità più evidente nelle configurazioni più spinte.
+  Evidenza: {"WL1_mean_response_time_ms": 1457.786, "WL3_mean_response_time_ms": 3269.6865, "latencyIncreasePercent": 124.29, "WL1_throughput_rps": 0.2918, "WL3_throughput_rps": 0.7559, "throughputIncreasePercent": 159.05}
+- models: [strong_signal] La famiglia models mostra una penalità dimensionale netta e dominante sulla latenza media.
+  Implicazione: Nel cluster corrente la scelta del modello incide fortemente sul comportamento del servizio e rappresenta uno dei driver principali della performance osservata.
+  Evidenza: {"smallModelMeanResponseTimeMs": 1439.175, "largeModelMeanResponseTimeMs": 4757.0145, "smallModelMeanThroughputRps": 0.5826, "largeModelMeanThroughputRps": 0.2964, "throughputChangePercent": -49.12, "penaltyPercent": 230.54}
+- placement: [weak_signal] Nel perimetro osservato la famiglia placement non mostra ancora un effetto abbastanza marcato da essere considerato dominante.
+  Implicazione: Le configurazioni di placement sono state confrontate rispetto alla baseline co-located PL1, ma la differenza di latenza resta sotto la soglia diagnostica configurata; nel cluster corrente il placement non emerge ancora come driver principale delle performance.
+  Evidenza: {"referencePlacementScenario": "PL1", "candidatePlacementScenario": "PL2", "PL1_mean_response_time_ms": 1483.7526, "PL2_mean_response_time_ms": 1538.3188, "PL1_throughput_rps": 0.5749, "PL2_throughput_rps": 0.5656, "throughputDifferencePercentVsPL1": -1.62, "differencePercentVsPL1": 3.68, "placementDifferenceThresholdPercent": 10}
+
+Per-family scenario averages
+--------------------------
+Family: worker-count
+- W1: samples=3, mean_response_time_ms=1507.3645 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1700.0 ms, throughput_rps=0.5709 requests/s, max_node_cpu_percent=34.0 %, max_node_memory_percent=38.0 %
+- W2: samples=3, mean_response_time_ms=1504.1032 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1700.0 ms, throughput_rps=0.5715 requests/s, max_node_cpu_percent=35.0 %, max_node_memory_percent=38.0 %
+- W3: unsupportedEvidence=3, replicas=['A', 'B', 'C'], evidenceKinds=['failed_scheduling', 'insufficient_cpu', 'insufficient_memory', 'no_preemption_victims_found', 'node_affinity_selector_mismatch', 'pending_pod', 'preemption_not_helpful']
+- W4: unsupportedEvidence=3, replicas=['A', 'B', 'C'], evidenceKinds=['failed_scheduling', 'insufficient_cpu', 'insufficient_memory', 'no_preemption_victims_found', 'node_affinity_selector_mismatch', 'pending_pod', 'preemption_not_helpful']
+
+Family: workload
+- WL1: samples=3, mean_response_time_ms=1457.786 ms, p50_response_time_ms=1466.6667 ms, p95_response_time_ms=1500.0 ms, p99_response_time_ms=1533.3333 ms, throughput_rps=0.2918 requests/s, max_node_cpu_percent=18.0 %, max_node_memory_percent=38.0 %
+- WL2: samples=3, mean_response_time_ms=1493.4422 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1700.0 ms, throughput_rps=0.5732 requests/s, max_node_cpu_percent=35.0 %, max_node_memory_percent=38.0 %
+- WL3: samples=3, mean_response_time_ms=3269.6865 ms, p50_response_time_ms=3300.0 ms, p95_response_time_ms=3300.0 ms, p99_response_time_ms=3633.3333 ms, throughput_rps=0.7559 requests/s, max_node_cpu_percent=50.0 %, max_node_memory_percent=37.0 %
+
+Family: models
+- M1: samples=3, mean_response_time_ms=1497.1326 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1700.0 ms, throughput_rps=0.5725 requests/s, max_node_cpu_percent=35.0 %, max_node_memory_percent=38.0 %
+- M2: samples=3, mean_response_time_ms=1381.2175 ms, p50_response_time_ms=1400.0 ms, p95_response_time_ms=1400.0 ms, p99_response_time_ms=1500.0 ms, throughput_rps=0.5927 requests/s, max_node_cpu_percent=33.0 %, max_node_memory_percent=35.0 %
+- M3: samples=3, mean_response_time_ms=5168.8147 ms, p50_response_time_ms=5000.0 ms, p95_response_time_ms=5100.0 ms, p99_response_time_ms=9300.0 ms, throughput_rps=0.2782 requests/s, max_node_cpu_percent=52.0 %, max_node_memory_percent=43.0 %
+- M4: samples=3, mean_response_time_ms=4345.2143 ms, p50_response_time_ms=4300.0 ms, p95_response_time_ms=4400.0 ms, p99_response_time_ms=6400.0 ms, throughput_rps=0.3146 requests/s, max_node_cpu_percent=52.0 %, max_node_memory_percent=52.0 %
+
+Family: placement
+- PL1: samples=3, mean_response_time_ms=1483.7526 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1500.0 ms, p99_response_time_ms=1633.3333 ms, throughput_rps=0.5749 requests/s, max_node_cpu_percent=35.0 %, max_node_memory_percent=33.0 %
+- PL2: samples=3, mean_response_time_ms=1538.3188 ms, p50_response_time_ms=1500.0 ms, p95_response_time_ms=1600.0 ms, p99_response_time_ms=1633.3333 ms, throughput_rps=0.5656 requests/s, max_node_cpu_percent=22.0 %, max_node_memory_percent=34.0 %
+
+Gaps
+----
+- Nessun gap critico rilevato per la diagnosi preliminare.

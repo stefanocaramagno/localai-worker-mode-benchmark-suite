@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Placement sweep Reporting</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1180px; margin: 32px auto; line-height: 1.5; padding: 0 24px; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 28px; font-size: 14px; display: block; overflow-x: auto; }
+    th, td { border: 1px solid #d0d0d0; padding: 7px 9px; vertical-align: top; }
+    th { background: #f2f2f2; }
+    code { background: #f6f6f6; padding: 1px 4px; }
+    img { max-width: 100%; border: 1px solid #e0e0e0; margin: 8px 0 24px; }
+    blockquote { border-left: 4px solid #999; padding-left: 12px; color: #333; }
+    a { color: #0645ad; }
+  </style>
+</head>
+<body>
+<h1>Placement sweep Report</h1>
+<p><strong>Reporting ID:</strong> <code>analysis_reporting_all_NA_20260429T032103Z</code></p>
+<p><strong>Generated at UTC:</strong> <code>2026-04-29T03:21:03.257749+00:00</code></p>
+<p><a href="../../index.html">Back to consolidated reporting index</a></p>
+<h2>Scope</h2>
+<p>This sweep-specific report isolates one benchmark family so that the varied dimension, fixed dimensions, measured values, unsupported evidence and diagnosis-based reading can be inspected without navigating the full consolidated report.</p>
+<h2>Placement sweep</h2>
+<p><strong>Execution status:</strong> <code>fully_measured</code></p>
+<p><strong>Execution note:</strong> All configured scenarios in this sweep have measured benchmark samples.</p>
+<p><strong>Varied dimension:</strong> Kubernetes placement strategy for LocalAI server and workers</p>
+<p><strong>Fixed dimensions:</strong> baseline model, baseline worker count, baseline workload, baseline protocol.</p>
+<p><strong>Reference scenario within the sweep:</strong> <code>PL1</code></p>
+<table>
+<thead><tr><th>Scenario count</th><th>Measured</th><th>Unsupported</th><th>Missing</th></tr></thead><tbody>
+<tr><td>2</td><td>2</td><td>0</td><td>0</td></tr>
+</tbody></table>
+<h3>Fixed baseline parameters</h3>
+<table>
+<thead><tr><th>Fixed dimension</th><th>Value inherited from baseline</th></tr></thead><tbody>
+<tr><td>Model</td><td>llama-3.2-1b-instruct:q4_k_m</td></tr>
+<tr><td>Worker count</td><td>2</td></tr>
+<tr><td>Workload</td><td>users=2, spawnRate=1, runTime=2m</td></tr>
+<tr><td>Prompt</td><td>Reply with only READY.</td></tr>
+<tr><td>Temperature</td><td>0.1</td></tr>
+<tr><td>Request timeout</td><td>120 s</td></tr>
+</tbody></table>
+<h3>Scenario parameter matrix</h3>
+<table>
+<thead><tr><th>Scenario</th><th>Status</th><th>Varied value (Kubernetes placement strategy for LocalAI server and workers)</th><th>Model</th><th>Workers</th><th>Placement</th><th>Workload</th><th>Timeout (s)</th></tr></thead><tbody>
+<tr><td><code>PL1</code></td><td>measured</td><td>colocated_sc_app_02</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>2</td><td>colocated_sc_app_02</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>PL2</code></td><td>measured</td><td>distributed</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>2</td><td>distributed</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+</tbody></table>
+<h3>Measurement summary</h3>
+<p>This compact table reports the core indicators used to read the sweep at a glance. Detailed percentiles, deltas and resource snapshots are reported in the following extended table.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Description</th><th>Status</th><th>Sample count</th><th>Mean response time (ms)</th><th>P95 response time (ms)</th><th>Throughput (requests/s)</th><th>Unsupported evidence</th></tr></thead><tbody>
+<tr><td><code>PL1</code></td><td>PL1 (colocated_sc_app_02)</td><td>measured</td><td>3</td><td>1483.75</td><td>1500.00</td><td>0.5749</td><td></td></tr>
+<tr><td><code>PL2</code></td><td>PL2 (distributed)</td><td>measured</td><td>3</td><td>1538.32</td><td>1600.00</td><td>0.5656</td><td></td></tr>
+</tbody></table>
+<h3>Extended measurement metrics</h3>
+<p>This secondary table keeps the additional metrics aligned with the technical diagnosis while avoiding an excessively wide primary summary table.</p>
+<table>
+<thead><tr><th>Scenario</th><th>P50 response time (ms)</th><th>P99 response time (ms)</th><th>Mean response time delta (%)</th><th>P95 response time delta (%)</th><th>Throughput delta (%)</th><th>Max node CPU snapshot (%)</th><th>Max node memory snapshot (%)</th></tr></thead><tbody>
+<tr><td><code>PL1</code></td><td>1500.00</td><td>1633.33</td><td>0.00</td><td>0.00</td><td>0.00</td><td>35.00</td><td>32.67</td></tr>
+<tr><td><code>PL2</code></td><td>1500.00</td><td>1633.33</td><td>3.68</td><td>6.67</td><td>-1.62</td><td>21.00</td><td>33.67</td></tr>
+</tbody></table>
+<h3>Diagnosis-based reading</h3>
+<ul>
+<li><strong>Nel perimetro osservato la famiglia placement non mostra ancora un effetto abbastanza marcato da essere considerato dominante.</strong> (status: <code>weak_signal</code>, confidence: <code>low</code>).</li>
+<li>Implication: Le configurazioni di placement sono state confrontate rispetto alla baseline co-located PL1, ma la differenza di latenza resta sotto la soglia diagnostica configurata; nel cluster corrente il placement non emerge ancora come driver principale delle performance.</li>
+</ul>
+<h3>Charts</h3>
+<h4>Mean response time</h4>
+<img src="../../charts/placement/mean_response_time_ms.svg" alt="Mean response time">
+<h4>P50 response time</h4>
+<img src="../../charts/placement/p50_response_time_ms.svg" alt="P50 response time">
+<h4>P95 response time</h4>
+<img src="../../charts/placement/p95_response_time_ms.svg" alt="P95 response time">
+<h4>P99 response time</h4>
+<img src="../../charts/placement/p99_response_time_ms.svg" alt="P99 response time">
+<h4>Throughput</h4>
+<img src="../../charts/placement/throughput_rps.svg" alt="Throughput">
+<h4>Maximum node CPU snapshot</h4>
+<img src="../../charts/placement/max_node_cpu_percent.svg" alt="Maximum node CPU snapshot">
+<h4>Maximum node memory snapshot</h4>
+<img src="../../charts/placement/max_node_memory_percent.svg" alt="Maximum node memory snapshot">
+<h3>Reading notes</h3>
+<ul>
+<li>Measured scenarios: <strong>2</strong>.</li>
+<li>Unsupported scenarios under current constraints: <strong>0</strong>.</li>
+<li>Percentage deltas are computed against the family reference scenario; positive latency deltas indicate worse response time, while positive throughput deltas indicate higher request throughput.</li>
+<li>Unsupported scenarios are infrastructure/constraint observations and must not be interpreted as measured latency regressions.</li>
+<li>A <code>not_executed</code> sweep means that neither measurement CSV files nor unsupported-scenario evidence were found for any configured scenario in that family.</li>
+</ul>
+</body>
+</html>

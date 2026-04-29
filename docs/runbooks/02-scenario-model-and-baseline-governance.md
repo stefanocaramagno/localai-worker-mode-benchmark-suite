@@ -66,6 +66,8 @@ config/
 │       ├── placement/
 │       ├── worker-count/
 │       └── workload/
+├── reporting/
+│   └── RP1.json
 ├── statistical-rigor/
 │   └── SR1.json
 └── technical-diagnosis/
@@ -100,7 +102,7 @@ Every run must produce a unique run identifier and a run manifest with required 
 
 ### 4. All campaigns must use explicit execution profiles
 
-Warm-up handling, protocol order, metric sets, cluster-side evidence, statistical rigor, technical diagnosis, and completion criteria are governed by configuration profiles, not by ad hoc operator choices.
+Warm-up handling, protocol order, metric sets, cluster-side evidence, statistical rigor, technical diagnosis, reporting, and completion criteria are governed by configuration profiles, not by ad hoc operator choices.
 
 ### 5. Interpretation boundaries must be explicit
 
@@ -172,7 +174,7 @@ Operators must not treat the baseline as a suggestion. It is the canonical refer
 - pilot family inheritance;
 - comparative interpretation;
 - consolidated campaign consistency;
-- diagnosis and completion gate evaluation.
+- diagnosis, reporting, and completion-gate evaluation.
 
 ---
 
@@ -691,6 +693,48 @@ Family-level judgments may instead express outcomes such as:
 ### Governance Rule
 
 Diagnosis is a governed post-processing stage based on consolidated evidence, not a free-form narrative written from memory. It must not be reduced to strong findings only: the governed output is expected to provide an explicit family-level interpretation even when a family does not justify a dominant finding.
+
+---
+
+
+## Reporting and Visualization Governance
+
+### File
+
+```text
+config/reporting/RP1.json
+```
+
+### Profile Identity
+
+- **Profile ID:** `RP1`
+
+### Purpose
+
+`RP1` defines the advisor-facing reporting layer that runs after technical diagnosis and before the completion gate. Its purpose is to convert the governed measurements and diagnosis context into readable global and per-sweep reports.
+
+### Governed Output Location
+
+```text
+results/reporting/
+```
+
+The current reporting profile writes one stable report directory, not a timestamped hierarchy. Rerunning the reporting launcher refreshes the managed reporting artifacts in that directory.
+
+### Expected Output Layers
+
+The reporting phase is expected to produce:
+
+- a global Markdown report;
+- a global HTML report;
+- a scenario summary CSV;
+- a reporting manifest;
+- charts organized by sweep family;
+- one dedicated Markdown and HTML report for each governed sweep family.
+
+### Governance Rule
+
+Reporting is not a substitute for diagnosis. Quantitative charts are generated from benchmark measurements, while diagnosis outputs provide interpretative context, unsupported-scenario evidence, and family-level readings.
 
 ---
 

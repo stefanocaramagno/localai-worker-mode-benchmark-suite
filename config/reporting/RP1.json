@@ -1,0 +1,144 @@
+{
+  "profileId": "RP1",
+  "description": "Advisor-facing reporting and visualization profile for consolidated LocalAI worker-mode pilot campaigns. The reporting phase is designed to run after technical diagnosis and before the completion gate, writing the current report directly under results/reporting and optionally preserving generated or existing current report snapshots under the reporting archive directory.",
+  "outputRoot": "results/reporting",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "chartsDirectoryName": "charts",
+  "baselineConfig": "config/scenarios/baseline/B0.json",
+  "technicalDiagnosisRoot": "results/diagnosis",
+  "preferDiagnosisContext": true,
+  "preferCsvMeasurementsForCharts": true,
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "pilotResultsRoots": {
+    "worker-count": "results/pilot/consolidated/worker-count",
+    "workload": "results/pilot/consolidated/workload",
+    "models": "results/pilot/consolidated/models",
+    "placement": "results/pilot/consolidated/placement"
+  },
+  "scenarioConfigRoots": {
+    "worker-count": "config/scenarios/pilot/worker-count",
+    "workload": "config/scenarios/pilot/workload",
+    "models": "config/scenarios/pilot/models",
+    "placement": "config/scenarios/pilot/placement"
+  },
+  "familyOrder": [
+    "worker-count",
+    "workload",
+    "models",
+    "placement"
+  ],
+  "familyDisplayNames": {
+    "worker-count": "Worker-count sweep",
+    "workload": "Workload sweep",
+    "models": "Model sweep",
+    "placement": "Placement sweep"
+  },
+  "variedDimensionByFamily": {
+    "worker-count": "number of LocalAI RPC workers",
+    "workload": "synthetic client-side workload pattern",
+    "models": "model served by the LocalAI worker-mode cluster",
+    "placement": "Kubernetes placement strategy for LocalAI server and workers"
+  },
+  "fixedDimensionsByFamily": {
+    "worker-count": [
+      "baseline model",
+      "baseline workload",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "workload": [
+      "baseline model",
+      "baseline worker count",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "models": [
+      "baseline worker count",
+      "baseline workload",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "placement": [
+      "baseline model",
+      "baseline worker count",
+      "baseline workload",
+      "baseline protocol"
+    ]
+  },
+  "referenceScenarioByFamily": {
+    "worker-count": "W2",
+    "workload": "WL2",
+    "models": "M1",
+    "placement": "PL1"
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    }
+  ],
+  "meetingRequirements": [
+    "Provide synthetic charts instead of requiring advisors to inspect raw CSV files manually.",
+    "Make the varied dimension and fixed dimensions explicit for every sweep.",
+    "Make latency, throughput and resource evidence readable at a glance.",
+    "Preserve the link between quantitative measurements and the technical diagnosis produced by the previous phase."
+  ],
+  "notes": [
+    "Reporting is a static post-processing artifact: rerun the reporting launcher after producing new benchmark and diagnosis outputs.",
+    "The current global report is written directly under results/reporting/ and managed artifacts are overwritten on each execution.",
+    "Optional archiving can preserve either the newly generated report package or the already generated current report under results/reporting/archive/<reporting-id>/ without changing the stable current report path.",
+    "Each benchmark family also receives a dedicated report under results/reporting/sweeps/<family>/.",
+    "Quantitative charts are generated from measurement CSV files whenever available; technical diagnosis is used as contextual and interpretative evidence.",
+    "Unsupported scenarios are reported explicitly and are not treated as measured performance regressions."
+  ],
+  "outputPolicy": {
+    "mode": "single_current_report_directory_with_optional_archive",
+    "managedOutputDirectory": "results/reporting",
+    "globalReportDirectory": "results/reporting",
+    "sweepReportsDirectory": "results/reporting/sweeps",
+    "overwriteManagedArtifactsOnEachExecution": true,
+    "rationale": "The repository needs one stable advisor-facing reporting location for normal review and completion-gate checks. Optional timestamped archives are available only when historical report snapshots are explicitly required.",
+    "archiveDirectory": "results/reporting/archive",
+    "archiveEnabledByDefault": false,
+    "archiveBehavior": "When enabled with generation archive mode, copy the newly generated current report artifacts to results/reporting/archive/<reporting-id>/ after writing the stable current report. When enabled with current-report archive mode, copy the already existing managed artifacts from results/reporting/ to results/reporting/archive/<reporting-id>/ without regenerating them, using reporting-manifest.json as the authoritative source for the reporting identifier.",
+    "currentArchiveBehavior": "Archive-current mode does not regenerate measurement tables or charts. It copies index.html, report.md, scenario-summary.csv, reporting-manifest.json, charts/, and sweeps/ from the current reporting directory, explicitly excluding any existing archive/ directory."
+  },
+  "sweepsDirectoryName": "sweeps",
+  "archiveDirectoryName": "archive"
+}
