@@ -1,0 +1,40 @@
+{
+  "indexId": "PRECHECK_PROFILES_INDEX",
+  "description": "Index of benchmark technical pre-check profiles and templates used by historical and provider-backed benchmark executions.",
+  "schema": "config/precheck/schemas/BENCHMARK_PRECHECK_PROFILE_SCHEMA_V1.json",
+  "profiles": [
+    {
+      "profileId": "TC_C0_HISTORICAL_FIXED_CLUSTER",
+      "path": "config/precheck/profiles/TC_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "scope": "historical_fixed_cluster",
+      "cycleId": "C0",
+      "baselineId": "B0",
+      "status": "active"
+    },
+    {
+      "profileId": "TC_C1_PROVIDER_BACKED_BASELINE",
+      "path": "config/precheck/profiles/TC_C1_PROVIDER_BACKED_BASELINE.json",
+      "scope": "provider_backed_baseline",
+      "cycleId": "C1",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "status": "active"
+    }
+  ],
+  "defaultHistoricalProfileId": "TC_C0_HISTORICAL_FIXED_CLUSTER",
+  "defaultProviderBackedProfileId": "TC_C1_PROVIDER_BACKED_BASELINE",
+  "defaultProviderBackedTemplateId": "TC_PROVIDER_BACKED_PRECHECK_TEMPLATE",
+  "templates": [
+    {
+      "templateId": "TC_PROVIDER_BACKED_PRECHECK_TEMPLATE",
+      "path": "config/precheck/templates/TC_PROVIDER_BACKED_PRECHECK_TEMPLATE.json",
+      "scope": "provider_backed_campaign_variants",
+      "status": "active"
+    }
+  ],
+  "selectionRules": [
+    "Use TC_C0_HISTORICAL_FIXED_CLUSTER only for the historical fixed-cluster characterization workflow.",
+    "Use TC_C1_PROVIDER_BACKED_BASELINE for the official C1 provider-backed baseline cycle.",
+    "Use TC_PROVIDER_BACKED_PRECHECK_TEMPLATE only as a runtime generation template for provider-backed campaign variants.",
+    "Do not use a concrete historical profile as a template for provider-backed variants."
+  ]
+}

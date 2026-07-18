@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "profileId": "RP_C3_NODE_COUNT_VARIATION",
+  "reportingProfileId": "RP_C3_NODE_COUNT_VARIATION",
+  "profileName": "C3 Node-Count Variation Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_node_count_variation_reporting",
+  "description": "Reporting profile for the provider-backed node-count variation campaign.",
+  "cycleId": "C3",
+  "cycleConfigPath": "config/experimental-cycles/C3.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C3/diagnosis",
+  "outputRoot": "results/experimental-cycles/C3/reporting",
+  "reportTitle": "C3 — Node-Count Variation Report",
+  "reportPurposeMarkdown": "This report compares provider worker-node-count variants under fixed LocalAI workload, model, LocalAI worker-count, per-node capacity and placement policy. It is intended to expose whether additional provider worker nodes reduce local contention, remain unused, or introduce distribution overhead.",
+  "familyOrder": [
+    "node-count-variation"
+  ],
+  "familyDisplayNames": {
+    "node-count-variation": "Node-Count Variation"
+  },
+  "scenarioConfigRoots": {
+    "node-count-variation": "config/scenarios/node-count-variation"
+  },
+  "scenarioConfigFiles": {
+    "node-count-variation": [
+      "config/scenarios/node-count-variation/NC_2N.json",
+      "config/scenarios/node-count-variation/NC_3N.json",
+      "config/scenarios/node-count-variation/NC_4N.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "node-count-variation": "results/experimental-cycles/C3/benchmark/node-count-variation"
+  },
+  "referenceScenarioByFamily": {
+    "node-count-variation": "NC_2N"
+  },
+  "variedDimensionByFamily": {
+    "node-count-variation": "provider worker node count"
+  },
+  "fixedDimensionsByFamily": {
+    "node-count-variation": [
+      "model=M1",
+      "LocalAI worker-count=W4",
+      "placement=PL_SPREAD_WORKERS",
+      "workload=WL2",
+      "worker node capacity=8 vCPU / 16 GiB"
+    ]
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "archiveDirectoryName": "archive",
+  "providerAwareContext": {
+    "cycleConfigPath": "config/experimental-cycles/C3.json",
+    "provisioningManifestPath": "results/experimental-cycles/C3/execution/latest-campaign-execution-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C3/execution/latest-campaign-execution-manifest.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C3/execution/latest-campaign-execution-manifest.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C3/execution/latest-campaign-execution-manifest.json"
+  },
+  "notes": [
+    "Only provider worker-node count is varied in this campaign; model, workload, LocalAI worker-count, per-node capacity and placement policy remain fixed.",
+    "The fixed W4 application topology is spread over the available provider worker nodes so the infrastructure-size dimension can produce observable distribution differences.",
+    "If fewer than two node-count variants are measured, the report must present the campaign as insufficient comparative evidence while preserving unsupported variants as capacity or scheduling evidence."
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisProfileId": "TD_C3_NODE_COUNT_VARIATION",
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C3_NODE_COUNT_VARIATION.json",
+  "reportingContext": {
+    "campaignType": "node_count_variation",
+    "primaryQuestion": "How does changing provider worker node count affect LocalAI worker-mode performance under fixed application dimensions?"
+  },
+  "reportingIdPrefix": "REP_C3",
+  "infrastructureSummaryMode": "variant_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "scenario_variant",
+    "interpretation": "Infrastructure profiles are attached to campaign variants; the report must render a variant-level infrastructure table rather than a single fixed cycle-level profile."
+  },
+  "referenceScenarioId": "NC_2N",
+  "referenceScenarioConfigPath": "config/scenarios/node-count-variation/NC_2N.json",
+  "referenceScenarioConfigByFamily": {
+    "node-count-variation": "config/scenarios/node-count-variation/NC_2N.json"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "pilot_consolidation-index/v1",
+  "defaultPilotConsolidationProfileId": "PC_CONSOLIDATED_PILOT_CAMPAIGN",
+  "pilotConsolidationProfiles": [
+    {
+      "profileId": "PC_CONSOLIDATED_PILOT_CAMPAIGN",
+      "profilePath": "config/pilot-consolidation/profiles/PC_CONSOLIDATED_PILOT_CAMPAIGN.json",
+      "profileType": "pilot_consolidation",
+      "description": "Consolidated pilot benchmark profile for the four pilot sweeps. The profile fixes the controlled replica set, the mandatory execution stack already defined in previous points, and stricter phase durations for re-running the pilot campaigns in a comparable way."
+    }
+  ]
+}

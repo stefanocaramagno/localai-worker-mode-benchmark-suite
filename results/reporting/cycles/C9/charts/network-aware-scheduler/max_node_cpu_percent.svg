@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="490.0" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold">C9 — Network-Aware Scheduler: Maximum node CPU snapshot</text>
+  <text x="490.0" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="13">Unit: %</text>
+  <g font-family="Arial, sans-serif" fill="#222">
+<line x1="86" y1="434" x2="948" y2="434" stroke="#222"/>
+<line x1="86" y1="74" x2="86" y2="434" stroke="#222"/>
+<line x1="81" y1="434.00" x2="948" y2="434.00" stroke="#ddd"/>
+<text x="76" y="438.00" text-anchor="end" font-size="12">0.00</text>
+<line x1="81" y1="362.00" x2="948" y2="362.00" stroke="#ddd"/>
+<text x="76" y="366.00" text-anchor="end" font-size="12">16.00</text>
+<line x1="81" y1="290.00" x2="948" y2="290.00" stroke="#ddd"/>
+<text x="76" y="294.00" text-anchor="end" font-size="12">32.00</text>
+<line x1="81" y1="218.00" x2="948" y2="218.00" stroke="#ddd"/>
+<text x="76" y="222.00" text-anchor="end" font-size="12">48.00</text>
+<line x1="81" y1="146.00" x2="948" y2="146.00" stroke="#ddd"/>
+<text x="76" y="150.00" text-anchor="end" font-size="12">64.00</text>
+<line x1="81" y1="74.00" x2="948" y2="74.00" stroke="#ddd"/>
+<text x="76" y="78.00" text-anchor="end" font-size="12">80.00</text>
+<rect x="89.90" y="371.00" width="12.72" height="63.00" fill="#666"/>
+<text x="96.26" y="364.00" text-anchor="middle" font-size="12">14.00</text>
+<text x="96.26" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 96.26,452.00)">NA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2 (1T_4N_L0_UNIFORM_M1_W2, kubernetes_default_scheduler)</text>
+<rect x="110.42" y="366.50" width="12.72" height="67.50" fill="#666"/>
+<text x="116.79" y="359.50" text-anchor="middle" font-size="12">15.00</text>
+<text x="116.79" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 116.79,452.00)">NA_DEFAULT_1T_4N_L2_UNIFORM_M1_W2 (1T_4N_L2_UNIFORM_M1_W2, kubernetes_default_scheduler)</text>
+<rect x="130.95" y="291.50" width="12.72" height="142.50" fill="#666"/>
+<text x="137.31" y="284.50" text-anchor="middle" font-size="12">31.67</text>
+<text x="137.31" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 137.31,452.00)">NA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2 (2T_4N_L0_DIFFERENTIATED_M1M1_W2, kubernetes_default_scheduler)</text>
+<rect x="151.47" y="351.50" width="12.72" height="82.50" fill="#666"/>
+<text x="157.83" y="344.50" text-anchor="middle" font-size="12">18.33</text>
+<text x="157.83" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 157.83,452.00)">NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2 (2T_4N_L0_UNIFORM_M1M1_W2, kubernetes_default_scheduler)</text>
+<rect x="171.99" y="287.00" width="12.72" height="147.00" fill="#666"/>
+<text x="178.36" y="280.00" text-anchor="middle" font-size="12">32.67</text>
+<text x="178.36" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 178.36,452.00)">NA_DEFAULT_2T_4N_L1_DIFFERENTIATED_M1M1_W2 (2T_4N_L1_DIFFERENTIATED_M1M1_W2, kubernetes_default_scheduler)</text>
+<rect x="192.52" y="303.50" width="12.72" height="130.50" fill="#666"/>
+<text x="198.88" y="296.50" text-anchor="middle" font-size="12">29.00</text>
+<text x="198.88" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 198.88,452.00)">NA_DEFAULT_2T_4N_L1_DIFFERENTIATED_M1M2_W2 (2T_4N_L1_DIFFERENTIATED_M1M2_W2, kubernetes_default_scheduler)</text>
+<rect x="213.04" y="354.50" width="12.72" height="79.50" fill="#666"/>
+<text x="219.40" y="347.50" text-anchor="middle" font-size="12">17.67</text>
+<text x="219.40" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 219.40,452.00)">NA_DEFAULT_2T_4N_L1_UNIFORM_M1M1_W2 (2T_4N_L1_UNIFORM_M1M1_W2, kubernetes_default_scheduler)</text>
+<rect x="233.57" y="291.50" width="12.72" height="142.50" fill="#666"/>
+<text x="239.93" y="284.50" text-anchor="middle" font-size="12">31.67</text>
+<text x="239.93" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 239.93,452.00)">NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2 (2T_4N_L2_DIFFERENTIATED_M1M1_W2, kubernetes_default_scheduler)</text>
+<text x="260.45" y="426.00" text-anchor="middle" font-size="12">n/a</text>
+<text x="260.45" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 260.45,452.00)">NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M2_W2 (2T_4N_L2_DIFFERENTIATED_M1M2_W2, kubernetes_default_scheduler)</text>
+<rect x="274.61" y="359.00" width="12.72" height="75.00" fill="#666"/>
+<text x="280.98" y="352.00" text-anchor="middle" font-size="12">16.67</text>
+<text x="280.98" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 280.98,452.00)">NA_DEFAULT_2T_4N_L2_UNIFORM_M1M1_W2 (2T_4N_L2_UNIFORM_M1M1_W2, kubernetes_default_scheduler)</text>
+<rect x="295.14" y="294.50" width="12.72" height="139.50" fill="#666"/>
+<text x="301.50" y="287.50" text-anchor="middle" font-size="12">31.00</text>
+<text x="301.50" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 301.50,452.00)">NA_DEFAULT_2T_4N_L3_DIFFERENTIATED_M1M1_W2 (2T_4N_L3_DIFFERENTIATED_M1M1_W2, kubernetes_default_scheduler)</text>
+<rect x="315.66" y="290.00" width="12.72" height="144.00" fill="#666"/>
+<text x="322.02" y="283.00" text-anchor="middle" font-size="12">32.00</text>
+<text x="322.02" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 322.02,452.00)">NA_DEFAULT_2T_4N_L3_DIFFERENTIATED_M1M2_W2 (2T_4N_L3_DIFFERENTIATED_M1M2_W2, kubernetes_default_scheduler)</text>
+<rect x="336.19" y="272.00" width="12.72" height="162.00" fill="#666"/>
+<text x="342.55" y="265.00" text-anchor="middle" font-size="12">36.00</text>
+<text x="342.55" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 342.55,452.00)">NA_DEFAULT_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2 (3T_4N_L1_DIFFERENTIATED_M1M1M1_W2, kubernetes_default_scheduler)</text>
+<rect x="356.71" y="273.50" width="12.72" height="160.50" fill="#666"/>
+<text x="363.07" y="266.50" text-anchor="middle" font-size="12">35.67</text>
+<text x="363.07" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 363.07,452.00)">NA_DEFAULT_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2 (3T_4N_L2_DIFFERENTIATED_M1M1M1_W2, kubernetes_default_scheduler)</text>
+<rect x="377.23" y="362.00" width="12.72" height="72.00" fill="#666"/>
+<text x="383.60" y="355.00" text-anchor="middle" font-size="12">16.00</text>
+<text x="383.60" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 383.60,452.00)">NA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2 (1T_4N_L0_UNIFORM_M1_W2, loadaware_custom_scheduler)</text>
+<rect x="397.76" y="369.50" width="12.72" height="64.50" fill="#666"/>
+<text x="404.12" y="362.50" text-anchor="middle" font-size="12">14.33</text>
+<text x="404.12" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 404.12,452.00)">NA_LOADAWARE_1T_4N_L2_UNIFORM_M1_W2 (1T_4N_L2_UNIFORM_M1_W2, loadaware_custom_scheduler)</text>
+<rect x="418.28" y="179.00" width="12.72" height="255.00" fill="#666"/>
+<text x="424.64" y="172.00" text-anchor="middle" font-size="12">56.67</text>
+<text x="424.64" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 424.64,452.00)">NA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2 (2T_4N_L0_DIFFERENTIATED_M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="438.80" y="308.00" width="12.72" height="126.00" fill="#666"/>
+<text x="445.17" y="301.00" text-anchor="middle" font-size="12">28.00</text>
+<text x="445.17" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 445.17,452.00)">NA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2 (2T_4N_L0_UNIFORM_M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="459.33" y="288.50" width="12.72" height="145.50" fill="#666"/>
+<text x="465.69" y="281.50" text-anchor="middle" font-size="12">32.33</text>
+<text x="465.69" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 465.69,452.00)">NA_LOADAWARE_2T_4N_L1_DIFFERENTIATED_M1M1_W2 (2T_4N_L1_DIFFERENTIATED_M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="479.85" y="198.50" width="12.72" height="235.50" fill="#666"/>
+<text x="486.21" y="191.50" text-anchor="middle" font-size="12">52.33</text>
+<text x="486.21" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 486.21,452.00)">NA_LOADAWARE_2T_4N_L1_DIFFERENTIATED_M1M2_W2 (2T_4N_L1_DIFFERENTIATED_M1M2_W2, loadaware_custom_scheduler)</text>
+<rect x="500.38" y="341.00" width="12.72" height="93.00" fill="#666"/>
+<text x="506.74" y="334.00" text-anchor="middle" font-size="12">20.67</text>
+<text x="506.74" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 506.74,452.00)">NA_LOADAWARE_2T_4N_L1_UNIFORM_M1M1_W2 (2T_4N_L1_UNIFORM_M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="520.90" y="312.50" width="12.72" height="121.50" fill="#666"/>
+<text x="527.26" y="305.50" text-anchor="middle" font-size="12">27.00</text>
+<text x="527.26" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 527.26,452.00)">NA_LOADAWARE_2T_4N_L2_DIFFERENTIATED_M1M1_W2 (2T_4N_L2_DIFFERENTIATED_M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="541.42" y="189.50" width="12.72" height="244.50" fill="#666"/>
+<text x="547.79" y="182.50" text-anchor="middle" font-size="12">54.33</text>
+<text x="547.79" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 547.79,452.00)">NA_LOADAWARE_2T_4N_L2_DIFFERENTIATED_M1M2_W2 (2T_4N_L2_DIFFERENTIATED_M1M2_W2, loadaware_custom_scheduler)</text>
+<rect x="561.95" y="275.00" width="12.72" height="159.00" fill="#666"/>
+<text x="568.31" y="268.00" text-anchor="middle" font-size="12">35.33</text>
+<text x="568.31" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 568.31,452.00)">NA_LOADAWARE_2T_4N_L2_UNIFORM_M1M1_W2 (2T_4N_L2_UNIFORM_M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="582.47" y="284.00" width="12.72" height="150.00" fill="#666"/>
+<text x="588.83" y="277.00" text-anchor="middle" font-size="12">33.33</text>
+<text x="588.83" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 588.83,452.00)">NA_LOADAWARE_2T_4N_L3_DIFFERENTIATED_M1M1_W2 (2T_4N_L3_DIFFERENTIATED_M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="602.99" y="281.00" width="12.72" height="153.00" fill="#666"/>
+<text x="609.36" y="274.00" text-anchor="middle" font-size="12">34.00</text>
+<text x="609.36" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 609.36,452.00)">NA_LOADAWARE_2T_4N_L3_DIFFERENTIATED_M1M2_W2 (2T_4N_L3_DIFFERENTIATED_M1M2_W2, loadaware_custom_scheduler)</text>
+<rect x="623.52" y="161.00" width="12.72" height="273.00" fill="#666"/>
+<text x="629.88" y="154.00" text-anchor="middle" font-size="12">60.67</text>
+<text x="629.88" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 629.88,452.00)">NA_LOADAWARE_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2 (3T_4N_L1_DIFFERENTIATED_M1M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="644.04" y="146.00" width="12.72" height="288.00" fill="#666"/>
+<text x="650.40" y="139.00" text-anchor="middle" font-size="12">64.00</text>
+<text x="650.40" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 650.40,452.00)">NA_LOADAWARE_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2 (3T_4N_L2_DIFFERENTIATED_M1M1M1_W2, loadaware_custom_scheduler)</text>
+<rect x="664.57" y="314.00" width="12.72" height="120.00" fill="#666"/>
+<text x="670.93" y="307.00" text-anchor="middle" font-size="12">26.67</text>
+<text x="670.93" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 670.93,452.00)">NA_NETAWARE_1T_4N_L0_UNIFORM_M1_W2 (1T_4N_L0_UNIFORM_M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="685.09" y="311.00" width="12.72" height="123.00" fill="#666"/>
+<text x="691.45" y="304.00" text-anchor="middle" font-size="12">27.33</text>
+<text x="691.45" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 691.45,452.00)">NA_NETAWARE_1T_4N_L2_UNIFORM_M1_W2 (1T_4N_L2_UNIFORM_M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="705.61" y="308.00" width="12.72" height="126.00" fill="#666"/>
+<text x="711.98" y="301.00" text-anchor="middle" font-size="12">28.00</text>
+<text x="711.98" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 711.98,452.00)">NA_NETAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2 (2T_4N_L0_DIFFERENTIATED_M1M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="726.14" y="273.50" width="12.72" height="160.50" fill="#666"/>
+<text x="732.50" y="266.50" text-anchor="middle" font-size="12">35.67</text>
+<text x="732.50" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 732.50,452.00)">NA_NETAWARE_2T_4N_L0_UNIFORM_M1M1_W2 (2T_4N_L0_UNIFORM_M1M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="746.66" y="290.00" width="12.72" height="144.00" fill="#666"/>
+<text x="753.02" y="283.00" text-anchor="middle" font-size="12">32.00</text>
+<text x="753.02" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 753.02,452.00)">NA_NETAWARE_2T_4N_L1_DIFFERENTIATED_M1M1_W2 (2T_4N_L1_DIFFERENTIATED_M1M1_W2, localai_resource_network_aware_scheduler)</text>
+<text x="773.55" y="426.00" text-anchor="middle" font-size="12">n/a</text>
+<text x="773.55" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 773.55,452.00)">NA_NETAWARE_2T_4N_L1_DIFFERENTIATED_M1M2_W2 (2T_4N_L1_DIFFERENTIATED_M1M2_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="787.71" y="288.50" width="12.72" height="145.50" fill="#666"/>
+<text x="794.07" y="281.50" text-anchor="middle" font-size="12">32.33</text>
+<text x="794.07" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 794.07,452.00)">NA_NETAWARE_2T_4N_L1_UNIFORM_M1M1_W2 (2T_4N_L1_UNIFORM_M1M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="808.23" y="287.00" width="12.72" height="147.00" fill="#666"/>
+<text x="814.60" y="280.00" text-anchor="middle" font-size="12">32.67</text>
+<text x="814.60" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 814.60,452.00)">NA_NETAWARE_2T_4N_L2_DIFFERENTIATED_M1M1_W2 (2T_4N_L2_DIFFERENTIATED_M1M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="828.76" y="297.50" width="12.72" height="136.50" fill="#666"/>
+<text x="835.12" y="290.50" text-anchor="middle" font-size="12">30.33</text>
+<text x="835.12" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 835.12,452.00)">NA_NETAWARE_2T_4N_L2_DIFFERENTIATED_M1M2_W2 (2T_4N_L2_DIFFERENTIATED_M1M2_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="849.28" y="299.00" width="12.72" height="135.00" fill="#666"/>
+<text x="855.64" y="292.00" text-anchor="middle" font-size="12">30.00</text>
+<text x="855.64" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 855.64,452.00)">NA_NETAWARE_2T_4N_L2_UNIFORM_M1M1_W2 (2T_4N_L2_UNIFORM_M1M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="869.80" y="288.50" width="12.72" height="145.50" fill="#666"/>
+<text x="876.17" y="281.50" text-anchor="middle" font-size="12">32.33</text>
+<text x="876.17" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 876.17,452.00)">NA_NETAWARE_2T_4N_L3_DIFFERENTIATED_M1M1_W2 (2T_4N_L3_DIFFERENTIATED_M1M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="890.33" y="186.50" width="12.72" height="247.50" fill="#666"/>
+<text x="896.69" y="179.50" text-anchor="middle" font-size="12">55.00</text>
+<text x="896.69" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 896.69,452.00)">NA_NETAWARE_2T_4N_L3_DIFFERENTIATED_M1M2_W2 (2T_4N_L3_DIFFERENTIATED_M1M2_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="910.85" y="203.00" width="12.72" height="231.00" fill="#666"/>
+<text x="917.21" y="196.00" text-anchor="middle" font-size="12">51.33</text>
+<text x="917.21" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 917.21,452.00)">NA_NETAWARE_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2 (3T_4N_L1_DIFFERENTIATED_M1M1M1_W2, localai_resource_network_aware_scheduler)</text>
+<rect x="931.38" y="143.00" width="12.72" height="291.00" fill="#666"/>
+<text x="937.74" y="136.00" text-anchor="middle" font-size="12">64.67</text>
+<text x="937.74" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 937.74,452.00)">NA_NETAWARE_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2 (3T_4N_L2_DIFFERENTIATED_M1M1M1_W2, localai_resource_network_aware_scheduler)</text>
+  </g>
+</svg>

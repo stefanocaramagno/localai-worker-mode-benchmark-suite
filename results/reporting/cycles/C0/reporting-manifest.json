@@ -1,0 +1,4636 @@
+{
+  "reportingProfile": {
+    "profileId": "RP_C0_HISTORICAL_FIXED_CLUSTER",
+    "profileFile": "config/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "description": "Stakeholder-facing reporting and visualization profile for the historical fixed-cluster LocalAI worker-mode characterization campaigns."
+  },
+  "reporting": {
+    "reportingId": "REP_C0_20260619T174611Z",
+    "createdAtUtc": "2026-06-19T17:46:12Z",
+    "cycleId": "C0",
+    "reportingProfileId": "RP_C0_HISTORICAL_FIXED_CLUSTER",
+    "reportTitle": "C0 — Historical Fixed-Cluster Report",
+    "outputDirectory": "results/experimental-cycles/C0/reporting",
+    "familyScope": "all",
+    "pipelinePosition": "after_technical_diagnosis_before_completion_gate"
+  },
+  "baseline": {
+    "baselineId": "B0",
+    "status": "official_locked_baseline",
+    "purpose": "Official historical baseline for consolidated LocalAI worker-mode characterization on the fixed two-worker CPU-only Kubernetes cluster.",
+    "workerMode": "worker",
+    "modelScenario": "M1",
+    "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+    "workerScenario": "W2",
+    "resolvedWorkerCount": 2,
+    "placementScenario": "PL1",
+    "resolvedPlacementType": "colocated_sc_app_02",
+    "workloadScenario": "WL2",
+    "resolvedWorkload": {
+      "users": 2,
+      "spawnRate": 1,
+      "runTime": "2m"
+    },
+    "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+    "serverManifest": "infra/k8s/compositions/server/models/m1",
+    "namespaceManifest": "infra/k8s/compositions/foundation/namespace",
+    "storageManifest": "infra/k8s/compositions/foundation/storage",
+    "baseUrl": "http://localhost:8080",
+    "prompt": "Reply with only READY.",
+    "temperature": 0.1,
+    "requestTimeoutSeconds": 120,
+    "resultsRoot": "results/experimental-cycles/C0/benchmark/baseline",
+    "expectedActiveRpcWorkers": [
+      "localai-rpc-a",
+      "localai-rpc-b"
+    ],
+    "expectedWorkerNodes": {
+      "localai-rpc-a": "sc-app-02",
+      "localai-rpc-b": "sc-app-02"
+    },
+    "selectionCriteria": [
+      "Keep the initial baseline lightweight and reproducible on the current CPU-only cluster.",
+      "Freeze the worker count at two because pilot evidence indicated a clear improvement over a single worker without the added complexity of larger topologies.",
+      "Freeze the model at the smallest validated family member (Llama 3.2 1B q4_k_m) to minimize footprint and preserve operational headroom for repeated characterization runs.",
+      "Freeze the workload at the controlled low-load scenario WL2 so that subsequent sweeps can vary one dimension at a time from a stable reference point.",
+      "Freeze the placement at PL1 because current pilot evidence indicates lower average latency than the distributed two-node alternative in this specific cluster configuration."
+    ],
+    "lockRules": [
+      "Do not override model, worker count, placement, or workload from launcher parameters.",
+      "Use this baseline as the unique reference configuration until the consolidated characterization phase is complete.",
+      "Treat all future deltas as controlled variations from B0.",
+      "Do not reuse B0 as the baseline for provider-backed infrastructure profiles; create a new baseline identifier for each new provider-backed cycle."
+    ],
+    "notes": "This historical baseline intentionally prioritizes stability, reproducibility, and low resource pressure over aggressive scale. The distributed placement scenario PL2 remains available as an experimental comparison, but it is not the locked reference configuration.",
+    "infrastructureProfileId": "INFRA_ORIGINAL_1CP_2W_8C16G",
+    "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_ORIGINAL_1CP_2W_8C16G.json",
+    "infrastructureRole": "historical_fixed_cluster_reference_baseline",
+    "associatedCycleId": "C0",
+    "placementProfileId": "PL_COLOCATED",
+    "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+    "placementProfileRole": "historical_colocated_mapping",
+    "scenarioId": "B0",
+    "scenarioProfileId": "B0",
+    "scenarioProfileName": "Official historical baseline for consolidated LocalAI worker-mode characterization on the fixed two-worker CPU-only Kubernetes cluster.",
+    "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+    "scenarioProfileSchemaVersion": "1.0"
+  },
+  "latestAllFamilyDiagnosis": "results/experimental-cycles/C0/diagnosis/analysis_diagnosis_all_NA_20260619T174612Z_diagnosis.json",
+  "dataSourcePolicy": {
+    "quantitativeCharts": "measurement_csv_when_available",
+    "interpretation": "latest_technical_diagnosis_when_available",
+    "scenarioMetadata": "scenario_configuration_files",
+    "minimalObservability": "latest_minimal_observability_snapshot_when_available",
+    "providerContext": "cycle_and_provider_profile_documents_when_available"
+  },
+  "reportingContext": {
+    "enabled": false,
+    "repoRoot": ".",
+    "cycleId": "C0",
+    "baselineId": "B0",
+    "providerId": null,
+    "documents": {
+      "cycle": {
+        "path": "config/experimental-cycles/C0.json",
+        "exists": true,
+        "payload": {
+          "cycleId": "C0",
+          "cycleName": "Historical Fixed Cluster Characterization Cycle",
+          "status": "historical_locked_completed_cycle",
+          "description": "Completed historical characterization cycle executed on the original fixed two-worker CPU-only K3s cluster before introducing provider-backed infrastructure profiles.",
+          "scope": {
+            "application": "LocalAI worker-mode benchmark suite",
+            "workerMode": "worker",
+            "cycleType": "historical_fixed_cluster_characterization",
+            "includedFamilies": [
+              "worker-count",
+              "workload",
+              "models",
+              "placement"
+            ],
+            "excludedFutureWork": [
+              "dynamically provisioned K3s clusters",
+              "infrastructure-profile sweeps",
+              "multi-application or multi-tenant LocalAI scenarios",
+              "artificial network-latency injection",
+              "provider-backed C1 execution",
+              "proxmox-k3s lifecycle orchestration"
+            ]
+          },
+          "clusterContext": {
+            "clusterContextId": "ORIGINAL_FIXED_K3S_CLUSTER",
+            "description": "Original externally provided K3s cluster used for the first LocalAI worker-mode characterization cycle.",
+            "kubernetesDistribution": "K3s",
+            "workerHardwareClass": "CPU-only",
+            "controlPlaneNodes": [
+              {
+                "name": "sc-master-01",
+                "role": "control-plane",
+                "vcpus": 2,
+                "memoryGiB": 4,
+                "storageGiB": 35
+              }
+            ],
+            "workerNodes": [
+              {
+                "name": "sc-app-01",
+                "role": "worker",
+                "vcpus": 8,
+                "memoryGiB": 16,
+                "storageGiB": 35
+              },
+              {
+                "name": "sc-app-02",
+                "role": "worker",
+                "vcpus": 8,
+                "memoryGiB": 16,
+                "storageGiB": 35
+              }
+            ],
+            "knownMethodologicalLimitations": [
+              "The cycle is intentionally tied to the original fixed cluster and to node names available in that environment.",
+              "Unsupported W3 and W4 worker-count scenarios are retained as valid evidence of current placement/resource constraints rather than measured performance samples."
+            ],
+            "infrastructureProfileId": "INFRA_ORIGINAL_1CP_2W_8C16G",
+            "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_ORIGINAL_1CP_2W_8C16G.json"
+          },
+          "baseline": {
+            "baselineId": "B0",
+            "configPath": "config/scenarios/baseline/B0.json",
+            "roleInCycle": "official_locked_reference_baseline",
+            "modelScenario": "M1",
+            "workerScenario": "W2",
+            "placementScenario": "PL1",
+            "workloadScenario": "WL2"
+          },
+          "pipelineProfiles": {
+            "runConvention": "config/conventions/RC1.json",
+            "precheck": "config/precheck/profiles/TC_C0_HISTORICAL_FIXED_CLUSTER.json",
+            "phaseProfile": "config/phases/WM1.json",
+            "protocolProfile": "config/protocol/EP1.json",
+            "clusterCapture": "config/cluster-capture/CS1.json",
+            "metricSet": "config/metric-set/MS1.json",
+            "statisticalRigor": "config/statistical-rigor/SR1.json",
+            "pilotConsolidation": "config/pilot-consolidation/CP1.json",
+            "technicalDiagnosis": "config/technical-diagnosis/profiles/TD_C0_HISTORICAL_FIXED_CLUSTER.json",
+            "reporting": "config/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+            "completionGate": "config/completion-gate/profiles/CG_C0_HISTORICAL_FIXED_CLUSTER.json",
+            "infrastructureProfilesIndex": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+            "clusterLifecyclePoliciesIndex": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+            "freeze": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+            "freezeIndex": "config/freeze/FREEZE_INDEX.json"
+          },
+          "evidenceRoots": {
+            "baseline": "results/experimental-cycles/C0/benchmark/baseline",
+            "consolidatedPilot": "results/experimental-cycles/C0/benchmark/pilot-consolidated",
+            "technicalDiagnosis": "results/experimental-cycles/C0/diagnosis",
+            "reporting": "results/experimental-cycles/C0/reporting",
+            "completionGate": "results/experimental-cycles/C0/completion-gate",
+            "clusterLifecycle": "results/experimental-cycles/C0/infrastructure/lifecycle"
+          },
+          "freezeOutputs": {
+            "cycleLockJson": "results/experimental-cycles/C0/freeze/C0-cycle-lock.json",
+            "cycleLockText": "results/experimental-cycles/C0/freeze/C0-cycle-lock.txt",
+            "artifactSnapshotRoot": "results/experimental-cycles/C0/artifacts",
+            "freezeProfile": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+            "freezeIndex": "config/freeze/FREEZE_INDEX.json",
+            "outputRoot": "results/experimental-cycles/C0/freeze",
+            "latestManifestPath": "results/experimental-cycles/C0/freeze/latest-freeze-manifest.json",
+            "latestTextSummaryPath": "results/experimental-cycles/C0/freeze/latest-freeze-summary.txt",
+            "freezeProfileId": "FR_C0_HISTORICAL_FIXED_CLUSTER",
+            "freezeProfilePath": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+            "freezeIndexPath": "config/freeze/FREEZE_INDEX.json",
+            "freezeManifestJson": "results/experimental-cycles/C0/freeze/latest-freeze-manifest.json",
+            "freezeSummaryText": "results/experimental-cycles/C0/freeze/latest-freeze-summary.txt"
+          },
+          "lockPolicy": {
+            "mutationStatus": "locked_for_historical_reference",
+            "rules": [
+              "Do not mutate B0 or the C0 consolidated evidence when starting provider-backed cluster experiments.",
+              "Do not overwrite C0 reporting, diagnosis, or completion-gate artifacts to represent future infrastructure-aware runs.",
+              "Create a new cycle and a new baseline identifier before running benchmarks on a cluster generated through proxmox-k3s.",
+              "Treat C0 as the historical reference cycle for the original fixed cluster, not as the universal baseline for all future infrastructure profiles.",
+              "Treat results/experimental-cycles/C0/artifacts as the self-contained frozen evidence snapshot for C0.",
+              "A normal freeze rerun must preserve existing C0 artifacts; use an explicit force option only when intentionally rebuilding the historical snapshot.",
+              "Treat C0/B0 as bound to infrastructure profile INFRA_ORIGINAL_1CP_2W_8C16G; future provider-backed runs must declare a distinct infrastructure profile.",
+              "C0 uses an external retained cluster lifecycle policy and must not trigger provider create or delete operations.",
+              "Any lifecycle manifest generated for C0 is descriptive evidence only and does not imply provider-managed provisioning."
+            ]
+          },
+          "nextCyclePreparation": {
+            "recommendedNextCycleId": "C1",
+            "recommendedNextBaselineId": "B1",
+            "purpose": "Provider-backed baseline and infrastructure-aware characterization based on K3s clusters generated through proxmox-k3s.",
+            "recommendedNextInfrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+            "recommendedNextInfrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json"
+          },
+          "frozenArtifactPolicy": {
+            "artifactSnapshotRoot": "results/experimental-cycles/C0/artifacts",
+            "defaultRerunBehavior": "preserve_existing_snapshot",
+            "forceRerunBehavior": "rebuild_snapshot_from_latest_resolved_source_artifacts",
+            "rationale": "The historical cycle must remain self-contained after freezing, while the freeze operation must remain robust when current diagnosis, reporting, or completion-gate artifacts are regenerated with different timestamps before the final lock is created.",
+            "sourceResolutionBehavior": "technical diagnosis, reporting and completion-gate artifacts are resolved from the canonical C0 cycle-scoped result roots before freeze.",
+            "primaryArtifactPolicy": "The lock records the latest frozen technical diagnosis JSON, its paired TXT summary, the latest completion-gate JSON/TXT pair, and the stable reporting artifacts."
+          },
+          "sourceArtifactResolution": {
+            "technicalDiagnosisJson": {
+              "mode": "latest",
+              "type": "file",
+              "root": "results/experimental-cycles/C0/diagnosis",
+              "pattern": "*_diagnosis.json",
+              "description": "Latest technical diagnosis JSON generated before the C0 freeze is executed."
+            },
+            "technicalDiagnosisText": {
+              "mode": "paired_text",
+              "type": "file",
+              "pairedWith": "technicalDiagnosisJson",
+              "description": "Technical diagnosis TXT paired with the resolved primary technical diagnosis JSON."
+            },
+            "reportingManifest": {
+              "mode": "fixed",
+              "type": "file",
+              "path": "results/experimental-cycles/C0/reporting/reporting-manifest.json"
+            },
+            "reportMarkdown": {
+              "mode": "fixed",
+              "type": "file",
+              "path": "results/experimental-cycles/C0/reporting/report.md"
+            },
+            "reportHtml": {
+              "mode": "fixed",
+              "type": "file",
+              "path": "results/experimental-cycles/C0/reporting/index.html"
+            },
+            "scenarioSummaryCsv": {
+              "mode": "fixed",
+              "type": "file",
+              "path": "results/experimental-cycles/C0/reporting/scenario-summary.csv"
+            },
+            "completionGateJson": {
+              "mode": "latest",
+              "type": "file",
+              "root": "results/experimental-cycles/C0/completion-gate",
+              "pattern": "*_completion_gate.json",
+              "description": "Latest completion-gate JSON generated before the C0 freeze is executed."
+            },
+            "completionGateText": {
+              "mode": "latest",
+              "type": "file",
+              "root": "results/experimental-cycles/C0/completion-gate",
+              "pattern": "*_completion_gate.txt",
+              "description": "Latest completion-gate text summary generated before the C0 freeze is executed."
+            }
+          },
+          "frozenClosureArtifacts": {
+            "reportingManifest": "results/experimental-cycles/C0/reporting/reporting-manifest.json",
+            "reportMarkdown": "results/experimental-cycles/C0/reporting/report.md",
+            "reportHtml": "results/experimental-cycles/C0/reporting/index.html",
+            "scenarioSummaryCsv": "results/experimental-cycles/C0/reporting/scenario-summary.csv",
+            "completionGateManifest": "results/experimental-cycles/C0/completion-gate/latest-completion-gate-manifest.json",
+            "completionGateSummary": "results/experimental-cycles/C0/completion-gate/latest-completion-gate-summary.txt",
+            "reportingCharts": "results/experimental-cycles/C0/reporting/charts",
+            "reportingSweepReports": "results/experimental-cycles/C0/reporting/sweeps",
+            "technicalDiagnosisRoot": "results/experimental-cycles/C0/diagnosis"
+          },
+          "infrastructureProfile": {
+            "infrastructureProfileId": "INFRA_ORIGINAL_1CP_2W_8C16G",
+            "profilePath": "config/infrastructure/profiles/INFRA_ORIGINAL_1CP_2W_8C16G.json",
+            "roleInCycle": "historical_fixed_cluster_profile",
+            "description": "Infrastructure profile formally associated with C0/B0. It describes the original fixed K3s cluster used before introducing provider-backed infrastructure profiles."
+          },
+          "cycleGovernance": {
+            "canonicalCycleId": "C0",
+            "previousCycleIdBeforeProviderBackedGovernance": "C1",
+            "role": "historical_fixed_cluster_cycle",
+            "reason": "The original fixed-cluster cycle is preserved as C0 so that C1 can become the first provider-backed baseline cycle generated through proxmox-k3s.",
+            "mutationPolicy": "locked_historical_reference"
+          },
+          "clusterLifecycle": {
+            "lifecyclePolicyId": "LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN",
+            "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN.json",
+            "clusterLifecycleMode": "external",
+            "providerManagedLifecycle": false,
+            "provisioningRequired": false,
+            "destroyClusterAfterCycle": false,
+            "createClusterBeforeWorkload": false,
+            "deleteClusterAfterCycle": false,
+            "lifecycleManifestRequired": true,
+            "lifecycleArtifactRoot": "results/experimental-cycles/C0/infrastructure/lifecycle",
+            "provisioningLogRoot": null,
+            "deletionLogRoot": null,
+            "destructiveActionsAllowed": false
+          },
+          "profileStatus": "historical_locked_completed_cycle",
+          "configurationState": "locked",
+          "executionState": "completed",
+          "stateModel": {
+            "profileStatus": "Configuration-profile lifecycle state. This is the canonical meaning of the backward-compatible status field.",
+            "configurationState": "Whether the cycle configuration is active, locked, superseded, or deprecated.",
+            "executionState": "Latest known execution outcome for the cycle or campaign.",
+            "status": "Backward-compatible alias of profileStatus; execution outcomes must be read from executionState."
+          },
+          "infrastructureSummaryMode": "historical_fixed_cluster",
+          "infrastructureSummarySemantics": {
+            "scope": "historical_fixed_cluster",
+            "description": "The cycle preserves historical fixed-cluster evidence and is not interpreted as a provider-backed materialization."
+          }
+        },
+        "error": null
+      },
+      "infrastructureProfile": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "providerBinding": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "provisioningIntegrationProfile": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "clusterValidationProfile": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "applicationDeploymentProfile": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "placementProfile": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "minimalObservabilityProfile": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "provisioningManifest": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "clusterValidationManifest": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "clusterValidationRaw": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "applicationDeploymentManifest": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "localAiSmokeResult": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "minimalObservabilityManifest": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      },
+      "minimalObservabilityMetrics": {
+        "path": null,
+        "exists": false,
+        "payload": null,
+        "error": null
+      }
+    }
+  },
+  "artifacts": {
+    "markdownReport": "results/experimental-cycles/C0/reporting/report.md",
+    "htmlReport": "results/experimental-cycles/C0/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C0/reporting/scenario-summary.csv",
+    "charts": {
+      "worker-count": [
+        {
+          "metric": "mean_response_time_ms",
+          "path": "charts/worker-count/mean_response_time_ms.svg",
+          "title": "Mean response time"
+        },
+        {
+          "metric": "p50_response_time_ms",
+          "path": "charts/worker-count/p50_response_time_ms.svg",
+          "title": "P50 response time"
+        },
+        {
+          "metric": "p95_response_time_ms",
+          "path": "charts/worker-count/p95_response_time_ms.svg",
+          "title": "P95 response time"
+        },
+        {
+          "metric": "p99_response_time_ms",
+          "path": "charts/worker-count/p99_response_time_ms.svg",
+          "title": "P99 response time"
+        },
+        {
+          "metric": "throughput_rps",
+          "path": "charts/worker-count/throughput_rps.svg",
+          "title": "Throughput"
+        },
+        {
+          "metric": "max_node_cpu_percent",
+          "path": "charts/worker-count/max_node_cpu_percent.svg",
+          "title": "Maximum node CPU snapshot"
+        },
+        {
+          "metric": "max_node_memory_percent",
+          "path": "charts/worker-count/max_node_memory_percent.svg",
+          "title": "Maximum node memory snapshot"
+        },
+        {
+          "metric": "max_pod_cpu_millicores",
+          "path": "charts/worker-count/max_pod_cpu_millicores.svg",
+          "title": "Maximum pod CPU snapshot"
+        },
+        {
+          "metric": "max_pod_memory_mib",
+          "path": "charts/worker-count/max_pod_memory_mib.svg",
+          "title": "Maximum pod memory snapshot"
+        }
+      ],
+      "workload": [
+        {
+          "metric": "mean_response_time_ms",
+          "path": "charts/workload/mean_response_time_ms.svg",
+          "title": "Mean response time"
+        },
+        {
+          "metric": "p50_response_time_ms",
+          "path": "charts/workload/p50_response_time_ms.svg",
+          "title": "P50 response time"
+        },
+        {
+          "metric": "p95_response_time_ms",
+          "path": "charts/workload/p95_response_time_ms.svg",
+          "title": "P95 response time"
+        },
+        {
+          "metric": "p99_response_time_ms",
+          "path": "charts/workload/p99_response_time_ms.svg",
+          "title": "P99 response time"
+        },
+        {
+          "metric": "throughput_rps",
+          "path": "charts/workload/throughput_rps.svg",
+          "title": "Throughput"
+        },
+        {
+          "metric": "max_node_cpu_percent",
+          "path": "charts/workload/max_node_cpu_percent.svg",
+          "title": "Maximum node CPU snapshot"
+        },
+        {
+          "metric": "max_node_memory_percent",
+          "path": "charts/workload/max_node_memory_percent.svg",
+          "title": "Maximum node memory snapshot"
+        },
+        {
+          "metric": "max_pod_cpu_millicores",
+          "path": "charts/workload/max_pod_cpu_millicores.svg",
+          "title": "Maximum pod CPU snapshot"
+        },
+        {
+          "metric": "max_pod_memory_mib",
+          "path": "charts/workload/max_pod_memory_mib.svg",
+          "title": "Maximum pod memory snapshot"
+        }
+      ],
+      "models": [
+        {
+          "metric": "mean_response_time_ms",
+          "path": "charts/models/mean_response_time_ms.svg",
+          "title": "Mean response time"
+        },
+        {
+          "metric": "p50_response_time_ms",
+          "path": "charts/models/p50_response_time_ms.svg",
+          "title": "P50 response time"
+        },
+        {
+          "metric": "p95_response_time_ms",
+          "path": "charts/models/p95_response_time_ms.svg",
+          "title": "P95 response time"
+        },
+        {
+          "metric": "p99_response_time_ms",
+          "path": "charts/models/p99_response_time_ms.svg",
+          "title": "P99 response time"
+        },
+        {
+          "metric": "throughput_rps",
+          "path": "charts/models/throughput_rps.svg",
+          "title": "Throughput"
+        },
+        {
+          "metric": "max_node_cpu_percent",
+          "path": "charts/models/max_node_cpu_percent.svg",
+          "title": "Maximum node CPU snapshot"
+        },
+        {
+          "metric": "max_node_memory_percent",
+          "path": "charts/models/max_node_memory_percent.svg",
+          "title": "Maximum node memory snapshot"
+        },
+        {
+          "metric": "max_pod_cpu_millicores",
+          "path": "charts/models/max_pod_cpu_millicores.svg",
+          "title": "Maximum pod CPU snapshot"
+        },
+        {
+          "metric": "max_pod_memory_mib",
+          "path": "charts/models/max_pod_memory_mib.svg",
+          "title": "Maximum pod memory snapshot"
+        }
+      ],
+      "placement": [
+        {
+          "metric": "mean_response_time_ms",
+          "path": "charts/placement/mean_response_time_ms.svg",
+          "title": "Mean response time"
+        },
+        {
+          "metric": "p50_response_time_ms",
+          "path": "charts/placement/p50_response_time_ms.svg",
+          "title": "P50 response time"
+        },
+        {
+          "metric": "p95_response_time_ms",
+          "path": "charts/placement/p95_response_time_ms.svg",
+          "title": "P95 response time"
+        },
+        {
+          "metric": "p99_response_time_ms",
+          "path": "charts/placement/p99_response_time_ms.svg",
+          "title": "P99 response time"
+        },
+        {
+          "metric": "throughput_rps",
+          "path": "charts/placement/throughput_rps.svg",
+          "title": "Throughput"
+        },
+        {
+          "metric": "max_node_cpu_percent",
+          "path": "charts/placement/max_node_cpu_percent.svg",
+          "title": "Maximum node CPU snapshot"
+        },
+        {
+          "metric": "max_node_memory_percent",
+          "path": "charts/placement/max_node_memory_percent.svg",
+          "title": "Maximum node memory snapshot"
+        },
+        {
+          "metric": "max_pod_cpu_millicores",
+          "path": "charts/placement/max_pod_cpu_millicores.svg",
+          "title": "Maximum pod CPU snapshot"
+        },
+        {
+          "metric": "max_pod_memory_mib",
+          "path": "charts/placement/max_pod_memory_mib.svg",
+          "title": "Maximum pod memory snapshot"
+        }
+      ]
+    },
+    "sweepReports": {
+      "worker-count": {
+        "markdownReport": "sweeps/worker-count/report.md",
+        "htmlReport": "sweeps/worker-count/index.html"
+      },
+      "workload": {
+        "markdownReport": "sweeps/workload/report.md",
+        "htmlReport": "sweeps/workload/index.html"
+      },
+      "models": {
+        "markdownReport": "sweeps/models/report.md",
+        "htmlReport": "sweeps/models/index.html"
+      },
+      "placement": {
+        "markdownReport": "sweeps/placement/report.md",
+        "htmlReport": "sweeps/placement/index.html"
+      }
+    }
+  },
+  "archive": {
+    "enabled": false,
+    "archiveDirectory": null
+  },
+  "familyData": {
+    "worker-count": {
+      "W1": {
+        "family": "worker-count",
+        "scenarioId": "W1",
+        "label": "W1 (1 worker)",
+        "scenario": {
+          "scenarioId": "W1",
+          "purpose": "Pilot Worker Count Sweep - Single RPC Worker",
+          "workerCount": 1,
+          "outputSubdir": "W1_worker_count_1",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w1",
+          "notes": "Worker-count-only variation anchored to the official locked baseline B0. All non-worker-count dimensions are inherited from B0 and the active RPC worker set remains fully co-located on sc-app-02, exactly following the baseline placement mode. The only intended experimental delta is the active worker count.",
+          "scenarioProfileId": "W1",
+          "scenarioProfileName": "Pilot Worker Count Sweep - Single RPC Worker",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/worker-count/W1.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1703.8076,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2200.0,
+            "throughput_rps": 0.5406,
+            "maxNodeCpuPercent": 34.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 2631.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2864.0,
+            "totalPodMemoryMiB": 1226.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 48,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 2
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1706.7848,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2100.0,
+            "throughput_rps": 0.5402,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 2698.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2931.0,
+            "totalPodMemoryMiB": 1230.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 48,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 2
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1716.2863,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2100.0,
+            "throughput_rps": 0.5384,
+            "maxNodeCpuPercent": 36.0,
+            "maxNodeMemoryPercent": 38.0,
+            "maxPodCpuMillicores": 2795.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 3029.0,
+            "totalPodMemoryMiB": 1231.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 39,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 2
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W1_worker_count_1/W1_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1708.9596,
+              "min": 1703.8076,
+              "max": 1716.2863,
+              "stddev": 5.3214,
+              "coefficientOfVariationPercent": 0.3114
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2133.3333,
+              "min": 2100.0,
+              "max": 2200.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.2097
+            },
+            "throughput_rps": {
+              "mean": 0.5397,
+              "min": 0.5384,
+              "max": 0.5406,
+              "stddev": 0.001,
+              "coefficientOfVariationPercent": 0.1773
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 35.0,
+              "min": 34.0,
+              "max": 36.0,
+              "stddev": 0.8165,
+              "coefficientOfVariationPercent": 2.3328
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 38.6667,
+              "min": 38.0,
+              "max": 39.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2191
+            },
+            "maxPodCpuMillicores": {
+              "mean": 2708.0,
+              "min": 2631.0,
+              "max": 2795.0,
+              "stddev": 67.3251,
+              "coefficientOfVariationPercent": 2.4862
+            },
+            "maxPodMemoryMiB": {
+              "mean": 1053.0,
+              "min": 1053.0,
+              "max": 1053.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 2941.3333,
+              "min": 2864.0,
+              "max": 3029.0,
+              "stddev": 67.7561,
+              "coefficientOfVariationPercent": 2.3036
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1229.0,
+              "min": 1226.0,
+              "max": 1231.0,
+              "stddev": 2.1602,
+              "coefficientOfVariationPercent": 0.1758
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 45,
+              "min": 39,
+              "max": 48,
+              "stddev": 4.2426,
+              "coefficientOfVariationPercent": 9.4281
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 6
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1708.9596,
+              "min": 1703.8076,
+              "max": 1716.2863,
+              "stddev": 5.3214,
+              "coefficientOfVariationPercent": 0.3114
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2133.3333,
+              "min": 2100.0,
+              "max": 2200.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.2097
+            },
+            "throughput_rps": {
+              "mean": 0.5397,
+              "min": 0.5384,
+              "max": 0.5406,
+              "stddev": 0.001,
+              "coefficientOfVariationPercent": 0.1773
+            }
+          },
+          "maxNodeCpuPercentObserved": 36.0,
+          "maxNodeMemoryPercentObserved": 39.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "W2": {
+        "family": "worker-count",
+        "scenarioId": "W2",
+        "label": "W2 (2 worker)",
+        "scenario": {
+          "scenarioId": "W2",
+          "purpose": "Pilot Worker Count Sweep - Two RPC Workers",
+          "workerCount": 2,
+          "outputSubdir": "W2_worker_count_2",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+          "notes": "Worker-count-only variation anchored to the official locked baseline B0. This scenario reproduces the official two-worker baseline layout and keeps both active RPC workers fully co-located on sc-app-02. The only intended experimental delta within the Worker Count Sweep family is the active worker count.",
+          "scenarioProfileId": "W2",
+          "scenarioProfileName": "Pilot Worker Count Sweep - Two RPC Workers",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/worker-count/W2.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1706.4431,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2200.0,
+            "throughput_rps": 0.5401,
+            "maxNodeCpuPercent": 37.0,
+            "maxNodeMemoryPercent": 38.0,
+            "maxPodCpuMillicores": 2655.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2898.0,
+            "totalPodMemoryMiB": 1238.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 45,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1704.7844,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2000.0,
+            "throughput_rps": 0.5406,
+            "maxNodeCpuPercent": 37.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 2769.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2995.0,
+            "totalPodMemoryMiB": 1244.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 45,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1700.7732,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2100.0,
+            "throughput_rps": 0.541,
+            "maxNodeCpuPercent": 37.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 2738.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2985.0,
+            "totalPodMemoryMiB": 1242.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 36,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W2_worker_count_2/W2_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1704.0002,
+              "min": 1700.7732,
+              "max": 1706.4431,
+              "stddev": 2.3802,
+              "coefficientOfVariationPercent": 0.1397
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2100.0,
+              "min": 2000.0,
+              "max": 2200.0,
+              "stddev": 81.6497,
+              "coefficientOfVariationPercent": 3.8881
+            },
+            "throughput_rps": {
+              "mean": 0.5406,
+              "min": 0.5401,
+              "max": 0.541,
+              "stddev": 0.0004,
+              "coefficientOfVariationPercent": 0.0681
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 37.0,
+              "min": 37.0,
+              "max": 37.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 37.3333,
+              "min": 37.0,
+              "max": 38.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2627
+            },
+            "maxPodCpuMillicores": {
+              "mean": 2720.6667,
+              "min": 2655.0,
+              "max": 2769.0,
+              "stddev": 48.1271,
+              "coefficientOfVariationPercent": 1.7689
+            },
+            "maxPodMemoryMiB": {
+              "mean": 1053.0,
+              "min": 1053.0,
+              "max": 1053.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 2959.3333,
+              "min": 2898.0,
+              "max": 2995.0,
+              "stddev": 43.5609,
+              "coefficientOfVariationPercent": 1.472
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1241.3333,
+              "min": 1238.0,
+              "max": 1244.0,
+              "stddev": 2.4944,
+              "coefficientOfVariationPercent": 0.2009
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 42,
+              "min": 36,
+              "max": 45,
+              "stddev": 4.2426,
+              "coefficientOfVariationPercent": 10.1015
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1704.0002,
+              "min": 1700.7732,
+              "max": 1706.4431,
+              "stddev": 2.3802,
+              "coefficientOfVariationPercent": 0.1397
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2100.0,
+              "min": 2000.0,
+              "max": 2200.0,
+              "stddev": 81.6497,
+              "coefficientOfVariationPercent": 3.8881
+            },
+            "throughput_rps": {
+              "mean": 0.5406,
+              "min": 0.5401,
+              "max": 0.541,
+              "stddev": 0.0004,
+              "coefficientOfVariationPercent": 0.0681
+            }
+          },
+          "maxNodeCpuPercentObserved": 37.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "W3": {
+        "family": "worker-count",
+        "scenarioId": "W3",
+        "label": "W3 (3 worker)",
+        "scenario": {
+          "scenarioId": "W3",
+          "purpose": "Pilot Worker Count Sweep - Three RPC Workers",
+          "workerCount": 3,
+          "outputSubdir": "W3_worker_count_3",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w3",
+          "notes": "Worker-count-only variation anchored to the official locked baseline B0. Model, workload, prompt, server manifest, and placement mode are all inherited from B0; the third active RPC worker is added while preserving the same co-located placement on sc-app-02 so that only the active worker count varies.",
+          "scenarioProfileId": "W3",
+          "scenarioProfileName": "Pilot Worker Count Sweep - Three RPC Workers",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/worker-count/W3.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W3_worker_count_3",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W3_worker_count_3",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W3_official_locked"
+        ],
+        "status": "unsupported_under_current_constraints",
+        "samples": [],
+        "summary": null,
+        "summarySource": "none",
+        "diagnosisScenarioSummary": null,
+        "unsupportedReports": [
+          {
+            "replica": "A",
+            "unsupportedJsonPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W3_worker_count_3/W3_runA_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "latency_injection",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          },
+          {
+            "replica": "B",
+            "unsupportedJsonPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W3_worker_count_3/W3_runB_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "latency_injection",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          },
+          {
+            "replica": "C",
+            "unsupportedJsonPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W3_worker_count_3/W3_runC_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "latency_injection",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          }
+        ],
+        "unsupportedSummary": {
+          "unsupportedReplicaCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "evidenceKinds": [
+            "failed_scheduling",
+            "insufficient_cpu",
+            "insufficient_memory",
+            "latency_injection",
+            "no_preemption_victims_found",
+            "node_affinity_selector_mismatch",
+            "pending_pod",
+            "preemption_not_helpful"
+          ],
+          "reasons": [
+            "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints."
+          ]
+        },
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "W4": {
+        "family": "worker-count",
+        "scenarioId": "W4",
+        "label": "W4 (4 worker)",
+        "scenario": {
+          "scenarioId": "W4",
+          "purpose": "Pilot Worker Count Sweep - Four RPC Workers",
+          "workerCount": 4,
+          "outputSubdir": "W4_worker_count_4",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w4",
+          "notes": "Worker-count-only variation anchored to the official locked baseline B0. Model, workload, prompt, server manifest, and placement mode are all inherited from B0; the fourth active RPC worker is added while preserving the same co-located placement on sc-app-02 so that only the active worker count varies.",
+          "scenarioProfileId": "W4",
+          "scenarioProfileName": "Pilot Worker Count Sweep - Four RPC Workers",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/worker-count/W4.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W4_worker_count_4",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W4_worker_count_4",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W4_official_locked"
+        ],
+        "status": "unsupported_under_current_constraints",
+        "samples": [],
+        "summary": null,
+        "summarySource": "none",
+        "diagnosisScenarioSummary": null,
+        "unsupportedReports": [
+          {
+            "replica": "A",
+            "unsupportedJsonPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W4_worker_count_4/W4_runA_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "latency_injection",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          },
+          {
+            "replica": "B",
+            "unsupportedJsonPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W4_worker_count_4/W4_runB_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "latency_injection",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          },
+          {
+            "replica": "C",
+            "unsupportedJsonPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count/W4_worker_count_4/W4_runC_unsupported.json",
+            "status": "unsupported_under_current_constraints",
+            "reason": "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "evidence": null,
+            "evidenceKinds": [
+              "failed_scheduling",
+              "insufficient_cpu",
+              "insufficient_memory",
+              "latency_injection",
+              "no_preemption_victims_found",
+              "node_affinity_selector_mismatch",
+              "pending_pod",
+              "preemption_not_helpful"
+            ],
+            "timeoutSeconds": null,
+            "model": null
+          }
+        ],
+        "unsupportedSummary": {
+          "unsupportedReplicaCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "evidenceKinds": [
+            "failed_scheduling",
+            "insufficient_cpu",
+            "insufficient_memory",
+            "latency_injection",
+            "no_preemption_victims_found",
+            "node_affinity_selector_mismatch",
+            "pending_pod",
+            "preemption_not_helpful"
+          ],
+          "reasons": [
+            "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints.",
+            "Worker-count scenario unsupported under the current constraints of the fixed baseline: placement 'colocated_sc_app_02' must remain unchanged and, after auto-apply and the configured stabilization window, at least one RPC pod required by the scenario remains unschedulable in the current cluster due to resource and/or affinity constraints."
+          ]
+        },
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      }
+    },
+    "workload": {
+      "WL1": {
+        "family": "workload",
+        "scenarioId": "WL1",
+        "label": "WL1 (1 users, spawn 1)",
+        "scenario": {
+          "scenarioId": "WL1",
+          "purpose": "Pilot Workload Sweep - Smoke Single User",
+          "users": 1,
+          "spawnRate": 1,
+          "runTime": "2m",
+          "outputSubdir": "WL1_smoke_single_user",
+          "referenceBaselineId": "B0",
+          "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the single-user smoke workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile.",
+          "scenarioProfileId": "WL1",
+          "scenarioProfileName": "Pilot Workload Sweep - Smoke Single User",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/workload/WL1.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 50,
+            "failure_count": 0,
+            "mean_response_time_ms": 1589.7926,
+            "p50_response_time_ms": 1600.0,
+            "p95_response_time_ms": 1700.0,
+            "p99_response_time_ms": 1700.0,
+            "throughput_rps": 0.2811,
+            "maxNodeCpuPercent": 18.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 1386.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 1506.0,
+            "totalPodMemoryMiB": 1241.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 38,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 50,
+            "failure_count": 0,
+            "mean_response_time_ms": 1587.8636,
+            "p50_response_time_ms": 1600.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1800.0,
+            "throughput_rps": 0.2813,
+            "maxNodeCpuPercent": 18.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 1338.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 1458.0,
+            "totalPodMemoryMiB": 1243.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 29,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 50,
+            "failure_count": 0,
+            "mean_response_time_ms": 1589.8425,
+            "p50_response_time_ms": 1600.0,
+            "p95_response_time_ms": 1700.0,
+            "p99_response_time_ms": 1800.0,
+            "throughput_rps": 0.2811,
+            "maxNodeCpuPercent": 16.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 1247.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 1344.0,
+            "totalPodMemoryMiB": 1241.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 29,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL1_smoke_single_user/WL1_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 50,
+              "min": 50,
+              "max": 50,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1589.1662,
+              "min": 1587.8636,
+              "max": 1589.8425,
+              "stddev": 0.9213,
+              "coefficientOfVariationPercent": 0.058
+            },
+            "p50_response_time_ms": {
+              "mean": 1600.0,
+              "min": 1600.0,
+              "max": 1600.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1666.6667,
+              "min": 1600.0,
+              "max": 1700.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.8284
+            },
+            "p99_response_time_ms": {
+              "mean": 1766.6667,
+              "min": 1700.0,
+              "max": 1800.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.6683
+            },
+            "throughput_rps": {
+              "mean": 0.2812,
+              "min": 0.2811,
+              "max": 0.2813,
+              "stddev": 0.0001,
+              "coefficientOfVariationPercent": 0.0335
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 17.3333,
+              "min": 16.0,
+              "max": 18.0,
+              "stddev": 0.9428,
+              "coefficientOfVariationPercent": 5.4393
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 37.0,
+              "min": 37.0,
+              "max": 37.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "maxPodCpuMillicores": {
+              "mean": 1323.6667,
+              "min": 1247.0,
+              "max": 1386.0,
+              "stddev": 57.6445,
+              "coefficientOfVariationPercent": 4.3549
+            },
+            "maxPodMemoryMiB": {
+              "mean": 1053.0,
+              "min": 1053.0,
+              "max": 1053.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 1436.0,
+              "min": 1344.0,
+              "max": 1506.0,
+              "stddev": 67.9412,
+              "coefficientOfVariationPercent": 4.7313
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1241.6667,
+              "min": 1241.0,
+              "max": 1243.0,
+              "stddev": 0.9428,
+              "coefficientOfVariationPercent": 0.0759
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 32,
+              "min": 29,
+              "max": 38,
+              "stddev": 4.2426,
+              "coefficientOfVariationPercent": 13.2583
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 3,
+              "min": 3,
+              "max": 3,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 50,
+              "min": 50,
+              "max": 50,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1589.1662,
+              "min": 1587.8636,
+              "max": 1589.8425,
+              "stddev": 0.9213,
+              "coefficientOfVariationPercent": 0.058
+            },
+            "p50_response_time_ms": {
+              "mean": 1600.0,
+              "min": 1600.0,
+              "max": 1600.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1666.6667,
+              "min": 1600.0,
+              "max": 1700.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.8284
+            },
+            "p99_response_time_ms": {
+              "mean": 1766.6667,
+              "min": 1700.0,
+              "max": 1800.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.6683
+            },
+            "throughput_rps": {
+              "mean": 0.2812,
+              "min": 0.2811,
+              "max": 0.2813,
+              "stddev": 0.0001,
+              "coefficientOfVariationPercent": 0.0335
+            }
+          },
+          "maxNodeCpuPercentObserved": 18.0,
+          "maxNodeMemoryPercentObserved": 37.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "WL2": {
+        "family": "workload",
+        "scenarioId": "WL2",
+        "label": "WL2 (2 users, spawn 1)",
+        "scenario": {
+          "scenarioId": "WL2",
+          "purpose": "Pilot Workload Sweep - Low Load Two Users",
+          "users": 2,
+          "spawnRate": 1,
+          "runTime": "2m",
+          "outputSubdir": "WL2_low_load_two_users",
+          "referenceBaselineId": "B0",
+          "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the low-load two-user reference workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile.",
+          "scenarioProfileId": "WL2",
+          "scenarioProfileName": "Pilot Workload Sweep - Low Load Two Users",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/workload/WL2.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1698.7445,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2000.0,
+            "throughput_rps": 0.5412,
+            "maxNodeCpuPercent": 36.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 2651.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2891.0,
+            "totalPodMemoryMiB": 1236.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 29,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1701.5166,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2000.0,
+            "throughput_rps": 0.541,
+            "maxNodeCpuPercent": 37.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 2669.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2905.0,
+            "totalPodMemoryMiB": 1242.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 17,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1703.5977,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2000.0,
+            "throughput_rps": 0.5403,
+            "maxNodeCpuPercent": 37.0,
+            "maxNodeMemoryPercent": 38.0,
+            "maxPodCpuMillicores": 2589.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2821.0,
+            "totalPodMemoryMiB": 1230.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 17,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL2_low_load_two_users/WL2_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1701.2863,
+              "min": 1698.7445,
+              "max": 1703.5977,
+              "stddev": 1.988,
+              "coefficientOfVariationPercent": 0.1169
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2000.0,
+              "min": 2000.0,
+              "max": 2000.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "throughput_rps": {
+              "mean": 0.5408,
+              "min": 0.5403,
+              "max": 0.5412,
+              "stddev": 0.0004,
+              "coefficientOfVariationPercent": 0.0713
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 36.6667,
+              "min": 36.0,
+              "max": 37.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2856
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 37.3333,
+              "min": 37.0,
+              "max": 38.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2627
+            },
+            "maxPodCpuMillicores": {
+              "mean": 2636.3333,
+              "min": 2589.0,
+              "max": 2669.0,
+              "stddev": 34.2669,
+              "coefficientOfVariationPercent": 1.2998
+            },
+            "maxPodMemoryMiB": {
+              "mean": 1053.0,
+              "min": 1053.0,
+              "max": 1053.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 2872.3333,
+              "min": 2821.0,
+              "max": 2905.0,
+              "stddev": 36.7454,
+              "coefficientOfVariationPercent": 1.2793
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1236.0,
+              "min": 1230.0,
+              "max": 1242.0,
+              "stddev": 4.899,
+              "coefficientOfVariationPercent": 0.3964
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 21,
+              "min": 17,
+              "max": 29,
+              "stddev": 5.6569,
+              "coefficientOfVariationPercent": 26.9374
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 3,
+              "min": 3,
+              "max": 3,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1701.2863,
+              "min": 1698.7445,
+              "max": 1703.5977,
+              "stddev": 1.988,
+              "coefficientOfVariationPercent": 0.1169
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2000.0,
+              "min": 2000.0,
+              "max": 2000.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "throughput_rps": {
+              "mean": 0.5408,
+              "min": 0.5403,
+              "max": 0.5412,
+              "stddev": 0.0004,
+              "coefficientOfVariationPercent": 0.0713
+            }
+          },
+          "maxNodeCpuPercentObserved": 37.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "WL3": {
+        "family": "workload",
+        "scenarioId": "WL3",
+        "label": "WL3 (4 users, spawn 2)",
+        "scenario": {
+          "scenarioId": "WL3",
+          "purpose": "Pilot Workload Sweep - Small Concurrency Four Users",
+          "users": 4,
+          "spawnRate": 2,
+          "runTime": "2m",
+          "outputSubdir": "WL3_small_concurrency_four_users",
+          "referenceBaselineId": "B0",
+          "notes": "Workload-only variation anchored to the official locked baseline B0. This scenario defines the small-concurrency four-user workload while inheriting the fixed model, worker scenario, placement scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Workload Sweep family is the resolved input workload profile.",
+          "scenarioProfileId": "WL3",
+          "scenarioProfileName": "Pilot Workload Sweep - Small Concurrency Four Users",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/workload/WL3.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 134,
+            "failure_count": 0,
+            "mean_response_time_ms": 3296.4973,
+            "p50_response_time_ms": 3300.0,
+            "p95_response_time_ms": 3500.0,
+            "p99_response_time_ms": 3800.0,
+            "throughput_rps": 0.752,
+            "maxNodeCpuPercent": 55.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 3984.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 4395.0,
+            "totalPodMemoryMiB": 1239.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 17,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 134,
+            "failure_count": 0,
+            "mean_response_time_ms": 3318.933,
+            "p50_response_time_ms": 3300.0,
+            "p95_response_time_ms": 3500.0,
+            "p99_response_time_ms": 4500.0,
+            "throughput_rps": 0.7488,
+            "maxNodeCpuPercent": 55.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 3986.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 4378.0,
+            "totalPodMemoryMiB": 1246.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 11,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 134,
+            "failure_count": 0,
+            "mean_response_time_ms": 3319.461,
+            "p50_response_time_ms": 3300.0,
+            "p95_response_time_ms": 3500.0,
+            "p99_response_time_ms": 4300.0,
+            "throughput_rps": 0.7488,
+            "maxNodeCpuPercent": 54.0,
+            "maxNodeMemoryPercent": 38.0,
+            "maxPodCpuMillicores": 3985.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 4375.0,
+            "totalPodMemoryMiB": 1253.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 11,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload/WL3_small_concurrency_four_users/WL3_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 134,
+              "min": 134,
+              "max": 134,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 3311.6304,
+              "min": 3296.4973,
+              "max": 3319.461,
+              "stddev": 10.7029,
+              "coefficientOfVariationPercent": 0.3232
+            },
+            "p50_response_time_ms": {
+              "mean": 3300.0,
+              "min": 3300.0,
+              "max": 3300.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 3500.0,
+              "min": 3500.0,
+              "max": 3500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 4200.0,
+              "min": 3800.0,
+              "max": 4500.0,
+              "stddev": 294.392,
+              "coefficientOfVariationPercent": 7.0093
+            },
+            "throughput_rps": {
+              "mean": 0.7499,
+              "min": 0.7488,
+              "max": 0.752,
+              "stddev": 0.0015,
+              "coefficientOfVariationPercent": 0.2012
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 54.6667,
+              "min": 54.0,
+              "max": 55.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 0.8623
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 38.6667,
+              "min": 38.0,
+              "max": 39.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2191
+            },
+            "maxPodCpuMillicores": {
+              "mean": 3985.0,
+              "min": 3984.0,
+              "max": 3986.0,
+              "stddev": 0.8165,
+              "coefficientOfVariationPercent": 0.0205
+            },
+            "maxPodMemoryMiB": {
+              "mean": 1053.0,
+              "min": 1053.0,
+              "max": 1053.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 4382.6667,
+              "min": 4375.0,
+              "max": 4395.0,
+              "stddev": 8.8066,
+              "coefficientOfVariationPercent": 0.2009
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1246.0,
+              "min": 1239.0,
+              "max": 1253.0,
+              "stddev": 5.7155,
+              "coefficientOfVariationPercent": 0.4587
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 13,
+              "min": 11,
+              "max": 17,
+              "stddev": 2.8284,
+              "coefficientOfVariationPercent": 21.7571
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 3,
+              "min": 3,
+              "max": 3,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 134,
+              "min": 134,
+              "max": 134,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 3311.6304,
+              "min": 3296.4973,
+              "max": 3319.461,
+              "stddev": 10.7029,
+              "coefficientOfVariationPercent": 0.3232
+            },
+            "p50_response_time_ms": {
+              "mean": 3300.0,
+              "min": 3300.0,
+              "max": 3300.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 3500.0,
+              "min": 3500.0,
+              "max": 3500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 4200.0,
+              "min": 3800.0,
+              "max": 4500.0,
+              "stddev": 294.392,
+              "coefficientOfVariationPercent": 7.0093
+            },
+            "throughput_rps": {
+              "mean": 0.7499,
+              "min": 0.7488,
+              "max": 0.752,
+              "stddev": 0.0015,
+              "coefficientOfVariationPercent": 0.2012
+            }
+          },
+          "maxNodeCpuPercentObserved": 55.0,
+          "maxNodeMemoryPercentObserved": 39.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      }
+    },
+    "models": {
+      "M1": {
+        "family": "models",
+        "scenarioId": "M1",
+        "label": "M1 (llama-3.2-1b-instruct:q4_k_m)",
+        "scenario": {
+          "scenarioId": "M1",
+          "purpose": "Pilot Model Sweep - Baseline Llama 3.2 1B q4_k_m",
+          "modelName": "llama-3.2-1b-instruct:q4_k_m",
+          "outputSubdir": "M1_llama32_1b_q4km",
+          "referenceBaselineId": "B0",
+          "serverManifest": "infra/k8s/compositions/server/models/m1",
+          "notes": "Model-only variation anchored to the official locked baseline B0. This scenario reproduces the official baseline model and inherits the fixed worker scenario, placement scenario, workload scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Model Sweep family is the resolved model and its derived server manifest.",
+          "scenarioProfileId": "M1",
+          "scenarioProfileName": "Pilot Model Sweep - Baseline Llama 3.2 1B q4_k_m",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/models/M1.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1700.5755,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2000.0,
+            "throughput_rps": 0.5413,
+            "maxNodeCpuPercent": 36.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 2735.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2983.0,
+            "totalPodMemoryMiB": 1249.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 11,
+            "kubernetesWarningEventsCount": 3,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1719.5225,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2200.0,
+            "throughput_rps": 0.5384,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 2793.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 3033.0,
+            "totalPodMemoryMiB": 1250.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 8,
+            "kubernetesWarningEventsCount": 2,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1695.7341,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1700.0,
+            "p99_response_time_ms": 2100.0,
+            "throughput_rps": 0.5418,
+            "maxNodeCpuPercent": 35.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 2719.0,
+            "maxPodMemoryMiB": 1053.0,
+            "totalPodCpuMillicores": 2969.0,
+            "totalPodMemoryMiB": 1245.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 8,
+            "kubernetesWarningEventsCount": 2,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M1_llama32_1b_q4km/M1_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1705.2774,
+              "min": 1695.7341,
+              "max": 1719.5225,
+              "stddev": 10.2649,
+              "coefficientOfVariationPercent": 0.6019
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1766.6667,
+              "min": 1700.0,
+              "max": 1800.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.6683
+            },
+            "p99_response_time_ms": {
+              "mean": 2100.0,
+              "min": 2000.0,
+              "max": 2200.0,
+              "stddev": 81.6497,
+              "coefficientOfVariationPercent": 3.8881
+            },
+            "throughput_rps": {
+              "mean": 0.5405,
+              "min": 0.5384,
+              "max": 0.5418,
+              "stddev": 0.0015,
+              "coefficientOfVariationPercent": 0.2773
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 35.3333,
+              "min": 35.0,
+              "max": 36.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.3342
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 37.6667,
+              "min": 37.0,
+              "max": 39.0,
+              "stddev": 0.9428,
+              "coefficientOfVariationPercent": 2.503
+            },
+            "maxPodCpuMillicores": {
+              "mean": 2749.0,
+              "min": 2719.0,
+              "max": 2793.0,
+              "stddev": 31.791,
+              "coefficientOfVariationPercent": 1.1565
+            },
+            "maxPodMemoryMiB": {
+              "mean": 1053.0,
+              "min": 1053.0,
+              "max": 1053.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 2995.0,
+              "min": 2969.0,
+              "max": 3033.0,
+              "stddev": 27.4712,
+              "coefficientOfVariationPercent": 0.9172
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1248.0,
+              "min": 1245.0,
+              "max": 1250.0,
+              "stddev": 2.1602,
+              "coefficientOfVariationPercent": 0.1731
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 9,
+              "min": 8,
+              "max": 11,
+              "stddev": 1.4142,
+              "coefficientOfVariationPercent": 15.7135
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 2.3333,
+              "min": 2,
+              "max": 3,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 20.2031
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1705.2774,
+              "min": 1695.7341,
+              "max": 1719.5225,
+              "stddev": 10.2649,
+              "coefficientOfVariationPercent": 0.6019
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1766.6667,
+              "min": 1700.0,
+              "max": 1800.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.6683
+            },
+            "p99_response_time_ms": {
+              "mean": 2100.0,
+              "min": 2000.0,
+              "max": 2200.0,
+              "stddev": 81.6497,
+              "coefficientOfVariationPercent": 3.8881
+            },
+            "throughput_rps": {
+              "mean": 0.5405,
+              "min": 0.5384,
+              "max": 0.5418,
+              "stddev": 0.0015,
+              "coefficientOfVariationPercent": 0.2773
+            }
+          },
+          "maxNodeCpuPercentObserved": 36.0,
+          "maxNodeMemoryPercentObserved": 39.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "M2": {
+        "family": "models",
+        "scenarioId": "M2",
+        "label": "M2 (llama-3.2-1b-instruct:q8_0)",
+        "scenario": {
+          "scenarioId": "M2",
+          "purpose": "Pilot Model Sweep - Llama 3.2 1B q8_0",
+          "modelName": "llama-3.2-1b-instruct:q8_0",
+          "outputSubdir": "M2_llama32_1b_q8_0",
+          "referenceBaselineId": "B0",
+          "serverManifest": "infra/k8s/compositions/server/models/m2",
+          "notes": "Model-only variation anchored to the official locked baseline B0. This scenario changes the model family member to the 1B q8_0 variant while inheriting the fixed worker scenario, placement scenario, workload scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Model Sweep family is the resolved model and its derived server manifest.",
+          "scenarioProfileId": "M2",
+          "scenarioProfileName": "Pilot Model Sweep - Llama 3.2 1B q8_0",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/models/M2.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 100,
+            "failure_count": 0,
+            "mean_response_time_ms": 1562.5488,
+            "p50_response_time_ms": 1600.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1800.0,
+            "throughput_rps": 0.5623,
+            "maxNodeCpuPercent": 34.0,
+            "maxNodeMemoryPercent": 38.0,
+            "maxPodCpuMillicores": 1384.0,
+            "maxPodMemoryMiB": 847.0,
+            "totalPodCpuMillicores": 2696.0,
+            "totalPodMemoryMiB": 1762.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 14,
+            "kubernetesWarningEventsCount": 1,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 100,
+            "failure_count": 0,
+            "mean_response_time_ms": 1581.4671,
+            "p50_response_time_ms": 1600.0,
+            "p95_response_time_ms": 1700.0,
+            "p99_response_time_ms": 1800.0,
+            "throughput_rps": 0.5593,
+            "maxNodeCpuPercent": 36.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 1495.0,
+            "maxPodMemoryMiB": 847.0,
+            "totalPodCpuMillicores": 2845.0,
+            "totalPodMemoryMiB": 1770.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 9,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 100,
+            "failure_count": 0,
+            "mean_response_time_ms": 1567.1489,
+            "p50_response_time_ms": 1600.0,
+            "p95_response_time_ms": 1600.0,
+            "p99_response_time_ms": 1800.0,
+            "throughput_rps": 0.5613,
+            "maxNodeCpuPercent": 34.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 1464.0,
+            "maxPodMemoryMiB": 847.0,
+            "totalPodCpuMillicores": 2805.0,
+            "totalPodMemoryMiB": 1768.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 9,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M2_llama32_1b_q8_0/M2_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 100,
+              "min": 100,
+              "max": 100,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1570.3883,
+              "min": 1562.5488,
+              "max": 1581.4671,
+              "stddev": 8.0559,
+              "coefficientOfVariationPercent": 0.513
+            },
+            "p50_response_time_ms": {
+              "mean": 1600.0,
+              "min": 1600.0,
+              "max": 1600.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1633.3333,
+              "min": 1600.0,
+              "max": 1700.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.8862
+            },
+            "p99_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "throughput_rps": {
+              "mean": 0.561,
+              "min": 0.5593,
+              "max": 0.5623,
+              "stddev": 0.0012,
+              "coefficientOfVariationPercent": 0.2223
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 34.6667,
+              "min": 34.0,
+              "max": 36.0,
+              "stddev": 0.9428,
+              "coefficientOfVariationPercent": 2.7196
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 37.3333,
+              "min": 37.0,
+              "max": 38.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2627
+            },
+            "maxPodCpuMillicores": {
+              "mean": 1447.6667,
+              "min": 1384.0,
+              "max": 1495.0,
+              "stddev": 46.7642,
+              "coefficientOfVariationPercent": 3.2303
+            },
+            "maxPodMemoryMiB": {
+              "mean": 847.0,
+              "min": 847.0,
+              "max": 847.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 2782.0,
+              "min": 2696.0,
+              "max": 2845.0,
+              "stddev": 62.9656,
+              "coefficientOfVariationPercent": 2.2633
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1766.6667,
+              "min": 1762.0,
+              "max": 1770.0,
+              "stddev": 3.3993,
+              "coefficientOfVariationPercent": 0.1924
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 10.6667,
+              "min": 9,
+              "max": 14,
+              "stddev": 2.357,
+              "coefficientOfVariationPercent": 22.0971
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 0.3333,
+              "min": 0,
+              "max": 1,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 141.4214
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 100,
+              "min": 100,
+              "max": 100,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1570.3883,
+              "min": 1562.5488,
+              "max": 1581.4671,
+              "stddev": 8.0559,
+              "coefficientOfVariationPercent": 0.513
+            },
+            "p50_response_time_ms": {
+              "mean": 1600.0,
+              "min": 1600.0,
+              "max": 1600.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1633.3333,
+              "min": 1600.0,
+              "max": 1700.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.8862
+            },
+            "p99_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "throughput_rps": {
+              "mean": 0.561,
+              "min": 0.5593,
+              "max": 0.5623,
+              "stddev": 0.0012,
+              "coefficientOfVariationPercent": 0.2223
+            }
+          },
+          "maxNodeCpuPercentObserved": 36.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "M3": {
+        "family": "models",
+        "scenarioId": "M3",
+        "label": "M3 (llama-3.2-3b-instruct:q4_k_m)",
+        "scenario": {
+          "scenarioId": "M3",
+          "purpose": "Pilot Model Sweep - Llama 3.2 3B q4_k_m",
+          "modelName": "llama-3.2-3b-instruct:q4_k_m",
+          "outputSubdir": "M3_llama32_3b_q4km",
+          "referenceBaselineId": "B0",
+          "serverManifest": "infra/k8s/compositions/server/models/m3",
+          "notes": "Model-only variation anchored to the official locked baseline B0. This scenario changes the model family member to the 3B q4_k_m variant while inheriting the fixed worker scenario, placement scenario, workload scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Model Sweep family is the resolved model and its derived server manifest.",
+          "scenarioProfileId": "M3",
+          "scenarioProfileName": "Pilot Model Sweep - Llama 3.2 3B q4_k_m",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/models/M3.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 46,
+            "failure_count": 0,
+            "mean_response_time_ms": 5595.7596,
+            "p50_response_time_ms": 5500.0,
+            "p95_response_time_ms": 5800.0,
+            "p99_response_time_ms": 7900.0,
+            "throughput_rps": 0.2624,
+            "maxNodeCpuPercent": 52.0,
+            "maxNodeMemoryPercent": 38.0,
+            "maxPodCpuMillicores": 2194.0,
+            "maxPodMemoryMiB": 1524.0,
+            "totalPodCpuMillicores": 4248.0,
+            "totalPodMemoryMiB": 3072.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 18,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 46,
+            "failure_count": 0,
+            "mean_response_time_ms": 5682.6776,
+            "p50_response_time_ms": 5500.0,
+            "p95_response_time_ms": 5800.0,
+            "p99_response_time_ms": 9800.0,
+            "throughput_rps": 0.2595,
+            "maxNodeCpuPercent": 52.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 1991.0,
+            "maxPodMemoryMiB": 1524.0,
+            "totalPodCpuMillicores": 3938.0,
+            "totalPodMemoryMiB": 3090.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 18,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 47,
+            "failure_count": 0,
+            "mean_response_time_ms": 5600.0289,
+            "p50_response_time_ms": 5500.0,
+            "p95_response_time_ms": 5700.0,
+            "p99_response_time_ms": 8100.0,
+            "throughput_rps": 0.2623,
+            "maxNodeCpuPercent": 52.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 2117.0,
+            "maxPodMemoryMiB": 1524.0,
+            "totalPodCpuMillicores": 4086.0,
+            "totalPodMemoryMiB": 3076.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 18,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M3_llama32_3b_q4km/M3_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 46.3333,
+              "min": 46,
+              "max": 47,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.0174
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 5626.1554,
+              "min": 5595.7596,
+              "max": 5682.6776,
+              "stddev": 40.0052,
+              "coefficientOfVariationPercent": 0.7111
+            },
+            "p50_response_time_ms": {
+              "mean": 5500.0,
+              "min": 5500.0,
+              "max": 5500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 5766.6667,
+              "min": 5700.0,
+              "max": 5800.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 0.8175
+            },
+            "p99_response_time_ms": {
+              "mean": 8600.0,
+              "min": 7900.0,
+              "max": 9800.0,
+              "stddev": 852.4475,
+              "coefficientOfVariationPercent": 9.9122
+            },
+            "throughput_rps": {
+              "mean": 0.2614,
+              "min": 0.2595,
+              "max": 0.2624,
+              "stddev": 0.0013,
+              "coefficientOfVariationPercent": 0.5142
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 52.0,
+              "min": 52.0,
+              "max": 52.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 37.3333,
+              "min": 37.0,
+              "max": 38.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2627
+            },
+            "maxPodCpuMillicores": {
+              "mean": 2100.6667,
+              "min": 1991.0,
+              "max": 2194.0,
+              "stddev": 83.6753,
+              "coefficientOfVariationPercent": 3.9833
+            },
+            "maxPodMemoryMiB": {
+              "mean": 1524.0,
+              "min": 1524.0,
+              "max": 1524.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 4090.6667,
+              "min": 3938.0,
+              "max": 4248.0,
+              "stddev": 126.6,
+              "coefficientOfVariationPercent": 3.0948
+            },
+            "totalPodMemoryMiB": {
+              "mean": 3079.3333,
+              "min": 3072.0,
+              "max": 3090.0,
+              "stddev": 7.7172,
+              "coefficientOfVariationPercent": 0.2506
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 18,
+              "min": 18,
+              "max": 18,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 46.3333,
+              "min": 46,
+              "max": 47,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.0174
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 5626.1554,
+              "min": 5595.7596,
+              "max": 5682.6776,
+              "stddev": 40.0052,
+              "coefficientOfVariationPercent": 0.7111
+            },
+            "p50_response_time_ms": {
+              "mean": 5500.0,
+              "min": 5500.0,
+              "max": 5500.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 5766.6667,
+              "min": 5700.0,
+              "max": 5800.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 0.8175
+            },
+            "p99_response_time_ms": {
+              "mean": 8600.0,
+              "min": 7900.0,
+              "max": 9800.0,
+              "stddev": 852.4475,
+              "coefficientOfVariationPercent": 9.9122
+            },
+            "throughput_rps": {
+              "mean": 0.2614,
+              "min": 0.2595,
+              "max": 0.2624,
+              "stddev": 0.0013,
+              "coefficientOfVariationPercent": 0.5142
+            }
+          },
+          "maxNodeCpuPercentObserved": 52.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "M4": {
+        "family": "models",
+        "scenarioId": "M4",
+        "label": "M4 (llama-3.2-3b-instruct:q8_0)",
+        "scenario": {
+          "scenarioId": "M4",
+          "purpose": "Pilot Model Sweep - Llama 3.2 3B Instruct q8_0",
+          "modelName": "llama-3.2-3b-instruct:q8_0",
+          "outputSubdir": "M4_llama32_3b_q8_0",
+          "referenceBaselineId": "B0",
+          "serverManifest": "infra/k8s/compositions/server/models/m4",
+          "notes": "Model-only variation anchored to the official locked baseline B0. This scenario changes the model family member to the 3B q8_0 variant while inheriting the fixed worker scenario, placement scenario, workload scenario, prompt, temperature, and request timeout directly from the baseline. The only intended experimental delta within the Model Sweep family is the resolved model and its derived server manifest.",
+          "scenarioProfileId": "M4",
+          "scenarioProfileName": "Pilot Model Sweep - Llama 3.2 3B Instruct q8_0",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/models/M4.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 51,
+            "failure_count": 0,
+            "mean_response_time_ms": 4920.4549,
+            "p50_response_time_ms": 4800.0,
+            "p95_response_time_ms": 5000.0,
+            "p99_response_time_ms": 9000.0,
+            "throughput_rps": 0.2883,
+            "maxNodeCpuPercent": 52.0,
+            "maxNodeMemoryPercent": 38.0,
+            "maxPodCpuMillicores": 2014.0,
+            "maxPodMemoryMiB": 2192.0,
+            "totalPodCpuMillicores": 4179.0,
+            "totalPodMemoryMiB": 4447.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 27,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 52,
+            "failure_count": 0,
+            "mean_response_time_ms": 4856.0369,
+            "p50_response_time_ms": 4700.0,
+            "p95_response_time_ms": 5000.0,
+            "p99_response_time_ms": 8100.0,
+            "throughput_rps": 0.291,
+            "maxNodeCpuPercent": 52.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 1992.0,
+            "maxPodMemoryMiB": 2192.0,
+            "totalPodCpuMillicores": 3895.0,
+            "totalPodMemoryMiB": 4445.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 27,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 52,
+            "failure_count": 0,
+            "mean_response_time_ms": 4840.648,
+            "p50_response_time_ms": 4700.0,
+            "p95_response_time_ms": 5000.0,
+            "p99_response_time_ms": 7900.0,
+            "throughput_rps": 0.2917,
+            "maxNodeCpuPercent": 52.0,
+            "maxNodeMemoryPercent": 37.0,
+            "maxPodCpuMillicores": 2206.0,
+            "maxPodMemoryMiB": 2192.0,
+            "totalPodCpuMillicores": 4166.0,
+            "totalPodMemoryMiB": 4444.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 27,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models/M4_llama32_3b_q8_0/M4_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 51.6667,
+              "min": 51,
+              "max": 52,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 0.9124
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 4872.3799,
+              "min": 4840.648,
+              "max": 4920.4549,
+              "stddev": 34.5698,
+              "coefficientOfVariationPercent": 0.7095
+            },
+            "p50_response_time_ms": {
+              "mean": 4733.3333,
+              "min": 4700.0,
+              "max": 4800.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 0.9959
+            },
+            "p95_response_time_ms": {
+              "mean": 5000.0,
+              "min": 5000.0,
+              "max": 5000.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 8333.3333,
+              "min": 7900.0,
+              "max": 9000.0,
+              "stddev": 478.4233,
+              "coefficientOfVariationPercent": 5.7411
+            },
+            "throughput_rps": {
+              "mean": 0.2903,
+              "min": 0.2883,
+              "max": 0.2917,
+              "stddev": 0.0015,
+              "coefficientOfVariationPercent": 0.5049
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 52.0,
+              "min": 52.0,
+              "max": 52.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 37.3333,
+              "min": 37.0,
+              "max": 38.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2627
+            },
+            "maxPodCpuMillicores": {
+              "mean": 2070.6667,
+              "min": 1992.0,
+              "max": 2206.0,
+              "stddev": 96.1157,
+              "coefficientOfVariationPercent": 4.6418
+            },
+            "maxPodMemoryMiB": {
+              "mean": 2192.0,
+              "min": 2192.0,
+              "max": 2192.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 4080.0,
+              "min": 3895.0,
+              "max": 4179.0,
+              "stddev": 130.9224,
+              "coefficientOfVariationPercent": 3.2089
+            },
+            "totalPodMemoryMiB": {
+              "mean": 4445.3333,
+              "min": 4444.0,
+              "max": 4447.0,
+              "stddev": 1.2472,
+              "coefficientOfVariationPercent": 0.0281
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 27,
+              "min": 27,
+              "max": 27,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 51.6667,
+              "min": 51,
+              "max": 52,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 0.9124
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 4872.3799,
+              "min": 4840.648,
+              "max": 4920.4549,
+              "stddev": 34.5698,
+              "coefficientOfVariationPercent": 0.7095
+            },
+            "p50_response_time_ms": {
+              "mean": 4733.3333,
+              "min": 4700.0,
+              "max": 4800.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 0.9959
+            },
+            "p95_response_time_ms": {
+              "mean": 5000.0,
+              "min": 5000.0,
+              "max": 5000.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 8333.3333,
+              "min": 7900.0,
+              "max": 9000.0,
+              "stddev": 478.4233,
+              "coefficientOfVariationPercent": 5.7411
+            },
+            "throughput_rps": {
+              "mean": 0.2903,
+              "min": 0.2883,
+              "max": 0.2917,
+              "stddev": 0.0015,
+              "coefficientOfVariationPercent": 0.5049
+            }
+          },
+          "maxNodeCpuPercentObserved": 52.0,
+          "maxNodeMemoryPercentObserved": 38.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      }
+    },
+    "placement": {
+      "PL1": {
+        "family": "placement",
+        "scenarioId": "PL1",
+        "label": "PL1 (colocated_sc_app_02)",
+        "scenario": {
+          "scenarioId": "PL1",
+          "purpose": "Historical compatibility placement scenario for co-located LocalAI server and RPC workers.",
+          "placementType": "colocated_sc_app_02",
+          "outputSubdir": "PL1_colocated_scapp02",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+          "notes": "Placement-only variation anchored to the historical baseline. This scenario now resolves to the explicit PL_COLOCATED placement profile while preserving the original co-located sc-app-02 topology and keeping model, worker count, workload, prompt, temperature, and request timeout fixed.",
+          "placementProfileId": "PL_COLOCATED",
+          "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+          "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+          "selectorPolicy": "stable_node_name_compatibility",
+          "expectedServerNode": "sc-app-02",
+          "expectedWorkerNodes": {
+            "localai-rpc-a": "sc-app-02",
+            "localai-rpc-b": "sc-app-02"
+          },
+          "placementResearchQuestion": "How does a compact LocalAI topology behave when communication distance is minimized but CPU and memory contention may increase?",
+          "status": "legacy_historical_compatibility",
+          "legacyScenarioId": "PL1",
+          "canonicalPlacementProfileId": "PL_COLOCATED",
+          "canonicalPlacementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+          "canonicalNamingPolicy": "Use placementProfileId for provider-backed cycles; keep PL1/PL2 only for historical fixed-cluster and legacy pilot compatibility.",
+          "supersededByPlacementProfileId": "PL_COLOCATED",
+          "profileResolutionMode": "legacy_scenario_to_canonical_placement_profile_alias",
+          "scenarioProfileId": "PL1",
+          "scenarioProfileName": "Historical compatibility placement scenario for co-located LocalAI server and RPC workers.",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/placement/PL1.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1721.6619,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2100.0,
+            "throughput_rps": 0.538,
+            "maxNodeCpuPercent": 36.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 1537.0,
+            "maxPodMemoryMiB": 606.0,
+            "totalPodCpuMillicores": 2971.0,
+            "totalPodMemoryMiB": 1288.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 36,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1715.3504,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2200.0,
+            "throughput_rps": 0.539,
+            "maxNodeCpuPercent": 38.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 1600.0,
+            "maxPodMemoryMiB": 606.0,
+            "totalPodCpuMillicores": 2956.0,
+            "totalPodMemoryMiB": 1286.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 36,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1717.6235,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2000.0,
+            "throughput_rps": 0.5389,
+            "maxNodeCpuPercent": 36.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 1594.0,
+            "maxPodMemoryMiB": 606.0,
+            "totalPodCpuMillicores": 3043.0,
+            "totalPodMemoryMiB": 1300.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 36,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-02": 3
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL1_colocated_scapp02/PL1_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1718.2119,
+              "min": 1715.3504,
+              "max": 1721.6619,
+              "stddev": 2.61,
+              "coefficientOfVariationPercent": 0.1519
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2100.0,
+              "min": 2000.0,
+              "max": 2200.0,
+              "stddev": 81.6497,
+              "coefficientOfVariationPercent": 3.8881
+            },
+            "throughput_rps": {
+              "mean": 0.5386,
+              "min": 0.538,
+              "max": 0.539,
+              "stddev": 0.0004,
+              "coefficientOfVariationPercent": 0.0835
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 36.6667,
+              "min": 36.0,
+              "max": 38.0,
+              "stddev": 0.9428,
+              "coefficientOfVariationPercent": 2.5713
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 39.0,
+              "min": 39.0,
+              "max": 39.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "maxPodCpuMillicores": {
+              "mean": 1577.0,
+              "min": 1537.0,
+              "max": 1600.0,
+              "stddev": 28.3901,
+              "coefficientOfVariationPercent": 1.8003
+            },
+            "maxPodMemoryMiB": {
+              "mean": 606.0,
+              "min": 606.0,
+              "max": 606.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 2990.0,
+              "min": 2956.0,
+              "max": 3043.0,
+              "stddev": 37.9737,
+              "coefficientOfVariationPercent": 1.27
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1291.3333,
+              "min": 1286.0,
+              "max": 1300.0,
+              "stddev": 6.1824,
+              "coefficientOfVariationPercent": 0.4788
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 36,
+              "min": 36,
+              "max": 36,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-02": 9
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1718.2119,
+              "min": 1715.3504,
+              "max": 1721.6619,
+              "stddev": 2.61,
+              "coefficientOfVariationPercent": 0.1519
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2100.0,
+              "min": 2000.0,
+              "max": 2200.0,
+              "stddev": 81.6497,
+              "coefficientOfVariationPercent": 3.8881
+            },
+            "throughput_rps": {
+              "mean": 0.5386,
+              "min": 0.538,
+              "max": 0.539,
+              "stddev": 0.0004,
+              "coefficientOfVariationPercent": 0.0835
+            }
+          },
+          "maxNodeCpuPercentObserved": 38.0,
+          "maxNodeMemoryPercentObserved": 39.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      },
+      "PL2": {
+        "family": "placement",
+        "scenarioId": "PL2",
+        "label": "PL2 (distributed)",
+        "scenario": {
+          "scenarioId": "PL2",
+          "purpose": "Historical compatibility placement scenario for distributed two-node LocalAI RPC worker placement.",
+          "placementType": "distributed",
+          "outputSubdir": "PL2_distributed_two_node",
+          "referenceBaselineId": "B0",
+          "topologyDir": "infra/k8s/compositions/topology/distributed-two-node-w2",
+          "notes": "Placement-only variation anchored to the historical baseline. This scenario now resolves to the explicit PL_DISTRIBUTED_TWO_NODE placement profile while preserving the original distributed two-node worker topology and keeping model, worker count, workload, prompt, temperature, and request timeout fixed.",
+          "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+          "placementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+          "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+          "compatiblePlacementProfileAliases": [
+            "PL_SPREAD_WORKERS"
+          ],
+          "selectorPolicy": "stable_node_name_compatibility",
+          "expectedServerNode": "sc-app-02",
+          "expectedWorkerNodes": {
+            "localai-rpc-a": "sc-app-01",
+            "localai-rpc-b": "sc-app-02"
+          },
+          "placementResearchQuestion": "Does spreading RPC workers across two nodes reduce local resource contention enough to compensate for the additional inter-node communication path?",
+          "status": "legacy_historical_compatibility",
+          "legacyScenarioId": "PL2",
+          "canonicalPlacementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+          "canonicalPlacementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+          "canonicalNamingPolicy": "Use placementProfileId for provider-backed cycles; keep PL1/PL2 only for historical fixed-cluster and legacy pilot compatibility.",
+          "supersededByPlacementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+          "profileResolutionMode": "legacy_scenario_to_canonical_placement_profile_alias",
+          "scenarioProfileId": "PL2",
+          "scenarioProfileName": "Historical compatibility placement scenario for distributed two-node LocalAI RPC worker placement.",
+          "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+          "scenarioProfileSchemaVersion": "1.0"
+        },
+        "scenarioConfigPath": "config/scenarios/pilot/placement/PL2.json",
+        "searchRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node",
+        "searchRoots": [
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node",
+          "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_official_locked"
+        ],
+        "status": "measured",
+        "samples": [
+          {
+            "replica": "A",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runA_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1717.7775,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2100.0,
+            "throughput_rps": 0.5384,
+            "maxNodeCpuPercent": 21.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 1603.0,
+            "maxPodMemoryMiB": 606.0,
+            "totalPodCpuMillicores": 2990.0,
+            "totalPodMemoryMiB": 1273.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 36,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-01": 1,
+              "sc-app-02": 2
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runA_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runA_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runA_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runA_cluster_post_events.json"
+          },
+          {
+            "replica": "B",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runB_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1719.1204,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2200.0,
+            "throughput_rps": 0.5386,
+            "maxNodeCpuPercent": 22.0,
+            "maxNodeMemoryPercent": 39.0,
+            "maxPodCpuMillicores": 1527.0,
+            "maxPodMemoryMiB": 606.0,
+            "totalPodCpuMillicores": 2969.0,
+            "totalPodMemoryMiB": 1275.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 36,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-01": 1,
+              "sc-app-02": 2
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runB_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runB_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runB_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runB_cluster_post_events.json"
+          },
+          {
+            "replica": "C",
+            "statsCsvPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runC_stats.csv",
+            "rowSource": "target_request",
+            "request_count": 96,
+            "failure_count": 0,
+            "mean_response_time_ms": 1718.8357,
+            "p50_response_time_ms": 1700.0,
+            "p95_response_time_ms": 1800.0,
+            "p99_response_time_ms": 2100.0,
+            "throughput_rps": 0.5381,
+            "maxNodeCpuPercent": 21.0,
+            "maxNodeMemoryPercent": 38.0,
+            "maxPodCpuMillicores": 1602.0,
+            "maxPodMemoryMiB": 606.0,
+            "totalPodCpuMillicores": 3001.0,
+            "totalPodMemoryMiB": 1291.0,
+            "podRestartCount": 0,
+            "pendingPodsCount": 0,
+            "failedPodsCount": 0,
+            "notReadyPodsCount": 0,
+            "kubernetesEventsCount": 36,
+            "kubernetesWarningEventsCount": 0,
+            "nodeCounts": {
+              "sc-app-01": 1,
+              "sc-app-02": 2
+            },
+            "clusterTopNodesPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runC_cluster_post_top-nodes.txt",
+            "clusterTopPodsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runC_cluster_post_top-pods.txt",
+            "clusterPodsWidePath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runC_cluster_post_pods-wide.txt",
+            "clusterEventsPath": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement/PL2_distributed_two_node/PL2_runC_cluster_post_events.json"
+          }
+        ],
+        "summary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1718.5779,
+              "min": 1717.7775,
+              "max": 1719.1204,
+              "stddev": 0.5778,
+              "coefficientOfVariationPercent": 0.0336
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2133.3333,
+              "min": 2100.0,
+              "max": 2200.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.2097
+            },
+            "throughput_rps": {
+              "mean": 0.5384,
+              "min": 0.5381,
+              "max": 0.5386,
+              "stddev": 0.0002,
+              "coefficientOfVariationPercent": 0.0382
+            }
+          },
+          "clusterSideSnapshots": {
+            "maxNodeCpuPercent": {
+              "mean": 21.3333,
+              "min": 21.0,
+              "max": 22.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 2.2097
+            },
+            "maxNodeMemoryPercent": {
+              "mean": 38.6667,
+              "min": 38.0,
+              "max": 39.0,
+              "stddev": 0.4714,
+              "coefficientOfVariationPercent": 1.2191
+            },
+            "maxPodCpuMillicores": {
+              "mean": 1577.3333,
+              "min": 1527.0,
+              "max": 1603.0,
+              "stddev": 35.5934,
+              "coefficientOfVariationPercent": 2.2566
+            },
+            "maxPodMemoryMiB": {
+              "mean": 606.0,
+              "min": 606.0,
+              "max": 606.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "totalPodCpuMillicores": {
+              "mean": 2986.6667,
+              "min": 2969.0,
+              "max": 3001.0,
+              "stddev": 13.2749,
+              "coefficientOfVariationPercent": 0.4445
+            },
+            "totalPodMemoryMiB": {
+              "mean": 1279.6667,
+              "min": 1273.0,
+              "max": 1291.0,
+              "stddev": 8.0554,
+              "coefficientOfVariationPercent": 0.6295
+            },
+            "podRestartCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "pendingPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failedPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "notReadyPodsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesEventsCount": {
+              "mean": 36,
+              "min": 36,
+              "max": 36,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "kubernetesWarningEventsCount": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            }
+          },
+          "observedPlacementNodeCounts": {
+            "sc-app-01": 3,
+            "sc-app-02": 6
+          }
+        },
+        "summarySource": "measurement_csv",
+        "diagnosisScenarioSummary": {
+          "sampleCount": 3,
+          "replicas": [
+            "A",
+            "B",
+            "C"
+          ],
+          "metrics": {
+            "request_count": {
+              "mean": 96,
+              "min": 96,
+              "max": 96,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "failure_count": {
+              "mean": 0,
+              "min": 0,
+              "max": 0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "mean_response_time_ms": {
+              "mean": 1718.5779,
+              "min": 1717.7775,
+              "max": 1719.1204,
+              "stddev": 0.5778,
+              "coefficientOfVariationPercent": 0.0336
+            },
+            "p50_response_time_ms": {
+              "mean": 1700.0,
+              "min": 1700.0,
+              "max": 1700.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p95_response_time_ms": {
+              "mean": 1800.0,
+              "min": 1800.0,
+              "max": 1800.0,
+              "stddev": 0.0,
+              "coefficientOfVariationPercent": 0.0
+            },
+            "p99_response_time_ms": {
+              "mean": 2133.3333,
+              "min": 2100.0,
+              "max": 2200.0,
+              "stddev": 47.1405,
+              "coefficientOfVariationPercent": 2.2097
+            },
+            "throughput_rps": {
+              "mean": 0.5384,
+              "min": 0.5381,
+              "max": 0.5386,
+              "stddev": 0.0002,
+              "coefficientOfVariationPercent": 0.0382
+            }
+          },
+          "maxNodeCpuPercentObserved": 22.0,
+          "maxNodeMemoryPercentObserved": 39.0
+        },
+        "unsupportedReports": [],
+        "unsupportedSummary": null,
+        "tenancyProfilePath": null,
+        "tenancyProfile": {},
+        "latencyProfilePath": null,
+        "latencyProfile": {},
+        "defaultSchedulerArtifacts": {}
+      }
+    }
+  }
+}

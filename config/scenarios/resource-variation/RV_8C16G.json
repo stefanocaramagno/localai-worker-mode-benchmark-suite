@@ -1,0 +1,169 @@
+{
+  "scenarioId": "RV_8C16G",
+  "variantId": "RV_8C16G",
+  "referenceBaselineId": "B1",
+  "referenceScenarioId": "RV_8C16G",
+  "status": "active_resource_variation_scenario",
+  "purpose": "Resource-variation benchmark variant using 8 vCPU / 16 GiB per worker while keeping model, workload, LocalAI worker count and placement unchanged.",
+  "workerMode": "worker",
+  "modelScenario": "M1",
+  "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "workerScenario": "W2",
+  "resolvedWorkerCount": 2,
+  "placementScenario": "PL_COLOCATED",
+  "resolvedPlacementType": "colocated_genai_pb_worker_02",
+  "workloadScenario": "WL2",
+  "resolvedWorkload": {
+    "users": 2,
+    "spawnRate": 1,
+    "runTime": "2m"
+  },
+  "topologyDir": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w2",
+  "serverManifest": "infra/k8s/compositions/server/models/m1-provider-backed",
+  "namespaceManifest": "infra/k8s/compositions/foundation/namespace",
+  "storageManifest": "infra/k8s/compositions/foundation/storage",
+  "baseUrl": "http://localhost:8080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "resultsRoot": "results/experimental-cycles/C2/benchmark/resource-variation",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b"
+  ],
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "genai-pb-worker-02",
+    "localai-rpc-b": "genai-pb-worker-02"
+  },
+  "selectionCriteria": [
+    "Vary only the worker-node CPU and memory shape so the resulting measurements remain attributable to infrastructure capacity changes.",
+    "Keep the LocalAI model fixed to llama-3.2-1b-instruct:q4_k_m to avoid mixing model-size effects with infrastructure effects.",
+    "Keep the workload fixed to the controlled low-load profile to preserve comparability across resource shapes.",
+    "Keep two LocalAI RPC workers and the co-located placement policy fixed so the campaign evaluates resource capacity rather than topology or worker-count changes.",
+    "Execute each variant through the same provider-backed lifecycle: provisioning, validation, deployment, benchmark, diagnosis, reporting, completion gate and freeze."
+  ],
+  "lockRules": [
+    "Do not change model, workload, LocalAI worker count or placement inside this resource-variation campaign.",
+    "Do not compare this scenario with another scenario unless the infrastructure profile and provider binding are explicitly reported.",
+    "Treat unsupported or non-schedulable variants as methodological evidence rather than discarding them silently.",
+    "Keep provider-generated kubeconfig files and local provider configurations out of version control.",
+    "Run campaign-level diagnosis, reporting, completion-gate evaluation and freeze only after all declared variants have been attempted or explicitly marked unsupported."
+  ],
+  "notes": "This scenario belongs to the C2 resource-variation campaign and changes only the declared worker-node resource shape: 8 vCPU / 16 GiB per worker.",
+  "infrastructureProfileId": "INFRA_C2_1CP_2W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C2_1CP_2W_8C16G.json",
+  "infrastructureRole": "resource_variation_variant",
+  "associatedCycleId": "C2",
+  "historicalReferenceBaselineId": "B0",
+  "providerBindingId": "BINDING_INFRA_C2_1CP_2W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C2_1CP_2W_8C16G_PROXMOX_K3S.json",
+  "providerId": "proxmox-k3s",
+  "applicationDeploymentProfileId": "AD_C2_RV_8C16G",
+  "applicationDeploymentProfilePath": "results/experimental-cycles/C2/execution/generated-runtime-configs/RV_8C16G/AD_RV_8C16G.json",
+  "applicationDeploymentIndexPath": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+  "requiresApplicationDeploymentBeforeBenchmark": true,
+  "applicationDeploymentArtifactRoot": "results/experimental-cycles/C2/variants/RV_8C16G/application/deployment",
+  "placementProfileId": "PL_COLOCATED",
+  "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+  "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+  "minimalObservabilityProfileId": "MO_C2_RV_8C16G",
+  "minimalObservabilityProfilePath": "results/experimental-cycles/C2/execution/generated-runtime-configs/RV_8C16G/MO_RV_8C16G.json",
+  "requiresMinimalObservabilityBeforeDiagnosis": true,
+  "minimalObservabilityArtifactRoot": "results/experimental-cycles/C2/variants/RV_8C16G/observability/minimal",
+  "precheckProfileId": "TC_C2_RV_8C16G",
+  "precheckProfilePath": "results/experimental-cycles/C2/execution/generated-runtime-configs/RV_8C16G/TC_RV_8C16G.json",
+  "precheckProfilesIndexPath": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+  "family": "resource-variation",
+  "campaignId": "C2",
+  "referenceProviderBackedCycleId": "C1",
+  "resourceVariationScenarioId": "RV_8C16G",
+  "scenarioLabel": "8 vCPU / 16 GiB per worker",
+  "outputSubdir": "RV_8C16G_official_locked",
+  "resourceVariant": {
+    "variantId": "RV_8C16G",
+    "label": "8 vCPU / 16 GiB per worker",
+    "workerNodeCount": 2,
+    "workerVcpusPerNode": 8,
+    "workerMemoryGiBPerNode": 16,
+    "workerStorageGiBPerNode": 35,
+    "totalWorkerVcpus": 16,
+    "totalWorkerMemoryGiB": 32,
+    "totalWorkerStorageGiB": 70,
+    "isReferenceShape": true
+  },
+  "fixedDimensions": {
+    "modelScenario": "M1",
+    "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+    "workerScenario": "W2",
+    "resolvedWorkerCount": 2,
+    "placementScenario": "PL_COLOCATED",
+    "resolvedPlacementType": "colocated_genai_pb_worker_02",
+    "workloadScenario": "WL2",
+    "resolvedWorkload": {
+      "users": 2,
+      "spawnRate": 1,
+      "runTime": "2m"
+    },
+    "prompt": "Reply with only READY.",
+    "requestTimeoutSeconds": 120,
+    "temperature": 0.1
+  },
+  "variedDimensions": [
+    "workerVcpusPerNode",
+    "workerMemoryGiBPerNode"
+  ],
+  "providerConfig": {
+    "examplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c2-1cp-2w-8c16g.example.yaml",
+    "localPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c2-1cp-2w-8c16g.local.yaml",
+    "recommendedKubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c2-1cp-2w-8c16g/kubeconfig"
+  },
+  "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c2-1cp-2w-8c16g/kubeconfig",
+  "comparisonPolicy": "Only CPU and memory capacity are varied in this scenario. Model, workload, LocalAI worker count and placement remain fixed.",
+  "placementScenarioPath": "config/placement/profiles/PL_COLOCATED.json",
+  "scenarioProfileId": "RV_8C16G",
+  "scenarioProfileName": "8 vCPU / 16 GiB per worker",
+  "precheckRequirement": "not_required_for_resource_variation_campaign_unless_enabled_by_runner",
+  "runtimeGeneratedProfiles": {
+    "resolutionMode": "generated_at_runtime",
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C2/execution/generated-runtime-configs",
+    "applicationDeployment": {
+      "profileId": "AD_C2_RV_8C16G",
+      "path": "results/experimental-cycles/C2/execution/generated-runtime-configs/RV_8C16G/AD_RV_8C16G.json",
+      "requiredBeforeBenchmark": true
+    },
+    "minimalObservability": {
+      "profileId": "MO_C2_RV_8C16G",
+      "path": "results/experimental-cycles/C2/execution/generated-runtime-configs/RV_8C16G/MO_RV_8C16G.json",
+      "requiredBeforeDiagnosis": true
+    },
+    "precheck": {
+      "profileId": "TC_C2_RV_8C16G",
+      "path": "results/experimental-cycles/C2/execution/generated-runtime-configs/RV_8C16G/TC_RV_8C16G.json",
+      "requiredBeforeBenchmark": false
+    }
+  },
+  "scenarioProfileSchemaVersion": "1.0",
+  "scenarioProfileScope": "provider_backed_resource_variation",
+  "expectedInactiveRpcWorkers": [],
+  "expectedServerNode": "genai-pb-worker-02",
+  "applicationTopology": {
+    "localAiWorkerCount": 2,
+    "workerScenario": "W2",
+    "workerScenarioPath": "config/scenarios/pilot/worker-count/W2.json",
+    "topologyDir": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w2",
+    "serverManifest": "infra/k8s/compositions/server/models/m1-provider-backed",
+    "placementType": "colocated_genai_pb_worker_02",
+    "placementScenario": "PL_COLOCATED",
+    "placementScenarioPath": "config/placement/profiles/PL_COLOCATED.json",
+    "expectedActiveRpcWorkers": [
+      "localai-rpc-a",
+      "localai-rpc-b"
+    ],
+    "expectedInactiveRpcWorkers": [],
+    "expectedWorkerNodes": {
+      "localai-rpc-a": "genai-pb-worker-02",
+      "localai-rpc-b": "genai-pb-worker-02"
+    },
+    "expectedServerNode": "genai-pb-worker-02"
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "localai-minimal-observability-profile/v1",
+  "title": "LocalAI Minimal Observability Profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "minimalObservabilityProfileId",
+    "profileName",
+    "cycleId",
+    "namespace",
+    "kubeconfigPath",
+    "metricSetProfilePath",
+    "clusterCaptureProfilePath",
+    "artifactPolicy",
+    "collection",
+    "clientSideMetrics",
+    "clusterSideMetrics",
+    "gates"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "minimalObservabilityProfileId": {
+      "type": "string"
+    },
+    "profileName": {
+      "type": "string"
+    },
+    "profileStatus": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "namespace": {
+      "type": "string"
+    },
+    "kubeconfigPath": {
+      "type": "string"
+    },
+    "metricSetProfilePath": {
+      "type": "string"
+    },
+    "clusterCaptureProfilePath": {
+      "type": "string"
+    },
+    "artifactPolicy": {
+      "type": "object"
+    },
+    "collection": {
+      "type": "object"
+    },
+    "clientSideMetrics": {
+      "type": "object"
+    },
+    "clusterSideMetrics": {
+      "type": "object"
+    },
+    "gates": {
+      "type": "object"
+    },
+    "decisionPolicy": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    },
+    "namespaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Ordered list of namespaces covered by namespace-scoped observability commands. The first item is the primary benchmark namespace."
+    },
+    "additionalNamespaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Additional namespace-scoped application clusters to include in minimal observability collection."
+    },
+    "namespaceCollectionPolicy": {
+      "type": "object",
+      "description": "Policy describing how primary and additional namespaces are selected for minimal observability collection."
+    }
+  }
+}

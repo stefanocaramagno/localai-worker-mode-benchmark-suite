@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "benchmark_phase-index/v1",
+  "defaultPhaseProfileId": "WM_STANDARD_WARMUP_MEASUREMENT",
+  "phaseProfiles": [
+    {
+      "profileId": "WM_STANDARD_WARMUP_MEASUREMENT",
+      "profilePath": "config/phases/profiles/WM_STANDARD_WARMUP_MEASUREMENT.json",
+      "profileType": "benchmark_phase",
+      "description": "Formal phase-separation profile for Locust-based benchmarks. Warm-up is executed first and measurement is executed afterwards using a distinct CSV prefix."
+    }
+  ]
+}

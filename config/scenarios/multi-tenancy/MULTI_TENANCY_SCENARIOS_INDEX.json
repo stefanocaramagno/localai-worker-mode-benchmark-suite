@@ -1,0 +1,62 @@
+{
+  "scenarioFamily": "multi-tenancy",
+  "status": "active",
+  "purpose": "Registry of provider-backed multi-cluster and multi-tenant LocalAI scenarios.",
+  "scenarioRoot": "config/scenarios/multi-tenancy",
+  "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+  "fixedDimensions": [
+    "infrastructure=INFRA_C6_1CP_4W_8C16G",
+    "benchmark tenant=tenant-a",
+    "benchmark workload=WL2",
+    "primary model=M1",
+    "primary worker-count=W2"
+  ],
+  "variedDimensions": [
+    "tenant count",
+    "co-tenant model mix",
+    "co-tenant placement"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "MT_SINGLE_TENANT_REFERENCE",
+      "path": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+      "tenancyProfileId": "TP_SINGLE_TENANT_REFERENCE",
+      "tenantCount": 1,
+      "status": "active_provider_backed_multi_tenancy",
+      "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+      "outputSubdir": "MT_SINGLE_TENANT_REFERENCE_official_locked"
+    },
+    {
+      "scenarioId": "MT_TWO_TENANTS_SEPARATED",
+      "path": "config/scenarios/multi-tenancy/MT_TWO_TENANTS_SEPARATED.json",
+      "tenancyProfileId": "TP_TWO_TENANTS_SEPARATED",
+      "tenantCount": 2,
+      "status": "active_provider_backed_multi_tenancy",
+      "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+      "outputSubdir": "MT_TWO_TENANTS_SEPARATED_official_locked"
+    },
+    {
+      "scenarioId": "MT_TWO_TENANTS_MIXED_MODELS",
+      "path": "config/scenarios/multi-tenancy/MT_TWO_TENANTS_MIXED_MODELS.json",
+      "tenancyProfileId": "TP_TWO_TENANTS_MIXED_MODELS",
+      "tenantCount": 2,
+      "status": "active_provider_backed_multi_tenancy",
+      "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+      "outputSubdir": "MT_TWO_TENANTS_MIXED_MODELS_official_locked"
+    },
+    {
+      "scenarioId": "MT_TWO_TENANTS_SHARED_NODEPOOL",
+      "path": "config/scenarios/multi-tenancy/MT_TWO_TENANTS_SHARED_NODEPOOL.json",
+      "tenancyProfileId": "TP_TWO_TENANTS_SHARED_NODEPOOL",
+      "tenantCount": 2,
+      "status": "active_provider_backed_multi_tenancy",
+      "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+      "outputSubdir": "MT_TWO_TENANTS_SHARED_NODEPOOL_official_locked"
+    }
+  ],
+  "governanceRules": [
+    "C6 varies tenant topology while keeping the primary benchmark target fixed.",
+    "Each scenario uses namespace-scoped LocalAI application clusters to preserve service-name compatibility without cross-tenant resource-name collisions.",
+    "Unsupported tenant topologies are retained as capacity or placement evidence."
+  ]
+}

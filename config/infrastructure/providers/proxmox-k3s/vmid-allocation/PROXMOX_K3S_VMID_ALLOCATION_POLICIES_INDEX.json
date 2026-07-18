@@ -1,0 +1,22 @@
+{
+  "indexId": "PROXMOX_K3S_VMID_ALLOCATION_POLICIES_INDEX",
+  "schemaVersion": "proxmox-k3s-vmid-allocation-policies-index/v1",
+  "providerId": "proxmox-k3s",
+  "policiesRoot": "config/infrastructure/providers/proxmox-k3s/vmid-allocation",
+  "policies": [
+    {
+      "policyId": "GENAI_PB_REUSABLE_VMID_RANGE_V1",
+      "path": "config/infrastructure/providers/proxmox-k3s/vmid-allocation/GENAI_PB_REUSABLE_VMID_RANGE_V1.json",
+      "clusterName": "genai-pb",
+      "vmidBase": 8200,
+      "reservedRange": "8200-8299",
+      "role": "official_provider_backed_reusable_cluster_range"
+    }
+  ],
+  "rules": [
+    "Provider-backed cluster YAML files must declare template.vmid_base explicitly.",
+    "Official genai-pb clusters use the 8200-8299 VMID range by default.",
+    "Partial clusters must be deleted before retrying provisioning with the same cluster_name.",
+    "Provider-backed benchmark cycles must use registered VMID allocation policies and must not infer VMID ranges from standalone validation assets."
+  ]
+}

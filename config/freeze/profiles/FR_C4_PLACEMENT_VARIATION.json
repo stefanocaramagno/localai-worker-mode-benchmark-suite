@@ -1,0 +1,244 @@
+{
+  "schemaVersion": "freeze-profile/v1",
+  "freezeProfileId": "FR_C4_PLACEMENT_VARIATION",
+  "profileId": "FR_C4_PLACEMENT_VARIATION",
+  "profileName": "C4 Placement Variation Freeze Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_placement_variation_freeze",
+  "description": "Freeze profile for the placement variation campaign evidence package.",
+  "cycleId": "C4",
+  "cycleConfigPath": "config/experimental-cycles/C4.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C4/freeze",
+  "artifactSnapshotRoot": "results/experimental-cycles/C4/artifacts",
+  "cycleLockJsonPath": "results/experimental-cycles/C4/freeze/C4-cycle-lock.json",
+  "cycleLockTextPath": "results/experimental-cycles/C4/freeze/C4-cycle-lock.txt",
+  "latestManifestPath": "results/experimental-cycles/C4/freeze/latest-freeze-manifest.json",
+  "latestTextSummaryPath": "results/experimental-cycles/C4/freeze/latest-freeze-summary.txt",
+  "manifestSuffix": "_freeze_manifest.json",
+  "textSuffix": "_freeze_summary.txt",
+  "writeLatestAliases": true,
+  "preserveExistingSnapshotByDefault": true,
+  "forceRebuildRequiresExplicitFlag": true,
+  "completionGatePolicy": {
+    "requiredBeforeFreeze": true,
+    "manifestPath": "results/experimental-cycles/C4/completion-gate/latest-completion-gate-manifest.json",
+    "acceptedStatuses": [
+      "completed",
+      "completed_with_unsupported_scenarios"
+    ],
+    "dryRunMayBypassRuntimeEvidence": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C4.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "scenarioIndex": "config/scenarios/placement-variation/PLACEMENT_VARIATION_SCENARIOS_INDEX.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C4_PLACEMENT_VARIATION.json",
+    "reportingProfile": "config/reporting/profiles/RP_C4_PLACEMENT_VARIATION.json",
+    "completionGateProfile": "config/completion-gate/profiles/CG_C4_PLACEMENT_VARIATION.json",
+    "freezeProfile": "config/freeze/profiles/FR_C4_PLACEMENT_VARIATION.json",
+    "infrastructureProfile": "config/infrastructure/profiles/INFRA_C4_1CP_4W_8C16G.json",
+    "providerBinding": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S.json",
+    "providerConfigExample": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c4-1cp-4w-8c16g.example.yaml",
+    "referenceScenarioConfig": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C4/execution/latest-campaign-execution-manifest.json",
+    "diagnosisRoot": "results/experimental-cycles/C4/diagnosis",
+    "reportingRoot": "results/experimental-cycles/C4/reporting",
+    "completionGateManifest": "results/experimental-cycles/C4/completion-gate/latest-completion-gate-manifest.json"
+  },
+  "snapshotSources": [
+    {
+      "key": "cycleConfig",
+      "type": "file",
+      "source": "config/experimental-cycles/C4.json",
+      "destination": "configuration/experimental-cycle/C4.json",
+      "required": true
+    },
+    {
+      "key": "infrastructureProfile",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C4_1CP_4W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C4_1CP_4W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "providerBinding",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "required": true
+    },
+    {
+      "key": "providerConfigExample",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c4-1cp-4w-8c16g.example.yaml",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/examples/cluster.c4-1cp-4w-8c16g.example.yaml",
+      "required": true
+    },
+    {
+      "key": "scenarioIndex",
+      "type": "file",
+      "source": "config/scenarios/placement-variation/PLACEMENT_VARIATION_SCENARIOS_INDEX.json",
+      "destination": "configuration/scenarios/placement-variation/PLACEMENT_VARIATION_SCENARIOS_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "placementVariationScenarios",
+      "type": "directory",
+      "source": "config/scenarios/placement-variation",
+      "destination": "configuration/scenarios/placement-variation",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisProfile",
+      "type": "file",
+      "source": "config/technical-diagnosis/profiles/TD_C4_PLACEMENT_VARIATION.json",
+      "destination": "configuration/technical-diagnosis/profiles/TD_C4_PLACEMENT_VARIATION.json",
+      "required": true
+    },
+    {
+      "key": "reportingProfile",
+      "type": "file",
+      "source": "config/reporting/profiles/RP_C4_PLACEMENT_VARIATION.json",
+      "destination": "configuration/reporting/profiles/RP_C4_PLACEMENT_VARIATION.json",
+      "required": true
+    },
+    {
+      "key": "completionGateProfile",
+      "type": "file",
+      "source": "config/completion-gate/profiles/CG_C4_PLACEMENT_VARIATION.json",
+      "destination": "configuration/completion-gate/profiles/CG_C4_PLACEMENT_VARIATION.json",
+      "required": true
+    },
+    {
+      "key": "freezeProfile",
+      "source": "config/freeze/profiles/FR_C4_PLACEMENT_VARIATION.json",
+      "destination": "configuration/freeze/profiles/FR_C4_PLACEMENT_VARIATION.json",
+      "type": "file",
+      "required": true
+    },
+    {
+      "key": "campaignExecutionArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C4/execution",
+      "destination": "runtime/execution",
+      "required": true
+    },
+    {
+      "key": "variantArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C4/variants",
+      "destination": "runtime/variants",
+      "required": true
+    },
+    {
+      "key": "benchmarkArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C4/benchmark",
+      "destination": "runtime/benchmark",
+      "required": true
+    },
+    {
+      "key": "diagnosisArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C4/diagnosis",
+      "destination": "runtime/diagnosis",
+      "required": true
+    },
+    {
+      "key": "reportingArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C4/reporting",
+      "destination": "runtime/reporting",
+      "required": true
+    },
+    {
+      "key": "completionGateArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C4/completion-gate",
+      "destination": "runtime/completion-gate",
+      "required": true
+    }
+  ],
+  "governance": {
+    "documentationPolicy": "Freeze outputs are retained evidence artifacts, not project documentation source files.",
+    "comparisonPolicy": "The frozen package must preserve the C4 cycle-scoped infrastructure profile, provider binding and placement scenario evidence so placement-only comparisons remain auditable without freezing local credentials."
+  },
+  "artifactPolicy": {
+    "outputRoot": "results/experimental-cycles/C4/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C4/artifacts",
+    "cycleLockJson": "results/experimental-cycles/C4/freeze/C4-cycle-lock.json",
+    "cycleLockText": "results/experimental-cycles/C4/freeze/C4-cycle-lock.txt",
+    "latestManifestPath": "results/experimental-cycles/C4/freeze/latest-freeze-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C4/freeze/latest-freeze-summary.txt",
+    "manifestSuffix": "_freeze_manifest.json",
+    "textSuffix": "_freeze_summary.txt",
+    "writeLatestAliases": true,
+    "preserveExistingSnapshotByDefault": false,
+    "canonicalDirectories": [
+      "configuration",
+      "configuration/application-deployment",
+      "configuration/cluster-validation",
+      "configuration/completion-gate",
+      "configuration/experimental-cycle",
+      "configuration/freeze",
+      "configuration/infrastructure",
+      "configuration/latency",
+      "configuration/observability-minimal",
+      "configuration/placement",
+      "configuration/precheck",
+      "configuration/provisioning",
+      "configuration/reporting",
+      "configuration/scenarios",
+      "configuration/technical-diagnosis",
+      "configuration/tenancy",
+      "runtime",
+      "runtime/application",
+      "runtime/benchmark",
+      "runtime/completion-gate",
+      "runtime/diagnosis",
+      "runtime/execution",
+      "runtime/infrastructure",
+      "runtime/observability",
+      "runtime/reporting",
+      "runtime/variants"
+    ]
+  },
+  "primaryFrozenArtifacts": {
+    "reportingManifest": "runtime/reporting/reporting-manifest.json",
+    "reportMarkdown": "runtime/reporting/report.md",
+    "reportHtml": "runtime/reporting/index.html",
+    "scenarioSummaryCsv": "runtime/reporting/scenario-summary.csv",
+    "completionGateManifest": "runtime/completion-gate/latest-completion-gate-manifest.json",
+    "completionGateSummary": "runtime/completion-gate/latest-completion-gate-summary.txt",
+    "diagnosisJson": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.json",
+      "required": true,
+      "description": "Latest frozen campaign-level technical diagnosis JSON."
+    },
+    "diagnosisSummary": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.txt",
+      "required": true,
+      "description": "Latest frozen campaign-level technical diagnosis text diagnosis summary."
+    }
+  },
+  "infrastructureProfileId": "INFRA_C4_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C4_1CP_4W_8C16G.json",
+  "providerBindingId": "BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "referenceScenarioId": "PLC_SPREAD_WORKERS",
+  "referenceScenarioConfigPath": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+  "referenceScenarioByFamily": {
+    "placement-variation": "PLC_SPREAD_WORKERS"
+  },
+  "referenceScenarioConfigByFamily": {
+    "placement-variation": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+  }
+}

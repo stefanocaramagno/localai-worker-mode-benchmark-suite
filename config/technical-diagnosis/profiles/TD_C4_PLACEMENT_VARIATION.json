@@ -1,0 +1,106 @@
+{
+  "technicalDiagnosisProfileId": "TD_C4_PLACEMENT_VARIATION",
+  "profileId": "TD_C4_PLACEMENT_VARIATION",
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "profileName": "C4 Placement Variation Technical Diagnosis Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_placement_variation_technical_diagnosis",
+  "description": "Technical diagnosis profile for the provider-backed placement variation campaign.",
+  "cycleId": "C4",
+  "cycleConfigPath": "config/experimental-cycles/C4.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "validationSummaryRelativePath": "results/experimental-cycles/C1/diagnosis/C1_regeneration_diagnosis_all_diagnosis.json",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "familyOrder": [
+    "placement-variation"
+  ],
+  "scenarioConfigRoots": {
+    "placement-variation": "config/scenarios/placement-variation"
+  },
+  "scenarioConfigFiles": {
+    "placement-variation": [
+      "config/scenarios/placement-variation/PLC_COLOCATED.json",
+      "config/scenarios/placement-variation/PLC_DISTRIBUTED_TWO_NODE.json",
+      "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+      "config/scenarios/placement-variation/PLC_SERVER_SEPARATED.json",
+      "config/scenarios/placement-variation/PLC_BALANCED_STATIC.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "placement-variation": "results/experimental-cycles/C4/benchmark/placement-variation"
+  },
+  "referenceScenarioByFamily": {
+    "placement-variation": "PLC_SPREAD_WORKERS"
+  },
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C4/diagnosis",
+  "familyScope": "all",
+  "expectedFamilies": [
+    "placement-variation"
+  ],
+  "families": [
+    "placement-variation"
+  ],
+  "fixedDimensionsByFamily": {
+    "placement-variation": [
+      "infrastructure=INFRA_C4_1CP_4W_8C16G",
+      "model=M1",
+      "LocalAI worker-count=W4",
+      "workload=WL2",
+      "worker node capacity=8 vCPU / 16 GiB"
+    ]
+  },
+  "variedDimensionByFamily": {
+    "placement-variation": "placement profile"
+  },
+  "familyDisplayNames": {
+    "placement-variation": "C4 Placement Variation"
+  },
+  "campaignAwareDiagnosis": {
+    "enabled": true,
+    "campaignExecutionManifest": "results/experimental-cycles/C4/execution/latest-campaign-execution-manifest.json",
+    "variantEvidenceRoot": "results/experimental-cycles/C4/variants",
+    "retainUnsupportedScenarioEvidence": true
+  },
+  "interpretationPolicy": {
+    "minimumMeasuredVariantsForComparativeClaims": 2,
+    "treatUnsupportedAsEvidence": true,
+    "avoidOverstatingWeakSignals": true,
+    "primaryQuestion": "Whether placement changes the communication/resource-contention trade-off under fixed infrastructure and workload conditions."
+  },
+  "placementVariation": {
+    "fixedDimensions": [
+      "infrastructure",
+      "model",
+      "workload",
+      "LocalAI worker count",
+      "per-node worker capacity"
+    ],
+    "variedDimensions": [
+      "placement profile"
+    ],
+    "referenceScenarioId": "PLC_SPREAD_WORKERS",
+    "scenarioOrdering": [
+      "PLC_COLOCATED",
+      "PLC_DISTRIBUTED_TWO_NODE",
+      "PLC_SPREAD_WORKERS",
+      "PLC_SERVER_SEPARATED",
+      "PLC_BALANCED_STATIC"
+    ],
+    "minimumMeasuredVariantsForPerformanceComparison": 2,
+    "interpretation": "Measured placement variants are compared only when infrastructure, model, workload and LocalAI worker count remain fixed."
+  },
+  "minimumScenarioSamples": 1,
+  "referenceScenarioId": "PLC_SPREAD_WORKERS",
+  "referenceScenarioConfigPath": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+  "referenceScenarioConfigByFamily": {
+    "placement-variation": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+  }
+}

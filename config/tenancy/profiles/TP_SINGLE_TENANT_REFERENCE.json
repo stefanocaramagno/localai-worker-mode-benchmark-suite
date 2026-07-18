@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "tenancy-profile/v1",
+  "tenancyProfileId": "TP_SINGLE_TENANT_REFERENCE",
+  "profileName": "Single Tenant Reference",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_multi_tenant_topology_profile",
+  "description": "Reference topology with one benchmarked LocalAI tenant cluster.",
+  "benchmarkTenantId": "tenant-a",
+  "tenantClusters": [
+    {
+      "tenantId": "tenant-a",
+      "namespace": "genai-tenant-a",
+      "modelScenario": "M1",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "placement": "primary_workers_01_02",
+      "role": "benchmark_tenant"
+    }
+  ],
+  "governance": {
+    "isolationModel": "namespace_per_localai_application_cluster",
+    "benchmarkPolicy": "The primary tenant is benchmarked through its own service endpoint while co-tenant clusters remain deployed to expose placement and resource-contention effects.",
+    "comparisonPolicy": "Tenant-count, model mix and co-tenant placement are varied while infrastructure, primary workload and primary benchmark target remain fixed."
+  }
+}

@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "experimental-cycle-runtime-template/v1",
+  "cycleTemplateId": "PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE",
+  "cycleId": "__CYCLE_ID__",
+  "cycleKind": "runtime_campaign_variant",
+  "cycleType": "provider_backed___SCENARIO_FAMILY___variant",
+  "cycleName": "Provider-Backed Campaign Variant __VARIANT_ID__",
+  "profileStatus": "template",
+  "status": "template",
+  "description": "Template used to generate concrete runtime cycle profiles for provider-backed comparative campaign variants.",
+  "campaignParentCycleId": "__PARENT_CYCLE_ID__",
+  "campaignType": "__CAMPAIGN_TYPE__",
+  "scenarioFamily": "__SCENARIO_FAMILY__",
+  "baseline": {
+    "baselineId": "__BASELINE_ID__",
+    "configPath": "__BASELINE_CONFIG_PATH__",
+    "referenceBaselineId": "__BASELINE_ID__",
+    "referenceBaselineConfigPath": "__BASELINE_CONFIG_PATH__",
+    "scenarioId": "__VARIANT_ID__",
+    "variantId": "__VARIANT_ID__",
+    "scenarioConfigPath": "__SCENARIO_CONFIG_PATH__",
+    "roleInCycle": "__SCENARIO_FAMILY___variant"
+  },
+  "benchmark": {
+    "benchmarkConfigId": "BENCHMARK___GENERATED_PROFILE_PREFIX__",
+    "benchmarkConfigPath": "__BENCHMARK_CONFIG_PATH__",
+    "runtimeBenchmarkConfigPath": "__BENCHMARK_CONFIG_PATH__",
+    "referenceBaselineId": "__BASELINE_ID__",
+    "referenceBaselineConfigPath": "__BASELINE_CONFIG_PATH__",
+    "scenarioId": "__VARIANT_ID__",
+    "variantId": "__VARIANT_ID__",
+    "scenarioConfigPath": "__SCENARIO_CONFIG_PATH__",
+    "configRole": "runtime_benchmark_config",
+    "roleInCycle": "__SCENARIO_FAMILY___benchmark_variant"
+  },
+  "benchmarkConfig": {
+    "configId": "BENCHMARK___GENERATED_PROFILE_PREFIX__",
+    "configPath": "__BENCHMARK_CONFIG_PATH__",
+    "configRole": "runtime_benchmark_config",
+    "canonical": true
+  },
+  "runtimeBenchmarkConfig": {
+    "configId": "BENCHMARK___GENERATED_PROFILE_PREFIX__",
+    "configPath": "__BENCHMARK_CONFIG_PATH__",
+    "configRole": "runtime_benchmark_config",
+    "canonical": true
+  },
+  "referenceBaselineConfig": {
+    "baselineId": "__BASELINE_ID__",
+    "configPath": "__BASELINE_CONFIG_PATH__",
+    "configRole": "reference_baseline_config"
+  },
+  "scenarioConfig": {
+    "scenarioId": "__VARIANT_ID__",
+    "configPath": "__SCENARIO_CONFIG_PATH__",
+    "scenarioFamily": "__SCENARIO_FAMILY__",
+    "configRole": "source_scenario_variant_config"
+  },
+  "providerBackedInfrastructure": {
+    "provider": "proxmox-k3s",
+    "infrastructureProfileId": "__INFRASTRUCTURE_PROFILE_ID__",
+    "infrastructureProfilePath": "__INFRASTRUCTURE_PROFILE_PATH__",
+    "providerBindingId": "__PROVIDER_BINDING_ID__",
+    "providerBindingPath": "__PROVIDER_BINDING_PATH__",
+    "kubeconfigPath": "__KUBECONFIG_PATH__",
+    "generatedKubeconfigPath": "__KUBECONFIG_PATH__",
+    "provisioningIntegrationProfileId": "__PI_PROFILE_ID__",
+    "provisioningIntegrationProfilePath": "__PI_PROFILE_PATH__",
+    "provisioningValidationProfileId": "__PV_PROFILE_ID__",
+    "provisioningValidationProfilePath": "__PV_PROFILE_PATH__",
+    "clusterValidationProfileId": "__CV_PROFILE_ID__",
+    "clusterValidationProfilePath": "__CV_PROFILE_PATH__",
+    "applicationDeploymentProfileId": "__AD_PROFILE_ID__",
+    "applicationDeploymentProfilePath": "__AD_PROFILE_PATH__",
+    "minimalObservabilityProfileId": "__MO_PROFILE_ID__",
+    "minimalObservabilityProfilePath": "__MO_PROFILE_PATH__",
+    "precheckProfileId": "__TC_PROFILE_ID__",
+    "precheckProfilePath": "__TC_PROFILE_PATH__",
+    "placementProfileId": "__PLACEMENT_PROFILE_ID__",
+    "placementProfilePath": "__PLACEMENT_PROFILE_PATH__",
+    "provisioningLogRoot": "__PROVISIONING_ROOT__",
+    "clusterValidationArtifactRoot": "__VALIDATION_ROOT__",
+    "applicationDeploymentArtifactRoot": "__DEPLOYMENT_ROOT__",
+    "minimalObservabilityArtifactRoot": "__OBSERVABILITY_ROOT__",
+    "placementProfileArtifactRoot": "__PLACEMENT_ROOT__",
+    "technicalDiagnosisProfileId": "__TECHNICAL_DIAGNOSIS_PROFILE_ID__",
+    "technicalDiagnosisProfilePath": "__TECHNICAL_DIAGNOSIS_PROFILE_PATH__",
+    "technicalDiagnosisArtifactRoot": "__TECHNICAL_DIAGNOSIS_ROOT__",
+    "reportingProfileId": "__REPORTING_PROFILE_ID__",
+    "reportingProfilePath": "__REPORTING_PROFILE_PATH__",
+    "reportingArtifactRoot": "__REPORTING_ROOT__",
+    "completionGateProfileId": "__COMPLETION_GATE_PROFILE_ID__",
+    "completionGateProfilePath": "__COMPLETION_GATE_PROFILE_PATH__",
+    "completionGateArtifactRoot": "__COMPLETION_GATE_ROOT__",
+    "freezeProfileId": "__FREEZE_PROFILE_ID__",
+    "freezeProfilePath": "__FREEZE_PROFILE_PATH__",
+    "freezeArtifactRoot": "__FREEZE_ROOT__",
+    "cycleExecutionArtifactRoot": "__VARIANT_ROOT__/execution"
+  },
+  "pipelineProfiles": {
+    "provisioningIntegration": "__PI_PROFILE_PATH__",
+    "provisioningValidation": "__PV_PROFILE_PATH__",
+    "clusterValidation": "__CV_PROFILE_PATH__",
+    "applicationDeployment": "__AD_PROFILE_PATH__",
+    "minimalObservability": "__MO_PROFILE_PATH__",
+    "precheck": "__TC_PROFILE_PATH__",
+    "technicalDiagnosis": "__TECHNICAL_DIAGNOSIS_PROFILE_PATH__",
+    "reporting": "__REPORTING_PROFILE_PATH__",
+    "completionGate": "__COMPLETION_GATE_PROFILE_PATH__",
+    "freeze": "__FREEZE_PROFILE_PATH__"
+  },
+  "campaignVariant": {
+    "parentCycleId": "__PARENT_CYCLE_ID__",
+    "variantId": "__VARIANT_ID__",
+    "scenarioFamily": "__SCENARIO_FAMILY__"
+  },
+  "templateMetadata": {
+    "templateId": "PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE",
+    "templateType": "provider_backed_campaign_variant_cycle",
+    "pathRole": "runtime_cycle_profile_template",
+    "intendedConsumers": [
+      "scripts/experimental-cycles/run-experimental-campaign.py"
+    ],
+    "generationPolicy": "Only explicit placeholders delimited by double underscores may be substituted. Runtime generation must not perform global literal replacements such as C1 or B1."
+  },
+  "runtimeScenario": {
+    "runtimeScenarioId": "__VARIANT_ID__",
+    "configPath": "__BENCHMARK_CONFIG_PATH__",
+    "benchmarkConfigId": "BENCHMARK___GENERATED_PROFILE_PREFIX__",
+    "benchmarkConfigPath": "__BENCHMARK_CONFIG_PATH__",
+    "runtimeBenchmarkConfigPath": "__BENCHMARK_CONFIG_PATH__",
+    "referenceBaselineId": "__BASELINE_ID__",
+    "referenceBaselineConfigPath": "__BASELINE_CONFIG_PATH__",
+    "referenceScenarioId": "__VARIANT_ID__",
+    "referenceScenarioConfigPath": "__SCENARIO_CONFIG_PATH__",
+    "scenarioId": "__VARIANT_ID__",
+    "variantId": "__VARIANT_ID__",
+    "scenarioConfigPath": "__SCENARIO_CONFIG_PATH__",
+    "configRole": "runtime_benchmark_config",
+    "roleInCycle": "__SCENARIO_FAMILY___benchmark_variant"
+  },
+  "reporting": {
+    "reportingProfileId": "__REPORTING_PROFILE_ID__",
+    "reportingProfilePath": "__REPORTING_PROFILE_PATH__",
+    "artifactRoot": "__REPORTING_ROOT__"
+  },
+  "completionGate": {
+    "completionGateProfileId": "__COMPLETION_GATE_PROFILE_ID__",
+    "completionGateProfilePath": "__COMPLETION_GATE_PROFILE_PATH__",
+    "artifactRoot": "__COMPLETION_GATE_ROOT__",
+    "latestManifestPath": "__COMPLETION_GATE_ROOT__/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "__COMPLETION_GATE_ROOT__/latest-completion-gate-summary.txt"
+  },
+  "freeze": {
+    "freezeProfileId": "__FREEZE_PROFILE_ID__",
+    "freezeProfilePath": "__FREEZE_PROFILE_PATH__",
+    "artifactRoot": "__FREEZE_ROOT__",
+    "artifactSnapshotRoot": "__VARIANT_ROOT__/artifacts"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "latency-profile/v1",
+  "latencyProfileId": "L0_NONE",
+  "profileId": "L0_NONE",
+  "profileName": "No injected latency",
+  "profileStatus": "active",
+  "profileRole": "network_latency_injection_profile",
+  "purpose": "Reference profile that actively clears any existing netem qdisc and applies no artificial network delay.",
+  "enabled": true,
+  "latencyCategory": "none",
+  "target": {
+    "targetNodePolicy": "all_worker_nodes_from_infrastructure_profile",
+    "nodeRole": "worker",
+    "explicitNodeNames": [],
+    "excludeControlPlane": true,
+    "rationale": "Apply latency to provider-backed worker nodes where LocalAI server and RPC workers are scheduled, while keeping the control plane outside the injected path."
+  },
+  "networkEmulation": {
+    "tool": "linux_tc_netem",
+    "mode": "egress_netem_on_host_interface",
+    "networkInterface": "eth0",
+    "delayMs": 0,
+    "jitterMs": 0,
+    "packetLossPercent": 0.0,
+    "correlationPercent": 0,
+    "distribution": "none",
+    "resetExistingQdiscBeforeApply": true,
+    "resetAfterBenchmark": true
+  },
+  "runtimeImplementation": {
+    "runner": "scripts/latency/apply-latency-profile.py",
+    "powershellWrapper": "scripts/latency/Apply-LatencyProfile.ps1",
+    "bashWrapper": "scripts/latency/apply-latency-profile.sh",
+    "kubernetesNamespace": "latency-control",
+    "jobImage": "docker.io/nicolaka/netshoot:latest",
+    "jobTimeoutSeconds": 180,
+    "cleanupJobsAfterCompletion": false,
+    "requiresPrivilegedPod": true,
+    "requiredLinuxCapabilities": [
+      "NET_ADMIN"
+    ],
+    "dryRunSupported": true
+  },
+  "safetyPolicy": {
+    "applyOnlyAfterClusterValidation": true,
+    "applyOnlyAfterApplicationDeployment": true,
+    "resetBeforeApply": true,
+    "resetAfterBenchmark": true,
+    "controlPlaneExcluded": true,
+    "failurePolicy": "fail_variant_before_benchmark_if_latency_profile_cannot_be_applied"
+  },
+  "methodologicalRole": {
+    "variedDimension": "latency profile",
+    "fixedDimensions": [
+      "infrastructure",
+      "model",
+      "workload",
+      "LocalAI worker count",
+      "placement profile"
+    ],
+    "interpretation": "The no-latency profile is an active reference: it resets existing qdisc state and leaves worker-node network paths unmodified before benchmark execution."
+  }
+}

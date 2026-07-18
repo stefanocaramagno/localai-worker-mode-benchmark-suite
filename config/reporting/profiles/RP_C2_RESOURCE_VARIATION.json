@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "profileId": "RP_C2_RESOURCE_VARIATION",
+  "reportingProfileId": "RP_C2_RESOURCE_VARIATION",
+  "profileName": "C2 Resource Variation Reporting",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_resource_variation_reporting",
+  "description": "Reporting profile for resource-variation comparison across provider-backed K3s clusters.",
+  "cycleId": "C2",
+  "cycleConfigPath": "config/experimental-cycles/C2.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C2/diagnosis",
+  "outputRoot": "results/experimental-cycles/C2/reporting",
+  "reportTitle": "C2 — Resource Variation Report",
+  "reportPurposeMarkdown": "This report compares worker CPU and memory variants under fixed LocalAI workload, model, worker-count and placement conditions. It is intended to expose whether resource capacity materially affects latency, throughput and cluster-side pressure.",
+  "familyOrder": [
+    "resource-variation"
+  ],
+  "familyDisplayNames": {
+    "resource-variation": "Resource Variation"
+  },
+  "scenarioConfigRoots": {
+    "resource-variation": "config/scenarios/resource-variation"
+  },
+  "scenarioConfigFiles": {
+    "resource-variation": [
+      "config/scenarios/resource-variation/RV_4C8G.json",
+      "config/scenarios/resource-variation/RV_4C16G.json",
+      "config/scenarios/resource-variation/RV_8C16G.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "resource-variation": "results/experimental-cycles/C2/benchmark/resource-variation"
+  },
+  "referenceScenarioByFamily": {
+    "resource-variation": "RV_8C16G"
+  },
+  "variedDimensionByFamily": {
+    "resource-variation": "worker CPU and memory capacity"
+  },
+  "fixedDimensionsByFamily": {
+    "resource-variation": [
+      "model=M1",
+      "workload=WL2",
+      "LocalAI worker count=W2",
+      "placement=PL_COLOCATED",
+      "request payload"
+    ]
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "archiveDirectoryName": "archive",
+  "providerAwareContext": {
+    "enabled": true,
+    "cycleConfigPath": "config/experimental-cycles/C2.json",
+    "providerId": "proxmox-k3s",
+    "provisioningManifestPath": "results/experimental-cycles/C2/execution/latest-campaign-execution-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C2/execution/latest-campaign-execution-manifest.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C2/execution/latest-campaign-execution-manifest.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C2/execution/latest-campaign-execution-manifest.json"
+  },
+  "notes": [
+    "Only resource capacity is varied in this campaign; application-level differences must not be inferred from the variant labels.",
+    "Unsupported variants remain meaningful evidence when they expose provider, scheduling or capacity constraints.",
+    "When only one resource variant is measured, the report must present C2 as capacity-boundary evidence rather than as a completed performance-sensitivity comparison."
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "reportingIdPrefix": "REP_C2",
+  "infrastructureSummaryMode": "variant_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "scenario_variant",
+    "interpretation": "Infrastructure profiles are attached to campaign variants; the report must render a variant-level infrastructure table rather than a single fixed cycle-level profile."
+  },
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "referenceScenarioId": "RV_8C16G",
+  "referenceScenarioConfigPath": "config/scenarios/resource-variation/RV_8C16G.json",
+  "referenceScenarioConfigByFamily": {
+    "resource-variation": "config/scenarios/resource-variation/RV_8C16G.json"
+  }
+}

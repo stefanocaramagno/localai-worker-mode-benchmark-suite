@@ -1,0 +1,84 @@
+{
+  "nodeNamingConventionId": "GENAI_PB_REUSABLE_NODE_NAMING_V1",
+  "status": "active_for_provider_backed_cluster_validation",
+  "purpose": "Reusable Kubernetes node naming convention for proxmox-k3s-generated clusters that must remain isolated from the historical sc-* cluster identity.",
+  "scope": {
+    "appliesTo": [
+      "C1/B1 provider-backed baseline work",
+      "C2/C3 provider-backed infrastructure variation profiles",
+      "provider-backed clusters that are created, validated, benchmarked and then retained or destroyed according to the declared lifecycle policy",
+      "C4 provider-backed placement-variation profiles that reuse the same genai-pb naming convention while changing only application placement",
+      "C5 latency-injection infrastructure profiles that reuse the genai-pb naming convention while varying network conditions",
+      "C6 multi-tenant infrastructure profiles that reuse the genai-pb naming convention while varying application tenancy"
+    ],
+    "doesNotRewrite": [
+      "C0 historical evidence",
+      "B0 historical baseline semantics",
+      "already-generated benchmark artifacts"
+    ]
+  },
+  "namingRules": {
+    "clusterNamePrefix": "genai-pb",
+    "toolNameComposition": "proxmox-k3s builds final node names as <cluster_name>-<configured_node_name> unless the configured name already starts with the same prefix.",
+    "controlPlane": {
+      "configuredNamePattern": "cp-<NN>",
+      "expectedKubernetesNodeNamePattern": "genai-pb-cp-<NN>",
+      "initialConfiguredNames": [
+        "cp-01"
+      ],
+      "initialExpectedNodeNames": [
+        "genai-pb-cp-01"
+      ]
+    },
+    "workers": {
+      "configuredNamePattern": "worker-<NN>",
+      "expectedKubernetesNodeNamePattern": "genai-pb-worker-<NN>",
+      "initialConfiguredNames": [
+        "worker-01",
+        "worker-02"
+      ],
+      "initialExpectedNodeNames": [
+        "genai-pb-worker-01",
+        "genai-pb-worker-02"
+      ],
+      "extensionPattern": [
+        "genai-pb-worker-03",
+        "genai-pb-worker-04",
+        "genai-pb-worker-05"
+      ]
+    }
+  },
+  "methodologicalRationale": [
+    "The historical fixed-cluster identity remains bound to sc-master-01, sc-app-01 and sc-app-02.",
+    "Provider-backed clusters are disposable or reusable operational artifacts and must not collide with historical node identities.",
+    "A single reusable provider-backed prefix keeps C1, C2 and C3 configurations simple while allowing one active provider-backed cluster at a time."
+  ],
+  "operationalRequirements": [
+    "Set cluster_name to genai-pb in provider-backed proxmox-k3s configurations.",
+    "Use cp-01 for the first control-plane configured node name.",
+    "Use worker-01, worker-02 and subsequent worker-NN names for worker nodes.",
+    "Do not keep multiple provider-backed clusters with the same genai-pb prefix active at the same time unless VM names, IP ranges and lifecycle operations are explicitly isolated.",
+    "Do not use sc-* names for provider-backed create/delete workflows."
+  ],
+  "riskControls": {
+    "historicalClusterCollisionRisk": "The genai-pb-* prefix prevents create/delete operations from targeting the historical sc-* VM and Kubernetes node names.",
+    "providerBackedReuseRisk": "Before creating a new provider-backed cluster with the same prefix, ensure that the previous provider-backed cluster has been intentionally retained for reuse or deleted according to the lifecycle policy.",
+    "nodeIdentityRisk": "Do not infer hardware equivalence from node names; always use the declared infrastructureProfileId in run metadata and reports."
+  },
+  "associatedProfiles": [
+    "INFRA_C1_1CP_2W_8C16G",
+    "INFRA_C2_1CP_2W_4C8G",
+    "INFRA_C2_1CP_2W_4C16G",
+    "INFRA_C2_1CP_2W_8C16G",
+    "INFRA_C3_1CP_2W_8C16G",
+    "INFRA_C3_1CP_3W_8C16G",
+    "INFRA_C3_1CP_4W_8C16G",
+    "INFRA_C4_1CP_4W_8C16G",
+    "INFRA_C5_1CP_4W_8C16G",
+    "INFRA_C6_1CP_4W_8C16G"
+  ],
+  "recommendedNextCycleId": "C1",
+  "recommendedNextBaselineId": "B1",
+  "schemaVersion": "node-naming-convention/v1",
+  "path": "config/infrastructure/node-naming/GENAI_PB_REUSABLE_NODE_NAMING_V1.json"
+}

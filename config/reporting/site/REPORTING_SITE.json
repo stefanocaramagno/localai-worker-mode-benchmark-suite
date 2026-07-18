@@ -1,0 +1,52 @@
+{
+  "reportingSiteId": "REPORTING_SITE",
+  "status": "active",
+  "description": "Static entry point for browsing generated LocalAI worker-mode benchmark cycle reports.",
+  "sourceReportingIndexPath": "config/reporting/REPORTING_INDEX.json",
+  "outputRoot": "results/reporting",
+  "cyclesDirectoryName": "cycles",
+  "reportHtmlName": "index.html",
+  "siteManifestName": "reporting-site-manifest.json",
+  "legacyManifestAliasName": "reporting-manifest.json",
+  "noJekyllFileName": ".nojekyll",
+  "cycleSourcePolicy": {
+    "sourceReportDirectoryField": "outputRoot",
+    "fallbackPattern": "results/experimental-cycles/{cycleId}/reporting",
+    "requiredFiles": [
+      "index.html",
+      "reporting-manifest.json"
+    ],
+    "optionalFiles": [
+      "report.md",
+      "scenario-summary.csv"
+    ],
+    "cycleFallbackPatterns": [
+      "results/experimental-cycles/{cycleId}/reporting"
+    ]
+  },
+  "copyPolicy": {
+    "removeManagedOutputRootBeforeGeneration": true,
+    "copyCycleReports": true,
+    "excludeDirectoryNames": [
+      "archive"
+    ],
+    "excludeFileNames": [],
+    "createEmptyCyclesDirectory": true,
+    "requirePortableCycleReportsBeforeCopy": true,
+    "portabilityViolationSampleLimit": 50
+  },
+  "presentation": {
+    "title": "LocalAI Worker-Mode Benchmark Results",
+    "subtitle": "Cycle-level benchmark reports across fixed-cluster and provider-backed executions",
+    "overview": "This page provides a compact entry point for reviewing benchmark reports across the available execution cycles. Each cycle is presented independently so that latency, throughput, resource pressure, placement, infrastructure size, latency injection, and multi-tenancy evidence can be interpreted within its own context.",
+    "methodologicalNote": "Cross-cycle comparisons must account for the cross-cycle baseline, family-local reference scenarios, provider, and infrastructure profile documented in each cycle report. Scenario entries and unsupported entries summarize the available evidence and must be interpreted together with the corresponding cycle-level report.",
+    "emptyStateMessage": "No cycle-level report is currently available. The page is still generated as a stable entry point and will expose reports as soon as they are produced."
+  },
+  "qualityPolicy": {
+    "preserveCycleScopedReports": true,
+    "doNotMergeCycleReportsIntoSingleLongReport": true,
+    "keepStablePublicationEntryPoint": true,
+    "treatMissingCyclesAsUnavailableRatherThanFailed": true
+  },
+  "reportMarkdownName": "report.md"
+}

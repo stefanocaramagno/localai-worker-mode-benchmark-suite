@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "PHASE_PROFILE_SCHEMA_V1.json",
+  "title": "Benchmark phase profiles profile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "profileId",
+    "description",
+    "warmUpEnabled",
+    "warmUpDuration",
+    "warmUpUsersMode",
+    "warmUpSpawnRateMode",
+    "startupModelCheckDuringWarmUp",
+    "startupModelCheckDuringMeasurement",
+    "warmUpCsvSuffix",
+    "phaseManifestSuffix"
+  ],
+  "properties": {
+    "profileId": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "warmUpEnabled": {
+      "type": "boolean"
+    },
+    "warmUpDuration": {
+      "type": "string"
+    },
+    "warmUpUsersMode": {
+      "type": "string"
+    },
+    "warmUpSpawnRateMode": {
+      "type": "string"
+    },
+    "startupModelCheckDuringWarmUp": {
+      "type": "boolean"
+    },
+    "startupModelCheckDuringMeasurement": {
+      "type": "boolean"
+    },
+    "warmUpCsvSuffix": {
+      "type": "string"
+    },
+    "phaseManifestSuffix": {
+      "type": "string"
+    }
+  }
+}

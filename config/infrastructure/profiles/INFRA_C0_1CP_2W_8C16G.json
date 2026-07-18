@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "infrastructure-profile/v1",
+  "infrastructureProfileId": "INFRA_C0_1CP_2W_8C16G",
+  "profileName": "Historical Fixed Two-Worker K3s Cluster",
+  "status": "historical_reference_profile",
+  "profileCategory": "historical-fixed-cluster",
+  "profileRole": "historical_fixed_cluster_reference",
+  "purpose": "Describes the fixed K3s cluster used for the historical LocalAI worker-mode characterization cycle.",
+  "clusterIdentity": {
+    "clusterName": "sc",
+    "kubernetesDistribution": "K3s",
+    "k3sVersion": "v1.35.3+k3s1",
+    "hardwareClass": "CPU-only",
+    "gpuAvailable": false
+  },
+  "provider": {
+    "providerId": "external-k3s-cluster",
+    "providerType": "external-k3s",
+    "mode": "external_preexisting_cluster",
+    "managedByBenchmarkSuite": false
+  },
+  "lifecycle": {
+    "scope": "fixed_existing_cluster",
+    "supportedModes": [
+      "external"
+    ],
+    "recommendedMode": "external",
+    "destroyAfterCycleDefault": false,
+    "lifecyclePolicyId": "LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN.json",
+    "clusterLifecycleModeDefault": "external",
+    "destroyClusterAfterCycleDefault": false,
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "lifecycleArtifactRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/lifecycle",
+    "provisioningLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/provisioning",
+    "deletionLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/deletion",
+    "policySelection": "Cycles may override the profile default only when the override is declared in the cycle profile and captured in the lifecycle manifest."
+  },
+  "nodeNaming": {
+    "nodeNamingConventionId": null,
+    "nodeNamingConventionPath": null,
+    "strategy": "historical_node_names",
+    "expectedControlPlaneNodeNames": [
+      "sc-master-01"
+    ],
+    "expectedWorkerNodeNames": [
+      "sc-app-01",
+      "sc-app-02"
+    ],
+    "notes": "Node names are compatibility handles; infrastructureProfileId remains the authoritative environment identifier."
+  },
+  "nodeSummary": {
+    "controlPlaneCount": 1,
+    "workerCount": 2,
+    "totalWorkerVcpus": 16,
+    "totalWorkerMemoryGiB": 32,
+    "totalWorkerStorageGiB": 70
+  },
+  "nodes": {
+    "controlPlane": [
+      {
+        "logicalName": "control-plane-01",
+        "role": "control-plane",
+        "expectedKubernetesNodeName": "sc-master-01",
+        "vcpus": 2,
+        "memoryGiB": 4,
+        "memoryMiB": 4096,
+        "storageGiB": 35,
+        "ipAddress": "192.168.1.210"
+      }
+    ],
+    "workers": [
+      {
+        "logicalName": "worker-a",
+        "role": "worker",
+        "expectedKubernetesNodeName": "sc-app-01",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "ipAddress": "192.168.1.211",
+        "intendedSchedulingRole": "original_worker_a"
+      },
+      {
+        "logicalName": "worker-b",
+        "role": "worker",
+        "expectedKubernetesNodeName": "sc-app-02",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "ipAddress": "192.168.1.213",
+        "intendedSchedulingRole": "original_worker_b"
+      }
+    ]
+  },
+  "selectors": {
+    "workerSelectorMode": "historical_node_names",
+    "workerNodeNames": [
+      "sc-app-01",
+      "sc-app-02"
+    ],
+    "recommendedLabelSelector": null,
+    "futureSelectorPreference": "label_based_node_pool"
+  },
+  "provisioning": {
+    "provisioningMode": "external_preexisting_cluster",
+    "providerConfigExamplePath": null,
+    "providerConfigLocalPath": null,
+    "kubeconfigPath": "config/cluster-access/fixed-cluster/kubeconfig",
+    "providerConfigBindingStatus": "not_applicable",
+    "notes": "Use this profile only as historical reference evidence. Provider-backed cycles must use distinct infrastructure profiles.",
+    "providerBindingId": null,
+    "providerBindingPath": null,
+    "providerConfigTemplatePath": null,
+    "selectionPolicy": "external_fixed_cluster_kubeconfig"
+  },
+  "validation": {
+    "expectedReadyNodeCount": 3,
+    "expectedControlPlaneNodes": [
+      "sc-master-01"
+    ],
+    "expectedWorkerNodes": [
+      "sc-app-01",
+      "sc-app-02"
+    ],
+    "expectedWorkerLabelSelector": null,
+    "requireK3sDistribution": true,
+    "requireMetricsApi": true,
+    "minimumRequiredOutcomeBeforeBenchmarking": "validated"
+  },
+  "benchmarkCompatibility": {
+    "compatibleWithExistingLocalAiTopologies": true,
+    "intendedScenarioFamilies": [
+      "historical-baseline",
+      "historical-characterization"
+    ],
+    "supportedAsProviderBackedBaseline": false,
+    "notes": "Historical evidence must remain associated with C0/B0 and must not be reinterpreted as provider-backed output."
+  },
+  "cycleBinding": {
+    "recommendedCycleId": "C0",
+    "recommendedBaselineId": "B0",
+    "bindingStatus": "bound"
+  },
+  "comparisonPolicy": {
+    "directComparisonAllowedOnlyWhenDeclared": true,
+    "policy": "Results from this profile are not interchangeable with provider-backed results unless infrastructure differences are explicitly reported."
+  },
+  "governance": {
+    "profilePath": "config/infrastructure/profiles/INFRA_C0_1CP_2W_8C16G.json",
+    "profileIndexPath": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "doNotInferEquivalenceFromNodeNames": true
+  },
+  "historicalReference": {
+    "cycleId": "C0",
+    "baselineId": "B0",
+    "role": "historical_fixed_cluster_reference",
+    "preserveAsImmutableReference": true
+  },
+  "observabilityAssumptions": {
+    "metricsServerExpected": true,
+    "jaegerObserved": true,
+    "notes": "These add-ons were observed on the original cluster and should not be assumed to exist automatically on future proxmox-k3s-generated clusters."
+  },
+  "placementCompatibility": {
+    "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+    "supportedPlacementProfileIds": [
+      "PL_COLOCATED",
+      "PL_DISTRIBUTED_TWO_NODE",
+      "PL_SPREAD_WORKERS"
+    ],
+    "defaultPlacementProfileId": "PL_COLOCATED",
+    "currentSelectorMode": "stable_node_name_compatibility",
+    "preferredFutureSelectorMode": "label_based_node_pool",
+    "notes": "Placement compatibility is declared at the profile level so that topology comparisons remain traceable to the infrastructure profile that materializes the cluster."
+  }
+}

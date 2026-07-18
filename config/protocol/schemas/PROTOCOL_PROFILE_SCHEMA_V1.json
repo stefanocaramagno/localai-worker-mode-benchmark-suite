@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "PROTOCOL_PROFILE_SCHEMA_V1.json",
+  "title": "Execution protocol profiles profile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "profileId",
+    "description",
+    "apiSmokeEnabledDefault",
+    "apiSmokeScriptRelativePathBash",
+    "apiSmokeScriptRelativePathPowerShell",
+    "protocolManifestSuffix",
+    "protocolTextSuffix",
+    "steps"
+  ],
+  "properties": {
+    "profileId": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "apiSmokeEnabledDefault": {
+      "type": "boolean"
+    },
+    "apiSmokeScriptRelativePathBash": {
+      "type": "string"
+    },
+    "apiSmokeScriptRelativePathPowerShell": {
+      "type": "string"
+    },
+    "protocolManifestSuffix": {
+      "type": "string"
+    },
+    "protocolTextSuffix": {
+      "type": "string"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

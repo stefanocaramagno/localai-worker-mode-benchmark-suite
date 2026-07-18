@@ -1,0 +1,226 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "provisioning-integration-profile/v1",
+    "title": "Provider-backed provisioning integration profile",
+    "type": "object",
+    "required": [
+        "schemaVersion",
+        "provisioningIntegrationProfileId",
+        "cycleId",
+        "cycleConfigPath",
+        "providerId",
+        "infrastructureProfileId",
+        "providerBindingId",
+        "actions",
+        "artifactPolicy",
+        "executionGuards"
+    ],
+    "properties": {
+        "schemaVersion": {
+            "const": "provisioning-integration-profile/v1"
+        },
+        "provisioningIntegrationProfileId": {
+            "type": "string"
+        },
+        "cycleId": {
+            "type": "string"
+        },
+        "cycleConfigPath": {
+            "type": "string"
+        },
+        "providerId": {
+            "type": "string"
+        },
+        "infrastructureProfileId": {
+            "type": "string"
+        },
+        "providerBindingId": {
+            "type": "string"
+        },
+        "providerBindingPath": {
+            "type": "string"
+        },
+        "providerConfigResolution": {
+            "type": "object"
+        },
+        "lifecycle": {
+            "type": "object"
+        },
+        "actions": {
+            "type": "object"
+        },
+        "artifactPolicy": {
+            "type": "object"
+        },
+        "executionGuards": {
+            "type": "object"
+        },
+        "kubeconfigVerification": {
+            "type": "object",
+            "description": "Rules for verifying and optionally refreshing kubeconfig files produced by the provider tool before cluster validation.",
+            "properties": {
+                "requiredAfterProvision": {
+                    "type": "boolean"
+                },
+                "requiredAfterKubeconfigRefresh": {
+                    "type": "boolean"
+                },
+                "expectedPath": {
+                    "type": "string"
+                },
+                "mustExist": {
+                    "type": "boolean"
+                },
+                "mustBeNonEmpty": {
+                    "type": "boolean"
+                },
+                "mustBeYamlParseable": {
+                    "type": "boolean"
+                },
+                "mustContainKubernetesConfigShape": {
+                    "type": "boolean"
+                },
+                "requiredTopLevelKeys": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "requiredKind": {
+                    "type": "string"
+                },
+                "requiredApiVersion": {
+                    "type": "string"
+                },
+                "requireHttpsClusterServer": {
+                    "type": "boolean"
+                },
+                "refreshAfterCreatePolicy": {
+                    "type": "string",
+                    "enum": [
+                        "disabled",
+                        "when_invalid",
+                        "always"
+                    ]
+                },
+                "refreshOnInvalidPolicy": {
+                    "type": "string",
+                    "enum": [
+                        "disabled",
+                        "when_invalid",
+                        "always"
+                    ]
+                },
+                "maxRefreshAttemptsAfterInvalid": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "diagnosticBackupPolicy": {
+                    "type": "string"
+                },
+                "dryRunPolicy": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": true
+        },
+        "failurePolicy": {
+            "type": "object"
+        },
+        "governance": {
+            "type": "object"
+        },
+        "lifecycleCollisionGuard": {
+            "type": "object",
+            "description": "Pre-provider-execution guard that records cluster name, IP allocation, kubeconfig reuse and lifecycle collision evidence."
+        },
+        "providerCommandExecution": {
+            "type": "object",
+            "description": "Timeout and incremental logging policy for external provider commands invoked by the provisioning wrapper.",
+            "properties": {
+                "mode": {
+                    "type": "string"
+                },
+                "defaultTimeoutSeconds": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "perStepTimeoutSeconds": {
+                    "type": "object",
+                    "properties": {
+                        "create": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "kubeconfig": {
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "delete": {
+                            "type": "integer",
+                            "minimum": 1
+                        }
+                    },
+                    "additionalProperties": {
+                        "type": "integer",
+                        "minimum": 1
+                    }
+                },
+                "heartbeatIntervalSeconds": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "gracefulTerminationSeconds": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "outputTailLines": {
+                    "type": "integer",
+                    "minimum": 1
+                },
+                "timeoutStatus": {
+                    "type": "string"
+                },
+                "timeoutPolicy": {
+                    "type": "string"
+                },
+                "logStreamingPolicy": {
+                    "type": "string"
+                },
+                "failureDiagnostics": {
+                    "type": "object",
+                    "description": "Structured diagnostics captured when provider commands fail or time out before the next pipeline phase.",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "captureProviderLogAnalysis": {
+                            "type": "boolean"
+                        },
+                        "captureProviderConfigNodeInventory": {
+                            "type": "boolean"
+                        },
+                        "captureVmidEvents": {
+                            "type": "boolean"
+                        },
+                        "diagnosticsRoot": {
+                            "type": "string"
+                        },
+                        "classificationPolicy": {
+                            "type": "string"
+                        },
+                        "remoteInspectionPolicy": {
+                            "type": "string"
+                        },
+                        "operatorFollowUpPolicy": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": true
+}

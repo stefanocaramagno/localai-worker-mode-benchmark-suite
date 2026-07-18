@@ -1,0 +1,374 @@
+{
+  "scenarioId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "variantId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "scenarioProfileId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "scenarioProfileName": "SC DEFAULT 2T 4N L0 UNIFORM M1M1 W2",
+  "scenarioProfileSchemaVersion": "resource-aware-scheduler-scenario/v1",
+  "scenarioProfileScope": "provider_backed_resource_aware_scheduler",
+  "associatedCycleId": "C8",
+  "campaignId": "C8",
+  "family": "resource-aware-scheduler",
+  "scenarioClass": "official",
+  "scenarioOrdinal": 4,
+  "status": "planned_provider_backed_resource_aware_scheduler_scenario",
+  "purpose": "Scheduler-comparison scenario for 2T_4N_L0_UNIFORM_M1M1_W2. The default and load-aware variants keep workload, infrastructure, model mix and latency constant while changing only scheduler selection.",
+  "roleInCampaign": "paired_default_variant",
+  "referenceBaselineId": "B1",
+  "referenceBaselineConfigPath": "config/scenarios/baseline/B1.json",
+  "referenceScenarioId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+  "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+  "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "workerNodeCount": 4,
+  "workerVcpusPerNode": 8,
+  "workerMemoryGiBPerNode": 16,
+  "workerStorageGiBPerNode": 35,
+  "controlPlaneNodeCount": 1,
+  "providerId": "proxmox-k3s",
+  "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+  "outputSubdir": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "workerMode": "worker",
+  "workerScenario": "W2",
+  "localAiWorkerCountPerTenant": 2,
+  "tenantCount": 2,
+  "tenantIds": [
+    "tenant-a",
+    "tenant-b"
+  ],
+  "namespaces": [
+    "genai-tenant-a",
+    "genai-tenant-b"
+  ],
+  "namespace": "genai-tenant-a",
+  "baseUrl": "http://localhost:8080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "modelMix": "M1M1",
+  "modelScenarios": [
+    "M1",
+    "M1"
+  ],
+  "resolvedModelNames": [
+    "llama-3.2-1b-instruct:q4_k_m",
+    "llama-3.2-1b-instruct:q4_k_m"
+  ],
+  "primaryModelScenario": "M1",
+  "primaryResolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "trafficProfileId": "TR_2T_UNIFORM_LOW",
+  "trafficProfile": {
+    "trafficProfileId": "TR_2T_UNIFORM_LOW",
+    "trafficShape": "uniform",
+    "profileLabel": "two tenants uniform low-rate workload",
+    "tenantProfiles": [
+      {
+        "tenantId": "tenant-a",
+        "users": 1,
+        "spawnRate": 1,
+        "runTime": "2m",
+        "waitTimeSeconds": 5,
+        "environment": {
+          "LOCALAI_WAIT_TIME_SECONDS": "5"
+        }
+      },
+      {
+        "tenantId": "tenant-b",
+        "users": 1,
+        "spawnRate": 1,
+        "runTime": "2m",
+        "waitTimeSeconds": 5,
+        "environment": {
+          "LOCALAI_WAIT_TIME_SECONDS": "5"
+        }
+      }
+    ],
+    "loadGenerator": "locust",
+    "runnerMode": "one_locust_process_per_tenant",
+    "requestTarget": "POST /v1/chat/completions",
+    "requestFrequencyPolicy": "low_rate_constant_wait_per_tenant",
+    "trafficDifferentiationEnabled": false
+  },
+  "workloadScenario": "TR_2T_UNIFORM_LOW",
+  "resolvedWorkload": {
+    "users": 2,
+    "spawnRate": 2,
+    "runTime": "2m",
+    "trafficShape": "uniform",
+    "perTenantWaitTimeSeconds": {
+      "tenant-a": 5,
+      "tenant-b": 5
+    }
+  },
+  "latencyAlias": "L0",
+  "latencyProfileId": "L0_NONE",
+  "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+  "latencyProfile": {
+    "delayMs": 0,
+    "jitterMs": 0,
+    "latencyCategory": "none",
+    "applyPolicy": "apply_after_default_scheduler_placement_capture_when_enabled",
+    "resetAfterBenchmark": true
+  },
+  "placementScenario": "RUNTIME_SCHEDULER_DECISION",
+  "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+  "resolvedPlacementType": "runtime_scheduler_decision",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b"
+  ],
+  "expectedInactiveRpcWorkers": [
+    "localai-rpc-c",
+    "localai-rpc-d"
+  ],
+  "expectedWorkerNodes": "captured_at_runtime",
+  "expectedServerNode": "captured_at_runtime",
+  "namespaceManifest": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+  "storageManifest": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+  "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+  "serverManifest": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+  "tenantClusters": [
+    {
+      "tenantId": "tenant-a",
+      "namespace": "genai-tenant-a",
+      "role": "primary_benchmark_tenant",
+      "modelScenario": "M1",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "trafficProfile": {
+        "users": 1,
+        "spawnRate": 1,
+        "runTime": "2m",
+        "waitTimeSeconds": 5,
+        "environment": {
+          "LOCALAI_WAIT_TIME_SECONDS": "5"
+        }
+      },
+      "placementPolicy": "kubernetes_default_scheduler_decides_at_runtime",
+      "expectedPlacement": "captured_at_runtime",
+      "serviceName": "localai-server",
+      "baseUrlMode": "tenant_scoped_port_forward"
+    },
+    {
+      "tenantId": "tenant-b",
+      "namespace": "genai-tenant-b",
+      "role": "concurrent_tenant",
+      "modelScenario": "M1",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "trafficProfile": {
+        "users": 1,
+        "spawnRate": 1,
+        "runTime": "2m",
+        "waitTimeSeconds": 5,
+        "environment": {
+          "LOCALAI_WAIT_TIME_SECONDS": "5"
+        }
+      },
+      "placementPolicy": "kubernetes_default_scheduler_decides_at_runtime",
+      "expectedPlacement": "captured_at_runtime",
+      "serviceName": "localai-server",
+      "baseUrlMode": "tenant_scoped_port_forward"
+    }
+  ],
+  "benchmarkTargets": [
+    {
+      "tenantId": "tenant-a",
+      "namespace": "genai-tenant-a",
+      "baseUrl": "http://localhost:__TENANT_PORT__",
+      "requestTarget": "POST /v1/chat/completions",
+      "outputSubdir": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2/tenant-a"
+    },
+    {
+      "tenantId": "tenant-b",
+      "namespace": "genai-tenant-b",
+      "baseUrl": "http://localhost:__TENANT_PORT__",
+      "requestTarget": "POST /v1/chat/completions",
+      "outputSubdir": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2/tenant-b"
+    }
+  ],
+  "applicationTopology": {
+    "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+    "kustomizeApplyOrder": [
+      {
+        "stepId": "resource-aware-scheduler-application-topology",
+        "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+        "kind": "kustomize",
+        "required": true
+      }
+    ],
+    "expectedResources": {
+      "namespaces": [
+        "genai-tenant-a",
+        "genai-tenant-b"
+      ],
+      "deploymentsPerTenant": [
+        "localai-server",
+        "localai-rpc-a",
+        "localai-rpc-b"
+      ],
+      "servicesPerTenant": [
+        "localai-server",
+        "localai-rpc-a",
+        "localai-rpc-b",
+        "localai-rpc-c",
+        "localai-rpc-d"
+      ],
+      "rolloutTimeoutSeconds": 900,
+      "minimumReadyDeploymentsPerTenant": 3
+    },
+    "schedulerMode": "kubernetes_default_scheduler",
+    "schedulerName": null,
+    "hardPlacementControlsAllowed": false,
+    "additionalRolloutTargets": []
+  },
+  "schedulerEvidence": {
+    "required": true,
+    "artifactRoot": "results/experimental-cycles/C8/scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+    "artifactName": "resource-aware-scheduler-decision-evidence.json",
+    "captureScope": "all_tenant_namespaces",
+    "schedulerName": "default-scheduler",
+    "requiredFields": [
+      "scenarioId",
+      "tenantId",
+      "namespace",
+      "deployment",
+      "podName",
+      "podUid",
+      "nodeName",
+      "podPhase",
+      "labels",
+      "resourceRequests",
+      "resourceLimits",
+      "restartCount",
+      "events",
+      "schedulerName",
+      "placementClassification"
+    ],
+    "latestArtifactName": "latest-resource-aware-scheduler-decision-evidence.json",
+    "evidenceScope": "resource-aware-scheduler"
+  },
+  "metricCollectionPolicy": {
+    "benchmarkArtifactsPerTenant": true,
+    "aggregateSummaryRequired": true,
+    "resourcePressureRequired": true,
+    "schedulerDecisionEvidenceRequired": true,
+    "annotationEvidenceRequired": true,
+    "resourceBalanceEvidenceRequired": true,
+    "negativeEvidencePolicy": "retain_unsupported_or_suboptimal_resource_aware_scheduler_outcomes"
+  },
+  "fixedDimensions": {
+    "schedulerMode": "kubernetes_default_scheduler",
+    "localAiWorkerCountPerTenant": 2,
+    "workerVcpusPerNode": 8,
+    "workerMemoryGiBPerNode": 16,
+    "requestTarget": "POST /v1/chat/completions",
+    "hardPlacementControls": "disabled",
+    "schedulerModeCycle": "C8",
+    "latencyInjection": "disabled",
+    "monitoringStack": "enabled",
+    "monAgent": "enabled",
+    "reschedulingPolicy": "RESCHEDULE_AFTER_TELEMETRY_PRIMING",
+    "schedulerName": "absent"
+  },
+  "variedDimensions": {
+    "tenantCount": 2,
+    "workerNodeCount": 4,
+    "latencyProfileId": "L0_NONE",
+    "trafficProfileId": "TR_2T_UNIFORM_LOW",
+    "modelMix": "M1M1",
+    "schedulerMode": "kubernetes_default_scheduler"
+  },
+  "selectionCriteria": [
+    "Keep the workload, model mix, node capacity, tenant topology and latency profile identical within each default/load-aware pair.",
+    "Use monitoring and mon-agent annotations as runtime evidence for resource-aware scheduling.",
+    "Exclude latency injection so observed differences are not attributed to a network-aware objective that is not enabled.",
+    "Preserve unsupported outcomes as methodological evidence when a declared tenant topology cannot be sustained."
+  ],
+  "lockRules": [
+    "Do not introduce nodeName or hostname-specific node selectors in resource-aware-scheduler manifests.",
+    "Do not add schedulerName to default-scheduler variants.",
+    "Use schedulerName: scheduler-plugins-scheduler only in load-aware variants.",
+    "Do not enable latency injection in C8 scenarios."
+  ],
+  "runtimeGeneratedProfiles": {
+    "resolutionMode": "generated_at_runtime",
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C8/execution/generated-runtime-configs",
+    "applicationDeployment": {
+      "profileId": "AD_RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+      "path": "results/experimental-cycles/C8/execution/generated-runtime-configs/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2/AD_RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json"
+    },
+    "minimalObservability": {
+      "profileId": "MO_RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+      "path": "results/experimental-cycles/C8/execution/generated-runtime-configs/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2/MO_RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json"
+    },
+    "benchmark": {
+      "path": "results/experimental-cycles/C8/execution/generated-runtime-configs/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2/BENCHMARK_RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json"
+    },
+    "cycleVariant": {
+      "path": "results/experimental-cycles/C8/execution/generated-runtime-configs/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.cycle.json"
+    }
+  },
+  "priorityClass": "P0",
+  "sourceDefaultSchedulerScenarioId": "DS_2T_4N_L0_UNIFORM_M1M1_W2",
+  "sourceDefaultSchedulerScenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L0_UNIFORM_M1M1_W2.json",
+  "placementProfilePath": "",
+  "schedulerModeTopology": {
+    "compositionPath": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+    "tenantCount": 2,
+    "localAiWorkerCountPerTenant": 2,
+    "placementControls": "none_hardcoded",
+    "schedulerMode": "kubernetes_default_scheduler",
+    "schedulerName": null,
+    "renderedManifestValidationRequired": true,
+    "validateNoNodeName": true,
+    "validateNoHostnameSpecificNodeSelector": true,
+    "validateNoHostnameSpecificNodeAffinity": true
+  },
+  "schedulerModePolicy": {
+    "schedulerMode": "kubernetes_default_scheduler",
+    "schedulerClass": "default",
+    "schedulerName": null,
+    "customSchedulerProfileId": null,
+    "customSchedulerProfilePath": null,
+    "monAgentProfileId": "MA_RESOURCE_AWARE",
+    "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+    "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+    "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+    "monitoringRequired": true,
+    "runtimeAnnotationsRequired": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "latencyInjectionEnabled": false,
+    "onlySchedulerDiffersWithinPair": true,
+    "pairedDefaultVariantId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+    "pairedLoadAwareVariantId": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2",
+    "logicalScenarioId": "2T_4N_L0_UNIFORM_M1M1_W2",
+    "schedulerModeRole": "default",
+    "runtimeAnnotationsOptional": [
+      "disk-throughput",
+      "network-throughput"
+    ]
+  },
+  "defaultSchedulerPolicy": {
+    "schedulerMode": "kubernetes_default_scheduler",
+    "hardPlacementControlsAllowed": false,
+    "placementDecisionOwner": "kubernetes_default_scheduler",
+    "placementEvidenceRequired": true,
+    "placementClassificationRequired": true,
+    "expectedServerNode": "captured_at_runtime",
+    "expectedWorkerNodes": "captured_at_runtime"
+  },
+  "profileStatus": "planned_provider_backed_resource_aware_scheduler_scenario",
+  "sourceVariantId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "logicalScenarioId": "2T_4N_L0_UNIFORM_M1M1_W2",
+  "experimentalVariantId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "schedulerModeRole": "default",
+  "executedScenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+  "campaignReferenceScenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+  "campaignReferenceScenarioId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2"
+}

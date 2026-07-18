@@ -1,0 +1,66 @@
+{
+  "indexId": "PROVISIONING_VALIDATION_INDEX",
+  "status": "active",
+  "purpose": "Canonical registry for provisioning validation profiles used to validate proxmox-k3s generated clusters before application deployment.",
+  "defaultProviderBackedProfileId": "PV_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "profileId": "PV_C1_PROVIDER_BACKED_BASELINE",
+      "path": "config/provisioning-validation/profiles/PV_C1_PROVIDER_BACKED_BASELINE.json",
+      "scope": "provider_backed_baseline",
+      "cycleId": "C1",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "providerId": "proxmox-k3s",
+      "status": "active"
+    }
+  ],
+  "selectionRules": [
+    "Use PV_C1_PROVIDER_BACKED_BASELINE for the official C1 provider-backed baseline validation workflow.",
+    "Use PV_PROVIDER_BACKED_VALIDATION_TEMPLATE only as a runtime generation template for provider-backed campaign variants.",
+    "Provisioning validation profiles are concrete executable profiles and are kept under config/provisioning-validation/profiles/.",
+    "Generated campaign-variant provisioning-validation profiles must point to the same infrastructure profile, provider binding, kubeconfig and provisioning integration profile as the corresponding generated cycle.",
+    "Provisioning-validation profiles are resolved through active cycle profiles or runtime-generated campaign profiles; standalone provider-validation checks are outside the default benchmark-cycle resolution path unless explicitly registered."
+  ],
+  "description": "Canonical registry for concrete provisioning validation profiles and templates used to validate proxmox-k3s generated clusters before application deployment.",
+  "defaultProviderBackedTemplateId": "PV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+  "templates": [
+    {
+      "templateId": "PV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+      "path": "config/provisioning-validation/templates/PV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+      "scope": "provider_backed_campaign_variants",
+      "providerId": "proxmox-k3s",
+      "status": "active"
+    }
+  ],
+  "runtimeGeneratedProfilePolicy": {
+    "enabled": true,
+    "generationScope": "provider_backed_campaign_variants",
+    "staticProfilesScope": "concrete_baseline_and_standalone_profiles",
+    "runtimeCycles": [
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C9"
+    ],
+    "templateId": "PV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+    "templatePath": "config/provisioning-validation/templates/PV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "generatedProfilesRootPattern": "results/experimental-cycles/<cycleId>/execution/generated-runtime-configs/<variantId>/",
+    "rationale": "Campaign-variant provisioning validation profiles are generated from the template to validate provider outputs for each infrastructure variant without duplicating static profile files.",
+    "networkAwareSchedulerToolchainScope": "C9 uses runtime-generated provider-backed profiles with proxmox-k3s v1.0.3 add-on support."
+  },
+  "prefixPolicy": {
+    "reservedProfilePrefix": "PV",
+    "reservedFor": "provisioning-validation profiles",
+    "disambiguationRule": "Placement-variation scenario identifiers use the PLC prefix. PV-prefixed identifiers under config/provisioning-validation are provisioning-validation profile identifiers."
+  },
+  "schema": {
+    "schemaVersion": "provisioning-validation-profile/v1",
+    "schemaPath": "config/provisioning-validation/schemas/PROVISIONING_VALIDATION_PROFILE_SCHEMA_V1.json",
+    "appliesTo": [
+      "profiles",
+      "templates"
+    ]
+  }
+}

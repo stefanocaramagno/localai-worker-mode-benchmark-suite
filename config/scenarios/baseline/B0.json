@@ -1,0 +1,61 @@
+{
+  "baselineId": "B0",
+  "status": "official_locked_baseline",
+  "purpose": "Official historical baseline for consolidated LocalAI worker-mode characterization on the fixed two-worker CPU-only Kubernetes cluster.",
+  "workerMode": "worker",
+  "modelScenario": "M1",
+  "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "workerScenario": "W2",
+  "resolvedWorkerCount": 2,
+  "placementScenario": "PL1",
+  "resolvedPlacementType": "colocated_sc_app_02",
+  "workloadScenario": "WL2",
+  "resolvedWorkload": {
+    "users": 2,
+    "spawnRate": 1,
+    "runTime": "2m"
+  },
+  "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+  "serverManifest": "infra/k8s/compositions/server/models/m1",
+  "namespaceManifest": "infra/k8s/compositions/foundation/namespace",
+  "storageManifest": "infra/k8s/compositions/foundation/storage",
+  "baseUrl": "http://localhost:8080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "resultsRoot": "results/experimental-cycles/C0/benchmark/baseline",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b"
+  ],
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "sc-app-02",
+    "localai-rpc-b": "sc-app-02"
+  },
+  "selectionCriteria": [
+    "Keep the initial baseline lightweight and reproducible on the current CPU-only cluster.",
+    "Freeze the worker count at two because pilot evidence indicated a clear improvement over a single worker without the added complexity of larger topologies.",
+    "Freeze the model at the smallest validated family member (Llama 3.2 1B q4_k_m) to minimize footprint and preserve operational headroom for repeated characterization runs.",
+    "Freeze the workload at the controlled low-load scenario WL2 so that subsequent sweeps can vary one dimension at a time from a stable reference point.",
+    "Freeze the placement at PL1 because current pilot evidence indicates lower average latency than the distributed two-node alternative in this specific cluster configuration."
+  ],
+  "lockRules": [
+    "Do not override model, worker count, placement, or workload from launcher parameters.",
+    "Use this baseline as the unique reference configuration until the consolidated characterization phase is complete.",
+    "Treat all future deltas as controlled variations from B0.",
+    "Do not reuse B0 as the baseline for provider-backed infrastructure profiles; create a new baseline identifier for each new provider-backed cycle."
+  ],
+  "notes": "This historical baseline intentionally prioritizes stability, reproducibility, and low resource pressure over aggressive scale. The distributed placement scenario PL2 remains available as an experimental comparison, but it is not the locked reference configuration.",
+  "infrastructureProfileId": "INFRA_C0_1CP_2W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C0_1CP_2W_8C16G.json",
+  "infrastructureRole": "historical_fixed_cluster_reference_baseline",
+  "associatedCycleId": "C0",
+  "placementProfileId": "PL_COLOCATED",
+  "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+  "placementProfileRole": "historical_colocated_mapping",
+  "scenarioId": "B0",
+  "scenarioProfileId": "B0",
+  "scenarioProfileName": "Official historical baseline for consolidated LocalAI worker-mode characterization on the fixed two-worker CPU-only Kubernetes cluster.",
+  "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+  "scenarioProfileSchemaVersion": "1.0"
+}

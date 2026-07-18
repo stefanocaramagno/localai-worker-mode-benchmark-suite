@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "localai-completion-gate-profile-v1",
+  "title": "LocalAI Completion Gate Profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "completionGateProfileId",
+    "cycleId",
+    "outputRoot",
+    "gates"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "completion-gate-profile/v1"
+    },
+    "completionGateProfileId": {
+      "type": "string"
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "profileName": {
+      "type": "string"
+    },
+    "profileStatus": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": "string"
+    },
+    "outputRoot": {
+      "type": "string"
+    },
+    "manifestSuffix": {
+      "type": "string"
+    },
+    "textSuffix": {
+      "type": "string"
+    },
+    "gates": {
+      "type": "object"
+    },
+    "decisionPolicy": {
+      "type": "object"
+    },
+    "artifactPolicy": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

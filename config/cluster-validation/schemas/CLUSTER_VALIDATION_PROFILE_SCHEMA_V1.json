@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cluster-validation-profile/v1",
+  "title": "Provider-backed cluster validation profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "clusterValidationProfileId",
+    "cycleId",
+    "provisioningValidationProfilePath",
+    "artifactPolicy",
+    "decisionPolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "cluster-validation-profile/v1"
+    },
+    "clusterValidationProfileId": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": "string"
+    },
+    "provisioningValidationProfilePath": {
+      "type": "string"
+    },
+    "kubeconfigPath": {
+      "type": "string"
+    },
+    "preValidationGate": {
+      "type": "object"
+    },
+    "artifactPolicy": {
+      "type": "object"
+    },
+    "decisionPolicy": {
+      "type": "object"
+    },
+    "executionGuards": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    },
+    "expectedCluster": {
+      "type": "object",
+      "properties": {
+        "expectedManagementNodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expectedManagementLabelSelector": {
+          "type": "string"
+        },
+        "expectedManagementTaints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

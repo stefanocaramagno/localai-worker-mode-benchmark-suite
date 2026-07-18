@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mon-agent
+  namespace: observability
+  labels:
+    app: mon-agent
+    app.kubernetes.io/name: mon-agent
+    app.kubernetes.io/component: metrics-annotation-agent
+    app.kubernetes.io/version: v0.0.6
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mon-agent
+  template:
+    metadata:
+      labels:
+        app: mon-agent
+        app.kubernetes.io/name: mon-agent
+        app.kubernetes.io/component: metrics-annotation-agent
+        app.kubernetes.io/version: v0.0.6
+    spec:
+      serviceAccountName: mon-agent
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              preference:
+                matchExpressions:
+                  - key: nodepool
+                    operator: In
+                    values:
+                      - management
+      tolerations:
+        - key: nodepool
+          operator: Equal
+          value: management
+          effect: NoSchedule
+      containers:
+        - name: mon-agent
+          image: ghcr.io/unict-cclab/mon-agent:v0.0.6
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PROMETHEUS_URL
+              value: http://prometheus-stack-kube-prom-prometheus.observability:9090
+            - name: SCRAPE_PERIOD_SECONDS
+              value: "30"
+            - name: PROMQL_RANGE
+              value: 5m
+            - name: NAMESPACE_LABEL_SELECTOR
+              value: mon-agent/enabled=true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+            capabilities:
+              drop:
+                - ALL

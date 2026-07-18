@@ -1,0 +1,215 @@
+{
+  "scenarioId": "MT_TWO_TENANTS_MIXED_MODELS",
+  "variantId": "MT_TWO_TENANTS_MIXED_MODELS",
+  "referenceBaselineId": "B1",
+  "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+  "status": "active_provider_backed_multi_tenancy",
+  "purpose": "Two separated tenant clusters are deployed; the co-tenant uses the q8_0 model variant to increase resource pressure.",
+  "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+  "providerId": "proxmox-k3s",
+  "providerBindingId": "BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "associatedCycleId": "C6",
+  "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+  "namespace": "genai-tenant-a",
+  "namespaceManifest": "infra/k8s/compositions/tenancy/single-tenant-reference",
+  "storageManifest": "infra/k8s/compositions/tenancy/single-tenant-reference",
+  "baseUrl": "http://localhost:8080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "precheckProfilesIndexPath": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+  "requiresApplicationDeploymentBeforeBenchmark": true,
+  "requiresMinimalObservabilityBeforeDiagnosis": true,
+  "family": "multi-tenancy",
+  "workerMode": "worker",
+  "modelScenario": "M1",
+  "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "workerScenario": "W2",
+  "resolvedWorkerCount": 2,
+  "workloadScenario": "WL2",
+  "resolvedWorkload": {
+    "users": 2,
+    "spawnRate": 1,
+    "runTime": "2m"
+  },
+  "placementScenario": "PL_DISTRIBUTED_TWO_NODE",
+  "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+  "placementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+  "resolvedPlacementType": "tenant_primary_distributed_two_node",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b"
+  ],
+  "expectedInactiveRpcWorkers": [
+    "localai-rpc-c",
+    "localai-rpc-d"
+  ],
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "genai-pb-worker-01",
+    "localai-rpc-b": "genai-pb-worker-02"
+  },
+  "expectedServerNode": "genai-pb-worker-01",
+  "scenarioLabel": "two tenants mixed models",
+  "topologyDir": "infra/k8s/compositions/tenancy/two-tenants-mixed-models",
+  "serverManifest": "infra/k8s/compositions/tenancy/two-tenants-mixed-models",
+  "outputSubdir": "MT_TWO_TENANTS_MIXED_MODELS_official_locked",
+  "fixedDimensions": {
+    "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+    "benchmarkTenant": "tenant-a",
+    "benchmarkNamespace": "genai-tenant-a",
+    "benchmarkModel": "M1",
+    "benchmarkWorkerCount": "W2",
+    "workloadScenario": "WL2",
+    "requestTarget": "POST /v1/chat/completions"
+  },
+  "variedDimensions": [
+    "tenant count",
+    "co-tenant model mix",
+    "co-tenant placement"
+  ],
+  "selectionCriteria": [
+    "Keep the infrastructure and primary tenant benchmark workload fixed.",
+    "Use namespace-scoped LocalAI application clusters to model tenant isolation.",
+    "Retain unsupported co-tenant topologies as capacity or contention evidence."
+  ],
+  "lockRules": [
+    "Do not change the primary tenant workload within C6 scenarios.",
+    "Interpret performance deltas together with rollout, pod placement and resource snapshots.",
+    "Do not compare C6 results with earlier cycles without explicitly declaring the tenant topology."
+  ],
+  "tenancyProfileId": "TP_TWO_TENANTS_MIXED_MODELS",
+  "tenancyProfilePath": "config/tenancy/profiles/TP_TWO_TENANTS_MIXED_MODELS.json",
+  "tenancyVariant": {
+    "tenantCount": 2,
+    "benchmarkTenantId": "tenant-a",
+    "benchmarkNamespace": "genai-tenant-a",
+    "coTenantModelScenario": "M2",
+    "coTenantPlacement": "separated_worker_pairs",
+    "sharedNodePool": false,
+    "label": "two tenants mixed models"
+  },
+  "applicationTopology": {
+    "namespace": "genai-tenant-a",
+    "localAiWorkerCount": 2,
+    "workerScenario": "W2",
+    "topologyDir": "infra/k8s/compositions/tenancy/two-tenants-mixed-models",
+    "serverManifest": "infra/k8s/compositions/tenancy/two-tenants-mixed-models",
+    "placementScenario": "PL_DISTRIBUTED_TWO_NODE",
+    "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+    "placementType": "tenant_primary_distributed_two_node",
+    "expectedServerNode": "genai-pb-worker-01",
+    "expectedWorkerNodes": {
+      "localai-rpc-a": "genai-pb-worker-01",
+      "localai-rpc-b": "genai-pb-worker-02"
+    },
+    "expectedActiveRpcWorkers": [
+      "localai-rpc-a",
+      "localai-rpc-b"
+    ],
+    "expectedInactiveRpcWorkers": [
+      "localai-rpc-c",
+      "localai-rpc-d"
+    ],
+    "kustomizeApplyOrder": [
+      {
+        "stepId": "multi-tenant-application-topology",
+        "path": "infra/k8s/compositions/tenancy/two-tenants-mixed-models",
+        "kind": "kustomize",
+        "required": true
+      }
+    ],
+    "expectedResources": {
+      "deployments": [
+        "localai-server",
+        "localai-rpc-a",
+        "localai-rpc-b"
+      ],
+      "inactiveDeployments": [
+        "localai-rpc-c",
+        "localai-rpc-d"
+      ],
+      "services": [
+        "localai-server",
+        "localai-rpc-a",
+        "localai-rpc-b",
+        "localai-rpc-c",
+        "localai-rpc-d"
+      ],
+      "configMaps": [
+        "localai-runtime-config"
+      ],
+      "persistentVolumeClaims": [
+        "localai-models-pvc"
+      ],
+      "rolloutTimeoutSeconds": 900,
+      "minimumReadyDeployments": 3
+    },
+    "additionalRolloutTargets": [
+      {
+        "tenantId": "tenant-b",
+        "namespace": "genai-tenant-b",
+        "deployments": [
+          "localai-server",
+          "localai-rpc-a",
+          "localai-rpc-b"
+        ],
+        "rolloutTimeoutSeconds": 900
+      }
+    ],
+    "tenancyProfileId": "TP_TWO_TENANTS_MIXED_MODELS",
+    "tenancyProfilePath": "config/tenancy/profiles/TP_TWO_TENANTS_MIXED_MODELS.json"
+  },
+  "tenantClusters": [
+    {
+      "tenantId": "tenant-a",
+      "namespace": "genai-tenant-a",
+      "modelScenario": "M1",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "placement": "workers_01_02",
+      "role": "benchmark_tenant"
+    },
+    {
+      "tenantId": "tenant-b",
+      "namespace": "genai-tenant-b",
+      "modelScenario": "M2",
+      "modelName": "llama-3.2-1b-instruct:q8_0",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "placement": "workers_03_04",
+      "role": "co_tenant"
+    }
+  ],
+  "scenarioProfileId": "MT_TWO_TENANTS_MIXED_MODELS",
+  "scenarioProfileName": "two tenants mixed models",
+  "applicationDeploymentProfileId": "AD_C6_MT_TWO_TENANTS_MIXED_MODELS",
+  "applicationDeploymentProfilePath": "results/experimental-cycles/C6/execution/generated-runtime-configs/MT_TWO_TENANTS_MIXED_MODELS/AD_MT_TWO_TENANTS_MIXED_MODELS.json",
+  "minimalObservabilityProfileId": "MO_C6_MT_TWO_TENANTS_MIXED_MODELS",
+  "minimalObservabilityProfilePath": "results/experimental-cycles/C6/execution/generated-runtime-configs/MT_TWO_TENANTS_MIXED_MODELS/MO_MT_TWO_TENANTS_MIXED_MODELS.json",
+  "precheckProfileId": "TC_C6_MT_TWO_TENANTS_MIXED_MODELS",
+  "precheckProfilePath": "results/experimental-cycles/C6/execution/generated-runtime-configs/MT_TWO_TENANTS_MIXED_MODELS/TC_MT_TWO_TENANTS_MIXED_MODELS.json",
+  "runtimeGeneratedProfiles": {
+    "resolutionMode": "generated_at_runtime",
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C6/execution/generated-runtime-configs",
+    "applicationDeployment": {
+      "profileId": "AD_C6_MT_TWO_TENANTS_MIXED_MODELS",
+      "path": "results/experimental-cycles/C6/execution/generated-runtime-configs/MT_TWO_TENANTS_MIXED_MODELS/AD_MT_TWO_TENANTS_MIXED_MODELS.json",
+      "requiredBeforeBenchmark": true
+    },
+    "minimalObservability": {
+      "profileId": "MO_C6_MT_TWO_TENANTS_MIXED_MODELS",
+      "path": "results/experimental-cycles/C6/execution/generated-runtime-configs/MT_TWO_TENANTS_MIXED_MODELS/MO_MT_TWO_TENANTS_MIXED_MODELS.json",
+      "requiredBeforeDiagnosis": true
+    },
+    "precheck": {
+      "profileId": "TC_C6_MT_TWO_TENANTS_MIXED_MODELS",
+      "path": "results/experimental-cycles/C6/execution/generated-runtime-configs/MT_TWO_TENANTS_MIXED_MODELS/TC_MT_TWO_TENANTS_MIXED_MODELS.json",
+      "requiredBeforeBenchmark": true
+    }
+  },
+  "scenarioProfileSchemaVersion": "1.0",
+  "scenarioProfileScope": "provider_backed_multi_tenancy"
+}

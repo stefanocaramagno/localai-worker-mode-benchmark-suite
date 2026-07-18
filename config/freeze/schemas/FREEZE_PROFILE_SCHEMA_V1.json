@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "freeze-profile/v1",
+  "title": "Freeze Profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "freezeProfileId",
+    "cycleId",
+    "cycleConfigPath",
+    "artifactPolicy",
+    "snapshotSources"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "freeze-profile/v1"
+    },
+    "freezeProfileId": {
+      "type": "string"
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "profileName": {
+      "type": "string"
+    },
+    "profileStatus": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": "string"
+    },
+    "baselineId": {
+      "type": "string"
+    },
+    "infrastructureProfileId": {
+      "type": "string"
+    },
+    "providerId": {
+      "type": "string"
+    },
+    "artifactPolicy": {
+      "type": "object",
+      "required": [
+        "outputRoot",
+        "artifactSnapshotRoot",
+        "cycleLockJson",
+        "cycleLockText"
+      ],
+      "properties": {
+        "outputRoot": {
+          "type": "string"
+        },
+        "artifactSnapshotRoot": {
+          "type": "string"
+        },
+        "cycleLockJson": {
+          "type": "string"
+        },
+        "cycleLockText": {
+          "type": "string"
+        },
+        "latestManifestPath": {
+          "type": "string"
+        },
+        "latestTextSummaryPath": {
+          "type": "string"
+        },
+        "manifestSuffix": {
+          "type": "string"
+        },
+        "textSuffix": {
+          "type": "string"
+        },
+        "writeLatestAliases": {
+          "type": "boolean"
+        },
+        "preserveExistingSnapshotByDefault": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "completionGatePolicy": {
+      "type": "object"
+    },
+    "requiredReferences": {
+      "type": "object"
+    },
+    "runtimeEvidence": {
+      "type": "object"
+    },
+    "snapshotSources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "key",
+          "source",
+          "destination",
+          "type"
+        ],
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "file",
+              "directory"
+            ]
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "primaryFrozenArtifacts": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

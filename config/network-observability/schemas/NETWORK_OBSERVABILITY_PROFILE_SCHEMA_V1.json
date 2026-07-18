@@ -1,0 +1,321 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LocalAI network observability profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "networkObservabilityProfileId",
+    "profileName",
+    "profileStatus",
+    "kubernetes",
+    "mentat",
+    "prometheus",
+    "validation",
+    "artifactPolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "localai-network-observability-profile/v1"
+    },
+    "networkObservabilityProfileId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profileName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profileStatus": {
+      "type": "string"
+    },
+    "profileRole": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "infrastructureProfileId": {
+      "type": "string"
+    },
+    "infrastructureProfilePath": {
+      "type": "string"
+    },
+    "monAgentProfileId": {
+      "type": "string"
+    },
+    "monAgentProfilePath": {
+      "type": "string"
+    },
+    "kubeconfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kubernetes": {
+      "type": "object",
+      "required": [
+        "kubectl",
+        "namespace",
+        "daemonSetName",
+        "podLabelSelector"
+      ],
+      "properties": {
+        "kubectl": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "daemonSetName": {
+          "type": "string"
+        },
+        "serviceAccountName": {
+          "type": "string"
+        },
+        "podLabelSelector": {
+          "type": "string"
+        },
+        "podMonitorName": {
+          "type": "string"
+        },
+        "podMonitorRequired": {
+          "type": "boolean"
+        },
+        "nodeSelector": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
+    },
+    "mentat": {
+      "type": "object",
+      "required": [
+        "installationMode",
+        "providerAddon",
+        "image",
+        "version",
+        "metricsPort",
+        "bandwidthPort"
+      ],
+      "properties": {
+        "installationMode": {
+          "type": "string"
+        },
+        "providerAddon": {
+          "type": "string"
+        },
+        "providerVersion": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "metricsPort": {
+          "type": "integer"
+        },
+        "bandwidthPort": {
+          "type": "integer"
+        },
+        "sleepSeconds": {
+          "type": "integer"
+        },
+        "pingAttempts": {
+          "type": "integer"
+        },
+        "pingTimeoutSeconds": {
+          "type": "integer"
+        },
+        "bandwidthBytes": {
+          "type": "integer"
+        },
+        "bandwidthIntervalSeconds": {
+          "type": "integer"
+        },
+        "bandwidthJitterSeconds": {
+          "type": "integer"
+        },
+        "bandwidthTimeoutSeconds": {
+          "type": "integer"
+        },
+        "managedByProvider": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "prometheus": {
+      "type": "object",
+      "required": [
+        "required",
+        "namespace",
+        "serviceName",
+        "port",
+        "requiredMetricFamilies"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "serviceName": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "url": {
+          "type": "string"
+        },
+        "localPortForwardHost": {
+          "type": "string"
+        },
+        "queryTimeoutSeconds": {
+          "type": "integer"
+        },
+        "portForwardReadyTimeoutSeconds": {
+          "type": "integer"
+        },
+        "requiredMetricFamilies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredLabelKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "queries": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "expectedMinimumReadyPods",
+        "requireDaemonSet",
+        "requirePrometheusMetrics",
+        "requireNodeAnnotations"
+      ],
+      "properties": {
+        "expectedMinimumReadyPods": {
+          "type": "integer"
+        },
+        "requireDaemonSet": {
+          "type": "boolean"
+        },
+        "requirePrometheusService": {
+          "type": "boolean"
+        },
+        "requirePrometheusMetrics": {
+          "type": "boolean"
+        },
+        "requirePodMonitorWhenMonitoringEnabled": {
+          "type": "boolean"
+        },
+        "requireNodeAnnotations": {
+          "type": "boolean"
+        },
+        "requiredNodeAnnotationPrefixes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredWorkerNodeCount": {
+          "type": "integer"
+        },
+        "workerNodeLabelSelector": {
+          "type": "object"
+        },
+        "waitTimeoutSeconds": {
+          "type": "integer"
+        },
+        "pollIntervalSeconds": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": true
+    },
+    "artifactPolicy": {
+      "type": "object",
+      "required": [
+        "root",
+        "logsRoot",
+        "snapshotsRoot",
+        "manifestsRoot",
+        "summariesRoot",
+        "latestManifestPath",
+        "latestSummaryPath",
+        "latestValidationSnapshotPath"
+      ],
+      "properties": {
+        "root": {
+          "type": "string"
+        },
+        "logsRoot": {
+          "type": "string"
+        },
+        "snapshotsRoot": {
+          "type": "string"
+        },
+        "manifestsRoot": {
+          "type": "string"
+        },
+        "summariesRoot": {
+          "type": "string"
+        },
+        "latestManifestPath": {
+          "type": "string"
+        },
+        "latestSummaryPath": {
+          "type": "string"
+        },
+        "latestValidationSnapshotPath": {
+          "type": "string"
+        },
+        "writeLatestAliases": {
+          "type": "boolean"
+        },
+        "perVariantOutputRootRequired": {
+          "type": "boolean"
+        },
+        "perVariantOutputRootPattern": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "decisionPolicy": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

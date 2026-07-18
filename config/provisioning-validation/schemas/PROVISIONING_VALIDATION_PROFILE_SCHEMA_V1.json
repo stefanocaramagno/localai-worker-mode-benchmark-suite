@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "provisioning-validation-profile/v1",
+  "title": "Provider-backed provisioning validation profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "profileId",
+    "provisioning",
+    "expectedCluster",
+    "kubeSystemChecks",
+    "output",
+    "decisionPolicy",
+    "validationChecks"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "proxmox-k3s-cluster-validation-profile/v1"
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "profileName": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "object"
+    },
+    "provisioning": {
+      "type": "object",
+      "required": [
+        "expectedToolCommand",
+        "providerBindingId",
+        "providerBindingPath",
+        "provisioningIntegrationProfileId",
+        "provisioningIntegrationProfilePath"
+      ],
+      "properties": {
+        "expectedToolCommand": {
+          "type": "string"
+        },
+        "providerBindingId": {
+          "type": "string"
+        },
+        "providerBindingPath": {
+          "type": "string"
+        },
+        "provisioningIntegrationProfileId": {
+          "type": "string"
+        },
+        "provisioningIntegrationProfilePath": {
+          "type": "string"
+        },
+        "recommendedKubeconfigPath": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "expectedCluster": {
+      "type": "object",
+      "required": [
+        "infrastructureProfileId",
+        "expectedControlPlaneNodes",
+        "expectedWorkerNodes",
+        "minimumReadyNodes"
+      ],
+      "properties": {
+        "infrastructureProfileId": {
+          "type": "string"
+        },
+        "expectedControlPlaneNodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expectedWorkerNodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expectedWorkerLabelSelector": {
+          "type": "string"
+        },
+        "minimumReadyNodes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requireAllExpectedNodesReady": {
+          "type": "boolean"
+        },
+        "requireK3sDistribution": {
+          "type": "boolean"
+        },
+        "expectedManagementNodes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expectedManagementLabelSelector": {
+          "type": "string"
+        },
+        "expectedManagementTaints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "kubeSystemChecks": {
+      "type": "object"
+    },
+    "output": {
+      "type": "object",
+      "required": [
+        "defaultOutputRoot",
+        "jsonSuffix",
+        "textSuffix"
+      ],
+      "additionalProperties": true
+    },
+    "decisionPolicy": {
+      "type": "object",
+      "required": [
+        "passedStatus",
+        "failedStatus",
+        "minimumRequiredOutcomeBeforeBenchmarking"
+      ],
+      "additionalProperties": true
+    },
+    "clusterLifecycle": {
+      "type": "object"
+    },
+    "preValidationGate": {
+      "type": "object"
+    },
+    "clusterValidation": {
+      "type": "object"
+    },
+    "validationChecks": {
+      "type": "object"
+    },
+    "profileGovernance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

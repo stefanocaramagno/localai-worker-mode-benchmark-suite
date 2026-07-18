@@ -1,0 +1,64 @@
+{
+  "scenarioFamily": "node-count-variation",
+  "status": "active",
+  "purpose": "Registry of provider-backed node-count variation scenarios.",
+  "scenarioRoot": "config/scenarios/node-count-variation",
+  "referenceScenarioId": "NC_2N",
+  "fixedDimensions": [
+    "model=M1",
+    "LocalAI worker-count=W4",
+    "placement=PL_SPREAD_WORKERS",
+    "workload=WL2",
+    "worker node capacity=8 vCPU / 16 GiB"
+  ],
+  "variedDimensions": [
+    "provider worker node count"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "NC_2N",
+      "path": "config/scenarios/node-count-variation/NC_2N.json",
+      "workerNodeCount": 2,
+      "localAiWorkerCount": 4,
+      "workerVcpusPerNode": 8,
+      "workerMemoryGiBPerNode": 16,
+      "status": "active_provider_backed_node_count_variation",
+      "resultsRoot": "results/experimental-cycles/C3/benchmark/node-count-variation",
+      "outputSubdir": "NC_2N_official_locked"
+    },
+    {
+      "scenarioId": "NC_3N",
+      "path": "config/scenarios/node-count-variation/NC_3N.json",
+      "workerNodeCount": 3,
+      "localAiWorkerCount": 4,
+      "workerVcpusPerNode": 8,
+      "workerMemoryGiBPerNode": 16,
+      "status": "active_provider_backed_node_count_variation",
+      "resultsRoot": "results/experimental-cycles/C3/benchmark/node-count-variation",
+      "outputSubdir": "NC_3N_official_locked"
+    },
+    {
+      "scenarioId": "NC_4N",
+      "path": "config/scenarios/node-count-variation/NC_4N.json",
+      "workerNodeCount": 4,
+      "localAiWorkerCount": 4,
+      "workerVcpusPerNode": 8,
+      "workerMemoryGiBPerNode": 16,
+      "status": "active_provider_backed_node_count_variation",
+      "resultsRoot": "results/experimental-cycles/C3/benchmark/node-count-variation",
+      "outputSubdir": "NC_4N_official_locked"
+    }
+  ],
+  "governanceRules": [
+    "Node-count scenarios vary only the number of provider worker nodes.",
+    "Per-node worker capacity, model, workload, LocalAI worker count and placement profile remain fixed.",
+    "Unsupported variants must be retained as capacity or scheduling evidence rather than discarded."
+  ],
+  "runtimeGeneratedProfilePolicy": {
+    "applicationDeploymentProfiles": "Generated at runtime from config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json for each node-count variant.",
+    "generatedRootPattern": "results/experimental-cycles/C3/execution/generated-runtime-configs/<scenarioId>/",
+    "profileIdPattern": "AD_C3_<scenarioId>",
+    "profileFilePattern": "AD_<scenarioId>.json",
+    "interpretationRule": "Static node-count scenario profiles declare the intended generated profile identifier and path; the concrete file is materialized by the campaign runner during execution."
+  }
+}

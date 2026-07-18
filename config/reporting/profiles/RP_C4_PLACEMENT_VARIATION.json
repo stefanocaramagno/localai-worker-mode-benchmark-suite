@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "profileId": "RP_C4_PLACEMENT_VARIATION",
+  "reportingProfileId": "RP_C4_PLACEMENT_VARIATION",
+  "profileName": "C4 Placement Variation Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_placement_variation_reporting",
+  "description": "Reporting profile for the provider-backed placement variation campaign.",
+  "cycleId": "C4",
+  "cycleConfigPath": "config/experimental-cycles/C4.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C4/diagnosis",
+  "outputRoot": "results/experimental-cycles/C4/reporting",
+  "reportTitle": "C4 — Placement Variation Report",
+  "reportPurposeMarkdown": "This report compares LocalAI server/RPC-worker placement variants under fixed provider-backed infrastructure, model, workload and LocalAI worker count. It is intended to expose the trade-off between communication distance and CPU/memory contention.",
+  "familyOrder": [
+    "placement-variation"
+  ],
+  "familyDisplayNames": {
+    "placement-variation": "Placement Variation"
+  },
+  "scenarioConfigRoots": {
+    "placement-variation": "config/scenarios/placement-variation"
+  },
+  "scenarioConfigFiles": {
+    "placement-variation": [
+      "config/scenarios/placement-variation/PLC_COLOCATED.json",
+      "config/scenarios/placement-variation/PLC_DISTRIBUTED_TWO_NODE.json",
+      "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+      "config/scenarios/placement-variation/PLC_SERVER_SEPARATED.json",
+      "config/scenarios/placement-variation/PLC_BALANCED_STATIC.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "placement-variation": "results/experimental-cycles/C4/benchmark/placement-variation"
+  },
+  "referenceScenarioByFamily": {
+    "placement-variation": "PLC_SPREAD_WORKERS"
+  },
+  "variedDimensionByFamily": {
+    "placement-variation": "placement profile"
+  },
+  "fixedDimensionsByFamily": {
+    "placement-variation": [
+      "infrastructure=INFRA_C4_1CP_4W_8C16G",
+      "model=M1",
+      "LocalAI worker-count=W4",
+      "workload=WL2",
+      "worker node capacity=8 vCPU / 16 GiB"
+    ]
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "archiveDirectoryName": "archive",
+  "providerAwareContext": {
+    "cycleConfigPath": "config/experimental-cycles/C4.json",
+    "provisioningManifestPath": "results/experimental-cycles/C4/execution/latest-campaign-execution-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C4/execution/latest-campaign-execution-manifest.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C4/execution/latest-campaign-execution-manifest.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C4/execution/latest-campaign-execution-manifest.json"
+  },
+  "notes": [
+    "Only placement is varied in this campaign; infrastructure, model, workload, LocalAI worker count and resource requests remain fixed.",
+    "The co-located W4 variant may expose resource-contention or schedulability limits and must be reported as unsupported evidence if it cannot be benchmarked.",
+    "Placement conclusions require checking both latency/throughput and cluster-side CPU/memory/pod-placement evidence."
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisProfileId": "TD_C4_PLACEMENT_VARIATION",
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C4_PLACEMENT_VARIATION.json",
+  "reportingContext": {
+    "campaignType": "placement_variation",
+    "primaryQuestion": "How does changing placement affect LocalAI worker-mode performance under fixed infrastructure and workload conditions?",
+    "fixedDimensions": [
+      "infrastructure=INFRA_C4_1CP_4W_8C16G",
+      "model=M1",
+      "LocalAI worker-count=W4",
+      "workload=WL2",
+      "worker node capacity=8 vCPU / 16 GiB"
+    ],
+    "variedDimensions": [
+      "placement profile"
+    ]
+  },
+  "reportingIdPrefix": "REP_C4",
+  "infrastructureSummaryMode": "fixed_cycle_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "cycle",
+    "interpretation": "A single fixed infrastructure profile is used as cycle-level context for the reporting package."
+  },
+  "referenceScenarioId": "PLC_SPREAD_WORKERS",
+  "referenceScenarioConfigPath": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+  "referenceScenarioConfigByFamily": {
+    "placement-variation": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+  }
+}

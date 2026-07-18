@@ -1,0 +1,176 @@
+{
+  "technicalDiagnosisProfileId": "TD_C7_DEFAULT_SCHEDULER_BASELINE",
+  "profileId": "TD_C7_DEFAULT_SCHEDULER_BASELINE",
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "profileName": "C7 Default Scheduler Baseline Technical Diagnosis Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_default_scheduler_baseline_technical_diagnosis",
+  "description": "Technical diagnosis profile for the provider-backed default-scheduler baseline campaign.",
+  "cycleId": "C7",
+  "cycleConfigPath": "config/experimental-cycles/C7.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "validationSummaryRelativePath": "results/experimental-cycles/C1/diagnosis/C1_regeneration_diagnosis_all_diagnosis.json",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "familyOrder": [
+    "default-scheduler"
+  ],
+  "scenarioConfigRoots": {
+    "default-scheduler": "config/scenarios/default-scheduler"
+  },
+  "scenarioConfigFiles": {
+    "default-scheduler": [
+      "config/scenarios/default-scheduler/DS_1T_2N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_2N_L1_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_4N_L1_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_3N_L1_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_3N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_3N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_4N_L2_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L2_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_3T_4N_L0_UNIFORM_M1M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_3T_4N_L1_UNIFORM_M1M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L0_UNIFORM_M1M2_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L1_UNIFORM_M1M2_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "default-scheduler": "results/experimental-cycles/C7/benchmark/default-scheduler"
+  },
+  "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C7/scheduler",
+  "schedulerDecisionEvidenceArtifactName": "default-scheduler-decision-evidence.json",
+  "multiTenantSummaryArtifactName": "multi-tenant-summary.json",
+  "referenceScenarioByFamily": {
+    "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+  },
+  "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+  "outputRoot": "results/experimental-cycles/C7/diagnosis",
+  "familyScope": "all",
+  "expectedFamilies": [
+    "default-scheduler"
+  ],
+  "families": [
+    "default-scheduler"
+  ],
+  "minimumScenarioSamples": 1,
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "acceptUnsupportedScenariosAsObserved": true,
+  "minimumUnsupportedReplicasPerScenario": 1,
+  "fixedDimensionsByFamily": {
+    "default-scheduler": [
+      "application=LocalAI worker-mode",
+      "worker-count-per-tenant=W2",
+      "scheduler=Kubernetes default scheduler",
+      "hard-placement-controls=disabled"
+    ]
+  },
+  "variedDimensionByFamily": {
+    "default-scheduler": "tenant count, worker-node count, latency profile, traffic profile, model mix"
+  },
+  "familyDisplayNames": {
+    "default-scheduler": "C7 Default Scheduler Baseline"
+  },
+  "campaignAwareDiagnosis": {
+    "enabled": true,
+    "campaignExecutionManifest": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "variantEvidenceRoot": "results/experimental-cycles/C7/variants",
+    "retainUnsupportedScenarioEvidence": true,
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C7/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C7/benchmark/default-scheduler"
+  },
+  "interpretationPolicy": {
+    "minimumMeasuredVariantsForComparativeClaims": 2,
+    "treatUnsupportedAsEvidence": true,
+    "treatSchedulerNegativeEvidenceAsPrimaryEvidence": true,
+    "avoidOverstatingWeakSignals": true,
+    "primaryQuestion": "Whether the Kubernetes default scheduler produces adequate or suboptimal placement decisions for distributed LocalAI tenant workloads under multi-tenancy, latency injection, variable worker-node count and differentiated tenant traffic."
+  },
+  "defaultSchedulerBaseline": {
+    "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+    "scenarioOrdering": [
+      "DS_1T_2N_L0_UNIFORM_M1_W2",
+      "DS_1T_2N_L1_UNIFORM_M1_W2",
+      "DS_1T_4N_L0_UNIFORM_M1_W2",
+      "DS_1T_4N_L1_UNIFORM_M1_W2",
+      "DS_2T_2N_L0_UNIFORM_M1M1_W2",
+      "DS_2T_2N_L1_UNIFORM_M1M1_W2",
+      "DS_2T_4N_L0_UNIFORM_M1M1_W2",
+      "DS_2T_4N_L1_UNIFORM_M1M1_W2",
+      "DS_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+      "DS_2T_2N_L1_DIFFERENTIATED_M1M1_W2",
+      "DS_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+      "DS_2T_4N_L1_DIFFERENTIATED_M1M1_W2",
+      "DS_1T_3N_L1_UNIFORM_M1_W2",
+      "DS_2T_3N_L1_UNIFORM_M1M1_W2",
+      "DS_2T_3N_L1_DIFFERENTIATED_M1M1_W2",
+      "DS_1T_4N_L2_UNIFORM_M1_W2",
+      "DS_2T_4N_L2_UNIFORM_M1M1_W2",
+      "DS_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+      "DS_2T_2N_L2_DIFFERENTIATED_M1M1_W2",
+      "DS_3T_4N_L0_UNIFORM_M1M1M1_W2",
+      "DS_3T_4N_L1_UNIFORM_M1M1M1_W2",
+      "DS_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2",
+      "DS_2T_4N_L0_UNIFORM_M1M2_W2",
+      "DS_2T_4N_L1_UNIFORM_M1M2_W2",
+      "DS_2T_4N_L1_DIFFERENTIATED_M1M2_W2"
+    ],
+    "minimumMeasuredVariantsForPerformanceComparison": 2,
+    "requiredEvidenceArtifacts": [
+      "default-scheduler-decision-evidence.json",
+      "multi-tenant-summary.json"
+    ],
+    "placementCategoriesOfInterest": [
+      "server_worker_colocated",
+      "server_worker_split",
+      "tenant_interference_risk",
+      "fully_spread",
+      "resource_contention_risk",
+      "latency_sensitive_split",
+      "default_scheduler_unclassified"
+    ],
+    "criticalPlacementCategories": [
+      "latency_sensitive_split",
+      "missing_server_pod",
+      "missing_worker_pods",
+      "unscheduled_pods"
+    ],
+    "warningPlacementCategories": [
+      "server_worker_split",
+      "tenant_interference_risk",
+      "resource_contention_risk",
+      "server_worker_partially_colocated"
+    ],
+    "trafficDifferentiationProfiles": [
+      "TR_2T_DIFFERENTIATED_LOW",
+      "TR_3T_DIFFERENTIATED_LOW"
+    ],
+    "latencyProfilesOfInterest": [
+      "L1_EDGE_NEAR",
+      "L2_EDGE_REMOTE"
+    ],
+    "interpretation": "Measured variants are interpreted together with scheduler-decision evidence. Performance degradation becomes stronger evidence when it is associated with split communicating components, latency-sensitive placement, cross-tenant node sharing or elevated local contention."
+  }
+}

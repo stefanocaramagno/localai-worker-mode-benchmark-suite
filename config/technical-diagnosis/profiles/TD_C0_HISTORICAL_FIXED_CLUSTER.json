@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "technicalDiagnosisProfileId": "TD_C0_HISTORICAL_FIXED_CLUSTER",
+  "profileId": "TD_C0_HISTORICAL_FIXED_CLUSTER",
+  "profileName": "C0 Historical Fixed-Cluster Technical Diagnosis",
+  "profileStatus": "active",
+  "profileRole": "historical_fixed_cluster_technical_diagnosis",
+  "description": "Historical fixed-cluster technical diagnosis profile for the consolidated LocalAI worker-mode characterization campaigns.",
+  "cycleId": "C0",
+  "cycleConfigPath": "config/experimental-cycles/C0.json",
+  "baselineId": "B0",
+  "baselineConfig": "config/scenarios/baseline/B0.json",
+  "outputRoot": "results/experimental-cycles/C0/diagnosis",
+  "diagnosisManifestSuffix": "_diagnosis.json",
+  "diagnosisTextSuffix": "_diagnosis.txt",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "validationSummaryRelativePath": "results/experimental-cycles/C0/validation/b0-summary.json",
+  "campaignResultsRoots": {
+    "worker-count": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count",
+    "workload": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload",
+    "models": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models",
+    "placement": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement"
+  },
+  "scenarioConfigRoots": {
+    "worker-count": "config/scenarios/pilot/worker-count",
+    "workload": "config/scenarios/pilot/workload",
+    "models": "config/scenarios/pilot/models",
+    "placement": "config/scenarios/pilot/placement"
+  },
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "workerImprovementThresholdPercent": 5,
+  "diminishingReturnThresholdPercent": 3,
+  "workloadStressThresholdPercent": 25,
+  "modelPenaltyThresholdPercent": 50,
+  "placementDifferenceThresholdPercent": 10,
+  "minimumScenarioSamples": 1,
+  "minimumFamiliesWithCoverageForClosure": 2,
+  "minimumFindingsForClosure": 2,
+  "acceptUnsupportedScenariosAsObserved": true,
+  "minimumUnsupportedReplicasPerScenario": 2,
+  "profileGovernance": {
+    "scope": "historical_fixed_cluster",
+    "cycleId": "C0",
+    "baselineId": "B0",
+    "status": "active_historical_profile",
+    "pathRole": "concrete_profile",
+    "schemaCompatibility": "modern_metadata_with_historical_fixed_cluster_inputs"
+  },
+  "familyOrder": [
+    "worker-count",
+    "workload",
+    "models",
+    "placement"
+  ]
+}

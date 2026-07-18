@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="490.0" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold">C4 — Placement Variation: P99 response time</text>
+  <text x="490.0" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="13">Unit: ms</text>
+  <g font-family="Arial, sans-serif" fill="#222">
+<line x1="86" y1="434" x2="948" y2="434" stroke="#222"/>
+<line x1="86" y1="74" x2="86" y2="434" stroke="#222"/>
+<line x1="81" y1="434.00" x2="948" y2="434.00" stroke="#ddd"/>
+<text x="76" y="438.00" text-anchor="end" font-size="12">0.00</text>
+<line x1="81" y1="362.00" x2="948" y2="362.00" stroke="#ddd"/>
+<text x="76" y="366.00" text-anchor="end" font-size="12">600.00</text>
+<line x1="81" y1="290.00" x2="948" y2="290.00" stroke="#ddd"/>
+<text x="76" y="294.00" text-anchor="end" font-size="12">1200.00</text>
+<line x1="81" y1="218.00" x2="948" y2="218.00" stroke="#ddd"/>
+<text x="76" y="222.00" text-anchor="end" font-size="12">1800.00</text>
+<line x1="81" y1="146.00" x2="948" y2="146.00" stroke="#ddd"/>
+<text x="76" y="150.00" text-anchor="end" font-size="12">2400.00</text>
+<line x1="81" y1="74.00" x2="948" y2="74.00" stroke="#ddd"/>
+<text x="76" y="78.00" text-anchor="end" font-size="12">3000.00</text>
+<rect x="135.20" y="218.00" width="74.00" height="216.00" fill="#666"/>
+<text x="172.20" y="211.00" text-anchor="middle" font-size="12">1800.00</text>
+<text x="172.20" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 172.20,452.00)">PLC_BALANCED_STATIC (balanced static)</text>
+<text x="344.60" y="426.00" text-anchor="middle" font-size="12">n/a</text>
+<text x="344.60" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 344.60,452.00)">PLC_COLOCATED (co-located)</text>
+<rect x="480.00" y="214.00" width="74.00" height="220.00" fill="#666"/>
+<text x="517.00" y="207.00" text-anchor="middle" font-size="12">1833.33</text>
+<text x="517.00" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 517.00,452.00)">PLC_DISTRIBUTED_TWO_NODE (distributed two-node)</text>
+<rect x="652.40" y="206.00" width="74.00" height="228.00" fill="#666"/>
+<text x="689.40" y="199.00" text-anchor="middle" font-size="12">1900.00</text>
+<text x="689.40" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 689.40,452.00)">PLC_SERVER_SEPARATED (server separated)</text>
+<rect x="824.80" y="194.00" width="74.00" height="240.00" fill="#666"/>
+<text x="861.80" y="187.00" text-anchor="middle" font-size="12">2000.00</text>
+<text x="861.80" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 861.80,452.00)">PLC_SPREAD_WORKERS (spread workers)</text>
+  </g>
+</svg>

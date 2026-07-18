@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C4 — Placement Variation Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1180px; margin: 32px auto; line-height: 1.5; padding: 0 24px; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 28px; font-size: 14px; display: block; overflow-x: auto; }
+    th, td { border: 1px solid #d0d0d0; padding: 7px 9px; vertical-align: top; }
+    th { background: #f2f2f2; }
+    code { background: #f6f6f6; padding: 1px 4px; }
+    img { max-width: 100%; border: 1px solid #e0e0e0; margin: 8px 0 24px; }
+    blockquote { border-left: 4px solid #999; padding-left: 12px; color: #333; }
+    a { color: #0645ad; }
+  </style>
+</head>
+<body>
+<h1>C4 — Placement Variation Report</h1>
+<p><strong>Cycle ID:</strong> <code>C4</code></p>
+<p><strong>Reporting Profile:</strong> <code>RP_C4_PLACEMENT_VARIATION</code></p>
+<p><strong>Reporting ID:</strong> <code>REP_C4_20260619T174611Z</code></p>
+<p><strong>Generated at UTC:</strong> <code>2026-06-19T17:46:54Z</code></p>
+<h2>Purpose</h2>
+<p>This report compares LocalAI server/RPC-worker placement variants under fixed provider-backed infrastructure, model, workload and LocalAI worker count. It is intended to expose the trade-off between communication distance and CPU/memory contention.</p>
+<p>The report combines <strong>measurement CSV data</strong>, <strong>minimal observability evidence</strong>, <strong>cluster validation outputs</strong>, <strong>application topology metadata</strong> and <strong>technical diagnosis context</strong> when those artifacts are available.</p>
+<p><a href="../../index.html">Back to cycle report index</a></p>
+<h2>Cross-cycle baseline reference</h2>
+<p>The values below describe the global baseline configuration used as a cross-cycle reference. Scenario-specific and sweep-local sections report the effective infrastructure, placement, worker count and runtime configuration used by each scenario. Percentage deltas are computed against the family-local reference scenario when one is defined for the sweep.</p>
+<table>
+<thead><tr><th>Dimension</th><th>Reference value</th></tr></thead><tbody>
+<tr><td>Baseline ID</td><td>B1</td></tr>
+<tr><td>Model</td><td>llama-3.2-1b-instruct:q4_k_m</td></tr>
+<tr><td>Worker count</td><td>2</td></tr>
+<tr><td>Placement</td><td>colocated_genai_pb_worker_02</td></tr>
+<tr><td>Workload</td><td>users=2, spawnRate=1, runTime=2m</td></tr>
+<tr><td>Prompt</td><td>Reply with only READY.</td></tr>
+<tr><td>Request timeout</td><td>120 s</td></tr>
+<tr><td>Infrastructure profile</td><td>INFRA_C1_1CP_2W_8C16G</td></tr>
+<tr><td>Placement profile</td><td>PL_COLOCATED</td></tr>
+</tbody></table>
+<h2>Family-local reference scenarios</h2>
+<p>The scenarios below are the sweep-local references used to interpret percentage deltas within each family. They may differ from the cross-cycle baseline when a campaign intentionally varies infrastructure, placement, latency or tenancy.</p>
+<table>
+<thead><tr><th>Sweep</th><th>Reference scenario</th><th>Description</th><th>Status</th><th>Varied dimension</th></tr></thead><tbody>
+<tr><td>Placement Variation</td><td><code>PLC_SPREAD_WORKERS</code></td><td>PLC_SPREAD_WORKERS (spread workers)</td><td>measured</td><td>placement profile</td></tr>
+</tbody></table>
+<h2>Data sources</h2>
+<table>
+<thead><tr><th>Layer</th><th>Primary use</th><th>Source</th></tr></thead><tbody>
+<tr><td>Measurement CSV</td><td>Quantitative charts and scenario summary metrics</td><td><code>{&quot;placement-variation&quot;: &quot;results/experimental-cycles/C4/benchmark/placement-variation&quot;}</code></td></tr>
+<tr><td>Technical diagnosis</td><td>Interpretation, family judgments, findings, unsupported-scenario context</td><td><code>results/experimental-cycles/C4/diagnosis/analysis_diagnosis_all_NA_20260619T174654Z_diagnosis.json</code></td></tr>
+<tr><td>Scenario configuration</td><td>Fixed/varied dimensions and scenario labels</td><td><code>config/scenarios/**</code></td></tr>
+<tr><td>Cluster-side artifacts</td><td>CPU/memory snapshots, pod placement and event evidence</td><td><code>minimal observability and cluster capture artifacts</code></td></tr>
+<tr><td>Reporting output</td><td>Current generated report package</td><td><code>results/experimental-cycles/C4/reporting</code></td></tr>
+</tbody></table>
+<h2>Infrastructure Summary</h2>
+<table>
+<thead><tr><th>Item</th><th>Value</th></tr></thead><tbody>
+<tr><td>Cycle ID</td><td>C4</td></tr>
+<tr><td>Baseline ID</td><td>B1</td></tr>
+<tr><td>Infrastructure profile</td><td>INFRA_C4_1CP_4W_8C16G</td></tr>
+<tr><td>Provider</td><td>proxmox-k3s</td></tr>
+<tr><td>Cluster name</td><td>genai-pb</td></tr>
+<tr><td>Kubernetes distribution</td><td>K3s</td></tr>
+<tr><td>K3s version</td><td>v1.35.3+k3s1</td></tr>
+<tr><td>Control-plane nodes</td><td>1</td></tr>
+<tr><td>Worker nodes</td><td>4</td></tr>
+<tr><td>Worker total vCPU</td><td>32</td></tr>
+<tr><td>Worker total memory</td><td>64 GiB</td></tr>
+<tr><td>Lifecycle mode</td><td>ephemeral</td></tr>
+<tr><td>Destroy after cycle</td><td>True</td></tr>
+</tbody></table>
+<h2>Provider Summary</h2>
+<p>This campaign may resolve provider configuration at scenario or variant level. The table below exposes provider bindings and concrete configuration paths per scenario whenever available.</p>
+<p>All configured scenarios currently resolve to the same provider binding. The provider is therefore reported once to avoid repeating identical configuration metadata.</p>
+<table>
+<thead><tr><th>Item</th><th>Value</th></tr></thead><tbody>
+<tr><td>Covered scenarios</td><td><code>PLC_BALANCED_STATIC</code>, <code>PLC_COLOCATED</code>, <code>PLC_DISTRIBUTED_TWO_NODE</code>, <code>PLC_SERVER_SEPARATED</code>, <code>PLC_SPREAD_WORKERS</code></td></tr>
+<tr><td>Provider</td><td>proxmox-k3s</td></tr>
+<tr><td>Provider binding</td><td>BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S</td></tr>
+<tr><td>Provider binding path</td><td>config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S.json</td></tr>
+<tr><td>Example config</td><td>config/infrastructure/providers/proxmox-k3s/examples/cluster.c4-1cp-4w-8c16g.example.yaml</td></tr>
+<tr><td>Local config</td><td>config/infrastructure/providers/proxmox-k3s/local/cluster.c4-1cp-4w-8c16g.local.yaml</td></tr>
+<tr><td>Kubeconfig</td><td>config/cluster-access/generated/proxmox-k3s/c4-1cp-4w-8c16g/kubeconfig</td></tr>
+</tbody></table>
+<h2>Cluster Validation Summary</h2>
+<table>
+<thead><tr><th>Item</th><th>Value</th></tr></thead><tbody>
+<tr><td>Validation profile</td><td>CV_PROVIDER_BACKED_VALIDATION_TEMPLATE</td></tr>
+<tr><td>Profile file</td><td>config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json</td></tr>
+<tr><td>Latest manifest</td><td>variant-scoped validation manifests (5 available)</td></tr>
+<tr><td>Current status</td><td>variant-scoped validation available (5/5 validated)</td></tr>
+<tr><td>Variant validation statuses</td><td>validated=5</td></tr>
+<tr><td>Latest raw validation</td><td>variant-scoped validation evidence is recorded in the campaign execution manifest and generated runtime profiles under results/experimental-cycles/C4/execution/generated-runtime-configs</td></tr>
+<tr><td>Accepted provisioning statuses</td><td>completed</td></tr>
+<tr><td>Required kubeconfig status</td><td>verified</td></tr>
+<tr><td>Artifact root</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs</td></tr>
+</tbody></table>
+<h2>Runtime Profile Variant Summary</h2>
+<p>This table links each scenario to the runtime-generated profiles used for precheck, application deployment and minimal observability evidence.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Family</th><th>Precheck profile</th><th>Precheck profile path</th><th>Application deployment profile</th><th>Application deployment profile path</th><th>Minimal observability profile</th><th>Minimal observability profile path</th><th>Cluster validation evidence</th></tr></thead><tbody>
+<tr><td><code>PLC_BALANCED_STATIC</code></td><td>placement-variation</td><td>TC_C4_PLC_BALANCED_STATIC</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/TC_PLC_BALANCED_STATIC.json</td><td>AD_C4_PLC_BALANCED_STATIC</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/AD_PLC_BALANCED_STATIC.json</td><td>MO_C4_PLC_BALANCED_STATIC</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/MO_PLC_BALANCED_STATIC.json</td><td>results/experimental-cycles/C4/variants/PLC_BALANCED_STATIC/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+<tr><td><code>PLC_COLOCATED</code></td><td>placement-variation</td><td>TC_C4_PLC_COLOCATED</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_COLOCATED/TC_PLC_COLOCATED.json</td><td>AD_C4_PLC_COLOCATED</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_COLOCATED/AD_PLC_COLOCATED.json</td><td>MO_C4_PLC_COLOCATED</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_COLOCATED/MO_PLC_COLOCATED.json</td><td>results/experimental-cycles/C4/variants/PLC_COLOCATED/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+<tr><td><code>PLC_DISTRIBUTED_TWO_NODE</code></td><td>placement-variation</td><td>TC_C4_PLC_DISTRIBUTED_TWO_NODE</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_DISTRIBUTED_TWO_NODE/TC_PLC_DISTRIBUTED_TWO_NODE.json</td><td>AD_C4_PLC_DISTRIBUTED_TWO_NODE</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_DISTRIBUTED_TWO_NODE/AD_PLC_DISTRIBUTED_TWO_NODE.json</td><td>MO_C4_PLC_DISTRIBUTED_TWO_NODE</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_DISTRIBUTED_TWO_NODE/MO_PLC_DISTRIBUTED_TWO_NODE.json</td><td>results/experimental-cycles/C4/variants/PLC_DISTRIBUTED_TWO_NODE/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+<tr><td><code>PLC_SERVER_SEPARATED</code></td><td>placement-variation</td><td>TC_C4_PLC_SERVER_SEPARATED</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_SERVER_SEPARATED/TC_PLC_SERVER_SEPARATED.json</td><td>AD_C4_PLC_SERVER_SEPARATED</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_SERVER_SEPARATED/AD_PLC_SERVER_SEPARATED.json</td><td>MO_C4_PLC_SERVER_SEPARATED</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_SERVER_SEPARATED/MO_PLC_SERVER_SEPARATED.json</td><td>results/experimental-cycles/C4/variants/PLC_SERVER_SEPARATED/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+<tr><td><code>PLC_SPREAD_WORKERS</code></td><td>placement-variation</td><td>TC_C4_PLC_SPREAD_WORKERS</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_SPREAD_WORKERS/TC_PLC_SPREAD_WORKERS.json</td><td>AD_C4_PLC_SPREAD_WORKERS</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_SPREAD_WORKERS/AD_PLC_SPREAD_WORKERS.json</td><td>MO_C4_PLC_SPREAD_WORKERS</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_SPREAD_WORKERS/MO_PLC_SPREAD_WORKERS.json</td><td>results/experimental-cycles/C4/variants/PLC_SPREAD_WORKERS/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+</tbody></table>
+<h2>Application Topology Summary</h2>
+<p>This campaign may vary placement, tenancy, latency profile or generated deployment profiles at scenario level. The table below exposes the scenario-level application topology used by each configured variant.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Family</th><th>Placement profile</th><th>Placement type</th><th>Topology dir</th><th>Server manifest</th><th>Worker count</th><th>Active RPC workers</th><th>Expected server node</th><th>Expected worker nodes</th><th>Latency profile</th><th>Tenancy profile</th><th>Generated deployment profile</th></tr></thead><tbody>
+<tr><td><code>PLC_BALANCED_STATIC</code></td><td>placement-variation</td><td>PL_BALANCED_STATIC</td><td>balanced_static_server_with_partial_worker_colocation</td><td>infra/k8s/compositions/topology/balanced-static-genai-pb-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-03, localai-rpc-d=genai-pb-worker-02</td><td>not_applicable</td><td>not_declared</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/AD_PLC_BALANCED_STATIC.json</td></tr>
+<tr><td><code>PLC_COLOCATED</code></td><td>placement-variation</td><td>PL_COLOCATED</td><td>colocated_server_and_workers_on_genai_pb_worker_02</td><td>infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-02, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-02, localai-rpc-d=genai-pb-worker-02</td><td>not_applicable</td><td>not_declared</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_COLOCATED/AD_PLC_COLOCATED.json</td></tr>
+<tr><td><code>PLC_DISTRIBUTED_TWO_NODE</code></td><td>placement-variation</td><td>PL_DISTRIBUTED_TWO_NODE</td><td>distributed_workers_across_two_provider_worker_nodes</td><td>infra/k8s/compositions/topology/distributed-genai-pb-two-node-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-01, localai-rpc-d=genai-pb-worker-02</td><td>not_applicable</td><td>not_declared</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_DISTRIBUTED_TWO_NODE/AD_PLC_DISTRIBUTED_TWO_NODE.json</td></tr>
+<tr><td><code>PLC_SERVER_SEPARATED</code></td><td>placement-variation</td><td>PL_SERVER_SEPARATED</td><td>server_separated_from_spread_workers</td><td>infra/k8s/compositions/topology/server-separated-genai-pb-worker-01-spread-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed-worker-01</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-01</td><td>localai-rpc-a=genai-pb-worker-02, localai-rpc-b=genai-pb-worker-03, localai-rpc-c=genai-pb-worker-04, localai-rpc-d=genai-pb-worker-02</td><td>not_applicable</td><td>not_declared</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_SERVER_SEPARATED/AD_PLC_SERVER_SEPARATED.json</td></tr>
+<tr><td><code>PLC_SPREAD_WORKERS</code></td><td>placement-variation</td><td>PL_SPREAD_WORKERS</td><td>spread_workers_across_four_provider_worker_nodes</td><td>infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-03, localai-rpc-d=genai-pb-worker-04</td><td>not_applicable</td><td>not_declared</td><td>results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_SPREAD_WORKERS/AD_PLC_SPREAD_WORKERS.json</td></tr>
+</tbody></table>
+<h2>Scenario Summary</h2>
+<p>The following table summarizes the currently available measurement and constraint evidence for all configured reporting families.</p>
+<table>
+<thead><tr><th>Family</th><th>Scenario</th><th>Status</th><th>Samples</th><th>Mean ms</th><th>P95 ms</th><th>RPS</th><th>Unsupported evidence</th></tr></thead><tbody>
+<tr><td>placement-variation</td><td>PLC_BALANCED_STATIC</td><td>measured</td><td>3</td><td>1535.15</td><td>1600.00</td><td>0.5666</td><td>NA</td></tr>
+<tr><td>placement-variation</td><td>PLC_COLOCATED</td><td>unsupported_under_current_constraints</td><td>0</td><td>NA</td><td>NA</td><td>NA</td><td>benchmark_precheck,cluster_nodes_ready,metrics_api_and_capacity,namespace_active,namespace_pods_healthy,none_or_within_strict_threshold,pending_pod,service_endpoint_and_model,worker_nodes_expected</td></tr>
+<tr><td>placement-variation</td><td>PLC_DISTRIBUTED_TWO_NODE</td><td>measured</td><td>3</td><td>1530.12</td><td>1600.00</td><td>0.5676</td><td>NA</td></tr>
+<tr><td>placement-variation</td><td>PLC_SERVER_SEPARATED</td><td>measured</td><td>3</td><td>1568.79</td><td>1600.00</td><td>0.5623</td><td>NA</td></tr>
+<tr><td>placement-variation</td><td>PLC_SPREAD_WORKERS</td><td>measured</td><td>3</td><td>1570.03</td><td>1733.33</td><td>0.5619</td><td>NA</td></tr>
+</tbody></table>
+<h2>Metrics Summary</h2>
+<p>The reporting generator first uses minimal observability metrics when available; missing values are filled from scenario-summary aggregates derived from benchmark CSV files and cluster-capture artifacts whenever possible. Values marked as <code>not_available</code> were not derivable from the available artifact set and are intentionally distinguished from measured zero values.</p>
+<table>
+<thead><tr><th>Metric</th><th>Value</th><th>Source</th></tr></thead><tbody>
+<tr><td>request_count</td><td>66.5833</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>success_rate_percent</td><td>100.0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>failure_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>mean_response_time_ms</td><td>1551.0229</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>p50_response_time_ms</td><td>1533.3333</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>p95_response_time_ms</td><td>1633.3333</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>p99_response_time_ms</td><td>1883.3333</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>throughput_rps</td><td>0.5646</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>max_node_cpu_percent</td><td>14.9167</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>max_node_memory_percent</td><td>15.9167</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>max_pod_cpu_millicores</td><td>809.0833</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>max_pod_memory_mib</td><td>384.1667</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>pod_restart_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>pending_pods_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>failed_pods_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>not_ready_pods_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>kubernetes_events_count</td><td>38.5</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>kubernetes_warning_events_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+</tbody></table>
+<h2>Unsupported Scenario Summary</h2>
+<table>
+<thead><tr><th>Family</th><th>Scenario</th><th>Status</th><th>Evidence</th><th>Source</th></tr></thead><tbody>
+<tr><td>placement-variation</td><td>PLC_COLOCATED</td><td>unsupported_under_current_constraints</td><td>benchmark_precheck, cluster_nodes_ready, metrics_api_and_capacity, namespace_active, namespace_pods_healthy, none_or_within_strict_threshold, pending_pod, service_endpoint_and_model, ... (+1)</td><td>results/experimental-cycles/C4/benchmark/placement-variation/PLC_COLOCATED_official_locked/PLC_COLOCATED_runA_unsupported.json, results/experimental-cycles/C4/benchmark/placement-variation/PLC_COLOCATED_official_locked/PLC_COLOCATED_runB_unsupported.json, results/experimental-cycles/C4/benchmark/placement-variation/PLC_COLOCATED_official_locked/PLC_COLOCATED_runC_unsupported.json</td></tr>
+</tbody></table>
+<h2>Main Findings</h2>
+<table>
+<thead><tr><th>Family</th><th>Finding</th><th>Status</th><th>Confidence</th><th>Implication</th></tr></thead><tbody>
+<tr><td>placement-variation</td><td>The placement variation family provides comparable placement evidence.</td><td>comparative_signal_available</td><td>medium</td><td>The campaign can be used to reason about the communication-vs-contention trade-off because infrastructure, model, workload and LocalAI worker count remain fixed while only placement changes.</td></tr>
+<tr><td>placement-variation</td><td>The placement campaign provides measured evidence across multiple placement policies.</td><td>NA</td><td>medium</td><td>The evidence can be used to evaluate whether communication-distance reduction or resource-contention reduction dominates under the fixed infrastructure and workload.</td></tr>
+<tr><td>placement-variation</td><td>The placement campaign identifies the lowest-latency placement among measured variants.</td><td>NA</td><td>medium</td><td>This result provides a controlled signal for placement selection under fixed infrastructure, model, workload and LocalAI worker count.</td></tr>
+<tr><td>baseline</td><td>Minimum end-to-end validation is available as a functional reliability baseline.</td><td>NA</td><td>high</td><td>The benchmark pipeline starts from a verified functional baseline rather than from a purely theoretical setup.</td></tr>
+</tbody></table>
+<h2>Sweep-specific reports</h2>
+<p>The global report below provides the stakeholder-facing overview. Each sweep also has a dedicated report for focused inspection of one varied dimension.</p>
+<table>
+<thead><tr><th>Sweep</th><th>Dedicated HTML report</th><th>Execution status</th><th>Coverage</th><th>Varied dimension</th></tr></thead><tbody>
+<tr><td>Placement Variation</td><td><a href="sweeps/placement-variation/index.html">placement-variation</a></td><td>partially_measured</td><td>measured=4, unsupported=1, missing=0</td><td>placement profile</td></tr>
+</tbody></table>
+<h2>Diagnosis coverage snapshot</h2>
+<table>
+<thead><tr><th>Family</th><th>Scenarios</th><th>Observed</th><th>Measured</th><th>Unsupported</th><th>Samples</th></tr></thead><tbody>
+<tr><td>placement-variation</td><td>5</td><td>5</td><td>4</td><td>1</td><td>12</td></tr>
+</tbody></table>
+<h2>Placement Variation</h2>
+<p><strong>Execution status:</strong> <code>partially_measured</code></p>
+<p><strong>Execution note:</strong> At least one configured scenario has measured benchmark samples, while other scenarios are missing or unsupported.</p>
+<p><strong>Varied dimension:</strong> placement profile</p>
+<p><strong>Fixed dimensions:</strong> infrastructure=INFRA_C4_1CP_4W_8C16G, model=M1, LocalAI worker-count=W4, workload=WL2, worker node capacity=8 vCPU / 16 GiB.</p>
+<p><strong>Reference scenario within the sweep:</strong> <code>PLC_SPREAD_WORKERS</code></p>
+<table>
+<thead><tr><th>Scenario count</th><th>Measured</th><th>Unsupported</th><th>Missing</th></tr></thead><tbody>
+<tr><td>5</td><td>4</td><td>1</td><td>0</td></tr>
+</tbody></table>
+<h3>Controlled scenario parameters</h3>
+<p>This table is derived from resolved scenario metadata. A parameter is marked as controlled only when it has the same effective value across all scenarios in the sweep.</p>
+<table>
+<thead><tr><th>Parameter</th><th>Resolved value</th><th>Interpretation</th></tr></thead><tbody>
+<tr><td>Model</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>controlled</td></tr>
+<tr><td>Worker count</td><td>4</td><td>controlled</td></tr>
+<tr><td>Placement</td><td>varies across scenarios (5 values)</td><td>varied or scenario-specific</td></tr>
+<tr><td>Workload</td><td>users=2, spawnRate=1, runTime=2m</td><td>controlled</td></tr>
+<tr><td>Topology</td><td>varies across scenarios (5 values)</td><td>varied or scenario-specific</td></tr>
+<tr><td>Server manifest</td><td>varies across scenarios (2 values)</td><td>varied or scenario-specific</td></tr>
+<tr><td>Prompt</td><td>Reply with only READY.</td><td>controlled</td></tr>
+<tr><td>Temperature</td><td>0.1</td><td>controlled</td></tr>
+<tr><td>Request timeout (s)</td><td>120</td><td>controlled</td></tr>
+</tbody></table>
+<h3>Scenario parameter matrix</h3>
+<table>
+<thead><tr><th>Scenario</th><th>Status</th><th>Varied value (placement profile)</th><th>Model</th><th>Worker count</th><th>Placement</th><th>Workload</th><th>Timeout (s)</th></tr></thead><tbody>
+<tr><td><code>PLC_BALANCED_STATIC</code></td><td>measured</td><td>balanced static</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>balanced_static_server_with_partial_worker_colocation</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>PLC_COLOCATED</code></td><td>unsupported_under_current_constraints</td><td>co-located</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>colocated_server_and_workers_on_genai_pb_worker_02</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>PLC_DISTRIBUTED_TWO_NODE</code></td><td>measured</td><td>distributed two-node</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>distributed_workers_across_two_provider_worker_nodes</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>PLC_SERVER_SEPARATED</code></td><td>measured</td><td>server separated</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>server_separated_from_spread_workers</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>PLC_SPREAD_WORKERS</code></td><td>measured</td><td>spread workers</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>spread_workers_across_four_provider_worker_nodes</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+</tbody></table>
+<h3>Measurement summary</h3>
+<p>This compact table reports the core indicators used to read the sweep at a glance. Detailed percentiles, deltas and resource snapshots are reported in the following extended table.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Description</th><th>Status</th><th>Sample count</th><th>Mean response time (ms)</th><th>P95 response time (ms)</th><th>Throughput (requests/s)</th><th>Unsupported evidence</th></tr></thead><tbody>
+<tr><td><code>PLC_BALANCED_STATIC</code></td><td>PLC_BALANCED_STATIC (balanced static)</td><td>measured</td><td>3</td><td>1535.15</td><td>1600.00</td><td>0.5666</td><td></td></tr>
+<tr><td><code>PLC_COLOCATED</code></td><td>PLC_COLOCATED (co-located)</td><td>unsupported_under_current_constraints</td><td>0</td><td>n/a</td><td>n/a</td><td>n/a</td><td>benchmark_precheck, cluster_nodes_ready, metrics_api_and_capacity, namespace_active, namespace_pods_healthy, none_or_within_strict_threshold, pending_pod, service_endpoint_and_model, worker_nodes_expected</td></tr>
+<tr><td><code>PLC_DISTRIBUTED_TWO_NODE</code></td><td>PLC_DISTRIBUTED_TWO_NODE (distributed two-node)</td><td>measured</td><td>3</td><td>1530.12</td><td>1600.00</td><td>0.5676</td><td></td></tr>
+<tr><td><code>PLC_SERVER_SEPARATED</code></td><td>PLC_SERVER_SEPARATED (server separated)</td><td>measured</td><td>3</td><td>1568.79</td><td>1600.00</td><td>0.5623</td><td></td></tr>
+<tr><td><code>PLC_SPREAD_WORKERS</code></td><td>PLC_SPREAD_WORKERS (spread workers)</td><td>measured</td><td>3</td><td>1570.03</td><td>1733.33</td><td>0.5619</td><td></td></tr>
+</tbody></table>
+<h3>Extended measurement metrics</h3>
+<p>This secondary table keeps the additional metrics aligned with the technical diagnosis while avoiding an excessively wide primary summary table.</p>
+<table>
+<thead><tr><th>Scenario</th><th>P50 response time (ms)</th><th>P99 response time (ms)</th><th>Mean response time delta (%)</th><th>P95 response time delta (%)</th><th>Throughput delta (%)</th><th>Max node CPU snapshot (%)</th><th>Max node memory snapshot (%)</th><th>Max pod CPU snapshot (mCPU)</th><th>Max pod memory snapshot (MiB)</th></tr></thead><tbody>
+<tr><td><code>PLC_BALANCED_STATIC</code></td><td>1500.00</td><td>1800.00</td><td>-2.22</td><td>-7.69</td><td>0.84</td><td>15.67</td><td>15.67</td><td>841.67</td><td>384.00</td></tr>
+<tr><td><code>PLC_COLOCATED</code></td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td></tr>
+<tr><td><code>PLC_DISTRIBUTED_TWO_NODE</code></td><td>1500.00</td><td>1833.33</td><td>-2.54</td><td>-7.69</td><td>1.01</td><td>18.33</td><td>16.00</td><td>796.33</td><td>384.00</td></tr>
+<tr><td><code>PLC_SERVER_SEPARATED</code></td><td>1600.00</td><td>1900.00</td><td>-0.08</td><td>-7.69</td><td>0.07</td><td>15.00</td><td>16.00</td><td>780.00</td><td>384.33</td></tr>
+<tr><td><code>PLC_SPREAD_WORKERS</code></td><td>1533.33</td><td>2000.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10.67</td><td>16.00</td><td>818.33</td><td>384.33</td></tr>
+</tbody></table>
+<h3>Placement context</h3>
+<p>This table makes the placement dimension explicit. Infrastructure, model, workload and LocalAI worker count are kept fixed while server and RPC-worker placement changes.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Placement</th><th>Profile</th><th>Server node</th><th>Worker node map</th><th>Communication distance</th><th>Resource contention</th></tr></thead><tbody>
+<tr><td><code>PLC_BALANCED_STATIC</code></td><td>balanced static</td><td>PL_BALANCED_STATIC</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-03, localai-rpc-d=genai-pb-worker-02</td><td>medium</td><td>medium</td></tr>
+<tr><td><code>PLC_COLOCATED</code></td><td>co-located</td><td>PL_COLOCATED</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-02, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-02, localai-rpc-d=genai-pb-worker-02</td><td>minimal</td><td>highest</td></tr>
+<tr><td><code>PLC_DISTRIBUTED_TWO_NODE</code></td><td>distributed two-node</td><td>PL_DISTRIBUTED_TWO_NODE</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-01, localai-rpc-d=genai-pb-worker-02</td><td>medium</td><td>medium_high</td></tr>
+<tr><td><code>PLC_SERVER_SEPARATED</code></td><td>server separated</td><td>PL_SERVER_SEPARATED</td><td>genai-pb-worker-01</td><td>localai-rpc-a=genai-pb-worker-02, localai-rpc-b=genai-pb-worker-03, localai-rpc-c=genai-pb-worker-04, localai-rpc-d=genai-pb-worker-02</td><td>highest</td><td>low</td></tr>
+<tr><td><code>PLC_SPREAD_WORKERS</code></td><td>spread workers</td><td>PL_SPREAD_WORKERS</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-03, localai-rpc-d=genai-pb-worker-04</td><td>higher</td><td>lowest</td></tr>
+</tbody></table>
+<h3>Diagnosis-based reading</h3>
+<ul>
+<li><strong>The placement variation family provides comparable placement evidence.</strong> (status: <code>comparative_signal_available</code>, confidence: <code>medium</code>).</li>
+<li>Implication: The campaign can be used to reason about the communication-vs-contention trade-off because infrastructure, model, workload and LocalAI worker count remain fixed while only placement changes.</li>
+<li><strong>The placement campaign provides measured evidence across multiple placement policies.</strong> (confidence: <code>medium</code>).</li>
+<li>Implication: The evidence can be used to evaluate whether communication-distance reduction or resource-contention reduction dominates under the fixed infrastructure and workload.</li>
+<li><strong>The placement campaign identifies the lowest-latency placement among measured variants.</strong> (confidence: <code>medium</code>).</li>
+<li>Implication: This result provides a controlled signal for placement selection under fixed infrastructure, model, workload and LocalAI worker count.</li>
+<li><strong>At least one placement scenario produced unsupported evidence under the current constraints.</strong> (confidence: <code>medium</code>).</li>
+<li>Implication: Unsupported placement variants should be treated as contention, capacity or scheduling evidence and not as measured performance regressions.</li>
+</ul>
+<h3>Charts</h3>
+<h4>Mean response time</h4>
+<img src="charts/placement-variation/mean_response_time_ms.svg" alt="Mean response time">
+<h4>P50 response time</h4>
+<img src="charts/placement-variation/p50_response_time_ms.svg" alt="P50 response time">
+<h4>P95 response time</h4>
+<img src="charts/placement-variation/p95_response_time_ms.svg" alt="P95 response time">
+<h4>P99 response time</h4>
+<img src="charts/placement-variation/p99_response_time_ms.svg" alt="P99 response time">
+<h4>Throughput</h4>
+<img src="charts/placement-variation/throughput_rps.svg" alt="Throughput">
+<h4>Maximum node CPU snapshot</h4>
+<img src="charts/placement-variation/max_node_cpu_percent.svg" alt="Maximum node CPU snapshot">
+<h4>Maximum node memory snapshot</h4>
+<img src="charts/placement-variation/max_node_memory_percent.svg" alt="Maximum node memory snapshot">
+<h4>Maximum pod CPU snapshot</h4>
+<img src="charts/placement-variation/max_pod_cpu_millicores.svg" alt="Maximum pod CPU snapshot">
+<h4>Maximum pod memory snapshot</h4>
+<img src="charts/placement-variation/max_pod_memory_mib.svg" alt="Maximum pod memory snapshot">
+<h3>Reading notes</h3>
+<ul>
+<li>Measured scenarios: <strong>4</strong>.</li>
+<li>Unsupported scenarios under current constraints: <strong>1</strong>.</li>
+<li>Percentage deltas are computed against the family reference scenario; positive latency deltas indicate worse response time, while positive throughput deltas indicate higher request throughput.</li>
+<li>Unsupported scenarios are infrastructure/constraint observations and must not be interpreted as measured latency regressions.</li>
+<li>A <code>not_executed</code> sweep means that neither measurement CSV files nor unsupported-scenario evidence were found for any configured scenario in that family.</li>
+</ul>
+<blockquote>Only placement is varied in this campaign; infrastructure, model, workload, LocalAI worker count and resource requests remain fixed.</blockquote>
+<blockquote>The co-located W4 variant may expose resource-contention or schedulability limits and must be reported as unsupported evidence if it cannot be benchmarked.</blockquote>
+<blockquote>Placement conclusions require checking both latency/throughput and cluster-side CPU/memory/pod-placement evidence.</blockquote>
+</body>
+</html>

@@ -1,0 +1,78 @@
+# Redacted proxmox-k3s v1.0.3 provider configuration example.
+# Copy this file to the corresponding local/cluster.<profile>.local.yaml path and fill local Proxmox credentials.
+# Local files must not be committed because they contain environment-specific access data.
+
+proxmox:
+  api_url: https://PROXMOX_HOST:8006/api2/json
+  token_id: root@pam!iac
+  token_secret: REPLACE_WITH_LOCAL_SECRET
+  insecure_tls: true
+
+template:
+  name: ubuntu-24.04-template
+  proxmox_node: minis01
+  storage: pool01
+  image_storage: local
+  bridge: vmbr0
+  ip: 192.168.1.140
+  gateway: 192.168.1.254
+  dns: 208.67.222.222
+  subnet_mask: 24
+  os: ubuntu-24.04
+  vmid_base: 8200
+  timeout_seconds: 1800
+
+clusters:
+  - name: genai-pb
+    kubeconfig_path: ./config/cluster-access/generated/proxmox-k3s/c2-1cp-2w-8c16g/kubeconfig
+
+    k3s:
+      version: v1.35.3+k3s1
+      extra_server_args: --disable=traefik --disable=servicelb --disable-network-policy --embedded-registry
+
+    control_plane:
+      - template: ubuntu-24.04-template
+        name: cp-01
+        proxmox_node: minis02
+        storage: pool01
+        bridge: vmbr0
+        cores: 2
+        memory: 4096
+        disk_size: 20
+        ip: 192.168.1.141
+        gateway: 192.168.1.254
+        dns: 208.67.222.222
+        subnet_mask: 24
+
+    workers:
+      - template: ubuntu-24.04-template
+        name: worker-01
+        proxmox_node: minis03
+        storage: pool01
+        bridge: vmbr0
+        cores: 8
+        memory: 16384
+        disk_size: 35
+        ip: 192.168.1.142
+        gateway: 192.168.1.254
+        dns: 208.67.222.222
+        subnet_mask: 24
+        labels:
+          - nodepool=workers
+        taints: []
+        
+      - template: ubuntu-24.04-template
+        name: worker-02
+        proxmox_node: minis04
+        storage: pool01
+        bridge: vmbr0
+        cores: 8
+        memory: 16384
+        disk_size: 35
+        ip: 192.168.1.143
+        gateway: 192.168.1.254
+        dns: 208.67.222.222
+        subnet_mask: 24
+        labels:
+          - nodepool=workers
+        taints: []

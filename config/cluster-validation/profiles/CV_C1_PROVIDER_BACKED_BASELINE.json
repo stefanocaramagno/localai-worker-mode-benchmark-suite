@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "cluster-validation-profile/v1",
+  "clusterValidationProfileId": "CV_C1_PROVIDER_BACKED_BASELINE",
+  "profileName": "Provider-Backed Baseline Cluster Validation",
+  "profileStatus": "active",
+  "profileRole": "canonical_provider_backed_baseline_cluster_validation_profile",
+  "purpose": "Validate that the C1 provider-backed K3s cluster is reachable, structurally consistent with the declared infrastructure profile, and ready to receive LocalAI worker-mode workloads.",
+  "cycleId": "C1",
+  "cycleConfigPath": "config/experimental-cycles/C1.json",
+  "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+  "providerId": "proxmox-k3s",
+  "providerBindingId": "BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+  "provisioningIntegrationProfileId": "PI_C1_PROVIDER_BACKED_BASELINE",
+  "provisioningIntegrationProfilePath": "config/provisioning/profiles/PI_C1_PROVIDER_BACKED_BASELINE.json",
+  "provisioningValidationProfilePath": "config/provisioning-validation/profiles/PV_C1_PROVIDER_BACKED_BASELINE.json",
+  "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c1-1cp-2w-8c16g/kubeconfig",
+  "preValidationGate": {
+    "enabled": true,
+    "requireLatestProvisioningIntegrationManifest": true,
+    "latestProvisioningIntegrationManifestPath": "results/experimental-cycles/C1/infrastructure/provisioning/latest-provisioning-integration-manifest.json",
+    "acceptedProvisioningStatuses": [
+      "completed"
+    ],
+    "acceptedProvisioningActions": [
+      "provision",
+      "kubeconfig"
+    ],
+    "requireKubeconfigVerificationStatus": "verified",
+    "allowBypassWithExplicitFlag": true,
+    "dryRunBypassesGate": true,
+    "failureBehavior": "stop_before_kubectl_validation"
+  },
+  "validationExecution": {
+    "runner": "scripts/infrastructure/validation/run-provider-backed-cluster-validation.py",
+    "lowLevelValidator": "scripts/infrastructure/validation/validate-proxmox-k3s-cluster.py",
+    "powershellWrapper": "scripts/infrastructure/validation/Start-ProviderBackedClusterValidation.ps1",
+    "bashWrapper": "scripts/infrastructure/validation/start-provider-backed-cluster-validation.sh",
+    "cycleLauncherPowerShell": "scripts/experimental-cycles/Start-ExperimentalCycle.ps1",
+    "cycleLauncherBash": "scripts/experimental-cycles/start-experimental-cycle.sh"
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C1/infrastructure/validation",
+    "logsRoot": "results/experimental-cycles/C1/infrastructure/validation/logs",
+    "manifestsRoot": "results/experimental-cycles/C1/infrastructure/validation/manifests",
+    "latestManifestPath": "results/experimental-cycles/C1/infrastructure/validation/latest-cluster-validation-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C1/infrastructure/validation/latest-cluster-validation-summary.txt",
+    "latestRawValidationJsonPath": "results/experimental-cycles/C1/infrastructure/validation/latest-validation.json",
+    "latestRawValidationTextPath": "results/experimental-cycles/C1/infrastructure/validation/latest-validation.txt",
+    "writeLatestAliases": true
+  },
+  "decisionPolicy": {
+    "passedStatus": "validated",
+    "warningStatus": "validated_with_warnings",
+    "failedStatus": "failed",
+    "dryRunStatus": "dry_run",
+    "minimumRequiredOutcomeBeforeApplicationDeployment": "validated",
+    "acceptedStatusesBeforeApplicationDeployment": [
+      "validated"
+    ],
+    "stopBeforeApplicationDeploymentOnFailure": true,
+    "warningsDoNotPermitApplicationDeploymentByDefault": true
+  },
+  "executionGuards": {
+    "dryRunSupported": true,
+    "realExecutionRequiresKubeconfig": true,
+    "realExecutionRequiresKubectl": true,
+    "realExecutionRequiresProvisioningManifestByDefault": true,
+    "allowMetricsWarningOverride": true,
+    "stopBeforeLocalAiDeploymentOnValidationFailure": true
+  },
+  "governance": {
+    "providerToolBoundary": "Cluster validation consumes the kubeconfig produced by the provider workflow but does not modify proxmox-k3s.",
+    "documentationPolicy": "This profile is operational configuration and not project documentation.",
+    "comparisonPolicy": "Cluster validation artifacts must be retained under the cycle-specific results tree before application deployment and benchmark execution."
+  },
+  "applicationDeployment": {
+    "applicationDeploymentProfileId": "AD_C1_PROVIDER_BACKED_BASELINE",
+    "applicationDeploymentProfilePath": "config/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+    "requiredAfterSuccessfulValidation": true,
+    "runner": "scripts/application/deployment/run-provider-backed-localai-deployment.py"
+  },
+  "downstreamConsumers": {
+    "minimalObservabilityProfileId": "MO_C1_PROVIDER_BACKED_BASELINE",
+    "minimalObservabilityProfilePath": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+    "reason": "Minimal observability consumes the validated kubeconfig, Metrics API and Kubernetes snapshots after the cluster validation gate passes."
+  }
+}

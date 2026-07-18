@@ -1,0 +1,94 @@
+{
+  "technicalDiagnosisProfileId": "TD_C6_MULTI_TENANCY",
+  "profileId": "TD_C6_MULTI_TENANCY",
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "profileName": "C6 Multi-Tenancy Technical Diagnosis Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_multi_tenancy_technical_diagnosis",
+  "description": "Technical diagnosis profile for the provider-backed multi-tenancy campaign.",
+  "cycleId": "C6",
+  "cycleConfigPath": "config/experimental-cycles/C6.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "validationSummaryRelativePath": "results/experimental-cycles/C1/diagnosis/C1_regeneration_diagnosis_all_diagnosis.json",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "familyOrder": [
+    "multi-tenancy"
+  ],
+  "scenarioConfigRoots": {
+    "multi-tenancy": "config/scenarios/multi-tenancy"
+  },
+  "scenarioConfigFiles": {
+    "multi-tenancy": [
+      "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+      "config/scenarios/multi-tenancy/MT_TWO_TENANTS_SEPARATED.json",
+      "config/scenarios/multi-tenancy/MT_TWO_TENANTS_MIXED_MODELS.json",
+      "config/scenarios/multi-tenancy/MT_TWO_TENANTS_SHARED_NODEPOOL.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "multi-tenancy": "results/experimental-cycles/C6/benchmark/multi-tenancy"
+  },
+  "referenceScenarioByFamily": {
+    "multi-tenancy": "MT_SINGLE_TENANT_REFERENCE"
+  },
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C6/diagnosis",
+  "familyScope": "all",
+  "expectedFamilies": [
+    "multi-tenancy"
+  ],
+  "families": [
+    "multi-tenancy"
+  ],
+  "fixedDimensionsByFamily": {
+    "multi-tenancy": [
+      "infrastructure=INFRA_C6_1CP_4W_8C16G",
+      "benchmark tenant=tenant-a",
+      "primary model=M1",
+      "primary worker-count=W2",
+      "workload=WL2"
+    ]
+  },
+  "variedDimensionByFamily": {
+    "multi-tenancy": "tenant topology"
+  },
+  "familyDisplayNames": {
+    "multi-tenancy": "C6 Multi-Tenancy"
+  },
+  "campaignAwareDiagnosis": {
+    "enabled": true,
+    "campaignExecutionManifest": "results/experimental-cycles/C6/execution/latest-campaign-execution-manifest.json",
+    "variantEvidenceRoot": "results/experimental-cycles/C6/variants",
+    "retainUnsupportedScenarioEvidence": true
+  },
+  "interpretationPolicy": {
+    "minimumMeasuredVariantsForComparativeClaims": 2,
+    "treatUnsupportedAsEvidence": true,
+    "avoidOverstatingWeakSignals": true,
+    "primaryQuestion": "Whether coexisting LocalAI tenant clusters change the measured tenant performance under fixed infrastructure and primary workload."
+  },
+  "multiTenancy": {
+    "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+    "scenarioOrdering": [
+      "MT_SINGLE_TENANT_REFERENCE",
+      "MT_TWO_TENANTS_SEPARATED",
+      "MT_TWO_TENANTS_MIXED_MODELS",
+      "MT_TWO_TENANTS_SHARED_NODEPOOL"
+    ],
+    "minimumMeasuredVariantsForPerformanceComparison": 2,
+    "interpretation": "Measured variants are compared only with the same infrastructure and primary benchmark workload while tenant count, co-tenant model mix or co-tenant placement changes."
+  },
+  "minimumScenarioSamples": 1,
+  "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+  "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+  "referenceScenarioConfigByFamily": {
+    "multi-tenancy": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+  }
+}

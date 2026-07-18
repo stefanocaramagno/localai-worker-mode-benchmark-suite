@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "completion-gate-profile/v1",
+  "completionGateProfileId": "CG_C6_MULTI_TENANCY",
+  "profileId": "CG_C6_MULTI_TENANCY",
+  "profileName": "C6 Multi-Tenancy Completion Gate Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_multi_tenancy_completion_gate",
+  "description": "Completion gate profile for the provider-backed multi-tenancy campaign.",
+  "cycleId": "C6",
+  "cycleConfigPath": "config/experimental-cycles/C6.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "providerId": "proxmox-k3s",
+  "outputRoot": "results/experimental-cycles/C6/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C6/completion-gate",
+    "latestManifestPath": "results/experimental-cycles/C6/completion-gate/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C6/completion-gate/latest-completion-gate-summary.txt",
+    "writeLatestAliases": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C6.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+    "reportingProfile": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+    "freezeProfile": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+    "scenarioIndex": "config/scenarios/multi-tenancy/MULTI_TENANCY_SCENARIOS_INDEX.json",
+    "tenancyProfilesIndex": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "referenceScenarioConfig": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C6/execution/latest-campaign-execution-manifest.json",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C6/diagnosis",
+    "reportingManifest": "results/experimental-cycles/C6/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C6/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C6/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C6/reporting/scenario-summary.csv",
+    "benchmarkRoots": [
+      "results/experimental-cycles/C6/benchmark/multi-tenancy"
+    ],
+    "clusterSideRoots": [
+      "results/experimental-cycles/C6/variants"
+    ],
+    "freezeProfile": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json"
+  },
+  "requiredFamilies": [
+    "multi-tenancy"
+  ],
+  "minimumReplicasPerScenario": 1,
+  "strictScenarioCoverage": true,
+  "acceptUnsupportedScenariosAsCovered": true,
+  "minimumUnsupportedReplicasPerScenario": 1,
+  "maximumMeanResponseTimeCvPercent": 1000000,
+  "gates": {
+    "profileResolution": {
+      "enabled": true
+    },
+    "providerConfig": {
+      "enabled": false
+    },
+    "provisioning": {
+      "enabled": false
+    },
+    "clusterValidation": {
+      "enabled": false
+    },
+    "applicationDeployment": {
+      "enabled": false
+    },
+    "minimalObservability": {
+      "enabled": false
+    },
+    "benchmarkArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C6/benchmark/multi-tenancy"
+      ],
+      "patterns": [
+        "*_stats.csv",
+        "*.json",
+        "*.csv",
+        "*.txt"
+      ]
+    },
+    "clusterSideArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C6/variants"
+      ],
+      "patterns": [
+        "*.json",
+        "*.txt",
+        "*.csv",
+        "*.log"
+      ]
+    },
+    "technicalDiagnosis": {
+      "enabled": true,
+      "acceptedClosureStatuses": [
+        "preliminary_diagnosis_available"
+      ],
+      "roots": [
+        "results/experimental-cycles/C6/diagnosis"
+      ],
+      "familyScope": "all",
+      "minimumFamiliesWithCoverage": 1,
+      "minimumFindings": 1
+    },
+    "reporting": {
+      "enabled": true,
+      "reportingRoot": "results/experimental-cycles/C6/reporting",
+      "manifestName": "reporting-manifest.json",
+      "markdownReportName": "report.md",
+      "htmlReportName": "index.html",
+      "scenarioSummaryCsvName": "scenario-summary.csv",
+      "chartsDirectoryName": "charts",
+      "sweepsDirectoryName": "sweeps",
+      "requiredSections": [
+        "Infrastructure Summary",
+        "Scenario Summary",
+        "Metrics Summary",
+        "Unsupported Scenario Summary",
+        "Main Findings"
+      ],
+      "requiredChartFamilies": [
+        "multi-tenancy"
+      ],
+      "requiredChartMetrics": [
+        "mean_response_time_ms",
+        "p50_response_time_ms",
+        "p95_response_time_ms",
+        "p99_response_time_ms",
+        "throughput_rps"
+      ],
+      "requiredSweepReports": [
+        "multi-tenancy"
+      ]
+    },
+    "freezeReadiness": {
+      "enabled": true,
+      "requireFreezeOutputsDeclared": false,
+      "requireFrozenArtifacts": false,
+      "requireFreezeProfileDeclared": true,
+      "requireFreezeProfileFile": true,
+      "freezeProfilePath": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json"
+    },
+    "scenarioCoverage": {
+      "requiredFamilies": [
+        "multi-tenancy"
+      ]
+    }
+  },
+  "decisionPolicy": {
+    "completedStatus": "completed",
+    "completedWithUnsupportedScenariosStatus": "completed_with_unsupported_scenarios",
+    "failedValidationStatus": "failed_validation",
+    "failedBenchmarkStatus": "failed_benchmark",
+    "failedReportingStatus": "failed_reporting",
+    "notCompletedStatus": "not_completed",
+    "unsupportedScenarioSignals": [
+      "unsupported",
+      "unsupported_under_current_constraints"
+    ],
+    "allowUnsupportedScenariosWhenDocumented": true,
+    "dryRunStatus": "dry_run"
+  },
+  "campaignAwareEvaluation": {
+    "enabled": true,
+    "variantEvidenceRoot": "results/experimental-cycles/C6/variants",
+    "campaignExecutionManifest": "results/experimental-cycles/C6/execution/latest-campaign-execution-manifest.json"
+  },
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+  "reportingProfilePath": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+  "minimumMeasuredScenariosByFamily": {
+    "multi-tenancy": 2
+  },
+  "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+  "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+  "referenceScenarioByFamily": {
+    "multi-tenancy": "MT_SINGLE_TENANT_REFERENCE"
+  },
+  "referenceScenarioConfigByFamily": {
+    "multi-tenancy": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+  }
+}

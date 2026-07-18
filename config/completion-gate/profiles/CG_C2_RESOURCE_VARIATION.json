@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "completion-gate-profile/v1",
+  "completionGateProfileId": "CG_C2_RESOURCE_VARIATION",
+  "profileId": "CG_C2_RESOURCE_VARIATION",
+  "profileName": "C2 Resource Variation Completion Gate",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_resource_variation_completion_gate",
+  "description": "Completion gate for a provider-backed resource-variation campaign. It verifies comparative benchmark evidence, technical diagnosis, reporting, and campaign execution metadata before freeze.",
+  "cycleId": "C2",
+  "cycleConfigPath": "config/experimental-cycles/C2.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "providerId": "proxmox-k3s",
+  "outputRoot": "results/experimental-cycles/C2/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C2/completion-gate",
+    "latestManifestPath": "results/experimental-cycles/C2/completion-gate/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C2/completion-gate/latest-completion-gate-summary.txt",
+    "writeLatestAliases": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C2.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "resourceVariationScenarioIndex": "config/scenarios/resource-variation/RESOURCE_VARIATION_SCENARIOS_INDEX.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C2_RESOURCE_VARIATION.json",
+    "reportingProfile": "config/reporting/profiles/RP_C2_RESOURCE_VARIATION.json",
+    "freezeProfile": "config/freeze/profiles/FR_C2_RESOURCE_VARIATION.json",
+    "placementProfile": "config/placement/profiles/PL_COLOCATED.json",
+    "referenceScenarioConfig": "config/scenarios/resource-variation/RV_8C16G.json"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C2/execution/latest-campaign-execution-manifest.json",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C2/diagnosis",
+    "reportingManifest": "results/experimental-cycles/C2/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C2/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C2/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C2/reporting/scenario-summary.csv",
+    "benchmarkRoots": [
+      "results/experimental-cycles/C2/benchmark/resource-variation"
+    ],
+    "clusterSideRoots": [
+      "results/experimental-cycles/C2/variants"
+    ],
+    "freezeProfile": "config/freeze/profiles/FR_C2_RESOURCE_VARIATION.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C2_RESOURCE_VARIATION.json"
+  },
+  "requiredFamilies": [
+    "resource-variation"
+  ],
+  "minimumReplicasPerScenario": 1,
+  "strictScenarioCoverage": true,
+  "acceptUnsupportedScenariosAsCovered": true,
+  "minimumUnsupportedReplicasPerScenario": 1,
+  "maximumMeanResponseTimeCvPercent": 1000000,
+  "gates": {
+    "profileResolution": {
+      "enabled": true
+    },
+    "providerConfig": {
+      "enabled": false
+    },
+    "provisioning": {
+      "enabled": false
+    },
+    "clusterValidation": {
+      "enabled": false
+    },
+    "applicationDeployment": {
+      "enabled": false
+    },
+    "minimalObservability": {
+      "enabled": false
+    },
+    "benchmarkArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C2/benchmark/resource-variation"
+      ],
+      "patterns": [
+        "*_stats.csv",
+        "*.json",
+        "*.csv",
+        "*.txt"
+      ]
+    },
+    "clusterSideArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C2/variants"
+      ],
+      "patterns": [
+        "*.json",
+        "*.txt",
+        "*.csv",
+        "*.log"
+      ]
+    },
+    "technicalDiagnosis": {
+      "enabled": true,
+      "acceptedClosureStatuses": [
+        "preliminary_diagnosis_available"
+      ],
+      "roots": [
+        "results/experimental-cycles/C2/diagnosis"
+      ],
+      "familyScope": "all",
+      "minimumFamiliesWithCoverage": 1,
+      "minimumFindings": 1
+    },
+    "reporting": {
+      "enabled": true,
+      "reportingRoot": "results/experimental-cycles/C2/reporting",
+      "manifestName": "reporting-manifest.json",
+      "markdownReportName": "report.md",
+      "htmlReportName": "index.html",
+      "scenarioSummaryCsvName": "scenario-summary.csv",
+      "chartsDirectoryName": "charts",
+      "sweepsDirectoryName": "sweeps",
+      "requiredSections": [
+        "Infrastructure Summary",
+        "Scenario Summary",
+        "Metrics Summary",
+        "Unsupported Scenario Summary",
+        "Main Findings"
+      ],
+      "requiredChartFamilies": [
+        "resource-variation"
+      ],
+      "requiredChartMetrics": [
+        "mean_response_time_ms",
+        "p50_response_time_ms",
+        "p95_response_time_ms",
+        "p99_response_time_ms",
+        "throughput_rps"
+      ],
+      "requiredSweepReports": [
+        "resource-variation"
+      ]
+    },
+    "freezeReadiness": {
+      "enabled": true,
+      "requireFreezeOutputsDeclared": false,
+      "requireFrozenArtifacts": false,
+      "requireFreezeProfileDeclared": true,
+      "requireFreezeProfileFile": true,
+      "freezeProfilePath": "config/freeze/profiles/FR_C2_RESOURCE_VARIATION.json"
+    }
+  },
+  "decisionPolicy": {
+    "completedStatus": "completed",
+    "completedWithUnsupportedScenariosStatus": "completed_with_unsupported_scenarios",
+    "failedValidationStatus": "failed_validation",
+    "failedBenchmarkStatus": "failed_benchmark",
+    "failedReportingStatus": "failed_reporting",
+    "notCompletedStatus": "not_completed",
+    "unsupportedScenarioSignals": [
+      "unsupported",
+      "unsupported_under_current_constraints"
+    ],
+    "allowUnsupportedScenariosWhenDocumented": true,
+    "dryRunStatus": "dry_run"
+  },
+  "campaignAwareEvaluation": {
+    "enabled": true,
+    "variantEvidenceRoot": "results/experimental-cycles/C2/variants",
+    "campaignExecutionManifest": "results/experimental-cycles/C2/execution/latest-campaign-execution-manifest.json"
+  },
+  "referenceScenarioId": "RV_8C16G",
+  "referenceScenarioConfigPath": "config/scenarios/resource-variation/RV_8C16G.json",
+  "referenceScenarioByFamily": {
+    "resource-variation": "RV_8C16G"
+  },
+  "referenceScenarioConfigByFamily": {
+    "resource-variation": "config/scenarios/resource-variation/RV_8C16G.json"
+  }
+}

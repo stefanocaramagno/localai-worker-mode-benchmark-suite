@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "tenancy-profile/v1",
+  "tenancyProfileId": "TP_TWO_TENANTS_SEPARATED",
+  "profileName": "Two Tenants Separated",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_multi_tenant_topology_profile",
+  "description": "Two LocalAI tenant clusters placed on disjoint worker-node pairs.",
+  "benchmarkTenantId": "tenant-a",
+  "tenantClusters": [
+    {
+      "tenantId": "tenant-a",
+      "namespace": "genai-tenant-a",
+      "modelScenario": "M1",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "placement": "workers_01_02",
+      "role": "benchmark_tenant"
+    },
+    {
+      "tenantId": "tenant-b",
+      "namespace": "genai-tenant-b",
+      "modelScenario": "M1",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "placement": "workers_03_04",
+      "role": "co_tenant"
+    }
+  ],
+  "governance": {
+    "isolationModel": "namespace_per_localai_application_cluster",
+    "benchmarkPolicy": "The primary tenant is benchmarked through its own service endpoint while co-tenant clusters remain deployed to expose placement and resource-contention effects.",
+    "comparisonPolicy": "Tenant-count, model mix and co-tenant placement are varied while infrastructure, primary workload and primary benchmark target remain fixed."
+  }
+}

@@ -1,0 +1,1733 @@
+{
+  "cycleId": "C8",
+  "cycleName": "Resource-Aware Scheduler Campaign",
+  "cycleKind": "comparative_campaign",
+  "campaignType": "resource_aware_scheduler",
+  "status": "planned_provider_backed_resource_aware_scheduler_campaign",
+  "description": "Provider-backed campaign that compares Kubernetes default scheduling with a load-aware custom scheduler for distributed LocalAI worker-mode workloads under L0 resource-aware conditions.",
+  "cycleGovernance": {
+    "role": "provider_backed_resource_aware_scheduler_campaign",
+    "predecessorCycleId": "C7",
+    "referenceBaselineId": "B1",
+    "referenceBaselineConfigPath": "config/scenarios/baseline/B1.json",
+    "referenceScenarioFamily": "resource-aware-scheduler",
+    "referenceScenarioId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+    "referenceScenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+    "governancePolicy": "compare default and load-aware scheduling under paired scenarios where workload, infrastructure, model mix, labels, monitoring and rescheduling policy are held constant.",
+    "referenceVariantId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+    "referenceScenarioProfileId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "scope": {
+    "application": "LocalAI worker-mode benchmark suite",
+    "workerMode": "worker",
+    "cycleType": "provider_backed_resource_aware_scheduler",
+    "includedFamilies": [
+      "resource-aware-scheduler",
+      "provisioning",
+      "provisioning-validation",
+      "cluster-validation",
+      "application-deployment",
+      "monitoring",
+      "mon-agent",
+      "custom-scheduler",
+      "rescheduling",
+      "minimal-observability",
+      "scheduler-decision-capture",
+      "technical-diagnosis",
+      "reporting",
+      "completion-gate",
+      "freeze"
+    ],
+    "deferredFamilies": [
+      "network-aware-scheduler",
+      "latency-injection",
+      "chaos-mesh",
+      "autoscaling"
+    ],
+    "primaryQuestion": "Does a load-aware custom scheduler using runtime CPU and memory annotations produce more balanced or better-performing LocalAI worker-mode placements than the Kubernetes default scheduler under paired L0 scenarios?"
+  },
+  "defaultSchedulerBaseline": {
+    "schedulerMode": "kubernetes_default_scheduler",
+    "placementPolicy": "no_hard_pod_placement_controls",
+    "forbiddenPlacementControls": [
+      "spec.nodeName",
+      "hostname_specific_nodeSelector",
+      "hostname_specific_nodeAffinity",
+      "controlled_placement_overlays"
+    ],
+    "allowedGeneralConstraints": [
+      "control_plane_exclusion",
+      "generic_worker_nodepool_selection",
+      "resource_requests",
+      "resource_limits",
+      "tenant_labels",
+      "application_role_labels"
+    ],
+    "decisionEvidenceRequired": true,
+    "decisionEvidenceArtifactName": "resource-aware-scheduler-decision-evidence.json",
+    "decisionEvidenceArtifactRoot": "results/experimental-cycles/C8/scheduler",
+    "placementClassificationRequired": true,
+    "tenantTrafficDifferentiationSupported": true,
+    "negativeEvidencePolicy": "capture_suboptimal_or_unsupported_default_scheduler_outcomes_as_methodological_evidence"
+  },
+  "providerBackedInfrastructure": {
+    "provider": "proxmox-k3s",
+    "providerIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_INDEX.json",
+    "providerBindingsIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "infrastructureProfilesIndexPath": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "plannedInfrastructureProfileIds": [
+      "INFRA_C8_1CP_2W_8C16G",
+      "INFRA_C8_1CP_4W_8C16G"
+    ],
+    "clusterLifecycleMode": "ephemeral",
+    "destroyClusterAfterCycle": true,
+    "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "cycleExecutionArtifactRoot": "results/experimental-cycles/C8/execution",
+    "campaignArtifactRoot": "results/experimental-cycles/C8",
+    "technicalDiagnosisProfileId": "TD_C8_RESOURCE_AWARE_SCHEDULER",
+    "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "technicalDiagnosisArtifactRoot": "results/experimental-cycles/C8/diagnosis",
+    "reportingProfileId": "RP_C8_RESOURCE_AWARE_SCHEDULER",
+    "reportingProfilePath": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "reportingArtifactRoot": "results/experimental-cycles/C8/reporting",
+    "completionGateProfileId": "CG_C8_RESOURCE_AWARE_SCHEDULER",
+    "completionGateProfilePath": "config/completion-gate/profiles/CG_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "completionGateArtifactRoot": "results/experimental-cycles/C8/completion-gate",
+    "freezeProfileId": "FR_C8_RESOURCE_AWARE_SCHEDULER",
+    "freezeProfilePath": "config/freeze/profiles/FR_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "freezeArtifactRoot": "results/experimental-cycles/C8/freeze",
+    "frozenArtifactSnapshotRoot": "results/experimental-cycles/C8/artifacts",
+    "latencyProfilesIndexPath": "config/latency/LATENCY_PROFILES_INDEX.json",
+    "tenancyProfilesIndexPath": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "precheckTemplateId": "TC_PROVIDER_BACKED_PRECHECK_TEMPLATE",
+    "precheckTemplatePath": "config/precheck/templates/TC_PROVIDER_BACKED_PRECHECK_TEMPLATE.json",
+    "precheckProfilesIndexPath": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+    "provisioningValidationTemplateId": "PV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+    "provisioningValidationTemplatePath": "config/provisioning-validation/templates/PV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "provisioningValidationIndexPath": "config/provisioning-validation/PROVISIONING_VALIDATION_INDEX.json",
+    "provisioningIntegrationTemplateId": "PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE",
+    "provisioningIntegrationTemplatePath": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+    "provisioningIntegrationIndexPath": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json",
+    "clusterValidationTemplateId": "CV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+    "clusterValidationTemplatePath": "config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "clusterValidationIndexPath": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+    "applicationDeploymentTemplateId": "AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE",
+    "applicationDeploymentTemplatePath": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+    "applicationDeploymentIndexPath": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+    "minimalObservabilityTemplateId": "MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE",
+    "minimalObservabilityTemplatePath": "config/observability-minimal/templates/MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE.json",
+    "minimalObservabilityIndexPath": "config/observability-minimal/MINIMAL_OBSERVABILITY_INDEX.json",
+    "cycleVariantTemplateId": "PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE",
+    "cycleVariantTemplatePath": "config/experimental-cycles/templates/PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE.json",
+    "activeClusterPolicy": "ephemeral_cluster_per_resource_aware_scheduler_variant",
+    "providerManagedAddons": {
+      "monitoring": {
+        "enabled": true,
+        "required": true
+      },
+      "mon_agent": {
+        "enabled": true,
+        "version": "v0.0.6",
+        "prometheus_url": "http://prometheus-stack-kube-prom-prometheus.observability:9090",
+        "scrape_period_seconds": 30,
+        "promql_range": "5m",
+        "namespace_label_selector": "mon-agent/enabled=true"
+      }
+    },
+    "monAgentInstallationMode": "provider_managed_addon",
+    "monAgentProviderAddon": "mon_agent",
+    "monAgentVersion": "v0.0.6"
+  },
+  "campaign": {
+    "campaignId": "C8",
+    "campaignType": "resource_aware_scheduler",
+    "scenarioFamily": "resource-aware-scheduler",
+    "scenarioConfigRoot": "config/scenarios/resource-aware-scheduler",
+    "scenarioIndexPath": "config/scenarios/resource-aware-scheduler/RESOURCE_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+    "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+    "defaultBaselineReplicas": [
+      "A",
+      "B",
+      "C"
+    ],
+    "variantExecutionMode": "sequential",
+    "destroyClusterBetweenVariants": true,
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C8/execution/generated-runtime-configs",
+    "scenarioClassCounts": {
+      "P0": 12,
+      "P1": 2,
+      "P2": 2,
+      "logicalScenarios": 8,
+      "total": 16
+    },
+    "plannedScenarioIds": {
+      "P0": [
+        "RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2",
+        "RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2",
+        "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+        "RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2",
+        "RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2",
+        "RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2",
+        "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+        "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2",
+        "RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2"
+      ],
+      "P1": [
+        "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2",
+        "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2"
+      ],
+      "P2": [
+        "RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2"
+      ]
+    },
+    "plannedScenarioReferences": [
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2.json",
+        "variantId": "RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2",
+        "scenarioProfileId": "RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2.json",
+        "variantId": "RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2",
+        "scenarioProfileId": "RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+        "variantId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+        "scenarioProfileId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2.json",
+        "variantId": "RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2",
+        "scenarioProfileId": "RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2.json",
+        "variantId": "RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2",
+        "scenarioProfileId": "RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2.json",
+        "variantId": "RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2",
+        "scenarioProfileId": "RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+        "variantId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+        "scenarioProfileId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2.json",
+        "variantId": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2",
+        "scenarioProfileId": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+        "variantId": "RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioProfileId": "RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+        "variantId": "RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioProfileId": "RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+        "variantId": "RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioProfileId": "RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2"
+      },
+      {
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+        "variantId": "RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioProfileId": "RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2"
+      },
+      {
+        "scenarioClass": "high-value",
+        "priorityClass": "P1",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2.json",
+        "variantId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2",
+        "scenarioProfileId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2"
+      },
+      {
+        "scenarioClass": "high-value",
+        "priorityClass": "P1",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2.json",
+        "variantId": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2",
+        "scenarioProfileId": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2"
+      },
+      {
+        "scenarioClass": "stress",
+        "priorityClass": "P2",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2.json",
+        "variantId": "RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "scenarioProfileId": "RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2"
+      },
+      {
+        "scenarioClass": "stress",
+        "priorityClass": "P2",
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2.json",
+        "variantId": "RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "scenarioProfileId": "RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2"
+      }
+    ],
+    "referenceScenarioId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+    "referenceScenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+    "referenceScenarioByFamily": {
+      "resource-aware-scheduler": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2"
+    },
+    "referenceScenarioConfigByFamily": {
+      "resource-aware-scheduler": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json"
+    },
+    "variants": [
+      {
+        "variantId": "RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "1T_2N_L0_UNIFORM_M1_W2",
+        "schedulerMode": "kubernetes_default_scheduler",
+        "schedulerName": null,
+        "scenarioOrdinal": 1,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_2W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_2W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-2w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-2w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-2w-8c16g/kubeconfig",
+        "workerNodeCount": 2,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/single-tenant-m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/single-tenant-m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "kubernetes_default_scheduler",
+          "schedulerName": null,
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": null,
+        "customSchedulerProfilePath": null,
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "1T_2N_L0_UNIFORM_M1_W2",
+        "schedulerMode": "loadaware_custom_scheduler",
+        "schedulerName": "scheduler-plugins-scheduler",
+        "scenarioOrdinal": 1,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_2W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_2W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-2w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-2w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-2w-8c16g/kubeconfig",
+        "workerNodeCount": 2,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/single-tenant-m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/single-tenant-m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "loadaware_custom_scheduler",
+          "schedulerName": "scheduler-plugins-scheduler",
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+        "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "1T_4N_L0_UNIFORM_M1_W2",
+        "schedulerMode": "kubernetes_default_scheduler",
+        "schedulerName": null,
+        "scenarioOrdinal": 2,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/single-tenant-m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/single-tenant-m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "kubernetes_default_scheduler",
+          "schedulerName": null,
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": null,
+        "customSchedulerProfilePath": null,
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "1T_4N_L0_UNIFORM_M1_W2",
+        "schedulerMode": "loadaware_custom_scheduler",
+        "schedulerName": "scheduler-plugins-scheduler",
+        "scenarioOrdinal": 2,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/single-tenant-m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/single-tenant-m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "loadaware_custom_scheduler",
+          "schedulerName": "scheduler-plugins-scheduler",
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+        "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "2T_2N_L0_UNIFORM_M1M1_W2",
+        "schedulerMode": "kubernetes_default_scheduler",
+        "schedulerName": null,
+        "scenarioOrdinal": 3,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_2W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_2W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-2w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-2w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-2w-8c16g/kubeconfig",
+        "workerNodeCount": 2,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "kubernetes_default_scheduler",
+          "schedulerName": null,
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": null,
+        "customSchedulerProfilePath": null,
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "2T_2N_L0_UNIFORM_M1M1_W2",
+        "schedulerMode": "loadaware_custom_scheduler",
+        "schedulerName": "scheduler-plugins-scheduler",
+        "scenarioOrdinal": 3,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_2W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_2W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-2w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-2w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-2w-8c16g/kubeconfig",
+        "workerNodeCount": 2,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "loadaware_custom_scheduler",
+          "schedulerName": "scheduler-plugins-scheduler",
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+        "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "2T_4N_L0_UNIFORM_M1M1_W2",
+        "schedulerMode": "kubernetes_default_scheduler",
+        "schedulerName": null,
+        "scenarioOrdinal": 4,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "kubernetes_default_scheduler",
+          "schedulerName": null,
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": null,
+        "customSchedulerProfilePath": null,
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "2T_4N_L0_UNIFORM_M1M1_W2",
+        "schedulerMode": "loadaware_custom_scheduler",
+        "schedulerName": "scheduler-plugins-scheduler",
+        "scenarioOrdinal": 4,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "loadaware_custom_scheduler",
+          "schedulerName": "scheduler-plugins-scheduler",
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+        "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "schedulerMode": "kubernetes_default_scheduler",
+        "schedulerName": null,
+        "scenarioOrdinal": 5,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_2W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_2W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-2w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-2w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-2w-8c16g/kubeconfig",
+        "workerNodeCount": 2,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "kubernetes_default_scheduler",
+          "schedulerName": null,
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": null,
+        "customSchedulerProfilePath": null,
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "schedulerMode": "loadaware_custom_scheduler",
+        "schedulerName": "scheduler-plugins-scheduler",
+        "scenarioOrdinal": 5,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_2W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_2W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-2w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-2w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-2w-8c16g/kubeconfig",
+        "workerNodeCount": 2,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "loadaware_custom_scheduler",
+          "schedulerName": "scheduler-plugins-scheduler",
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+        "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "schedulerMode": "kubernetes_default_scheduler",
+        "schedulerName": null,
+        "scenarioOrdinal": 6,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "kubernetes_default_scheduler",
+          "schedulerName": null,
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": null,
+        "customSchedulerProfilePath": null,
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "official",
+        "priorityClass": "P0",
+        "logicalScenarioId": "2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "schedulerMode": "loadaware_custom_scheduler",
+        "schedulerName": "scheduler-plugins-scheduler",
+        "scenarioOrdinal": 6,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "loadaware_custom_scheduler",
+          "schedulerName": "scheduler-plugins-scheduler",
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+        "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "high-value",
+        "priorityClass": "P1",
+        "logicalScenarioId": "2T_4N_L0_UNIFORM_M1M2_W2",
+        "schedulerMode": "kubernetes_default_scheduler",
+        "schedulerName": null,
+        "scenarioOrdinal": 7,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m2-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/two-tenants-m1m2-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "kubernetes_default_scheduler",
+          "schedulerName": null,
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": null,
+        "customSchedulerProfilePath": null,
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "high-value",
+        "priorityClass": "P1",
+        "logicalScenarioId": "2T_4N_L0_UNIFORM_M1M2_W2",
+        "schedulerMode": "loadaware_custom_scheduler",
+        "schedulerName": "scheduler-plugins-scheduler",
+        "scenarioOrdinal": 7,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m2-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/two-tenants-m1m2-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "loadaware_custom_scheduler",
+          "schedulerName": "scheduler-plugins-scheduler",
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+        "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "stress",
+        "priorityClass": "P2",
+        "logicalScenarioId": "3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "schedulerMode": "kubernetes_default_scheduler",
+        "schedulerName": null,
+        "scenarioOrdinal": 8,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/three-tenants-m1m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/default-scheduler/three-tenants-m1m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b",
+              "genai-tenant-c"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "kubernetes_default_scheduler",
+          "schedulerName": null,
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": null,
+        "customSchedulerProfilePath": null,
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      },
+      {
+        "variantId": "RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "scenarioFamily": "resource-aware-scheduler",
+        "scenarioClass": "stress",
+        "priorityClass": "P2",
+        "logicalScenarioId": "3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "schedulerMode": "loadaware_custom_scheduler",
+        "schedulerName": "scheduler-plugins-scheduler",
+        "scenarioOrdinal": 8,
+        "scenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2.json",
+        "infrastructureProfileId": "INFRA_C8_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C8_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-4w-8c16g/kubeconfig",
+        "workerNodeCount": 4,
+        "workerVcpusPerNode": 8,
+        "workerMemoryGiBPerNode": 16,
+        "workerStorageGiBPerNode": 35,
+        "resultsRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+        "outputSubdir": "RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+        "placementProfilePath": "",
+        "latencyProfileId": "L0_NONE",
+        "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+        "applicationTopology": {
+          "topologyDir": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/three-tenants-m1m1m1-w2",
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "resource-aware-scheduler-application-topology",
+              "path": "infra/k8s/compositions/resource-aware-scheduler/loadaware-scheduler/three-tenants-m1m1m1-w2",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "namespaces": [
+              "genai-tenant-a",
+              "genai-tenant-b",
+              "genai-tenant-c"
+            ],
+            "deploymentsPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "servicesPerTenant": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeploymentsPerTenant": 3
+          },
+          "schedulerMode": "loadaware_custom_scheduler",
+          "schedulerName": "scheduler-plugins-scheduler",
+          "hardPlacementControlsAllowed": false,
+          "additionalRolloutTargets": []
+        },
+        "monAgentProfileId": "MA_RESOURCE_AWARE",
+        "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+        "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+        "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+        "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+        "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json"
+      }
+    ],
+    "plannedVariantIds": {
+      "P0": [
+        "RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2",
+        "RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2",
+        "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+        "RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2",
+        "RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2",
+        "RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2",
+        "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+        "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2",
+        "RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2"
+      ],
+      "P1": [
+        "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2",
+        "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2"
+      ],
+      "P2": [
+        "RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2"
+      ]
+    },
+    "referenceVariantId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "analysisPolicy": {
+    "primaryComparison": "paired_default_vs_loadaware",
+    "comparisonKey": "logicalScenarioId",
+    "metrics": [
+      "mean latency",
+      "P95 latency",
+      "P99 latency",
+      "throughput",
+      "failure rate",
+      "CPU balance",
+      "memory balance",
+      "placement quality"
+    ],
+    "unsupportedOutcomePolicy": "preserve_as_methodological_evidence",
+    "pairwiseSchedulerMode": {
+      "enabled": true,
+      "pairingKey": "logicalScenarioId",
+      "defaultVariantPrefix": "RA_DEFAULT_",
+      "loadAwareVariantPrefix": "RA_LOADAWARE_",
+      "metrics": [
+        "mean_response_time_ms",
+        "p95_response_time_ms",
+        "p99_response_time_ms",
+        "throughput_rps",
+        "failure_count",
+        "success_rate_percent",
+        "max_node_cpu_percent",
+        "max_node_memory_percent"
+      ]
+    }
+  },
+  "reporting": {
+    "reportingProfileId": "RP_C8_RESOURCE_AWARE_SCHEDULER",
+    "reportingProfilePath": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "artifactRoot": "results/experimental-cycles/C8/reporting"
+  },
+  "completionGate": {
+    "completionGateProfileId": "CG_C8_RESOURCE_AWARE_SCHEDULER",
+    "completionGateProfilePath": "config/completion-gate/profiles/CG_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "artifactRoot": "results/experimental-cycles/C8/completion-gate"
+  },
+  "freeze": {
+    "freezeProfileId": "FR_C8_RESOURCE_AWARE_SCHEDULER",
+    "freezeProfilePath": "config/freeze/profiles/FR_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "artifactRoot": "results/experimental-cycles/C8/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C8/artifacts"
+  },
+  "diagnosis": {
+    "technicalDiagnosisProfileId": "TD_C8_RESOURCE_AWARE_SCHEDULER",
+    "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "artifactRoot": "results/experimental-cycles/C8/diagnosis"
+  },
+  "pipelineProfiles": {
+    "runConvention": "config/conventions/profiles/RC_STANDARD_RUN_CONVENTION.json",
+    "phaseProfile": "config/phases/profiles/WM_STANDARD_WARMUP_MEASUREMENT.json",
+    "protocolProfile": "config/protocol/profiles/EP_STANDARD_BENCHMARK_PROTOCOL.json",
+    "clusterCapture": "config/cluster-capture/profiles/CS_STANDARD_CLUSTER_CAPTURE.json",
+    "metricSet": "config/metric-set/profiles/MS_STANDARD_BENCHMARK_METRICS.json",
+    "statisticalRigor": "config/statistical-rigor/profiles/SR_REPLICATED_BENCHMARK_RIGOR.json",
+    "infrastructureProfilesIndex": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "providersIndex": "config/infrastructure/providers/PROVIDERS_INDEX.json",
+    "providerBindingsIndex": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "clusterLifecyclePoliciesIndex": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "provisioningValidationIndex": "config/provisioning-validation/PROVISIONING_VALIDATION_INDEX.json",
+    "clusterValidationIndex": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+    "applicationDeploymentIndex": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+    "minimalObservabilityIndex": "config/observability-minimal/MINIMAL_OBSERVABILITY_INDEX.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "reportingIndex": "config/reporting/REPORTING_INDEX.json",
+    "completionGateIndex": "config/completion-gate/COMPLETION_GATE_INDEX.json",
+    "freezeIndex": "config/freeze/FREEZE_INDEX.json",
+    "precheckTemplate": "config/precheck/templates/TC_PROVIDER_BACKED_PRECHECK_TEMPLATE.json",
+    "precheckIndex": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+    "technicalDiagnosis": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "reporting": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "completionGate": "config/completion-gate/profiles/CG_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "freeze": "config/freeze/profiles/FR_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "latencyProfilesIndex": "config/latency/LATENCY_PROFILES_INDEX.json",
+    "tenancyProfilesIndex": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "provisioningValidationTemplate": "config/provisioning-validation/templates/PV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "provisioningIntegrationTemplate": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+    "provisioningIntegrationIndex": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json",
+    "clusterValidationTemplate": "config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "applicationDeploymentTemplate": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+    "minimalObservabilityTemplate": "config/observability-minimal/templates/MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE.json",
+    "cycleVariantTemplate": "config/experimental-cycles/templates/PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE.json",
+    "monAgent": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+    "customScheduler": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+    "rescheduling": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+    "schedulerModeValidation": "scripts/validation/scheduler/validate-scheduler-mode-manifests.py"
+  },
+  "qualityGates": {
+    "requiresDefaultSchedulerManifests": true,
+    "requiresNoHardPlacementControls": true,
+    "requiresSchedulerDecisionEvidence": true,
+    "requiresTenantScopedBenchmarkArtifacts": true,
+    "requiresLatencyProfileTraceability": true,
+    "requiresUnsupportedScenarioEvidenceWhenApplicable": true
+  },
+  "configurationState": "planned",
+  "executionState": "not_started",
+  "profileStatus": "planned_provider_backed_resource_aware_scheduler_campaign",
+  "stateModel": {
+    "profileStatus": "Configuration-profile lifecycle state. This is the canonical meaning of the backward-compatible status field.",
+    "configurationState": "Whether the cycle configuration is planned, active, locked, superseded, or deprecated.",
+    "executionState": "Latest known execution outcome for the cycle or campaign.",
+    "status": "Backward-compatible alias of profileStatus; execution outcomes must be read from executionState."
+  },
+  "infrastructureSummaryMode": "variant_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "campaign_variant",
+    "description": "The cycle is expected to evaluate several worker-node counts through variant-scoped infrastructure profiles. Scenario-level evidence must identify the concrete infrastructure profile used for each run."
+  },
+  "schedulerMode": {
+    "comparisonDesign": "paired_variant_comparison",
+    "defaultSchedulerMode": "kubernetes_default_scheduler",
+    "customSchedulerMode": "loadaware_custom_scheduler",
+    "customSchedulerName": "scheduler-plugins-scheduler",
+    "customSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+    "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+    "customSchedulerPlugin": "LoadAwareResourcesBalancedAllocation",
+    "monAgentProfileId": "MA_RESOURCE_AWARE",
+    "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+    "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+    "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+    "requiredAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "latencyInjectionEnabled": false,
+    "logicalScenarioCount": 8,
+    "variantCount": 16,
+    "pairedComparisons": [
+      {
+        "logicalScenarioId": "1T_2N_L0_UNIFORM_M1_W2",
+        "priority": "P0",
+        "scenarioClass": "official",
+        "variants": {
+          "default": "RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2",
+          "loadaware": "RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2"
+        }
+      },
+      {
+        "logicalScenarioId": "1T_4N_L0_UNIFORM_M1_W2",
+        "priority": "P0",
+        "scenarioClass": "official",
+        "variants": {
+          "default": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+          "loadaware": "RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2"
+        }
+      },
+      {
+        "logicalScenarioId": "2T_2N_L0_UNIFORM_M1M1_W2",
+        "priority": "P0",
+        "scenarioClass": "official",
+        "variants": {
+          "default": "RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2",
+          "loadaware": "RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2"
+        }
+      },
+      {
+        "logicalScenarioId": "2T_4N_L0_UNIFORM_M1M1_W2",
+        "priority": "P0",
+        "scenarioClass": "official",
+        "variants": {
+          "default": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+          "loadaware": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2"
+        }
+      },
+      {
+        "logicalScenarioId": "2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "priority": "P0",
+        "scenarioClass": "official",
+        "variants": {
+          "default": "RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+          "loadaware": "RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2"
+        }
+      },
+      {
+        "logicalScenarioId": "2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "priority": "P0",
+        "scenarioClass": "official",
+        "variants": {
+          "default": "RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+          "loadaware": "RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2"
+        }
+      },
+      {
+        "logicalScenarioId": "2T_4N_L0_UNIFORM_M1M2_W2",
+        "priority": "P1",
+        "scenarioClass": "high-value",
+        "variants": {
+          "default": "RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2",
+          "loadaware": "RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2"
+        }
+      },
+      {
+        "logicalScenarioId": "3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "priority": "P2",
+        "scenarioClass": "stress",
+        "variants": {
+          "default": "RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2",
+          "loadaware": "RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2"
+        }
+      }
+    ],
+    "monAgentInstallationMode": "provider_managed_addon",
+    "monAgentVersion": "v0.0.6"
+  },
+  "schedulerModeRuntime": {
+    "enabled": true,
+    "manifestValidationScript": "scripts/validation/scheduler/validate-scheduler-mode-manifests.py",
+    "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+    "customSchedulerProfilePath": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+    "reschedulingProfilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+    "annotationValidationRequired": true,
+    "reschedulingRequired": true,
+    "installCustomSchedulerOnlyForLoadAwareVariants": true,
+    "manifestValidationRequiresRender": true,
+    "manifestValidationRequiresLocalAiDeployments": true,
+    "manifestValidationStage": "before_application_deployment",
+    "monAgentValidationRequired": true,
+    "telemetryPrimingWorkloadRequired": true,
+    "telemetryPrimingWorkloadStage": "after_mon_agent_validation_before_rescheduling",
+    "officialBenchmarkStartsAfterRescheduling": true,
+    "monAgentInstallationMode": "provider_managed_addon",
+    "monAgentApplyPolicy": "validate_provider_managed_deployment_and_namespace_labels"
+  }
+}

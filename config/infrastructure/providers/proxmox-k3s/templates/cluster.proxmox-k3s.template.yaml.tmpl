@@ -1,0 +1,41 @@
+# proxmox-k3s v1.0.3 provider configuration template.
+# This file is intentionally generic and is intended to be rendered from an infrastructure profile and a provider binding.
+
+proxmox:
+  api_url: {{ proxmox_api_url }}
+  token_id: {{ proxmox_token_id }}
+  token_secret: {{ proxmox_token_secret }}
+  insecure_tls: {{ proxmox_insecure_tls }}
+
+template:
+  name: {{ template_name }}
+  proxmox_node: {{ template_proxmox_node }}
+  storage: {{ template_storage }}
+  image_storage: {{ template_image_storage }}
+  bridge: {{ template_bridge }}
+  ip: {{ template_ip }}
+  gateway: {{ gateway }}
+  dns: {{ dns }}
+  subnet_mask: {{ subnet_mask }}
+  os: {{ template_os }}
+  vmid_base: {{ template_vmid_base }}
+  timeout_seconds: {{ template_timeout_seconds }}
+
+clusters:
+  - name: {{ cluster_name }}
+    kubeconfig_path: {{ kubeconfig_path }}
+
+    k3s:
+      version: {{ k3s_version }}
+      extra_server_args: "{{ k3s_extra_server_args }}"
+      extra_agent_args: "{{ k3s_extra_agent_args }}"
+      taint_control_plane: {{ k3s_taint_control_plane }}
+
+    addons:
+{{ addons_yaml }}
+
+    control_plane:
+{{ control_plane_nodes_yaml }}
+
+    workers:
+{{ worker_nodes_yaml }}

@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-a
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - genai-pb-worker-03
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-b
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - genai-pb-worker-04
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-c
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - genai-pb-worker-03
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-d
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - genai-pb-worker-04

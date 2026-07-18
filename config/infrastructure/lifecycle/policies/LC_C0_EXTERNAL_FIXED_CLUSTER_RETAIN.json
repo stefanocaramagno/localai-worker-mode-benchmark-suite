@@ -1,0 +1,55 @@
+{
+    "schemaVersion": "cluster-lifecycle-policy/v1",
+    "lifecyclePolicyId": "LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN",
+    "policyName": "External Fixed Cluster Retain Policy",
+    "policyCategory": "external-fixed-cluster",
+    "clusterLifecycleMode": "external",
+    "providerId": "external-k3s-cluster",
+    "providerManagedLifecycle": false,
+    "provisioningRequired": false,
+    "destroyClusterAfterCycleDefault": false,
+    "description": "Lifecycle policy for historical or externally managed clusters whose creation and deletion are outside the provider-backed pipeline.",
+    "commands": {
+        "createCluster": {
+            "required": false,
+            "allowed": false,
+            "commandName": null
+        },
+        "refreshKubeconfig": {
+            "required": false,
+            "allowed": true,
+            "commandName": "kubectl_or_external_access_refresh"
+        },
+        "deleteCluster": {
+            "required": false,
+            "allowed": false,
+            "commandName": null
+        },
+        "deleteTemplate": {
+            "required": false,
+            "allowed": false,
+            "commandName": null
+        }
+    },
+    "executionGuards": {
+        "allowCreate": false,
+        "allowDelete": false,
+        "requireExplicitDeleteConfirmation": true,
+        "allowTemplateDeletion": false,
+        "failFastOnMissingProviderConfig": false
+    },
+    "artifactPolicy": {
+        "writeLifecycleManifest": true,
+        "writeProvisioningCommandManifest": false,
+        "writeDeleteCommandManifest": false,
+        "writeLogs": false,
+        "defaultLifecycleArtifactRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/lifecycle",
+        "defaultProvisioningLogRootTemplate": null,
+        "defaultDeleteLogRootTemplate": null
+    },
+    "governance": {
+        "officialBenchmarkingAllowed": true,
+        "comparisonPolicy": "Treat outputs as external-cluster evidence and do not infer provider-backed reproducibility from this policy.",
+        "destructiveActionPolicy": "No delete action is permitted by this lifecycle policy."
+    }
+}

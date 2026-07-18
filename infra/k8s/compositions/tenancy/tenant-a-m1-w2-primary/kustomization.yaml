@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: genai-tenant-a
+resources:
+  - namespace.yaml
+  - ../../../base/foundation/storage
+  - ../../../base/shared/rpc-workers-services
+  - ../../../base/topology
+  - ../../../overlays/server/models/m1
+components:
+  - ../../../overlays/topology/placement/distributed-genai-pb-two-node
+  - ../../../overlays/topology/worker-count/w2
+patches:
+  - path: patch-server-placement.yaml

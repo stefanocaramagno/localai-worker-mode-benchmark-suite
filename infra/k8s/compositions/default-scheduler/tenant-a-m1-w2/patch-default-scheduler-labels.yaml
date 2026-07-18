@@ -1,0 +1,149 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-server
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: server
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+spec:
+  template:
+    metadata:
+      labels:
+        localai.benchmark/tenant: tenant-a
+        localai.benchmark/component: server
+        localai.benchmark/scheduler-mode: default-scheduler
+        localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-a
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+spec:
+  template:
+    metadata:
+      labels:
+        localai.benchmark/tenant: tenant-a
+        localai.benchmark/component: rpc-worker
+        localai.benchmark/scheduler-mode: default-scheduler
+        localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-b
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+spec:
+  template:
+    metadata:
+      labels:
+        localai.benchmark/tenant: tenant-a
+        localai.benchmark/component: rpc-worker
+        localai.benchmark/scheduler-mode: default-scheduler
+        localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-c
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+spec:
+  template:
+    metadata:
+      labels:
+        localai.benchmark/tenant: tenant-a
+        localai.benchmark/component: rpc-worker
+        localai.benchmark/scheduler-mode: default-scheduler
+        localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-d
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+spec:
+  template:
+    metadata:
+      labels:
+        localai.benchmark/tenant: tenant-a
+        localai.benchmark/component: rpc-worker
+        localai.benchmark/scheduler-mode: default-scheduler
+        localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-server
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: server
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-rpc-a
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-rpc-b
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-rpc-c
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-rpc-d
+  namespace: localai-benchmark
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/scheduler-mode: default-scheduler
+    localai.benchmark/placement-policy: runtime-default-scheduler

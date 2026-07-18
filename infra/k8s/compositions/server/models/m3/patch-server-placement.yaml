@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-server
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: sc-app-02

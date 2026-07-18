@@ -1,0 +1,111 @@
+{
+  "schemaId": "INFRASTRUCTURE_PROFILE_SCHEMA_V1",
+  "schemaVersion": "infrastructure-profile/v1",
+  "purpose": "Machine-readable contract for infrastructure profiles consumed by provider-backed benchmark cycles.",
+  "requiredTopLevelFields": [
+    "schemaVersion",
+    "infrastructureProfileId",
+    "profileName",
+    "status",
+    "profileCategory",
+    "profileRole",
+    "purpose",
+    "clusterIdentity",
+    "provider",
+    "lifecycle",
+    "nodeNaming",
+    "nodeSummary",
+    "nodes",
+    "selectors",
+    "provisioning",
+    "validation",
+    "benchmarkCompatibility",
+    "cycleBinding",
+    "comparisonPolicy",
+    "governance"
+  ],
+  "fieldGroups": {
+    "clusterIdentity": [
+      "clusterName",
+      "kubernetesDistribution",
+      "k3sVersion",
+      "hardwareClass",
+      "gpuAvailable"
+    ],
+    "provider": [
+      "providerId",
+      "providerType",
+      "mode",
+      "managedByBenchmarkSuite"
+    ],
+    "nodeSummary": [
+      "controlPlaneCount",
+      "workerCount",
+      "totalWorkerVcpus",
+      "totalWorkerMemoryGiB",
+      "totalWorkerStorageGiB"
+    ],
+    "nodes": [
+      "controlPlane",
+      "workers"
+    ],
+    "validation": [
+      "expectedReadyNodeCount",
+      "expectedControlPlaneNodes",
+      "expectedWorkerNodes",
+      "requireK3sDistribution",
+      "requireMetricsApi",
+      "minimumRequiredOutcomeBeforeBenchmarking"
+    ],
+    "provisioning": [
+      "provisioningMode",
+      "providerBindingId",
+      "providerBindingPath",
+      "providerConfigTemplatePath",
+      "providerConfigExamplePath",
+      "providerConfigLocalPath",
+      "kubeconfigPath",
+      "providerConfigBindingStatus",
+      "selectionPolicy"
+    ],
+    "providerBinding": [
+      "providerBindingId",
+      "providerBindingPath",
+      "providerIndexPath"
+    ],
+    "lifecycle": [
+      "scope",
+      "supportedModes",
+      "recommendedMode",
+      "destroyAfterCycleDefault",
+      "lifecyclePolicyId",
+      "lifecyclePolicyPath",
+      "clusterLifecycleModeDefault",
+      "destroyClusterAfterCycleDefault",
+      "lifecyclePoliciesIndexPath",
+      "lifecycleArtifactRootTemplate",
+      "provisioningLogRootTemplate",
+      "deletionLogRootTemplate"
+    ],
+    "physicalHostMaterialization": [
+      "policy",
+      "proxmoxNodesInUse",
+      "consolidatedWorkersOnHost",
+      "interpretationRule"
+    ]
+  },
+  "governanceRules": [
+    "Every benchmark cycle must reference exactly one infrastructureProfileId.",
+    "Provider-backed profiles must declare providerId=proxmox-k3s unless another provider is explicitly introduced.",
+    "Identical Kubernetes node names across profiles do not imply equivalent infrastructure.",
+    "Historical profiles must remain distinct from provider-backed profiles.",
+    "Resource and node-count variation profiles should vary one principal infrastructure dimension at a time.",
+    "Provider-backed infrastructure profiles should include providerBindingId and providerBindingPath.",
+    "Provider-specific cluster YAML paths must be resolved through provider bindings rather than hard-coded directly in execution logic.",
+    "Every provider-backed infrastructure profile must declare a lifecyclePolicyId and lifecyclePolicyPath.",
+    "Lifecycle policy defaults may be overridden by cycle profiles only when the override is explicit and recorded in a lifecycle manifest.",
+    "Resource-variation and node-count profiles should prefer ephemeral lifecycle policies when clean infrastructure comparisons are required.",
+    "Infrastructure profiles must document physical-host consolidation when declared worker nodes outnumber available distinct Proxmox hosts.",
+    "Provider bindings and provider cluster YAML files must be consistent with the Proxmox host materialization declared by the infrastructure profile."
+  ]
+}

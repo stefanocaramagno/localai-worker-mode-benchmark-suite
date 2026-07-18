@@ -1,0 +1,43 @@
+{
+  "profileId": "TC_C0_HISTORICAL_FIXED_CLUSTER",
+  "description": "Historical fixed-cluster benchmark technical pre-check profile for the original LocalAI worker-mode characterization cycle.",
+  "kubeconfig": "config/cluster-access/fixed-cluster/kubeconfig",
+  "namespace": "localai-benchmark",
+  "expectedReadyNodes": [
+    "sc-master-01",
+    "sc-app-01",
+    "sc-app-02"
+  ],
+  "expectedWorkerNodes": [
+    "sc-app-01",
+    "sc-app-02"
+  ],
+  "allowedPodPhases": [
+    "Running",
+    "Succeeded"
+  ],
+  "minimumNamespacePods": 1,
+  "criticalWaitingReasons": [
+    "CrashLoopBackOff",
+    "ImagePullBackOff",
+    "ErrImagePull",
+    "CreateContainerConfigError",
+    "CreateContainerError",
+    "InvalidImageName"
+  ],
+  "maxTotalRestartsInNamespace": 0,
+  "requireMetricsApi": true,
+  "maxNodeCpuPercent": 95,
+  "maxNodeMemoryPercent": 95,
+  "defaultOutputRoot": "results/experimental-cycles/C0/precheck",
+  "serviceReadinessTimeoutSeconds": 300,
+  "serviceReadinessPollIntervalMilliseconds": 2000,
+  "serviceReadinessRequestTimeoutSeconds": 10,
+  "profileGovernance": {
+    "scope": "historical_fixed_cluster",
+    "cycleId": "C0",
+    "baselineId": "B0",
+    "status": "active_historical_profile",
+    "pathRole": "concrete_profile"
+  }
+}

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="490.0" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold">C7 — Default Kubernetes Scheduler Baseline: Throughput</text>
+  <text x="490.0" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="13">Unit: requests/s</text>
+  <g font-family="Arial, sans-serif" fill="#222">
+<line x1="86" y1="434" x2="948" y2="434" stroke="#222"/>
+<line x1="86" y1="74" x2="86" y2="434" stroke="#222"/>
+<line x1="81" y1="434.00" x2="948" y2="434.00" stroke="#ddd"/>
+<text x="76" y="438.00" text-anchor="end" font-size="12">0.00</text>
+<line x1="81" y1="362.00" x2="948" y2="362.00" stroke="#ddd"/>
+<text x="76" y="366.00" text-anchor="end" font-size="12">0.04</text>
+<line x1="81" y1="290.00" x2="948" y2="290.00" stroke="#ddd"/>
+<text x="76" y="294.00" text-anchor="end" font-size="12">0.08</text>
+<line x1="81" y1="218.00" x2="948" y2="218.00" stroke="#ddd"/>
+<text x="76" y="222.00" text-anchor="end" font-size="12">0.12</text>
+<line x1="81" y1="146.00" x2="948" y2="146.00" stroke="#ddd"/>
+<text x="76" y="150.00" text-anchor="end" font-size="12">0.16</text>
+<line x1="81" y1="74.00" x2="948" y2="74.00" stroke="#ddd"/>
+<text x="76" y="78.00" text-anchor="end" font-size="12">0.20</text>
+<rect x="92.55" y="146.00" width="21.38" height="288.00" fill="#666"/>
+<text x="103.24" y="139.00" text-anchor="middle" font-size="12">0.16</text>
+<text x="103.24" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 103.24,452.00)">DS_1T_2N_L0_UNIFORM_M1_W2</text>
+<rect x="127.03" y="286.22" width="21.38" height="147.78" fill="#666"/>
+<text x="137.72" y="279.22" text-anchor="middle" font-size="12">0.08</text>
+<text x="137.72" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 137.72,452.00)">DS_1T_2N_L1_UNIFORM_M1_W2</text>
+<rect x="161.51" y="344.72" width="21.38" height="89.28" fill="#666"/>
+<text x="172.20" y="337.72" text-anchor="middle" font-size="12">0.05</text>
+<text x="172.20" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 172.20,452.00)">DS_1T_3N_L1_UNIFORM_M1_W2</text>
+<rect x="195.99" y="146.54" width="21.38" height="287.46" fill="#666"/>
+<text x="206.68" y="139.54" text-anchor="middle" font-size="12">0.16</text>
+<text x="206.68" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 206.68,452.00)">DS_1T_4N_L0_UNIFORM_M1_W2</text>
+<rect x="230.47" y="345.26" width="21.38" height="88.74" fill="#666"/>
+<text x="241.16" y="338.26" text-anchor="middle" font-size="12">0.05</text>
+<text x="241.16" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 241.16,452.00)">DS_1T_4N_L1_UNIFORM_M1_W2</text>
+<rect x="264.95" y="397.64" width="21.38" height="36.36" fill="#666"/>
+<text x="275.64" y="390.64" text-anchor="middle" font-size="12">0.02</text>
+<text x="275.64" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 275.64,452.00)">DS_1T_4N_L2_UNIFORM_M1_W2</text>
+<rect x="299.43" y="205.04" width="21.38" height="228.96" fill="#666"/>
+<text x="310.12" y="198.04" text-anchor="middle" font-size="12">0.13</text>
+<text x="310.12" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 310.12,452.00)">DS_2T_2N_L0_DIFFERENTIATED_M1M1_W2</text>
+<rect x="333.91" y="150.50" width="21.38" height="283.50" fill="#666"/>
+<text x="344.60" y="143.50" text-anchor="middle" font-size="12">0.16</text>
+<text x="344.60" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 344.60,452.00)">DS_2T_2N_L0_UNIFORM_M1M1_W2</text>
+<rect x="368.39" y="321.32" width="21.38" height="112.68" fill="#666"/>
+<text x="379.08" y="314.32" text-anchor="middle" font-size="12">0.06</text>
+<text x="379.08" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 379.08,452.00)">DS_2T_2N_L1_DIFFERENTIATED_M1M1_W2</text>
+<rect x="402.87" y="323.12" width="21.38" height="110.88" fill="#666"/>
+<text x="413.56" y="316.12" text-anchor="middle" font-size="12">0.06</text>
+<text x="413.56" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 413.56,452.00)">DS_2T_2N_L1_UNIFORM_M1M1_W2</text>
+<text x="448.04" y="426.00" text-anchor="middle" font-size="12">n/a</text>
+<text x="448.04" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 448.04,452.00)">DS_2T_2N_L2_DIFFERENTIATED_M1M1_W2</text>
+<rect x="471.83" y="350.12" width="21.38" height="83.88" fill="#666"/>
+<text x="482.52" y="343.12" text-anchor="middle" font-size="12">0.05</text>
+<text x="482.52" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 482.52,452.00)">DS_2T_3N_L1_DIFFERENTIATED_M1M1_W2</text>
+<rect x="506.31" y="346.34" width="21.38" height="87.66" fill="#666"/>
+<text x="517.00" y="339.34" text-anchor="middle" font-size="12">0.05</text>
+<text x="517.00" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 517.00,452.00)">DS_2T_3N_L1_UNIFORM_M1M1_W2</text>
+<rect x="540.79" y="206.66" width="21.38" height="227.34" fill="#666"/>
+<text x="551.48" y="199.66" text-anchor="middle" font-size="12">0.13</text>
+<text x="551.48" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 551.48,452.00)">DS_2T_4N_L0_DIFFERENTIATED_M1M1_W2</text>
+<rect x="575.27" y="146.72" width="21.38" height="287.28" fill="#666"/>
+<text x="585.96" y="139.72" text-anchor="middle" font-size="12">0.16</text>
+<text x="585.96" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 585.96,452.00)">DS_2T_4N_L0_UNIFORM_M1M1_W2</text>
+<rect x="609.75" y="145.82" width="21.38" height="288.18" fill="#666"/>
+<text x="620.44" y="138.82" text-anchor="middle" font-size="12">0.16</text>
+<text x="620.44" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 620.44,452.00)">DS_2T_4N_L0_UNIFORM_M1M2_W2</text>
+<rect x="644.23" y="350.12" width="21.38" height="83.88" fill="#666"/>
+<text x="654.92" y="343.12" text-anchor="middle" font-size="12">0.05</text>
+<text x="654.92" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 654.92,452.00)">DS_2T_4N_L1_DIFFERENTIATED_M1M1_W2</text>
+<rect x="678.71" y="350.66" width="21.38" height="83.34" fill="#666"/>
+<text x="689.40" y="343.66" text-anchor="middle" font-size="12">0.05</text>
+<text x="689.40" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 689.40,452.00)">DS_2T_4N_L1_DIFFERENTIATED_M1M2_W2</text>
+<rect x="713.19" y="345.08" width="21.38" height="88.92" fill="#666"/>
+<text x="723.88" y="338.08" text-anchor="middle" font-size="12">0.05</text>
+<text x="723.88" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 723.88,452.00)">DS_2T_4N_L1_UNIFORM_M1M1_W2</text>
+<rect x="747.67" y="344.72" width="21.38" height="89.28" fill="#666"/>
+<text x="758.36" y="337.72" text-anchor="middle" font-size="12">0.05</text>
+<text x="758.36" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 758.36,452.00)">DS_2T_4N_L1_UNIFORM_M1M2_W2</text>
+<text x="792.84" y="426.00" text-anchor="middle" font-size="12">n/a</text>
+<text x="792.84" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 792.84,452.00)">DS_2T_4N_L2_DIFFERENTIATED_M1M1_W2</text>
+<rect x="816.63" y="398.90" width="21.38" height="35.10" fill="#666"/>
+<text x="827.32" y="391.90" text-anchor="middle" font-size="12">0.02</text>
+<text x="827.32" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 827.32,452.00)">DS_2T_4N_L2_UNIFORM_M1M1_W2</text>
+<rect x="851.11" y="149.24" width="21.38" height="284.76" fill="#666"/>
+<text x="861.80" y="142.24" text-anchor="middle" font-size="12">0.16</text>
+<text x="861.80" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 861.80,452.00)">DS_3T_4N_L0_UNIFORM_M1M1M1_W2</text>
+<rect x="885.59" y="355.52" width="21.38" height="78.48" fill="#666"/>
+<text x="896.28" y="348.52" text-anchor="middle" font-size="12">0.04</text>
+<text x="896.28" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 896.28,452.00)">DS_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2</text>
+<rect x="920.07" y="345.08" width="21.38" height="88.92" fill="#666"/>
+<text x="930.76" y="338.08" text-anchor="middle" font-size="12">0.05</text>
+<text x="930.76" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 930.76,452.00)">DS_3T_4N_L1_UNIFORM_M1M1M1_W2</text>
+  </g>
+</svg>

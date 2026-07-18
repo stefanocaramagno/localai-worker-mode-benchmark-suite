@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "freeze-profile/v1",
+  "freezeProfileId": "FR_C6_MULTI_TENANCY",
+  "profileId": "FR_C6_MULTI_TENANCY",
+  "profileName": "C6 Multi-Tenancy Freeze Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_multi_tenancy_freeze",
+  "description": "Freeze profile for the multi-tenancy campaign evidence package.",
+  "cycleId": "C6",
+  "cycleConfigPath": "config/experimental-cycles/C6.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C6/freeze",
+  "artifactSnapshotRoot": "results/experimental-cycles/C6/artifacts",
+  "cycleLockJsonPath": "results/experimental-cycles/C6/freeze/C6-cycle-lock.json",
+  "cycleLockTextPath": "results/experimental-cycles/C6/freeze/C6-cycle-lock.txt",
+  "latestManifestPath": "results/experimental-cycles/C6/freeze/latest-freeze-manifest.json",
+  "latestTextSummaryPath": "results/experimental-cycles/C6/freeze/latest-freeze-summary.txt",
+  "manifestSuffix": "_freeze_manifest.json",
+  "textSuffix": "_freeze_summary.txt",
+  "writeLatestAliases": true,
+  "preserveExistingSnapshotByDefault": true,
+  "forceRebuildRequiresExplicitFlag": true,
+  "completionGatePolicy": {
+    "requiredBeforeFreeze": true,
+    "manifestPath": "results/experimental-cycles/C6/completion-gate/latest-completion-gate-manifest.json",
+    "acceptedStatuses": [
+      "completed",
+      "completed_with_unsupported_scenarios"
+    ],
+    "dryRunMayBypassRuntimeEvidence": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C6.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "scenarioIndex": "config/scenarios/multi-tenancy/MULTI_TENANCY_SCENARIOS_INDEX.json",
+    "tenancyProfilesIndex": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+    "reportingProfile": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+    "completionGateProfile": "config/completion-gate/profiles/CG_C6_MULTI_TENANCY.json",
+    "freezeProfile": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+    "infrastructureProfile": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+    "providerBinding": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+    "providerConfigExample": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c6-1cp-4w-8c16g.example.yaml",
+    "referenceScenarioConfig": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C6/execution/latest-campaign-execution-manifest.json",
+    "diagnosisRoot": "results/experimental-cycles/C6/diagnosis",
+    "reportingRoot": "results/experimental-cycles/C6/reporting",
+    "completionGateManifest": "results/experimental-cycles/C6/completion-gate/latest-completion-gate-manifest.json"
+  },
+  "snapshotSources": [
+    {
+      "key": "cycleConfig",
+      "type": "file",
+      "source": "config/experimental-cycles/C6.json",
+      "destination": "configuration/experimental-cycle/C6.json",
+      "required": true
+    },
+    {
+      "key": "infrastructureProfile",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "providerBinding",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "required": true
+    },
+    {
+      "key": "providerConfigExample",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c6-1cp-4w-8c16g.example.yaml",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/examples/cluster.c6-1cp-4w-8c16g.example.yaml",
+      "required": true
+    },
+    {
+      "key": "scenarioIndex",
+      "type": "file",
+      "source": "config/scenarios/multi-tenancy/MULTI_TENANCY_SCENARIOS_INDEX.json",
+      "destination": "configuration/scenarios/multi-tenancy/MULTI_TENANCY_SCENARIOS_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "tenancyProfilesIndex",
+      "type": "file",
+      "source": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+      "destination": "configuration/tenancy/TENANCY_PROFILES_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisProfile",
+      "source": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+      "destination": "configuration/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+      "type": "file",
+      "required": true
+    },
+    {
+      "key": "reportingProfile",
+      "source": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+      "destination": "configuration/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+      "type": "file",
+      "required": true
+    },
+    {
+      "key": "completionGateProfile",
+      "source": "config/completion-gate/profiles/CG_C6_MULTI_TENANCY.json",
+      "destination": "configuration/completion-gate/profiles/CG_C6_MULTI_TENANCY.json",
+      "type": "file",
+      "required": true
+    },
+    {
+      "key": "freezeProfile",
+      "source": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+      "destination": "configuration/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+      "type": "file",
+      "required": true
+    },
+    {
+      "key": "diagnosisRoot",
+      "type": "directory",
+      "source": "results/experimental-cycles/C6/diagnosis",
+      "destination": "runtime/diagnosis",
+      "required": true
+    },
+    {
+      "key": "reportingRoot",
+      "type": "directory",
+      "source": "results/experimental-cycles/C6/reporting",
+      "destination": "runtime/reporting",
+      "required": true
+    },
+    {
+      "key": "completionGateRoot",
+      "type": "directory",
+      "source": "results/experimental-cycles/C6/completion-gate",
+      "destination": "runtime/completion-gate",
+      "required": true
+    },
+    {
+      "key": "campaignExecutionRoot",
+      "type": "directory",
+      "source": "results/experimental-cycles/C6/execution",
+      "destination": "runtime/execution",
+      "required": true
+    },
+    {
+      "key": "variantEvidenceRoot",
+      "type": "directory",
+      "source": "results/experimental-cycles/C6/variants",
+      "destination": "runtime/variants",
+      "required": true
+    },
+    {
+      "key": "benchmarkRoot",
+      "type": "directory",
+      "source": "results/experimental-cycles/C6/benchmark",
+      "destination": "runtime/benchmark",
+      "required": true
+    }
+  ],
+  "governance": {
+    "documentationPolicy": "Freeze outputs are retained evidence artifacts, not project documentation source files.",
+    "comparisonPolicy": "The frozen package must preserve the C6 cycle-scoped infrastructure profile, provider binding, tenancy profiles, multi-tenant scenario evidence, and resource-contention evidence so multi-tenant comparisons remain auditable without freezing local credentials."
+  },
+  "artifactPolicy": {
+    "outputRoot": "results/experimental-cycles/C6/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C6/artifacts",
+    "cycleLockJson": "results/experimental-cycles/C6/freeze/C6-cycle-lock.json",
+    "cycleLockText": "results/experimental-cycles/C6/freeze/C6-cycle-lock.txt",
+    "latestManifestPath": "results/experimental-cycles/C6/freeze/latest-freeze-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C6/freeze/latest-freeze-summary.txt",
+    "manifestSuffix": "_freeze_manifest.json",
+    "textSuffix": "_freeze_summary.txt",
+    "writeLatestAliases": true,
+    "preserveExistingSnapshotByDefault": false,
+    "canonicalDirectories": [
+      "configuration",
+      "configuration/application-deployment",
+      "configuration/cluster-validation",
+      "configuration/completion-gate",
+      "configuration/experimental-cycle",
+      "configuration/freeze",
+      "configuration/infrastructure",
+      "configuration/latency",
+      "configuration/observability-minimal",
+      "configuration/placement",
+      "configuration/precheck",
+      "configuration/provisioning",
+      "configuration/reporting",
+      "configuration/scenarios",
+      "configuration/technical-diagnosis",
+      "configuration/tenancy",
+      "runtime",
+      "runtime/application",
+      "runtime/benchmark",
+      "runtime/completion-gate",
+      "runtime/diagnosis",
+      "runtime/execution",
+      "runtime/infrastructure",
+      "runtime/observability",
+      "runtime/reporting",
+      "runtime/variants"
+    ]
+  },
+  "primaryFrozenArtifacts": {
+    "reportingManifest": "runtime/reporting/reporting-manifest.json",
+    "reportMarkdown": "runtime/reporting/report.md",
+    "reportHtml": "runtime/reporting/index.html",
+    "scenarioSummaryCsv": "runtime/reporting/scenario-summary.csv",
+    "completionGateManifest": "runtime/completion-gate/latest-completion-gate-manifest.json",
+    "completionGateSummary": "runtime/completion-gate/latest-completion-gate-summary.txt",
+    "diagnosisJson": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.json",
+      "required": true,
+      "description": "Latest frozen campaign-level technical diagnosis JSON."
+    },
+    "diagnosisSummary": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.txt",
+      "required": true,
+      "description": "Latest frozen campaign-level technical diagnosis text diagnosis summary."
+    }
+  },
+  "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+  "providerBindingId": "BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+  "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+  "referenceScenarioByFamily": {
+    "multi-tenancy": "MT_SINGLE_TENANT_REFERENCE"
+  },
+  "referenceScenarioConfigByFamily": {
+    "multi-tenancy": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+  }
+}

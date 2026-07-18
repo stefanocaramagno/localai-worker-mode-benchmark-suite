@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "localai-mon-agent-profile/v1",
+  "monAgentProfileId": "MA_RESOURCE_AWARE",
+  "profileName": "Resource-Aware mon-agent Add-on Integration Profile",
+  "profileStatus": "active_provider_managed_resource_aware_profile",
+  "profileRole": "resource_aware_scheduler_metrics_annotation_agent",
+  "purpose": "Use the provider-managed mon-agent add-on as the runtime annotation source for resource-aware scheduler workflows.",
+  "cycleId": "C8",
+  "cycleConfigPath": "config/experimental-cycles/C8.json",
+  "kubeconfigPath": null,
+  "kubernetes": {
+    "kubectl": "kubectl",
+    "namespace": "observability",
+    "createNamespace": true,
+    "serviceAccountName": "mon-agent",
+    "deploymentName": "mon-agent"
+  },
+  "prometheus": {
+    "required": true,
+    "namespace": "observability",
+    "serviceName": "prometheus-stack-kube-prom-prometheus",
+    "port": 9090,
+    "url": "http://prometheus-stack-kube-prom-prometheus.observability:9090",
+    "requiredMetricFamilies": [
+      "node_cpu_seconds_total",
+      "node_memory_MemAvailable_bytes",
+      "kube_pod_labels",
+      "container_cpu_usage_seconds_total",
+      "container_memory_working_set_bytes",
+      "node_disk_read_bytes_total",
+      "node_disk_written_bytes_total",
+      "node_network_receive_bytes_total",
+      "node_network_transmit_bytes_total",
+      "container_fs_reads_bytes_total",
+      "container_fs_writes_bytes_total",
+      "container_network_receive_bytes_total",
+      "container_network_transmit_bytes_total"
+    ]
+  },
+  "namespaceSelection": {
+    "selector": "mon-agent/enabled=true",
+    "labelKey": "mon-agent/enabled",
+    "labelValue": "true",
+    "labelNamespacesOnApply": true,
+    "applicationNamespaces": [
+      "genai-tenant-a",
+      "genai-tenant-b",
+      "genai-tenant-c"
+    ],
+    "ignoreMissingApplicationNamespaces": false
+  },
+  "monAgentDeployment": {
+    "image": "ghcr.io/unict-cclab/mon-agent:v0.0.6",
+    "imagePullPolicy": "IfNotPresent",
+    "replicas": 1,
+    "scrapePeriodSeconds": 30,
+    "promqlRange": "5m",
+    "resources": {
+      "requests": {
+        "cpu": "50m",
+        "memory": "64Mi"
+      },
+      "limits": {
+        "cpu": "500m",
+        "memory": "256Mi"
+      }
+    },
+    "preferredNodeAffinity": {
+      "key": "nodepool",
+      "operator": "In",
+      "values": [
+        "management"
+      ],
+      "weight": 100
+    },
+    "tolerations": [
+      {
+        "key": "nodepool",
+        "operator": "Equal",
+        "value": "management",
+        "effect": "NoSchedule"
+      }
+    ],
+    "version": "v0.0.6",
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "runAsNonRoot": true,
+      "runAsUser": 65532,
+      "runAsGroup": 65532,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      }
+    },
+    "installationMode": "provider_managed",
+    "providerAddon": "mon_agent",
+    "providerVersion": "v1.0.3"
+  },
+  "annotationValidation": {
+    "requiredNodeAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "requiredDeploymentAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "skipDeploymentsWithZeroReplicas": true,
+    "requireAtLeastOneAnnotatedDeployment": false,
+    "waitTimeoutSeconds": 180,
+    "pollIntervalSeconds": 15,
+    "optionalNodeAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ],
+    "optionalDeploymentAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ],
+    "deploymentNames": [
+      "localai-server",
+      "localai-rpc-a",
+      "localai-rpc-b"
+    ],
+    "labelSelectorKey": "localai.benchmark/component",
+    "requireGroupAndAppLabels": true,
+    "requireSelectedDeployments": true,
+    "requireAllSelectedDeploymentsAnnotated": true,
+    "scenarioOverrides": "enabled_when_scenario_config_is_supplied"
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C8/observability/mon-agent",
+    "logsRoot": "results/experimental-cycles/C8/observability/mon-agent/logs",
+    "snapshotsRoot": "results/experimental-cycles/C8/observability/mon-agent/snapshots",
+    "manifestsRoot": "results/experimental-cycles/C8/observability/mon-agent/manifests",
+    "summariesRoot": "results/experimental-cycles/C8/observability/mon-agent/summaries",
+    "renderedManifestsRoot": "results/experimental-cycles/C8/observability/mon-agent/rendered",
+    "latestManifestPath": "results/experimental-cycles/C8/observability/mon-agent/latest-mon-agent-manifest.json",
+    "latestSummaryPath": "results/experimental-cycles/C8/observability/mon-agent/latest-mon-agent-summary.txt",
+    "latestValidationSnapshotPath": "results/experimental-cycles/C8/observability/mon-agent/latest-mon-agent-validation-snapshot.json",
+    "writeLatestAliases": true
+  },
+  "decisionPolicy": {
+    "appliedStatus": "applied",
+    "validatedStatus": "validated",
+    "captureOnlyStatus": "captured",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "requirePrometheusServiceBeforeApply": true,
+    "requireAnnotationsForValidateAction": true,
+    "providerManagedDeployment": true,
+    "skipManifestApplyWhenProviderManaged": true,
+    "requireExistingDeploymentWhenProviderManaged": true
+  },
+  "governance": {
+    "documentationPolicy": "This profile is operational configuration and not repository documentation.",
+    "annotationBoundary": "mon-agent annotations are runtime evidence used by scheduler-aware experiments. CPU and memory annotations are validation gates; disk-throughput and network-throughput annotations are optional evidence emitted by mon-agent v0.0.6.",
+    "schedulerCompatibility": "The resource-aware scheduler requires cpu-usage and memory-usage annotations on nodes and deployments. Additional mon-agent v0.0.6 annotations are captured only as observability evidence for C8.",
+    "networkMetricsPolicy": "Network-bandwidth annotations can be captured when available, but they are not used as optimization inputs in the initial resource-aware comparison. Network-aware scheduling remains out of scope for C8.",
+    "scenarioScopePolicy": "When a resource-aware-scheduler scenario config is supplied, application namespaces and expected LocalAI deployments are derived from that scenario instead of using the profile-wide fallback namespace list.",
+    "containerSecurityPolicy": "mon-agent runs as the numeric distroless non-root UID/GID 65532 so Kubernetes can verify runAsNonRoot deterministically at container creation time.",
+    "installationBoundary": "mon-agent is installed by the proxmox-k3s mon_agent add-on. The benchmark suite labels application namespaces, validates annotations and captures runtime evidence instead of applying a divergent mon-agent manifest.",
+    "providerAddon": "mon_agent",
+    "providerAddonVersion": "v0.0.6"
+  }
+}

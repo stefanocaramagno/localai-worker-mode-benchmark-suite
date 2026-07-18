@@ -1,0 +1,292 @@
+{
+  "schemaVersion": "infrastructure-profile/v1",
+  "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+  "profileName": "Multi-Tenancy Fixed 4-Worker K3s Cluster",
+  "status": "active_provider_backed_multi_tenancy_profile",
+  "profileCategory": "multi-tenancy",
+  "profileRole": "provider_backed_multi_tenancy_infrastructure",
+  "purpose": "Provider-backed fixed infrastructure profile with 4 worker nodes and fixed per-node capacity for evaluating LocalAI multi-tenant application-cluster coexistence under controlled placement and resource-contention conditions.",
+  "clusterIdentity": {
+    "clusterName": "genai-pb",
+    "kubernetesDistribution": "K3s",
+    "k3sVersion": "v1.35.3+k3s1",
+    "hardwareClass": "CPU-only",
+    "gpuAvailable": false
+  },
+  "provider": {
+    "providerId": "proxmox-k3s",
+    "providerType": "proxmox-k3s",
+    "mode": "proxmox_k3s_generated_cluster",
+    "managedByBenchmarkSuite": true,
+    "tool": "proxmox-k3s",
+    "toolRepository": "proxmox-k3s",
+    "providerBindingId": "BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S",
+    "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+    "providerIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_INDEX.json"
+  },
+  "lifecycle": {
+    "scope": "dynamically_provisioned_cluster",
+    "supportedModes": [
+      "reuse",
+      "ephemeral"
+    ],
+    "recommendedMode": "ephemeral",
+    "destroyAfterCycleDefault": true,
+    "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+    "clusterLifecycleModeDefault": "ephemeral",
+    "destroyClusterAfterCycleDefault": true,
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "lifecycleArtifactRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/lifecycle",
+    "provisioningLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/provisioning",
+    "deletionLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/deletion",
+    "policySelection": "Cycles may override the profile default only when the override is declared in the cycle profile and captured in the lifecycle manifest."
+  },
+  "nodeNaming": {
+    "nodeNamingConventionId": "GENAI_PB_REUSABLE_NODE_NAMING_V1",
+    "nodeNamingConventionPath": "config/infrastructure/node-naming/GENAI_PB_REUSABLE_NODE_NAMING_V1.json",
+    "strategy": "reusable_genai_pb_prefix",
+    "expectedControlPlaneNodeNames": [
+      "genai-pb-cp-01"
+    ],
+    "expectedWorkerNodeNames": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02",
+      "genai-pb-worker-03",
+      "genai-pb-worker-04"
+    ],
+    "notes": "Node names are compatibility handles for generated provider-backed node-count variants; infrastructureProfileId remains the authoritative environment identifier."
+  },
+  "nodeSummary": {
+    "controlPlaneCount": 1,
+    "workerCount": 4,
+    "totalWorkerVcpus": 32,
+    "totalWorkerMemoryGiB": 64,
+    "totalWorkerStorageGiB": 140
+  },
+  "nodes": {
+    "controlPlane": [
+      {
+        "logicalName": "control-plane-01",
+        "role": "control-plane",
+        "vcpus": 2,
+        "memoryGiB": 4,
+        "memoryMiB": 4096,
+        "storageGiB": 20,
+        "configuredName": "cp-01",
+        "expectedKubernetesNodeName": "genai-pb-cp-01",
+        "proxmoxNode": "minis02",
+        "ipAddress": "192.168.1.141"
+      }
+    ],
+    "workers": [
+      {
+        "logicalName": "worker-a",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "configuredName": "worker-01",
+        "expectedKubernetesNodeName": "genai-pb-worker-01",
+        "proxmoxNode": "minis03",
+        "ipAddress": "192.168.1.142",
+        "recommendedLabels": {
+          "nodepool": "workers"
+        },
+        "namingConventionRole": "genai_pb_worker"
+      },
+      {
+        "logicalName": "worker-b",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "configuredName": "worker-02",
+        "expectedKubernetesNodeName": "genai-pb-worker-02",
+        "proxmoxNode": "minis04",
+        "ipAddress": "192.168.1.143",
+        "recommendedLabels": {
+          "nodepool": "workers"
+        },
+        "namingConventionRole": "genai_pb_worker"
+      },
+      {
+        "logicalName": "worker-c",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "configuredName": "worker-03",
+        "expectedKubernetesNodeName": "genai-pb-worker-03",
+        "proxmoxNode": "minis05",
+        "ipAddress": "192.168.1.144",
+        "recommendedLabels": {
+          "nodepool": "workers"
+        },
+        "namingConventionRole": "genai_pb_worker"
+      },
+      {
+        "logicalName": "worker-d",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "configuredName": "worker-04",
+        "expectedKubernetesNodeName": "genai-pb-worker-04",
+        "proxmoxNode": "minis06",
+        "ipAddress": "192.168.1.145",
+        "recommendedLabels": {
+          "nodepool": "workers"
+        },
+        "namingConventionRole": "genai_pb_worker"
+      }
+    ]
+  },
+  "selectors": {
+    "workerSelectorMode": "provider_backed_reusable_node_names",
+    "workerNodeNames": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02",
+      "genai-pb-worker-03",
+      "genai-pb-worker-04"
+    ],
+    "recommendedLabelSelector": {
+      "nodepool": "workers"
+    },
+    "futureSelectorPreference": "label_based_node_pool"
+  },
+  "provisioning": {
+    "provisioningMode": "proxmox_k3s_generated_cluster",
+    "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c6-1cp-4w-8c16g.example.yaml",
+    "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c6-1cp-4w-8c16g.local.yaml",
+    "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c6-1cp-4w-8c16g/kubeconfig",
+    "providerConfigBindingStatus": "bound",
+    "notes": "Provider configuration is resolved through the proxmox-k3s provider binding associated with this infrastructure profile.",
+    "providerBindingId": "BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S",
+    "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+    "providerConfigTemplatePath": "config/infrastructure/providers/proxmox-k3s/templates/cluster.proxmox-k3s.template.yaml.tmpl",
+    "selectionPolicy": "prefer_local_config_for_real_execution; use_example_config_for_review_or_dry_run_only"
+  },
+  "validation": {
+    "expectedReadyNodeCount": 5,
+    "expectedControlPlaneNodes": [
+      "genai-pb-cp-01"
+    ],
+    "expectedWorkerNodes": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02",
+      "genai-pb-worker-03",
+      "genai-pb-worker-04"
+    ],
+    "expectedWorkerLabelSelector": "nodepool=workers",
+    "requireK3sDistribution": true,
+    "requireMetricsApi": true,
+    "minimumRequiredOutcomeBeforeBenchmarking": "validated"
+  },
+  "benchmarkCompatibility": {
+    "compatibleWithExistingLocalAiTopologies": true,
+    "intendedScenarioFamilies": [
+      "multi-tenancy"
+    ],
+    "requiresDedicatedProviderConfig": true,
+    "notes": "Use this profile for multi-tenant campaigns that keep the provider-backed infrastructure fixed while varying tenant topology, co-tenant model mix and co-tenant placement/co-location conditions.",
+    "compatibleWithProviderBackedReusableNodeNaming": true,
+    "compatibleWithHistoricalScNodeNaming": false
+  },
+  "cycleBinding": {
+    "recommendedCycleId": "C6",
+    "recommendedBaselineId": "MT_SINGLE_TENANT_REFERENCE",
+    "bindingStatus": "available_for_multi_tenancy",
+    "recommendedReferenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+    "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+  },
+  "comparisonPolicy": "C6 uses this fixed infrastructure to vary tenant topology, co-tenant model mix and co-tenant placement conditions while preserving the same provider-backed resource envelope.",
+  "governance": {
+    "profilePath": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+    "profileIndexPath": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "doNotInferEquivalenceFromNodeNames": true,
+    "equivalentInfrastructureReferenceProfileId": "INFRA_C3_1CP_4W_8C16G"
+  },
+  "templateAssumptions": {
+    "templateName": "ubuntu-24.04-template",
+    "storage": "pool01",
+    "bridge": "vmbr0",
+    "subnetMask": 24,
+    "gateway": "192.168.1.254",
+    "os": "ubuntu-24.04",
+    "bindingStatus": "informational_defaults"
+  },
+  "k3sServerArguments": {
+    "extraServerArgs": "--disable=traefik --disable=servicelb --disable-network-policy --embedded-registry",
+    "disabledComponents": [
+      "traefik",
+      "servicelb",
+      "network-policy"
+    ],
+    "embeddedRegistryEnabled": true
+  },
+  "observabilityAssumptions": {
+    "metricsServerExpected": true,
+    "jaegerExpectedByDefault": false,
+    "notes": "Minimal K3s observability is sufficient for this profile unless a later configuration explicitly requires additional add-ons."
+  },
+  "placementCompatibility": {
+    "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+    "supportedPlacementProfileIds": [
+      "PL_COLOCATED",
+      "PL_DISTRIBUTED_TWO_NODE",
+      "PL_SPREAD_WORKERS",
+      "PL_SERVER_SEPARATED",
+      "PL_BALANCED_STATIC"
+    ],
+    "defaultPlacementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+    "currentSelectorMode": "provider_backed_reusable_node_name_compatibility",
+    "preferredFutureSelectorMode": "label_based_node_pool",
+    "notes": "The C6 default placement profile follows the distributed two-node topology used by the multi-tenant scenario definitions; C6 keeps the provider-backed infrastructure fixed while varying tenant topology, co-tenant model mix and co-tenant placement conditions."
+  },
+  "methodologicalEquivalence": {
+    "equivalentInfrastructureProfileId": "INFRA_C3_1CP_4W_8C16G",
+    "equivalenceScope": "same logical cluster size, worker-node capacity, naming convention, IP plan and Proxmox placement assumptions; dedicated C6 profile and YAML paths exist for traceability while C6 varies tenant topology, co-tenant model mix and co-tenant placement conditions",
+    "controlledVariable": "tenant topology, co-tenant model mix and co-tenant placement conditions",
+    "nonVariedDimensions": [
+      "workerNodeCount",
+      "workerVcpusPerNode",
+      "workerMemoryGiBPerNode",
+      "workerStorageGiBPerNode",
+      "k3sVersion",
+      "clusterName",
+      "nodeNamingConvention",
+      "providerBackedInfrastructureProfile",
+      "workerNodeCapacity"
+    ],
+    "variedDimensions": [
+      "tenancyProfileId",
+      "tenantTopology",
+      "coTenantModelMix",
+      "coTenantPlacementConditions"
+    ]
+  },
+  "methodologicalNotes": [
+    "C6 intentionally preserves the fixed 4-worker provider-backed infrastructure shape used for previous fixed four-worker infrastructure studies, while varying only tenancy and application-cluster coexistence conditions."
+  ],
+  "associatedCycleId": "C6",
+  "description": "Provider-backed four-worker-node infrastructure profile for multi-tenant LocalAI application-cluster experiments.",
+  "physicalHostMaterialization": {
+    "policy": "available_proxmox_hosts_only",
+    "proxmoxNodesInUse": [
+      "minis04",
+      "minis05",
+      "minis06",
+      "minis02"
+    ],
+    "consolidatedWorkersOnHost": {
+      "proxmoxNode": "minis02",
+      "reason": "Additional Proxmox hosts are not part of the available execution environment; worker VM placement is therefore materialized on the declared available host."
+    },
+    "interpretationRule": "Infrastructure comparisons must use the declared profile and provider binding; identical Kubernetes node counts do not imply distinct physical Proxmox hosts for every worker VM."
+  }
+}

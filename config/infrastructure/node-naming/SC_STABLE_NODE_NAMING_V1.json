@@ -1,0 +1,71 @@
+{
+  "nodeNamingConventionId": "SC_STABLE_NODE_NAMING_V1",
+  "status": "legacy_historical_fixed_cluster_reference",
+  "purpose": "Legacy node naming reference for the historical fixed cluster identity. New provider-backed clusters must use a separate reusable provider-backed naming convention.",
+  "scope": {
+    "appliesTo": [
+      "historical fixed-cluster evidence",
+      "C0/B0 historical reference metadata",
+      "legacy compatibility checks that explicitly target sc-* nodes"
+    ],
+    "doesNotApplyTo": [
+      "new proxmox-k3s provider-backed clusters",
+      "C1 and later provider-backed infrastructure profiles",
+      "ephemeral provider-backed cluster deletion workflows"
+    ]
+  },
+  "namingRules": {
+    "clusterNamePrefix": "sc",
+    "toolNameComposition": "proxmox-k3s builds final node names as <cluster_name>-<configured_node_name> unless the configured name already starts with the same prefix.",
+    "controlPlane": {
+      "configuredNamePattern": "master-<NN>",
+      "expectedKubernetesNodeNamePattern": "sc-master-<NN>",
+      "initialConfiguredNames": [
+        "master-01"
+      ],
+      "initialExpectedNodeNames": [
+        "sc-master-01"
+      ]
+    },
+    "workers": {
+      "configuredNamePattern": "app-<NN>",
+      "expectedKubernetesNodeNamePattern": "sc-app-<NN>",
+      "initialConfiguredNames": [
+        "app-01",
+        "app-02"
+      ],
+      "initialExpectedNodeNames": [
+        "sc-app-01",
+        "sc-app-02"
+      ],
+      "extensionPattern": [
+        "sc-app-03",
+        "sc-app-04",
+        "sc-app-05"
+      ]
+    }
+  },
+  "methodologicalRationale": [
+    "The benchmark suite already contains validated topology compositions and historical evidence based on sc-master-01, sc-app-01, and sc-app-02.",
+    "Keeping the same deterministic naming convention for provisioned clusters avoids unnecessary refactoring before validating proxmox-k3s.",
+    "The infrastructure profile remains mandatory because identical node names do not imply identical CPU, memory, storage, provisioning mode, or installed add-ons."
+  ],
+  "operationalRequirements": [
+    "Do not create new provider-backed clusters with the sc-* prefix.",
+    "Do not delete or recreate the historical fixed-cluster nodes through provider-backed lifecycle commands.",
+    "Use this convention only when interpreting historical C0/B0 evidence or explicitly targeting the historical fixed cluster."
+  ],
+  "riskControls": {
+    "vmNameCollisionRisk": "Before provisioning, ensure that Proxmox does not already contain active VMs with the same generated names for the target experiment, or intentionally delete/reuse the target cluster according to the lifecycle policy.",
+    "nodeIdentityRisk": "Do not infer hardware equivalence from node names; always use the declared infrastructureProfileId in run metadata and reports.",
+    "futurePortabilityRisk": "If arbitrary external clusters must be supported later, introduce label-based placement or node-role abstraction in a new cycle without rewriting C0."
+  },
+  "associatedProfiles": [
+    "INFRA_C0_1CP_2W_8C16G"
+  ],
+  "recommendedNextCycleId": null,
+  "recommendedNextBaselineId": null,
+  "schemaVersion": "node-naming-convention/v1",
+  "path": "config/infrastructure/node-naming/SC_STABLE_NODE_NAMING_V1.json",
+  "legacyAssociatedProfileIds": []
+}

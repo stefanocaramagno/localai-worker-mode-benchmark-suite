@@ -1,0 +1,425 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LocalAI mon-agent integration profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "monAgentProfileId",
+    "profileName",
+    "profileStatus",
+    "kubernetes",
+    "prometheus",
+    "namespaceSelection",
+    "monAgentDeployment",
+    "annotationValidation",
+    "artifactPolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "localai-mon-agent-profile/v1"
+    },
+    "monAgentProfileId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profileName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profileStatus": {
+      "type": "string"
+    },
+    "profileRole": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kubeconfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kubernetes": {
+      "type": "object",
+      "required": [
+        "kubectl",
+        "namespace",
+        "serviceAccountName",
+        "deploymentName"
+      ],
+      "properties": {
+        "kubectl": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "serviceAccountName": {
+          "type": "string"
+        },
+        "deploymentName": {
+          "type": "string"
+        },
+        "createNamespace": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "prometheus": {
+      "type": "object",
+      "required": [
+        "url",
+        "namespace",
+        "serviceName"
+      ],
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "serviceName": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "requiredMetricFamilies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "namespaceSelection": {
+      "type": "object",
+      "required": [
+        "selector",
+        "labelKey",
+        "labelValue",
+        "applicationNamespaces"
+      ],
+      "properties": {
+        "selector": {
+          "type": "string"
+        },
+        "labelKey": {
+          "type": "string"
+        },
+        "labelValue": {
+          "type": "string"
+        },
+        "applicationNamespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "labelNamespacesOnApply": {
+          "type": "boolean"
+        },
+        "requiresIstioInjectionLabel": {
+          "type": "boolean"
+        },
+        "istioInjectionLabelKey": {
+          "type": "string"
+        },
+        "istioInjectionLabelValue": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "monAgentDeployment": {
+      "type": "object",
+      "required": [
+        "image",
+        "imagePullPolicy",
+        "replicas",
+        "scrapePeriodSeconds",
+        "promqlRange"
+      ],
+      "properties": {
+        "image": {
+          "type": "string"
+        },
+        "imagePullPolicy": {
+          "type": "string"
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scrapePeriodSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "promqlRange": {
+          "type": "string"
+        },
+        "resources": {
+          "type": "object"
+        },
+        "preferredNodeAffinity": {
+          "type": "object"
+        },
+        "tolerations": {
+          "type": "array"
+        },
+        "version": {
+          "type": "string"
+        },
+        "securityContext": {
+          "type": "object",
+          "properties": {
+            "allowPrivilegeEscalation": {
+              "type": "boolean"
+            },
+            "runAsNonRoot": {
+              "type": "boolean"
+            },
+            "runAsUser": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "runAsGroup": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "capabilities": {
+              "type": "object"
+            },
+            "seccompProfile": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": true
+        },
+        "installationMode": {
+          "type": "string"
+        },
+        "providerAddon": {
+          "type": "string"
+        },
+        "providerVersion": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "annotationValidation": {
+      "type": "object",
+      "required": [
+        "requiredNodeAnnotations",
+        "requiredDeploymentAnnotations",
+        "waitTimeoutSeconds",
+        "pollIntervalSeconds"
+      ],
+      "properties": {
+        "requiredNodeAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredDeploymentAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "skipDeploymentsWithZeroReplicas": {
+          "type": "boolean"
+        },
+        "requireAtLeastOneAnnotatedDeployment": {
+          "type": "boolean"
+        },
+        "waitTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pollIntervalSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "optionalNodeAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optionalDeploymentAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredNodeAnnotationPrefixes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredDeploymentAnnotationPrefixes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optionalNodeAnnotationPrefixes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optionalDeploymentAnnotationPrefixes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredDeploymentLabels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "captureAllMatchingDynamicAnnotations": {
+          "type": "boolean"
+        },
+        "expectedSelectedDeploymentCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requireExpectedSelectedDeploymentCount": {
+          "type": "boolean"
+        },
+        "nodeSelectorLabels": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean"
+            ]
+          }
+        },
+        "requireWorkerNodeAnnotationsOnly": {
+          "type": "boolean"
+        },
+        "requiredGatewayTrafficKey": {
+          "type": "string"
+        },
+        "requireExactGatewayTrafficKey": {
+          "type": "boolean"
+        },
+        "requireGatewayTrafficAnnotation": {
+          "type": "boolean"
+        },
+        "gatewayTrafficRequiredRoleLabelValue": {
+          "type": "string"
+        },
+        "gatewayTrafficRequiredOnlyForMasterRole": {
+          "type": "boolean"
+        },
+        "gatewayTrafficAlternativeAnnotationGroups": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "alternativeDeploymentAnnotationGroups": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "artifactPolicy": {
+      "type": "object",
+      "required": [
+        "root",
+        "logsRoot",
+        "snapshotsRoot",
+        "manifestsRoot",
+        "summariesRoot",
+        "renderedManifestsRoot",
+        "latestManifestPath",
+        "latestSummaryPath",
+        "latestValidationSnapshotPath",
+        "writeLatestAliases"
+      ],
+      "properties": {
+        "root": {
+          "type": "string"
+        },
+        "logsRoot": {
+          "type": "string"
+        },
+        "snapshotsRoot": {
+          "type": "string"
+        },
+        "manifestsRoot": {
+          "type": "string"
+        },
+        "summariesRoot": {
+          "type": "string"
+        },
+        "renderedManifestsRoot": {
+          "type": "string"
+        },
+        "latestManifestPath": {
+          "type": "string"
+        },
+        "latestSummaryPath": {
+          "type": "string"
+        },
+        "latestValidationSnapshotPath": {
+          "type": "string"
+        },
+        "writeLatestAliases": {
+          "type": "boolean"
+        },
+        "perVariantOutputRootRequired": {
+          "type": "boolean"
+        },
+        "perVariantOutputRootPattern": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "decisionPolicy": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

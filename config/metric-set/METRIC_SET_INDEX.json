@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "metric_set-index/v1",
+  "defaultMetricSetProfileId": "MS_STANDARD_BENCHMARK_METRICS",
+  "metricSetProfiles": [
+    {
+      "profileId": "MS_STANDARD_BENCHMARK_METRICS",
+      "profilePath": "config/metric-set/profiles/MS_STANDARD_BENCHMARK_METRICS.json",
+      "profileType": "metric_set",
+      "description": "Minimum mandatory metric set for all benchmark and validation runs. The profile fixes the canonical client-side and cluster-side metrics that must always be collected or derivable from run artifacts."
+    }
+  ]
+}

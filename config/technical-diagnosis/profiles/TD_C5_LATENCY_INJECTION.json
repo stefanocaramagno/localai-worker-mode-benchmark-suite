@@ -1,0 +1,106 @@
+{
+  "technicalDiagnosisProfileId": "TD_C5_LATENCY_INJECTION",
+  "profileId": "TD_C5_LATENCY_INJECTION",
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "profileName": "C5 Latency Injection Technical Diagnosis Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_latency_injection_technical_diagnosis",
+  "description": "Technical diagnosis profile for the provider-backed latency-injection campaign.",
+  "cycleId": "C5",
+  "cycleConfigPath": "config/experimental-cycles/C5.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "validationSummaryRelativePath": "results/experimental-cycles/C1/diagnosis/C1_regeneration_diagnosis_all_diagnosis.json",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "familyOrder": [
+    "latency-injection"
+  ],
+  "scenarioConfigRoots": {
+    "latency-injection": "config/scenarios/latency-injection"
+  },
+  "scenarioConfigFiles": {
+    "latency-injection": [
+      "config/scenarios/latency-injection/LI_L0_NONE.json",
+      "config/scenarios/latency-injection/LI_L1_EDGE_NEAR.json",
+      "config/scenarios/latency-injection/LI_L2_EDGE_REMOTE.json",
+      "config/scenarios/latency-injection/LI_L3_EXTREME.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "latency-injection": "results/experimental-cycles/C5/benchmark/latency-injection"
+  },
+  "referenceScenarioByFamily": {
+    "latency-injection": "LI_L0_NONE"
+  },
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C5/diagnosis",
+  "familyScope": "all",
+  "expectedFamilies": [
+    "latency-injection"
+  ],
+  "families": [
+    "latency-injection"
+  ],
+  "fixedDimensionsByFamily": {
+    "latency-injection": [
+      "infrastructure=INFRA_C5_1CP_4W_8C16G",
+      "model=M1",
+      "LocalAI worker-count=W4",
+      "workload=WL2",
+      "placement=PL_SPREAD_WORKERS",
+      "worker node capacity=8 vCPU / 16 GiB"
+    ]
+  },
+  "variedDimensionByFamily": {
+    "latency-injection": "latency profile"
+  },
+  "familyDisplayNames": {
+    "latency-injection": "C5 Latency Injection"
+  },
+  "campaignAwareDiagnosis": {
+    "enabled": true,
+    "campaignExecutionManifest": "results/experimental-cycles/C5/execution/latest-campaign-execution-manifest.json",
+    "variantEvidenceRoot": "results/experimental-cycles/C5/variants",
+    "retainUnsupportedScenarioEvidence": true
+  },
+  "interpretationPolicy": {
+    "minimumMeasuredVariantsForComparativeClaims": 2,
+    "treatUnsupportedAsEvidence": true,
+    "avoidOverstatingWeakSignals": true,
+    "primaryQuestion": "Whether injected network latency changes LocalAI worker-mode performance under fixed infrastructure, workload and placement."
+  },
+  "latencyInjection": {
+    "fixedDimensions": [
+      "infrastructure",
+      "model",
+      "workload",
+      "LocalAI worker count",
+      "placement profile",
+      "per-node worker capacity"
+    ],
+    "variedDimensions": [
+      "latency profile"
+    ],
+    "referenceScenarioId": "LI_L0_NONE",
+    "scenarioOrdering": [
+      "LI_L0_NONE",
+      "LI_L1_EDGE_NEAR",
+      "LI_L2_EDGE_REMOTE",
+      "LI_L3_EXTREME"
+    ],
+    "minimumMeasuredVariantsForPerformanceComparison": 2,
+    "interpretation": "Measured latency variants are compared only when infrastructure, model, workload, LocalAI worker count and placement remain fixed."
+  },
+  "minimumScenarioSamples": 1,
+  "referenceScenarioId": "LI_L0_NONE",
+  "referenceScenarioConfigPath": "config/scenarios/latency-injection/LI_L0_NONE.json",
+  "referenceScenarioConfigByFamily": {
+    "latency-injection": "config/scenarios/latency-injection/LI_L0_NONE.json"
+  }
+}

@@ -1,0 +1,196 @@
+{
+  "technicalDiagnosisIndexId": "TECHNICAL_DIAGNOSIS_INDEX",
+  "status": "active",
+  "purpose": "Canonical registry for technical diagnosis profiles used by historical and provider-backed LocalAI worker-mode benchmark cycles.",
+  "defaultHistoricalProfileId": "TD_C0_HISTORICAL_FIXED_CLUSTER",
+  "defaultProviderBackedProfileId": "TD_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "technicalDiagnosisProfileId": "TD_C0_HISTORICAL_FIXED_CLUSTER",
+      "path": "config/technical-diagnosis/profiles/TD_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "role": "historical_fixed_cluster_technical_diagnosis",
+      "cycleId": "C0",
+      "baselineId": "B0",
+      "outputRoot": "results/experimental-cycles/C0/diagnosis",
+      "mode": "legacy_sweep_diagnosis",
+      "status": "active"
+    },
+    {
+      "technicalDiagnosisProfileId": "TD_C1_PROVIDER_BACKED_BASELINE",
+      "path": "config/technical-diagnosis/profiles/TD_C1_PROVIDER_BACKED_BASELINE.json",
+      "role": "provider_backed_baseline_technical_diagnosis",
+      "cycleId": "C1",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C1/diagnosis",
+      "mode": "provider_aware_baseline_diagnosis",
+      "status": "active",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json"
+    },
+    {
+      "technicalDiagnosisProfileId": "TD_C2_RESOURCE_VARIATION",
+      "path": "config/technical-diagnosis/profiles/TD_C2_RESOURCE_VARIATION.json",
+      "role": "provider_backed_resource_variation_technical_diagnosis",
+      "cycleId": "C2",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C2/diagnosis",
+      "mode": "resource_variation_campaign_diagnosis",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "RV_8C16G",
+      "referenceScenarioConfigPath": "config/scenarios/resource-variation/RV_8C16G.json",
+      "referenceScenarioByFamily": {
+        "resource-variation": "RV_8C16G"
+      },
+      "referenceScenarioConfigByFamily": {
+        "resource-variation": "config/scenarios/resource-variation/RV_8C16G.json"
+      },
+      "status": "active",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant"
+    },
+    {
+      "technicalDiagnosisProfileId": "TD_C3_NODE_COUNT_VARIATION",
+      "path": "config/technical-diagnosis/profiles/TD_C3_NODE_COUNT_VARIATION.json",
+      "role": "provider_backed_node_count_variation_technical_diagnosis",
+      "cycleId": "C3",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C3/diagnosis",
+      "mode": "node_count_variation_campaign_diagnosis",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "NC_2N",
+      "referenceScenarioConfigPath": "config/scenarios/node-count-variation/NC_2N.json",
+      "referenceScenarioByFamily": {
+        "node-count-variation": "NC_2N"
+      },
+      "status": "active",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant",
+      "referenceScenarioConfigByFamily": {
+        "node-count-variation": "config/scenarios/node-count-variation/NC_2N.json"
+      }
+    },
+    {
+      "technicalDiagnosisProfileId": "TD_C4_PLACEMENT_VARIATION",
+      "path": "config/technical-diagnosis/profiles/TD_C4_PLACEMENT_VARIATION.json",
+      "role": "provider_backed_placement_variation_technical_diagnosis",
+      "cycleId": "C4",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C4/diagnosis",
+      "mode": "placement_variation_campaign_diagnosis",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "PLC_SPREAD_WORKERS",
+      "referenceScenarioConfigPath": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+      "referenceScenarioByFamily": {
+        "placement-variation": "PLC_SPREAD_WORKERS"
+      },
+      "status": "active",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C4_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "placement-variation": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+      }
+    },
+    {
+      "path": "config/technical-diagnosis/profiles/TD_C5_LATENCY_INJECTION.json",
+      "cycleId": "C5",
+      "family": "latency-injection",
+      "status": "active",
+      "technicalDiagnosisProfileId": "TD_C5_LATENCY_INJECTION",
+      "role": "provider_backed_latency_injection_technical_diagnosis",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C5/diagnosis",
+      "mode": "latency_injection_campaign_diagnosis",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "LI_L0_NONE",
+      "referenceScenarioConfigPath": "config/scenarios/latency-injection/LI_L0_NONE.json",
+      "referenceScenarioByFamily": {
+        "latency-injection": "LI_L0_NONE"
+      },
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C5_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "latency-injection": "config/scenarios/latency-injection/LI_L0_NONE.json"
+      }
+    },
+    {
+      "path": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+      "cycleId": "C6",
+      "family": "multi-tenancy",
+      "status": "active",
+      "technicalDiagnosisProfileId": "TD_C6_MULTI_TENANCY",
+      "role": "provider_backed_multi_tenancy_technical_diagnosis",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C6/diagnosis",
+      "mode": "multi_tenancy_campaign_diagnosis",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+      "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+      "referenceScenarioByFamily": {
+        "multi-tenancy": "MT_SINGLE_TENANT_REFERENCE"
+      },
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "multi-tenancy": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+      }
+    },
+    {
+      "path": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "cycleId": "C7",
+      "family": "default-scheduler",
+      "status": "active",
+      "technicalDiagnosisProfileId": "TD_C7_DEFAULT_SCHEDULER_BASELINE",
+      "role": "provider_backed_default_scheduler_baseline_technical_diagnosis",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C7/diagnosis",
+      "mode": "default_scheduler_baseline_campaign_diagnosis",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+      "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+      "referenceScenarioByFamily": {
+        "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+      },
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant",
+      "referenceScenarioConfigByFamily": {
+        "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+      }
+    },
+    {
+      "technicalDiagnosisProfileId": "TD_C8_RESOURCE_AWARE_SCHEDULER",
+      "path": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json",
+      "role": "provider_backed_resource_aware_scheduler_technical_diagnosis",
+      "cycleId": "C8",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C8/diagnosis",
+      "status": "active",
+      "mode": "resource_aware_scheduler_campaign_diagnosis",
+      "scenarioFamily": "resource-aware-scheduler",
+      "scenarioIndexPath": "config/scenarios/resource-aware-scheduler/RESOURCE_AWARE_SCHEDULER_SCENARIOS_INDEX.json"
+    },
+    {
+      "technicalDiagnosisProfileId": "TD_C9_NETWORK_AWARE_SCHEDULER",
+      "path": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+      "role": "provider_backed_network_aware_scheduler_technical_diagnosis",
+      "cycleId": "C9",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C9/diagnosis",
+      "status": "active",
+      "mode": "network_aware_scheduler_campaign_diagnosis",
+      "scenarioFamily": "network-aware-scheduler",
+      "scenarioIndexPath": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+      "infrastructureProfileId": "INFRA_C9_1CP_4W_8C16G"
+    }
+  ],
+  "selectionRules": [
+    "Use TD_C0_HISTORICAL_FIXED_CLUSTER only for the historical fixed-cluster consolidated pilot diagnosis.",
+    "Use TD_C1_PROVIDER_BACKED_BASELINE for the provider-backed C1 baseline diagnosis.",
+    "Provider-backed technical diagnosis must treat infrastructure, provider, cluster validation, deployment, minimal observability and baseline benchmark evidence as part of the diagnostic context.",
+    "Baseline-only provider-backed cycles must not require worker-count, workload, model or placement sweep coverage before those comparison cycles are explicitly executed.",
+    "Use TD_C7_DEFAULT_SCHEDULER_BASELINE for C7 default-scheduler diagnosis, combining benchmark metrics with scheduler-decision evidence and placement-classification artifacts.",
+    "Use TD_C9_NETWORK_AWARE_SCHEDULER for C9 network-aware scheduler diagnosis, combining tenant-level metrics with scheduler decisions, placement classifications and network-aware telemetry evidence."
+  ]
+}

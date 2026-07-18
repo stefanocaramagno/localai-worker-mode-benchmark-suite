@@ -1,0 +1,72 @@
+{
+  "profileId": "TC_PROVIDER_BACKED_PRECHECK_TEMPLATE",
+  "description": "Provider-backed benchmark technical pre-check template used to generate runtime pre-check profiles for campaign variants.",
+  "kubeconfig": "__GENERATED_KUBECONFIG_PATH__",
+  "namespace": "localai-benchmark",
+  "expectedReadyNodes": [],
+  "expectedWorkerNodes": [],
+  "allowedPodPhases": [
+    "Running",
+    "Succeeded"
+  ],
+  "minimumNamespacePods": 1,
+  "criticalWaitingReasons": [
+    "CrashLoopBackOff",
+    "ImagePullBackOff",
+    "ErrImagePull",
+    "CreateContainerConfigError",
+    "CreateContainerError",
+    "InvalidImageName"
+  ],
+  "maxTotalRestartsInNamespace": 0,
+  "requireMetricsApi": true,
+  "maxNodeCpuPercent": 95,
+  "maxNodeMemoryPercent": 95,
+  "defaultOutputRoot": "__GENERATED_OUTPUT_ROOT__",
+  "serviceReadinessTimeoutSeconds": 420,
+  "serviceReadinessPollIntervalMilliseconds": 2000,
+  "serviceReadinessRequestTimeoutSeconds": 10,
+  "clusterReadinessPolicy": {
+    "type": "explicit_nodes",
+    "nodeSource": "variant_infrastructure_profile",
+    "expectedReadyNodesSemantic": "All control-plane and worker nodes declared by the selected infrastructure profile must exist and be Ready before benchmark execution."
+  },
+  "workerPlacementPolicy": {
+    "type": "generated_from_variant_profile",
+    "allowedWorkerNodeSource": "variant_worker_pool",
+    "allowColocatedPlacement": true,
+    "note": "Runtime campaign profiles replace this template policy with the effective placement and worker-node expectations for each variant."
+  },
+  "templateMetadata": {
+    "templateId": "TC_PROVIDER_BACKED_PRECHECK_TEMPLATE",
+    "templateType": "provider_backed_campaign_precheck",
+    "pathRole": "runtime_profile_template",
+    "generatedFields": [
+      "profileId",
+      "description",
+      "kubeconfig",
+      "expectedReadyNodes",
+      "expectedWorkerNodes",
+      "defaultOutputRoot",
+      "clusterReadinessPolicy",
+      "workerPlacementPolicy",
+      "restartTolerancePolicy",
+      "namespace",
+      "additionalNamespaces",
+      "namespaceValidationPolicy"
+    ],
+    "intendedConsumers": [
+      "scripts/experimental-cycles/run-experimental-campaign.py"
+    ]
+  },
+  "additionalNamespaces": [],
+  "namespaceValidationPolicy": {
+    "primaryNamespace": "localai-benchmark",
+    "additionalNamespaces": [],
+    "validateAdditionalNamespaces": false,
+    "minimumPodsPerAdditionalNamespace": 1,
+    "treatAdditionalNamespaceWarningsAsBlocking": true,
+    "namespaceRoles": [],
+    "description": "Additional namespaces are validated when a runtime scenario deploys multiple namespace-scoped application clusters."
+  }
+}

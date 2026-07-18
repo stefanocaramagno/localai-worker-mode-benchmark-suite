@@ -1,0 +1,84 @@
+{
+  "latencyProfilesIndexId": "LATENCY_PROFILES_INDEX",
+  "status": "active",
+  "purpose": "Registry of latency profiles used by latency-injection and network-aware scheduling campaigns.",
+  "schemaPath": "config/latency/schemas/LATENCY_PROFILE_SCHEMA_V1.json",
+  "profiles": [
+    {
+      "latencyProfileId": "L0_NONE",
+      "path": "config/latency/profiles/L0_NONE.json",
+      "enabled": true,
+      "delayMs": 0,
+      "jitterMs": 0,
+      "packetLossPercent": 0.0,
+      "status": "active"
+    },
+    {
+      "latencyProfileId": "L1_EDGE_NEAR",
+      "path": "config/latency/profiles/L1_EDGE_NEAR.json",
+      "enabled": true,
+      "delayMs": 50,
+      "jitterMs": 5,
+      "packetLossPercent": 0.0,
+      "status": "active"
+    },
+    {
+      "latencyProfileId": "L2_EDGE_REMOTE",
+      "path": "config/latency/profiles/L2_EDGE_REMOTE.json",
+      "enabled": true,
+      "delayMs": 150,
+      "jitterMs": 15,
+      "packetLossPercent": 0.0,
+      "status": "active"
+    },
+    {
+      "latencyProfileId": "L3_EXTREME",
+      "path": "config/latency/profiles/L3_EXTREME.json",
+      "enabled": true,
+      "delayMs": 600,
+      "jitterMs": 50,
+      "packetLossPercent": 0.0,
+      "status": "active"
+    },
+    {
+      "latencyProfileId": "L1_INTER_GROUP_MODERATE",
+      "path": "config/latency/profiles/L1_INTER_GROUP_MODERATE.json",
+      "enabled": true,
+      "delayMs": 50,
+      "jitterMs": 5,
+      "packetLossPercent": 0.0,
+      "status": "active",
+      "profileRole": "network_aware_inter_group_latency_profile",
+      "implementationMode": "annotation_controlled_inter_group_latency_matrix"
+    },
+    {
+      "latencyProfileId": "L2_INTER_GROUP_HIGH",
+      "path": "config/latency/profiles/L2_INTER_GROUP_HIGH.json",
+      "enabled": true,
+      "delayMs": 150,
+      "jitterMs": 15,
+      "packetLossPercent": 0.0,
+      "status": "active",
+      "profileRole": "network_aware_inter_group_latency_profile",
+      "implementationMode": "annotation_controlled_inter_group_latency_matrix"
+    },
+    {
+      "latencyProfileId": "L3_INTER_GROUP_EXTREME",
+      "path": "config/latency/profiles/L3_INTER_GROUP_EXTREME.json",
+      "enabled": true,
+      "delayMs": 300,
+      "jitterMs": 30,
+      "packetLossPercent": 0.0,
+      "status": "active",
+      "profileRole": "network_aware_inter_group_latency_profile",
+      "implementationMode": "annotation_controlled_inter_group_latency_matrix"
+    }
+  ],
+  "governanceRules": [
+    "C9 inter-group profiles model a four-worker topology with two close worker groups and higher cross-group network cost.",
+    "C9 inter-group profiles are materialized as node annotation matrices consumed by the network-aware scheduler and captured as runtime evidence.",
+    "The no-latency profile is retained as the campaign-local reference scenario.",
+    "Injected or annotated latency state must be reset after the benchmark or cleaned up by ephemeral cluster deletion.",
+    "Latency-profile failures must stop benchmark execution for the affected variant because measurements without the requested latency model would not be comparable."
+  ]
+}

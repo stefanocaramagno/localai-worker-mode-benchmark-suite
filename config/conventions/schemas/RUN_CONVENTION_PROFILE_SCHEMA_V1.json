@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "RUN_CONVENTION_PROFILE_SCHEMA_V1.json",
+  "title": "Run convention profiles profile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "runConventionId",
+    "version",
+    "timezone",
+    "runIdFormat",
+    "utcTimestampCompactPattern",
+    "runManifestSuffix",
+    "csvPrefixFormat",
+    "replicaPolicy",
+    "requiredRunMetadata"
+  ],
+  "properties": {
+    "runConventionId": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "runIdFormat": {
+      "type": "string"
+    },
+    "utcTimestampCompactPattern": {
+      "type": "string"
+    },
+    "runManifestSuffix": {
+      "type": "string"
+    },
+    "csvPrefixFormat": {
+      "type": "string"
+    },
+    "replicaPolicy": {
+      "type": "object"
+    },
+    "requiredRunMetadata": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  }
+}

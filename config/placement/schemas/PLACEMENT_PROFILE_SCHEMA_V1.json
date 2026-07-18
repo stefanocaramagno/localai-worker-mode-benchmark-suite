@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "placement-profile-schema/v1",
+  "schemaId": "PLACEMENT_PROFILE_SCHEMA_V1",
+  "status": "active",
+  "purpose": "Validation schema for LocalAI placement profiles used to describe server and RPC-worker placement independently from workload, model, and infrastructure profiles.",
+  "requiredTopLevelFields": [
+    "schemaVersion",
+    "placementProfileId",
+    "profileName",
+    "status",
+    "strategy",
+    "placementIntent",
+    "researchQuestion",
+    "selectorPolicy",
+    "serverPlacement",
+    "workerPlacement",
+    "kustomize",
+    "expectedTradeoffs",
+    "governance"
+  ],
+  "requiredSelectorPolicyFields": [
+    "selectorMode",
+    "currentCompatibilityMode",
+    "preferredFutureMode"
+  ],
+  "requiredWorkerPlacementFields": [
+    "defaultWorkerNodeMap",
+    "activeWorkerNodeMapByWorkerCount",
+    "nodePoolPolicy"
+  ],
+  "validationRules": [
+    "Placement profiles must describe placement intent without embedding workload, model, or benchmark-duration parameters.",
+    "Placement profiles may reference stable node names for compatibility, but must also declare the intended node-pool or label-based direction.",
+    "Placement profiles used by a deployment profile must expose the Kustomize topology target or explicitly declare that the target is not yet active.",
+    "Placement profiles must declare the expected resource/network trade-off that motivates their use.",
+    "Placement profiles must be referenced by scenarios and deployment profiles through placementProfileId and placementProfilePath.",
+    "Historical fixed-cluster scenario identifiers such as PL1/PL2 must be represented as legacy mappings, not as canonical placementProfileId values.",
+    "When a placement profile has both application worker-count and infrastructure worker-node mappings, it must declare mapping semantics and the canonical selection policy for provider-backed campaigns.",
+    "Kustomize topology mappings should use compositionByApplicationWorkerCount for LocalAI worker-count selection and compositionByInfrastructureWorkerCount for provider-backed infrastructure worker-node selection; compositionByWorkerCount is a legacy compatibility field only."
+  ],
+  "recommendedTopLevelFields": [
+    "identifierGovernance"
+  ],
+  "recommendedIdentifierGovernanceFields": [
+    "canonicalIdentifierField",
+    "canonicalPlacementProfileId",
+    "historicalFixedClusterScenarioIds",
+    "providerBackedPlacementScenarioIds",
+    "legacyScenarioUsage",
+    "providerBackedUsage"
+  ],
+  "recommendedWorkerPlacementFields": [
+    "activeWorkerNodeMapByInfrastructureWorkerCount",
+    "mappingSemantics"
+  ],
+  "recommendedKustomizeFields": [
+    "compositionSelectionPolicy",
+    "compositionByInfrastructureWorkerCount",
+    "compositionByApplicationWorkerCount"
+  ]
+}

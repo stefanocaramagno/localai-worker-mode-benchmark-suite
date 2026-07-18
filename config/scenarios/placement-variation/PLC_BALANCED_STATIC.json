@@ -1,0 +1,152 @@
+{
+  "scenarioId": "PLC_BALANCED_STATIC",
+  "variantId": "PLC_BALANCED_STATIC",
+  "referenceBaselineId": "B1",
+  "referenceScenarioId": "PLC_SPREAD_WORKERS",
+  "status": "active_provider_backed_placement_variation",
+  "purpose": "Provider-backed placement-variation scenario under fixed infrastructure, model, workload and LocalAI worker count.",
+  "workerMode": "worker",
+  "modelScenario": "M1",
+  "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "workerScenario": "W4",
+  "resolvedWorkerCount": 4,
+  "workloadScenario": "WL2",
+  "resolvedWorkload": {
+    "users": 2,
+    "spawnRate": 1,
+    "runTime": "2m"
+  },
+  "namespaceManifest": "infra/k8s/compositions/foundation/namespace",
+  "storageManifest": "infra/k8s/compositions/foundation/storage",
+  "baseUrl": "http://localhost:8080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "resultsRoot": "results/experimental-cycles/C4/benchmark/placement-variation",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b",
+    "localai-rpc-c",
+    "localai-rpc-d"
+  ],
+  "expectedInactiveRpcWorkers": [],
+  "infrastructureProfileId": "INFRA_C4_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C4_1CP_4W_8C16G.json",
+  "infrastructureRole": "fixed_provider_backed_placement_variation_infrastructure",
+  "associatedCycleId": "C4",
+  "providerId": "proxmox-k3s",
+  "providerBindingId": "BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C4_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "requiresApplicationDeploymentBeforeBenchmark": true,
+  "requiresMinimalObservabilityBeforeDiagnosis": true,
+  "precheckProfilesIndexPath": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+  "family": "placement-variation",
+  "fixedDimensions": {
+    "infrastructureProfileId": "INFRA_C4_1CP_4W_8C16G",
+    "modelScenario": "M1",
+    "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+    "workerScenario": "W4",
+    "resolvedWorkerCount": 4,
+    "workloadScenario": "WL2",
+    "prompt": "Reply with only READY.",
+    "temperature": 0.1,
+    "workerVcpusPerNode": 8,
+    "workerMemoryGiBPerNode": 16,
+    "serverManifestPolicy": "variant_specific_when_placement_requires_server_node_change"
+  },
+  "variedDimensions": [
+    "placement profile"
+  ],
+  "selectionCriteria": [
+    "Keep infrastructure, model, workload and LocalAI worker count fixed so the campaign isolates placement.",
+    "Use four LocalAI RPC workers to make worker distribution observable across the fixed four-node provider-backed infrastructure.",
+    "Retain unsupported placement variants as resource-contention evidence when the selected layout cannot be scheduled under current requests."
+  ],
+  "lockRules": [
+    "Do not change infrastructure, model, workload or LocalAI worker count inside this scenario.",
+    "Do not interpret placement differences without checking CPU, memory, pod placement and unsupported-scenario evidence.",
+    "Use the scenario only within a declared placement-variation campaign or a documented derivative cycle."
+  ],
+  "scenarioLabel": "static balanced worker placement",
+  "placementScenario": "PL_BALANCED_STATIC",
+  "placementProfileId": "PL_BALANCED_STATIC",
+  "placementProfilePath": "config/placement/profiles/PL_BALANCED_STATIC.json",
+  "resolvedPlacementType": "balanced_static_server_with_partial_worker_colocation",
+  "topologyDir": "infra/k8s/compositions/topology/balanced-static-genai-pb-w4",
+  "serverManifest": "infra/k8s/compositions/server/models/m1-provider-backed",
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "genai-pb-worker-01",
+    "localai-rpc-b": "genai-pb-worker-02",
+    "localai-rpc-c": "genai-pb-worker-03",
+    "localai-rpc-d": "genai-pb-worker-02"
+  },
+  "expectedServerNode": "genai-pb-worker-02",
+  "outputSubdir": "PLC_BALANCED_STATIC_official_locked",
+  "placementVariant": {
+    "variantId": "PLC_BALANCED_STATIC",
+    "label": "balanced static",
+    "placementProfileId": "PL_BALANCED_STATIC",
+    "serverNode": "genai-pb-worker-02",
+    "workerNodeMap": {
+      "localai-rpc-a": "genai-pb-worker-01",
+      "localai-rpc-b": "genai-pb-worker-02",
+      "localai-rpc-c": "genai-pb-worker-03",
+      "localai-rpc-d": "genai-pb-worker-02"
+    },
+    "expectedCommunicationDistance": "medium",
+    "expectedResourceContention": "medium"
+  },
+  "applicationTopology": {
+    "localAiWorkerCount": 4,
+    "workerScenario": "W4",
+    "workerScenarioPath": "config/scenarios/pilot/worker-count/W4.json",
+    "topologyDir": "infra/k8s/compositions/topology/balanced-static-genai-pb-w4",
+    "serverManifest": "infra/k8s/compositions/server/models/m1-provider-backed",
+    "placementType": "balanced_static_server_with_partial_worker_colocation",
+    "placementScenario": "PL_BALANCED_STATIC",
+    "placementScenarioPath": "config/placement/profiles/PL_BALANCED_STATIC.json",
+    "expectedActiveRpcWorkers": [
+      "localai-rpc-a",
+      "localai-rpc-b",
+      "localai-rpc-c",
+      "localai-rpc-d"
+    ],
+    "expectedInactiveRpcWorkers": [],
+    "expectedWorkerNodes": {
+      "localai-rpc-a": "genai-pb-worker-01",
+      "localai-rpc-b": "genai-pb-worker-02",
+      "localai-rpc-c": "genai-pb-worker-03",
+      "localai-rpc-d": "genai-pb-worker-02"
+    },
+    "expectedServerNode": "genai-pb-worker-02"
+  },
+  "scenarioProfileId": "PLC_BALANCED_STATIC",
+  "scenarioProfileName": "static balanced worker placement",
+  "applicationDeploymentProfileId": "AD_C4_PLC_BALANCED_STATIC",
+  "applicationDeploymentProfilePath": "results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/AD_PLC_BALANCED_STATIC.json",
+  "minimalObservabilityProfileId": "MO_C4_PLC_BALANCED_STATIC",
+  "minimalObservabilityProfilePath": "results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/MO_PLC_BALANCED_STATIC.json",
+  "precheckProfileId": "TC_C4_PLC_BALANCED_STATIC",
+  "precheckProfilePath": "results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/TC_PLC_BALANCED_STATIC.json",
+  "runtimeGeneratedProfiles": {
+    "resolutionMode": "generated_at_runtime",
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C4/execution/generated-runtime-configs",
+    "applicationDeployment": {
+      "profileId": "AD_C4_PLC_BALANCED_STATIC",
+      "path": "results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/AD_PLC_BALANCED_STATIC.json",
+      "requiredBeforeBenchmark": true
+    },
+    "minimalObservability": {
+      "profileId": "MO_C4_PLC_BALANCED_STATIC",
+      "path": "results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/MO_PLC_BALANCED_STATIC.json",
+      "requiredBeforeDiagnosis": true
+    },
+    "precheck": {
+      "profileId": "TC_C4_PLC_BALANCED_STATIC",
+      "path": "results/experimental-cycles/C4/execution/generated-runtime-configs/PLC_BALANCED_STATIC/TC_PLC_BALANCED_STATIC.json",
+      "requiredBeforeBenchmark": true
+    }
+  },
+  "scenarioProfileSchemaVersion": "1.0",
+  "scenarioProfileScope": "provider_backed_placement_variation"
+}

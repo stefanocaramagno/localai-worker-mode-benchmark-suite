@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "localai-cluster-lens-profile-v1",
+  "title": "LocalAI Cluster Lens Profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "clusterLensProfileId",
+    "profileName",
+    "profileStatus",
+    "profileRole",
+    "cycleId",
+    "kubernetes",
+    "clusterLens",
+    "captureScope",
+    "placementExtraction",
+    "artifactPolicy",
+    "validationPolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "cluster-lens-capture-profile/v1"
+    },
+    "clusterLensProfileId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profileName": {
+      "type": "string"
+    },
+    "profileStatus": {
+      "type": "string"
+    },
+    "profileRole": {
+      "type": "string"
+    },
+    "schemaPath": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": "string"
+    },
+    "scenarioIndexPath": {
+      "type": "string"
+    },
+    "infrastructureProfileId": {
+      "type": "string"
+    },
+    "infrastructureProfilePath": {
+      "type": "string"
+    },
+    "kubeconfigPath": {
+      "type": "string"
+    },
+    "kubernetes": {
+      "type": "object",
+      "required": [
+        "clusterLensNamespace",
+        "clusterLensServiceName",
+        "clusterLensServicePort"
+      ],
+      "properties": {
+        "kubectl": {
+          "type": "string"
+        },
+        "clusterLensNamespace": {
+          "type": "string"
+        },
+        "clusterLensServiceName": {
+          "type": "string"
+        },
+        "clusterLensServicePort": {
+          "type": "integer"
+        },
+        "clusterLensNodePort": {
+          "type": "integer"
+        },
+        "defaultAccessMode": {
+          "type": "string"
+        },
+        "portForward": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "clusterLens": {
+      "type": "object",
+      "required": [
+        "providerAddon",
+        "version",
+        "apiPath",
+        "requestTimeoutSeconds",
+        "readOnlyCapture"
+      ],
+      "properties": {
+        "providerAddon": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "apiPath": {
+          "type": "string"
+        },
+        "requestTimeoutSeconds": {
+          "type": "integer"
+        },
+        "expectedSnapshotFields": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "readOnlyCapture": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "captureScope": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "placementExtraction": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "artifactPolicy": {
+      "type": "object",
+      "required": [
+        "rawSnapshotFileName",
+        "podsSnapshotFileName",
+        "deploymentsSnapshotFileName",
+        "nodesSnapshotFileName",
+        "placementSummaryFileName",
+        "placementSignatureFileName",
+        "captureManifestFileName"
+      ],
+      "additionalProperties": true
+    },
+    "validationPolicy": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "placement-profile/v1",
+  "placementProfileId": "PL_COLOCATED",
+  "profileName": "Co-Located Server and RPC Workers",
+  "status": "active",
+  "profileRole": "baseline_colocated_placement_profile",
+  "strategy": "colocated",
+  "placementIntent": "Place the LocalAI server and active RPC workers on the same worker node to minimize intra-application communication distance.",
+  "researchQuestion": "How does a compact LocalAI topology behave when communication distance is minimized but CPU and memory contention may increase?",
+  "aliases": [
+    "colocated_genai_pb_worker_02"
+  ],
+  "infrastructureCompatibility": {
+    "supportedInfrastructureProfiles": [
+      "INFRA_C0_1CP_2W_8C16G",
+      "INFRA_C1_1CP_2W_8C16G",
+      "INFRA_C2_1CP_2W_4C8G",
+      "INFRA_C2_1CP_2W_4C16G",
+      "INFRA_C2_1CP_2W_8C16G",
+      "INFRA_C3_1CP_2W_8C16G",
+      "INFRA_C3_1CP_3W_8C16G",
+      "INFRA_C3_1CP_4W_8C16G",
+      "INFRA_C4_1CP_4W_8C16G",
+      "INFRA_C5_1CP_4W_8C16G",
+      "INFRA_C6_1CP_4W_8C16G"
+    ],
+    "requiresWorkerNodePool": true,
+    "requiresControlPlaneExclusion": true,
+    "minimumWorkerNodes": 1,
+    "activeForProviderBackedBaseline": true,
+    "activeForProviderBackedPlacementVariation": true
+  },
+  "selectorPolicy": {
+    "selectorMode": "provider_backed_reusable_node_name_compatibility",
+    "currentCompatibilityMode": "kubernetes.io/hostname",
+    "preferredFutureMode": "label_based_node_pool",
+    "workerNodePoolLabel": {
+      "nodepool": "workers"
+    },
+    "controlPlaneExclusion": {
+      "key": "node-role.kubernetes.io/control-plane",
+      "operator": "DoesNotExist"
+    },
+    "rationale": "Stable node names are retained for compatibility with the current Kustomize overlays; label-based node-pool selection is the preferred direction for future generated clusters.",
+    "supportedInfrastructureWorkerCounts": [
+      2,
+      3,
+      4
+    ],
+    "placementType": "colocated_single_worker_node"
+  },
+  "serverPlacement": {
+    "component": "localai-server",
+    "expectedNode": "genai-pb-worker-02",
+    "selector": {
+      "kubernetes.io/hostname": "genai-pb-worker-02"
+    },
+    "nodePool": "workers",
+    "placementNotes": "The current server manifest is still node-name compatible; later topology profiles can replace this with a label-based selector."
+  },
+  "workerPlacement": {
+    "components": [
+      "localai-rpc-a",
+      "localai-rpc-b",
+      "localai-rpc-c",
+      "localai-rpc-d"
+    ],
+    "defaultWorkerNodeMap": {
+      "localai-rpc-a": "genai-pb-worker-02",
+      "localai-rpc-b": "genai-pb-worker-02",
+      "localai-rpc-c": "genai-pb-worker-02",
+      "localai-rpc-d": "genai-pb-worker-02"
+    },
+    "activeWorkerNodeMapByWorkerCount": {
+      "W1": {
+        "localai-rpc-a": "genai-pb-worker-02"
+      },
+      "W2": {
+        "localai-rpc-a": "genai-pb-worker-02",
+        "localai-rpc-b": "genai-pb-worker-02"
+      },
+      "W3": {
+        "localai-rpc-a": "genai-pb-worker-02",
+        "localai-rpc-b": "genai-pb-worker-02",
+        "localai-rpc-c": "genai-pb-worker-02"
+      },
+      "W4": {
+        "localai-rpc-a": "genai-pb-worker-02",
+        "localai-rpc-b": "genai-pb-worker-02",
+        "localai-rpc-c": "genai-pb-worker-02",
+        "localai-rpc-d": "genai-pb-worker-02"
+      }
+    },
+    "nodePoolPolicy": {
+      "nodePool": "workers",
+      "allowControlPlaneScheduling": false,
+      "preferredSelector": {
+        "nodepool": "workers"
+      }
+    },
+    "mappingSemantics": {
+      "activeWorkerNodeMapByWorkerCount": "Application-level worker-count mapping currently defined for W1, W2, W3 and W4, with all active RPC workers co-located on genai-pb-worker-02."
+    }
+  },
+  "kustomize": {
+    "implementationStatus": "active",
+    "currentBaselineTopologyPath": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w4",
+    "workerPlacementOverlayPath": "infra/k8s/overlays/topology/placement/colocated-genai-pb-worker-02",
+    "compositionByApplicationWorkerCount": {
+      "W1": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w1",
+      "W2": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w2",
+      "W3": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w3",
+      "W4": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w4"
+    },
+    "compositionSelectionPolicy": {
+      "canonicalProviderBackedSelector": "compositionByApplicationWorkerCount",
+      "selectionRationale": "This placement profile varies the LocalAI application topology by active RPC-worker count. Infrastructure worker-node count is not the primary selector for this profile."
+    }
+  },
+  "expectedTradeoffs": {
+    "expectedBenefits": [
+      "lower communication distance between server and RPC workers",
+      "simpler topology interpretation"
+    ],
+    "expectedRisks": [
+      "higher CPU and memory contention on the selected node",
+      "lower headroom for worker-count increases"
+    ]
+  },
+  "evaluationFocus": [
+    "baseline reference",
+    "communication-distance minimization",
+    "resource-contention characterization"
+  ],
+  "constraints": [],
+  "governance": {
+    "profileScope": "application_topology",
+    "doesNotChangeInfrastructure": true,
+    "doesNotChangeModel": true,
+    "doesNotChangeWorkload": true,
+    "documentationPolicy": "This profile is operational configuration.",
+    "comparisonPolicy": "Placement comparisons must keep infrastructure, model, workload, worker count, protocol, and metric collection fixed unless a cycle profile explicitly declares otherwise."
+  },
+  "identifierGovernance": {
+    "canonicalIdentifierField": "placementProfileId",
+    "canonicalPlacementProfileId": "PL_COLOCATED",
+    "historicalFixedClusterScenarioIds": [
+      "PL1"
+    ],
+    "providerBackedPlacementScenarioIds": [
+      "PLC_COLOCATED"
+    ],
+    "legacyScenarioUsage": "compatibility_only",
+    "providerBackedUsage": "use_placementProfileId_for_profile_resolution_and_PLC_scenarioId_for_campaign_variants",
+    "mustNotResolveLegacyScenarioAsProfileId": true
+  },
+  "placementType": "colocated_single_worker_node",
+  "supportedInfrastructureWorkerCounts": [
+    2,
+    3,
+    4
+  ]
+}

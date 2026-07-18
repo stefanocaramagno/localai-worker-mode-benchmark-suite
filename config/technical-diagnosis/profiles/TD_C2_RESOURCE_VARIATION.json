@@ -1,0 +1,86 @@
+{
+  "technicalDiagnosisProfileId": "TD_C2_RESOURCE_VARIATION",
+  "profileId": "TD_C2_RESOURCE_VARIATION",
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "profileName": "C2 Resource Variation Technical Diagnosis",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_resource_variation_technical_diagnosis",
+  "description": "Technical diagnosis profile for a provider-backed resource-variation campaign comparing CPU and memory capacity under fixed application-level conditions.",
+  "cycleId": "C2",
+  "cycleConfigPath": "config/experimental-cycles/C2.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "validationSummaryRelativePath": "results/experimental-cycles/C1/diagnosis/C1_regeneration_diagnosis_all_diagnosis.json",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "familyOrder": [
+    "resource-variation"
+  ],
+  "scenarioConfigRoots": {
+    "resource-variation": "config/scenarios/resource-variation"
+  },
+  "scenarioConfigFiles": {
+    "resource-variation": [
+      "config/scenarios/resource-variation/RV_4C8G.json",
+      "config/scenarios/resource-variation/RV_4C16G.json",
+      "config/scenarios/resource-variation/RV_8C16G.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "resource-variation": "results/experimental-cycles/C2/benchmark/resource-variation"
+  },
+  "referenceScenarioByFamily": {
+    "resource-variation": "RV_8C16G"
+  },
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "resourceVariation": {
+    "fixedDimensions": [
+      "model",
+      "workload",
+      "LocalAI worker count",
+      "placement"
+    ],
+    "variedDimensions": [
+      "worker CPU capacity",
+      "worker memory capacity"
+    ],
+    "referenceScenarioId": "RV_8C16G",
+    "scenarioOrdering": [
+      "RV_4C8G",
+      "RV_4C16G",
+      "RV_8C16G"
+    ],
+    "minimumMeasuredVariantsForPerformanceComparison": 2,
+    "capacityBoundaryPolicy": {
+      "enabled": true,
+      "interpretUnsupportedSchedulingEvidenceAsCapacityBoundary": true,
+      "capacityEvidenceKinds": [
+        "failed_scheduling",
+        "insufficient_cpu",
+        "insufficient_memory",
+        "node_affinity_selector_mismatch",
+        "rollout_timeout",
+        "pending_pod"
+      ],
+      "measuredReferenceScenarioId": "RV_8C16G",
+      "interpretation": "When fewer than two resource variants are measured, documented scheduler-level unsupported evidence is treated as deployability-boundary evidence rather than as a silent benchmark failure."
+    }
+  },
+  "governance": {
+    "comparisonPolicy": "Resource-variation diagnosis must compare scenarios only after verifying that application-level dimensions are fixed.",
+    "evidencePolicy": "Unsupported variants are retained as capacity evidence and not discarded as execution noise.",
+    "capacityBoundaryPolicy": "If lower resource variants are unsupported because the fixed topology cannot be scheduled or rolled out, the diagnosis must preserve that evidence as a capacity boundary and avoid claiming full CPU/RAM performance sensitivity."
+  },
+  "outputRoot": "results/experimental-cycles/C2/diagnosis",
+  "minimumScenarioSamples": 1,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "referenceScenarioId": "RV_8C16G",
+  "referenceScenarioConfigPath": "config/scenarios/resource-variation/RV_8C16G.json",
+  "referenceScenarioConfigByFamily": {
+    "resource-variation": "config/scenarios/resource-variation/RV_8C16G.json"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "latency-profile-schema/v1",
+  "schemaId": "LATENCY_PROFILE_SCHEMA_V1",
+  "purpose": "Defines declarative network-latency profiles applied by the benchmark suite before workload execution.",
+  "requiredFields": [
+    "latencyProfileId",
+    "profileName",
+    "enabled",
+    "target",
+    "networkEmulation"
+  ],
+  "fieldNotes": {
+    "enabled": "false means no runtime netem mutation is applied, but a manifest is still written for traceability.",
+    "target": "Describes which Kubernetes nodes receive host-network netem configuration.",
+    "networkEmulation": "Defines delay, jitter, packet loss and network interface parameters.",
+    "implementation": "The runtime implementation uses a privileged, short-lived Kubernetes Job per target node. The provider tool remains application-agnostic."
+  }
+}

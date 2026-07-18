@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "localai-scheduler-integration-index/v1",
+  "indexId": "SCHEDULER_INTEGRATION_INDEX",
+  "description": "Index of operational profiles used to install, validate, and capture evidence for Kubernetes custom scheduler integrations.",
+  "profiles": [
+    {
+      "profileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+      "path": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+      "cycleId": "C8",
+      "schedulerName": "scheduler-plugins-scheduler",
+      "schedulerMode": "c8_load_aware_resource_scheduler",
+      "status": "active",
+      "schedulerImage": "ghcr.io/unict-cclab/kube-scheduler:sophos-v0.2.4",
+      "plugins": [
+        "LoadAwareResourcesBalancedAllocation"
+      ]
+    },
+    {
+      "profileId": "CS_C9_LOADAWARE_SECOND_SCHEDULER",
+      "path": "config/scheduler/profiles/CS_C9_LOADAWARE_SECOND_SCHEDULER.json",
+      "cycleId": "C9",
+      "schedulerName": "scheduler-plugins-scheduler",
+      "schedulerMode": "c9_load_aware_resource_scheduler",
+      "status": "active",
+      "schedulerImage": "ghcr.io/unict-cclab/kube-scheduler:sophos-v0.2.4",
+      "plugins": [
+        "LoadAwareResourcesBalancedAllocation"
+      ]
+    },
+    {
+      "profileId": "CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER",
+      "path": "config/scheduler/profiles/CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER.json",
+      "cycleId": "C9",
+      "schedulerName": "scheduler-plugins-scheduler",
+      "schedulerMode": "c9_localai_resource_network_aware_scheduler",
+      "plugins": [
+        "LoadAwareResourcesBalancedAllocation",
+        "NetworkAwareLocalAi"
+      ],
+      "gatewayTrafficKey": "traffic.localai-gateway-istio",
+      "schedulerImage": "ghcr.io/unict-cclab/kube-scheduler:sophos-v0.2.4",
+      "status": "active"
+    }
+  ],
+  "defaultNetworkAwareSchedulerProfileId": "CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER",
+  "requirements": {
+    "networkAwareSchedulerRequiresGatewayTrafficKey": true,
+    "networkAwareSchedulerRequiresLocalAiLabels": [
+      "group",
+      "app",
+      "role"
+    ],
+    "networkAwareSchedulerRequiresNodeAnnotationPrefixes": [
+      "network-latency."
+    ],
+    "networkAwareSchedulerRequiresDeploymentAnnotationPrefixes": [
+      "traffic."
+    ],
+    "networkAwareSchedulerOptionalDeploymentAnnotationPrefixes": [
+      "rps."
+    ]
+  },
+  "defaultResourceAwareSchedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+  "defaultC9LoadAwareSchedulerProfileId": "CS_C9_LOADAWARE_SECOND_SCHEDULER"
+}

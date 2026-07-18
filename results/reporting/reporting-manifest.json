@@ -1,0 +1,732 @@
+{
+  "reportingSite": {
+    "siteId": "REPORTING_SITE_20260709T201358Z",
+    "createdAtUtc": "2026-07-09T20:13:58.330110Z",
+    "status": "generated",
+    "outputRoot": "results/reporting",
+    "siteConfigPath": "config/reporting/site/REPORTING_SITE.json",
+    "reportingIndexPath": "config/reporting/REPORTING_INDEX.json"
+  },
+  "summary": {
+    "registeredCycleCount": 10,
+    "availableCycleReportCount": 10,
+    "unavailableCycleReportCount": 0,
+    "scenarioRowCount": 116,
+    "unsupportedScenarioRowCount": 12
+  },
+  "artifacts": {
+    "htmlIndex": "results/reporting/index.html",
+    "markdownReport": "results/reporting/report.md",
+    "manifest": "results/reporting/reporting-site-manifest.json",
+    "cyclesDirectory": "results/reporting/cycles"
+  },
+  "cycles": [
+    {
+      "cycleId": "C0",
+      "reportingProfileId": "RP_C0_HISTORICAL_FIXED_CLUSTER",
+      "profilePath": "config/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "role": "historical_fixed_cluster_reporting",
+      "baselineId": "B0",
+      "infrastructureProfileId": "INFRA_C0_1CP_2W_8C16G",
+      "infrastructureProfileIds": [
+        "INFRA_C0_1CP_2W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C0_1CP_2W_8C16G",
+      "infrastructureProfileScope": "historical_fixed_cluster",
+      "providerId": "external-k3s-cluster",
+      "sourceRoot": "results/experimental-cycles/C0/reporting",
+      "publishedRoot": "results/reporting/cycles/C0",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C0/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C0",
+        "filesScanned": 12,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C0/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C0/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C0_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:46:12Z",
+      "reportTitle": "C0 — Historical Fixed-Cluster Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 13,
+        "measuredScenarioCount": 11,
+        "unsupportedScenarioCount": 2
+      },
+      "links": {
+        "htmlReport": "cycles/C0/index.html",
+        "manifest": "cycles/C0/reporting-manifest.json",
+        "markdownReport": "cycles/C0/report.md",
+        "scenarioSummaryCsv": "cycles/C0/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C1",
+      "reportingProfileId": "RP_C1_PROVIDER_BACKED_BASELINE",
+      "profilePath": "config/reporting/profiles/RP_C1_PROVIDER_BACKED_BASELINE.json",
+      "role": "provider_backed_baseline_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "infrastructureProfileIds": [
+        "INFRA_C1_1CP_2W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C1_1CP_2W_8C16G",
+      "infrastructureProfileScope": "fixed_cycle_scoped",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C1/reporting",
+      "publishedRoot": "results/reporting/cycles/C1",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C1/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C1",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C1/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C1/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C1_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:46:34Z",
+      "reportTitle": "C1 — Provider-Backed Baseline Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 1,
+        "measuredScenarioCount": 1,
+        "unsupportedScenarioCount": 0
+      },
+      "links": {
+        "htmlReport": "cycles/C1/index.html",
+        "manifest": "cycles/C1/reporting-manifest.json",
+        "markdownReport": "cycles/C1/report.md",
+        "scenarioSummaryCsv": "cycles/C1/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C2",
+      "reportingProfileId": "RP_C2_RESOURCE_VARIATION",
+      "profilePath": "config/reporting/profiles/RP_C2_RESOURCE_VARIATION.json",
+      "role": "provider_backed_resource_variation_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": null,
+      "infrastructureProfileIds": [
+        "INFRA_C2_1CP_2W_4C8G",
+        "INFRA_C2_1CP_2W_4C16G",
+        "INFRA_C2_1CP_2W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C2_1CP_2W_4C8G, INFRA_C2_1CP_2W_4C16G, INFRA_C2_1CP_2W_8C16G",
+      "infrastructureProfileScope": "scenario_variant",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C2/reporting",
+      "publishedRoot": "results/reporting/cycles/C2",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C2/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C2",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C2/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C2/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C2_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:46:38Z",
+      "reportTitle": "C2 — Resource Variation Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 3,
+        "measuredScenarioCount": 1,
+        "unsupportedScenarioCount": 2
+      },
+      "links": {
+        "htmlReport": "cycles/C2/index.html",
+        "manifest": "cycles/C2/reporting-manifest.json",
+        "markdownReport": "cycles/C2/report.md",
+        "scenarioSummaryCsv": "cycles/C2/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C3",
+      "reportingProfileId": "RP_C3_NODE_COUNT_VARIATION",
+      "profilePath": "config/reporting/profiles/RP_C3_NODE_COUNT_VARIATION.json",
+      "role": "provider_backed_node_count_variation_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": null,
+      "infrastructureProfileIds": [
+        "INFRA_C3_1CP_2W_8C16G",
+        "INFRA_C3_1CP_3W_8C16G",
+        "INFRA_C3_1CP_4W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C3_1CP_2W_8C16G, INFRA_C3_1CP_3W_8C16G, INFRA_C3_1CP_4W_8C16G",
+      "infrastructureProfileScope": "scenario_variant",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C3/reporting",
+      "publishedRoot": "results/reporting/cycles/C3",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C3/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C3",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C3/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C3/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C3_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:46:44Z",
+      "reportTitle": "C3 — Node-Count Variation Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 3,
+        "measuredScenarioCount": 3,
+        "unsupportedScenarioCount": 0
+      },
+      "links": {
+        "htmlReport": "cycles/C3/index.html",
+        "manifest": "cycles/C3/reporting-manifest.json",
+        "markdownReport": "cycles/C3/report.md",
+        "scenarioSummaryCsv": "cycles/C3/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C4",
+      "reportingProfileId": "RP_C4_PLACEMENT_VARIATION",
+      "profilePath": "config/reporting/profiles/RP_C4_PLACEMENT_VARIATION.json",
+      "role": "provider_backed_placement_variation_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C4_1CP_4W_8C16G",
+      "infrastructureProfileIds": [
+        "INFRA_C4_1CP_4W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C4_1CP_4W_8C16G",
+      "infrastructureProfileScope": "fixed_cycle_scoped",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C4/reporting",
+      "publishedRoot": "results/reporting/cycles/C4",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C4/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C4",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C4/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C4/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C4_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:46:54Z",
+      "reportTitle": "C4 — Placement Variation Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 5,
+        "measuredScenarioCount": 4,
+        "unsupportedScenarioCount": 1
+      },
+      "links": {
+        "htmlReport": "cycles/C4/index.html",
+        "manifest": "cycles/C4/reporting-manifest.json",
+        "markdownReport": "cycles/C4/report.md",
+        "scenarioSummaryCsv": "cycles/C4/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C5",
+      "reportingProfileId": "RP_C5_LATENCY_INJECTION",
+      "profilePath": "config/reporting/profiles/RP_C5_LATENCY_INJECTION.json",
+      "role": "provider_backed_latency_injection_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C5_1CP_4W_8C16G",
+      "infrastructureProfileIds": [
+        "INFRA_C5_1CP_4W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C5_1CP_4W_8C16G",
+      "infrastructureProfileScope": "fixed_cycle_scoped",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C5/reporting",
+      "publishedRoot": "results/reporting/cycles/C5",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C5/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C5",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C5/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C5/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C5_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:47:11Z",
+      "reportTitle": "C5 — Latency Injection Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 4,
+        "measuredScenarioCount": 3,
+        "unsupportedScenarioCount": 1
+      },
+      "links": {
+        "htmlReport": "cycles/C5/index.html",
+        "manifest": "cycles/C5/reporting-manifest.json",
+        "markdownReport": "cycles/C5/report.md",
+        "scenarioSummaryCsv": "cycles/C5/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C6",
+      "reportingProfileId": "RP_C6_MULTI_TENANCY",
+      "profilePath": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+      "role": "provider_backed_multi_tenancy_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+      "infrastructureProfileIds": [
+        "INFRA_C6_1CP_4W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C6_1CP_4W_8C16G",
+      "infrastructureProfileScope": "fixed_cycle_scoped",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C6/reporting",
+      "publishedRoot": "results/reporting/cycles/C6",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C6/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C6",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C6/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C6/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C6_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:47:25Z",
+      "reportTitle": "C6 — Multi-Tenancy Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 4,
+        "measuredScenarioCount": 3,
+        "unsupportedScenarioCount": 1
+      },
+      "links": {
+        "htmlReport": "cycles/C6/index.html",
+        "manifest": "cycles/C6/reporting-manifest.json",
+        "markdownReport": "cycles/C6/report.md",
+        "scenarioSummaryCsv": "cycles/C6/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C7",
+      "reportingProfileId": "RP_C7_DEFAULT_SCHEDULER_BASELINE",
+      "profilePath": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "role": "provider_backed_default_scheduler_baseline_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": null,
+      "infrastructureProfileIds": [
+        "INFRA_C7_1CP_2W_8C16G",
+        "INFRA_C7_1CP_4W_8C16G",
+        "INFRA_C7_1CP_3W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C7_1CP_2W_8C16G, INFRA_C7_1CP_4W_8C16G, INFRA_C7_1CP_3W_8C16G",
+      "infrastructureProfileScope": "scenario_variant",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C7/reporting",
+      "publishedRoot": "results/reporting/cycles/C7",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C7/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C7",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C7/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C7/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C7_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:47:51Z",
+      "reportTitle": "C7 — Default Kubernetes Scheduler Baseline Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 25,
+        "measuredScenarioCount": 23,
+        "unsupportedScenarioCount": 2
+      },
+      "links": {
+        "htmlReport": "cycles/C7/index.html",
+        "manifest": "cycles/C7/reporting-manifest.json",
+        "markdownReport": "cycles/C7/report.md",
+        "scenarioSummaryCsv": "cycles/C7/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C8",
+      "reportingProfileId": "RP_C8_RESOURCE_AWARE_SCHEDULER",
+      "profilePath": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+      "role": "provider_backed_resource_aware_scheduler_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": null,
+      "infrastructureProfileIds": [
+        "INFRA_C8_1CP_2W_8C16G",
+        "INFRA_C8_1CP_4W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C8_1CP_2W_8C16G, INFRA_C8_1CP_4W_8C16G",
+      "infrastructureProfileScope": "scenario_variant_scoped",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C8/reporting",
+      "publishedRoot": "results/reporting/cycles/C8",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C8/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C8",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C8/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C8/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C8_20260619T174611Z",
+      "createdAtUtc": "2026-06-19T17:50:31Z",
+      "reportTitle": "C8 — Scheduler Comparison Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 16,
+        "measuredScenarioCount": 15,
+        "unsupportedScenarioCount": 1
+      },
+      "links": {
+        "htmlReport": "cycles/C8/index.html",
+        "manifest": "cycles/C8/reporting-manifest.json",
+        "markdownReport": "cycles/C8/report.md",
+        "scenarioSummaryCsv": "cycles/C8/scenario-summary.csv"
+      }
+    },
+    {
+      "cycleId": "C9",
+      "reportingProfileId": "RP_C9_NETWORK_AWARE_SCHEDULER",
+      "profilePath": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+      "role": "provider_backed_network_aware_scheduler_reporting",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C9_1CP_4W_8C16G",
+      "infrastructureProfileIds": [
+        "INFRA_C9_1CP_4W_8C16G"
+      ],
+      "infrastructureProfileDisplay": "INFRA_C9_1CP_4W_8C16G",
+      "infrastructureProfileScope": "scenario_variant_scoped",
+      "providerId": "proxmox-k3s",
+      "sourceRoot": "results/experimental-cycles/C9/reporting",
+      "publishedRoot": "results/reporting/cycles/C9",
+      "sourceAvailable": true,
+      "available": true,
+      "missingRequiredFiles": [],
+      "checkedSourceRoots": [
+        {
+          "path": "results/experimental-cycles/C9/reporting",
+          "exists": true,
+          "missingRequiredFiles": [],
+          "available": true
+        }
+      ],
+      "portability": {
+        "status": "PASS",
+        "requiredForPublication": true,
+        "validatedRoot": "results/reporting/cycles/C9",
+        "filesScanned": 6,
+        "violationCount": 0,
+        "violations": []
+      },
+      "publishedNavigationRewrites": [
+        {
+          "file": "cycles/C9/index.html",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        },
+        {
+          "file": "cycles/C9/report.md",
+          "replacements": [
+            {
+              "from": "../../../reporting/index.html",
+              "to": "../../index.html"
+            }
+          ]
+        }
+      ],
+      "reportingId": "REP_C9_20260709T201227Z",
+      "createdAtUtc": "2026-07-09T20:12:27Z",
+      "reportTitle": "C9 — Network-Aware Scheduler Campaign Report",
+      "scenarioSummary": {
+        "available": true,
+        "scenarioCount": 42,
+        "measuredScenarioCount": 40,
+        "unsupportedScenarioCount": 2
+      },
+      "links": {
+        "htmlReport": "cycles/C9/index.html",
+        "manifest": "cycles/C9/reporting-manifest.json",
+        "markdownReport": "cycles/C9/report.md",
+        "scenarioSummaryCsv": "cycles/C9/scenario-summary.csv"
+      }
+    }
+  ]
+}

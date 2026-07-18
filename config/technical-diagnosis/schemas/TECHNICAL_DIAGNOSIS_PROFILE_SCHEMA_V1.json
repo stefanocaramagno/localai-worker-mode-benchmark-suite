@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "localai-technical-diagnosis-profile-v1",
+  "title": "LocalAI Technical Diagnosis Profile",
+  "type": "object",
+  "required": [
+    "profileId",
+    "outputRoot",
+    "familyOrder",
+    "requestTargetType",
+    "requestTargetName",
+    "campaignResultsRoots",
+    "scenarioConfigRoots",
+    "minimumScenarioSamples",
+    "minimumFamiliesWithCoverageForClosure",
+    "minimumFindingsForClosure"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "outputRoot": {
+      "type": "string"
+    },
+    "diagnosisManifestSuffix": {
+      "type": "string"
+    },
+    "diagnosisTextSuffix": {
+      "type": "string"
+    },
+    "familyOrder": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "requestTargetType": {
+      "type": "string"
+    },
+    "requestTargetName": {
+      "type": "string"
+    },
+    "fallbackToAggregated": {
+      "type": "boolean"
+    },
+    "validationSummaryRelativePath": {
+      "type": "string"
+    },
+    "scenarioConfigRoots": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "scenarioConfigFiles": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "clusterCpuPressureThresholdPercent": {
+      "type": "number"
+    },
+    "clusterMemoryPressureThresholdPercent": {
+      "type": "number"
+    },
+    "minimumScenarioSamples": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "minimumFamiliesWithCoverageForClosure": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "minimumFindingsForClosure": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "acceptUnsupportedScenariosAsObserved": {
+      "type": "boolean"
+    },
+    "minimumUnsupportedReplicasPerScenario": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "campaignResultsRoots": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

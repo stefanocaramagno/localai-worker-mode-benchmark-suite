@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "minimal-observability-index/v1",
+  "indexId": "MINIMAL_OBSERVABILITY_INDEX",
+  "description": "Registry of minimal observability profiles based on K3s, metrics-server, kubectl snapshots and Locust artifacts.",
+  "defaultProfileId": "MO_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "minimalObservabilityProfileId": "MO_C1_PROVIDER_BACKED_BASELINE",
+      "cycleId": "C1",
+      "path": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+      "schemaPath": "config/observability-minimal/schemas/MINIMAL_OBSERVABILITY_PROFILE_SCHEMA_V1.json",
+      "status": "active",
+      "role": "provider_backed_baseline_minimal_observability"
+    }
+  ],
+  "requirements": {
+    "metricsServerRequired": true,
+    "kubectlTopRequired": true,
+    "locustCsvSupported": true
+  },
+  "templatesRoot": "config/observability-minimal/templates",
+  "templates": [
+    {
+      "minimalObservabilityTemplateId": "MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE",
+      "templatePath": "config/observability-minimal/templates/MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE.json",
+      "role": "provider_backed_campaign_runtime_minimal_observability_template",
+      "status": "active_template",
+      "usedFor": "runtime_generated_provider_backed_campaign_variants"
+    }
+  ],
+  "governanceRules": [
+    "Runtime campaign variants must be generated from minimal observability templates rather than from concrete baseline profiles."
+  ],
+  "runtimeGeneratedProfilePolicy": {
+    "enabled": true,
+    "generationScope": "provider_backed_campaign_variants",
+    "staticProfilesScope": "concrete_baseline_profiles",
+    "runtimeCycles": [
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "templateId": "MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE",
+    "templatePath": "config/observability-minimal/templates/MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE.json",
+    "generatedProfilesRootPattern": "results/experimental-cycles/<cycleId>/execution/generated-runtime-configs/<variantId>/",
+    "rationale": "Campaign-variant minimal observability profiles are generated from the template so each variant can point to its own validation, deployment and benchmark artifact roots."
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "schemaVersion": "localai-custom-scheduler-profile/v1",
+  "schedulerProfileId": "CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER",
+  "profileName": "C9 LocalAI Resource and Network-Aware Scheduler Integration Profile",
+  "profileStatus": "active",
+  "profileRole": "resource_network_aware_second_scheduler_installation_and_validation",
+  "purpose": "Install the scheduler-plugins chart as a second Kubernetes scheduler and validate the combined LoadAwareResourcesBalancedAllocation and NetworkAwareLocalAi plugins before C9 NETAWARE comparison variants.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "kubeconfigPath": null,
+  "tooling": {
+    "kubectl": "kubectl",
+    "helm": "helm",
+    "schedulerPluginsRootPath": "../scheduler-plugins",
+    "chartPathFromSchedulerPluginsRoot": "manifests/install/charts/as-a-second-scheduler"
+  },
+  "helmRelease": {
+    "name": "scheduler-plugins",
+    "namespace": "scheduler-plugins",
+    "createNamespace": true,
+    "wait": true,
+    "timeoutSeconds": 600,
+    "atomic": false
+  },
+  "installFailureDiagnostics": {
+    "enabled": true,
+    "commandTimeoutSeconds": 60,
+    "logTailLines": 300,
+    "maxOutputCharacters": 120000,
+    "includePreviousContainerLogs": true
+  },
+  "scheduler": {
+    "name": "scheduler-plugins-scheduler",
+    "image": "ghcr.io/unict-cclab/kube-scheduler:sophos-v0.2.4",
+    "replicaCount": 1,
+    "leaderElect": false,
+    "expectedDeploymentName": "scheduler-plugins-scheduler",
+    "expectedContainerName": "scheduler-plugins-scheduler",
+    "environmentVariables": [
+      {
+        "name": "GATEWAY_TRAFFIC_KEY",
+        "value": "traffic.localai-gateway-istio"
+      }
+    ],
+    "gatewayTrafficAnnotationKey": "traffic.localai-gateway-istio"
+  },
+  "controller": {
+    "name": "scheduler-plugins-controller",
+    "image": "registry.k8s.io/scheduler-plugins/controller:v0.29.7",
+    "replicaCount": 1,
+    "expectedDeploymentName": "scheduler-plugins-controller"
+  },
+  "plugins": {
+    "enabled": [
+      "LoadAwareResourcesBalancedAllocation",
+      "NetworkAwareLocalAi"
+    ],
+    "disabled": [],
+    "requiredEnabledPlugins": [
+      "LoadAwareResourcesBalancedAllocation",
+      "NetworkAwareLocalAi"
+    ],
+    "pluginConfig": [],
+    "resourceAwarePlugin": "LoadAwareResourcesBalancedAllocation",
+    "networkAwarePlugin": "NetworkAwareLocalAi"
+  },
+  "placement": {
+    "schedulerPreferredNodeAffinity": {
+      "key": "nodepool",
+      "operator": "In",
+      "values": [
+        "management"
+      ],
+      "weight": 100
+    },
+    "controllerPreferredNodeAffinity": {
+      "key": "nodepool",
+      "operator": "In",
+      "values": [
+        "management"
+      ],
+      "weight": 100
+    },
+    "schedulerTolerations": [
+      {
+        "key": "ManagementOnly",
+        "operator": "Equal",
+        "value": "true",
+        "effect": "NoSchedule"
+      }
+    ],
+    "controllerTolerations": [
+      {
+        "key": "ManagementOnly",
+        "operator": "Equal",
+        "value": "true",
+        "effect": "NoSchedule"
+      }
+    ]
+  },
+  "validation": {
+    "namespace": "scheduler-validation",
+    "testDeploymentName": "network-aware-scheduler-validation-pod",
+    "testImage": "registry.k8s.io/pause:3.9",
+    "testSchedulerName": "scheduler-plugins-scheduler",
+    "testLabels": {
+      "group": "scheduler-validation",
+      "app": "master",
+      "role": "master"
+    },
+    "testDeploymentAnnotations": {
+      "cpu-usage": "0",
+      "memory-usage": "0",
+      "network-throughput": "0",
+      "rps.istio-ingressgateway": "1",
+      "traffic.localai-gateway-istio": "1000",
+      "traffic.istio-ingressgateway": "1000",
+      "rps.localai-gateway-istio": "1"
+    },
+    "podScheduledTimeoutSeconds": 120,
+    "rolloutTimeoutSeconds": 180,
+    "deleteTestWorkloadAfterValidation": true,
+    "requireSchedulerDeploymentAvailable": true,
+    "requireControllerDeploymentAvailable": true,
+    "requireSchedulerConfigPlugin": true,
+    "requireTestPodScheduled": true,
+    "requireConfiguredTolerations": true,
+    "requireSchedulerEnvironmentVariables": true,
+    "requiredSchedulerEnvironmentVariables": {
+      "GATEWAY_TRAFFIC_KEY": "traffic.localai-gateway-istio"
+    },
+    "requireNetworkAwarePlugin": true,
+    "requireLoadAwarePlugin": true
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C9/scheduler/custom-scheduler",
+    "logsRoot": "results/experimental-cycles/C9/scheduler/custom-scheduler/logs",
+    "snapshotsRoot": "results/experimental-cycles/C9/scheduler/custom-scheduler/snapshots",
+    "manifestsRoot": "results/experimental-cycles/C9/scheduler/custom-scheduler/manifests",
+    "summariesRoot": "results/experimental-cycles/C9/scheduler/custom-scheduler/summaries",
+    "renderedValuesRoot": "results/experimental-cycles/C9/scheduler/custom-scheduler/rendered-values",
+    "renderedChartRoot": "results/experimental-cycles/C9/scheduler/custom-scheduler/rendered-chart",
+    "latestManifestPath": "results/experimental-cycles/C9/scheduler/custom-scheduler/latest-custom-scheduler-manifest.json",
+    "latestSummaryPath": "results/experimental-cycles/C9/scheduler/custom-scheduler/latest-custom-scheduler-summary.txt",
+    "latestValidationSnapshotPath": "results/experimental-cycles/C9/scheduler/custom-scheduler/latest-custom-scheduler-validation-snapshot.json",
+    "writeLatestAliases": true
+  },
+  "decisionPolicy": {
+    "plannedStatus": "planned",
+    "installedStatus": "installed",
+    "validatedStatus": "validated",
+    "capturedStatus": "captured",
+    "uninstalledStatus": "uninstalled",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "requireHelmBeforeInstall": true,
+    "requireKubectlBeforeValidation": true,
+    "validateAfterInstallByDefault": true
+  },
+  "governance": {
+    "documentationPolicy": "This profile is operational configuration and not repository documentation.",
+    "schedulerBoundary": "The second scheduler is used only by workloads that explicitly set spec.schedulerName to scheduler-plugins-scheduler.",
+    "defaultSchedulerBoundary": "Workloads without spec.schedulerName continue to use the Kubernetes default scheduler.",
+    "networkAwareScope": "The enabled plugins combine resource-aware scoring with LocalAI-specific network-aware scoring based on group, app and role labels, node latency annotations and gateway traffic annotations.",
+    "gatewayTrafficKeyPolicy": "The scheduler container must receive GATEWAY_TRAFFIC_KEY=traffic.localai-gateway-istio so NetworkAwareLocalAi reads the exact traffic annotation expected for Gateway API based LocalAI gateway workloads. Runtime validation must fail NETAWARE variants when this selected key is not present on the master deployment; alternative traffic annotations are diagnostic evidence only."
+  },
+  "chartValidation": {
+    "enabled": true,
+    "failOnError": true,
+    "requiredChartFiles": [
+      "Chart.yaml",
+      "values.yaml",
+      "templates/configmap.yaml",
+      "templates/deployment.yaml",
+      "templates/rbac.yaml",
+      "templates/serviceaccount.yaml"
+    ],
+    "expectedChart": {
+      "name": "scheduler-plugins",
+      "version": "0.29.7",
+      "appVersion": "0.29.7",
+      "type": "application"
+    },
+    "expectedChartDefaults": {
+      "scheduler.name": "scheduler-plugins-scheduler",
+      "controller.name": "scheduler-plugins-controller",
+      "controller.image": "registry.k8s.io/scheduler-plugins/controller:v0.29.7"
+    },
+    "expectedRenderedValues": {
+      "exact": {
+        "scheduler.name": "scheduler-plugins-scheduler",
+        "scheduler.image": "ghcr.io/unict-cclab/kube-scheduler:sophos-v0.2.4",
+        "controller.name": "scheduler-plugins-controller",
+        "controller.image": "registry.k8s.io/scheduler-plugins/controller:v0.29.7",
+        "pluginConfig": [],
+        "scheduler.extraEnv": [
+          {
+            "name": "GATEWAY_TRAFFIC_KEY",
+            "value": "traffic.localai-gateway-istio"
+          }
+        ]
+      },
+      "contains": {
+        "plugins.enabled": [
+          "LoadAwareResourcesBalancedAllocation",
+          "NetworkAwareLocalAi"
+        ]
+      }
+    },
+    "requiredTemplateMarkers": [
+      {
+        "file": "templates/configmap.yaml",
+        "contains": [
+          "schedulerName: {{ .Values.scheduler.name }}",
+          "$.Values.plugins.enabled",
+          "- name: {{ . }}"
+        ]
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "contains": [
+          "image: {{ .Values.scheduler.image }}",
+          "serviceAccountName: {{ .Values.scheduler.name }}",
+          ".Values.scheduler.extraEnv"
+        ]
+      }
+    ],
+    "requiredSchedulerPluginSources": [
+      {
+        "path": "pkg/sophos/loadawareresourcesbalancedallocation/loadawareresourcesbalancedallocation.go",
+        "contains": [
+          "LoadAwareResourcesBalancedAllocation",
+          "GetAppCpuUsage",
+          "GetNodeCpuUsage",
+          "GetAppMemoryUsage",
+          "GetNodeMemoryUsage"
+        ]
+      },
+      {
+        "path": "pkg/sophos/networkawarelocalai/networkawarelocalai.go",
+        "contains": [
+          "NetworkAwareLocalAi",
+          "GATEWAY_TRAFFIC_KEY",
+          "GetNodeLatency",
+          "role",
+          "master",
+          "worker"
+        ]
+      },
+      {
+        "path": "cmd/scheduler/main.go",
+        "contains": [
+          "networkawarelocalai.Name",
+          "networkawarelocalai.New"
+        ]
+      },
+      {
+        "path": "pkg/sophos/utils.go",
+        "contains": [
+          "network-latency.",
+          "func GetGatewayTraffic",
+          "func GetGroupTraffic",
+          "traffic."
+        ]
+      }
+    ]
+  },
+  "chartPatchPolicy": {
+    "enabled": true,
+    "useTemporaryPatchedChart": true,
+    "preservePluginNameCase": true,
+    "enableSchedulerExtraEnv": true,
+    "patches": [
+      {
+        "patchId": "preserve_plugin_name_case",
+        "target": "templates/configmap.yaml",
+        "purpose": "Render plugin names exactly as provided by the profile, without Helm title-case transformation."
+      },
+      {
+        "patchId": "scheduler_extra_env",
+        "target": "templates/deployment.yaml",
+        "purpose": "Render scheduler container environment variables from scheduler.extraEnv."
+      }
+    ]
+  }
+}

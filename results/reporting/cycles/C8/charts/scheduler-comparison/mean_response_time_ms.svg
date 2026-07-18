@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="490.0" y="34" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold">C8 — Scheduler Comparison: Mean response time</text>
+  <text x="490.0" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="13">Unit: ms</text>
+  <g font-family="Arial, sans-serif" fill="#222">
+<line x1="86" y1="434" x2="948" y2="434" stroke="#222"/>
+<line x1="86" y1="74" x2="86" y2="434" stroke="#222"/>
+<line x1="81" y1="434.00" x2="948" y2="434.00" stroke="#ddd"/>
+<text x="76" y="438.00" text-anchor="end" font-size="12">0.00</text>
+<line x1="81" y1="362.00" x2="948" y2="362.00" stroke="#ddd"/>
+<text x="76" y="366.00" text-anchor="end" font-size="12">400.00</text>
+<line x1="81" y1="290.00" x2="948" y2="290.00" stroke="#ddd"/>
+<text x="76" y="294.00" text-anchor="end" font-size="12">800.00</text>
+<line x1="81" y1="218.00" x2="948" y2="218.00" stroke="#ddd"/>
+<text x="76" y="222.00" text-anchor="end" font-size="12">1200.00</text>
+<line x1="81" y1="146.00" x2="948" y2="146.00" stroke="#ddd"/>
+<text x="76" y="150.00" text-anchor="end" font-size="12">1600.00</text>
+<line x1="81" y1="74.00" x2="948" y2="74.00" stroke="#ddd"/>
+<text x="76" y="78.00" text-anchor="end" font-size="12">2000.00</text>
+<rect x="96.24" y="155.45" width="33.40" height="278.55" fill="#666"/>
+<text x="112.94" y="148.45" text-anchor="middle" font-size="12">1547.49</text>
+<text x="112.94" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 112.94,452.00)">SC_DEFAULT_1T_2N_L0_UNIFORM_M1_W2 (1T_2N_L0_UNIFORM_M1_W2, default)</text>
+<rect x="150.11" y="159.55" width="33.40" height="274.45" fill="#666"/>
+<text x="166.81" y="152.55" text-anchor="middle" font-size="12">1524.74</text>
+<text x="166.81" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 166.81,452.00)">SC_DEFAULT_1T_4N_L0_UNIFORM_M1_W2 (1T_4N_L0_UNIFORM_M1_W2, default)</text>
+<rect x="203.99" y="159.57" width="33.40" height="274.43" fill="#666"/>
+<text x="220.69" y="152.57" text-anchor="middle" font-size="12">1524.60</text>
+<text x="220.69" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 220.69,452.00)">SC_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2 (2T_2N_L0_DIFFERENTIATED_M1M1_W2, default)</text>
+<rect x="257.86" y="164.04" width="33.40" height="269.96" fill="#666"/>
+<text x="274.56" y="157.04" text-anchor="middle" font-size="12">1499.78</text>
+<text x="274.56" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 274.56,452.00)">SC_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2 (2T_2N_L0_UNIFORM_M1M1_W2, default)</text>
+<text x="328.44" y="426.00" text-anchor="middle" font-size="12">n/a</text>
+<text x="328.44" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 328.44,452.00)">SC_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2 (2T_4N_L0_DIFFERENTIATED_M1M1_W2, default)</text>
+<rect x="365.61" y="164.39" width="33.40" height="269.61" fill="#666"/>
+<text x="382.31" y="157.39" text-anchor="middle" font-size="12">1497.85</text>
+<text x="382.31" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 382.31,452.00)">SC_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2 (2T_4N_L0_UNIFORM_M1M1_W2, default)</text>
+<rect x="419.49" y="173.71" width="33.40" height="260.29" fill="#666"/>
+<text x="436.19" y="166.71" text-anchor="middle" font-size="12">1446.04</text>
+<text x="436.19" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 436.19,452.00)">SC_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2 (2T_4N_L0_UNIFORM_M1M2_W2, default)</text>
+<rect x="473.36" y="165.41" width="33.40" height="268.59" fill="#666"/>
+<text x="490.06" y="158.41" text-anchor="middle" font-size="12">1492.17</text>
+<text x="490.06" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 490.06,452.00)">SC_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2 (3T_4N_L0_UNIFORM_M1M1M1_W2, default)</text>
+<rect x="527.24" y="170.94" width="33.40" height="263.06" fill="#666"/>
+<text x="543.94" y="163.94" text-anchor="middle" font-size="12">1461.43</text>
+<text x="543.94" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 543.94,452.00)">SC_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2 (1T_2N_L0_UNIFORM_M1_W2, loadaware)</text>
+<rect x="581.11" y="170.61" width="33.40" height="263.39" fill="#666"/>
+<text x="597.81" y="163.61" text-anchor="middle" font-size="12">1463.27</text>
+<text x="597.81" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 597.81,452.00)">SC_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2 (1T_4N_L0_UNIFORM_M1_W2, loadaware)</text>
+<rect x="634.99" y="159.62" width="33.40" height="274.38" fill="#666"/>
+<text x="651.69" y="152.62" text-anchor="middle" font-size="12">1524.31</text>
+<text x="651.69" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 651.69,452.00)">SC_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2 (2T_2N_L0_DIFFERENTIATED_M1M1_W2, loadaware)</text>
+<rect x="688.86" y="164.05" width="33.40" height="269.95" fill="#666"/>
+<text x="705.56" y="157.05" text-anchor="middle" font-size="12">1499.71</text>
+<text x="705.56" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 705.56,452.00)">SC_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2 (2T_2N_L0_UNIFORM_M1M1_W2, loadaware)</text>
+<rect x="742.74" y="167.55" width="33.40" height="266.45" fill="#666"/>
+<text x="759.44" y="160.55" text-anchor="middle" font-size="12">1480.27</text>
+<text x="759.44" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 759.44,452.00)">SC_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2 (2T_4N_L0_DIFFERENTIATED_M1M1_W2, loadaware)</text>
+<rect x="796.61" y="166.86" width="33.40" height="267.14" fill="#666"/>
+<text x="813.31" y="159.86" text-anchor="middle" font-size="12">1484.09</text>
+<text x="813.31" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 813.31,452.00)">SC_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2 (2T_4N_L0_UNIFORM_M1M1_W2, loadaware)</text>
+<rect x="850.49" y="160.50" width="33.40" height="273.50" fill="#666"/>
+<text x="867.19" y="153.50" text-anchor="middle" font-size="12">1519.43</text>
+<text x="867.19" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 867.19,452.00)">SC_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2 (2T_4N_L0_UNIFORM_M1M2_W2, loadaware)</text>
+<rect x="904.36" y="151.17" width="33.40" height="282.83" fill="#666"/>
+<text x="921.06" y="144.17" text-anchor="middle" font-size="12">1571.27</text>
+<text x="921.06" y="452.00" text-anchor="end" font-size="12" transform="rotate(-35 921.06,452.00)">SC_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2 (3T_4N_L0_UNIFORM_M1M1M1_W2, loadaware)</text>
+  </g>
+</svg>

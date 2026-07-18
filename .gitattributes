@@ -1,0 +1,76 @@
+# Repository-wide Git attributes policy.
+# Git automatically detects text files unless a more specific rule is declared below.
+* text=auto
+
+# Repository control files must remain LF-normalized to keep Git behavior deterministic.
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.editorconfig text eol=lf
+
+# Unix-oriented automation must keep LF line endings for predictable execution.
+*.sh text eol=lf
+*.bash text eol=lf
+
+# PowerShell automation is LF-normalized to keep cross-platform diffs and tooling consistent.
+*.ps1 text eol=lf
+*.psm1 text eol=lf
+*.psd1 text eol=lf
+
+# Native Windows command launchers keep CRLF line endings.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Source code and package metadata used by automation and analysis tooling.
+*.py text eol=lf
+*.toml text eol=lf
+
+# Declarative configuration files consumed by Kubernetes, provisioning, validation, and reporting tools.
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.xml text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
+*.conf text eol=lf
+*.tmpl text eol=lf
+*.example text eol=lf
+
+# Human-readable documentation, summaries, reports, and tabular artifacts.
+*.md text eol=lf
+*.txt text eol=lf
+*.csv text eol=lf
+*.tsv text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.svg text eol=lf
+
+# Binary artifacts must never be line-ending normalized.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.tgz binary
+*.7z binary
+*.rar binary
+*.mp3 binary
+*.mp4 binary
+*.mov binary
+*.avi binary
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.bin binary
+*.sqlite binary
+*.sqlite3 binary
+*.db binary
+*.docx binary
+*.pptx binary
+*.xlsx binary

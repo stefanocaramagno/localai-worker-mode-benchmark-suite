@@ -1,0 +1,242 @@
+{
+  "cycleId": "C0",
+  "cycleName": "Historical Fixed Cluster Characterization Cycle",
+  "status": "historical_locked_completed_cycle",
+  "description": "Completed historical characterization cycle executed on the original fixed two-worker CPU-only K3s cluster before introducing provider-backed infrastructure profiles.",
+  "scope": {
+    "application": "LocalAI worker-mode benchmark suite",
+    "workerMode": "worker",
+    "cycleType": "historical_fixed_cluster_characterization",
+    "includedFamilies": [
+      "worker-count",
+      "workload",
+      "models",
+      "placement"
+    ],
+    "excludedFutureWork": [
+      "dynamically provisioned K3s clusters",
+      "infrastructure-profile sweeps",
+      "multi-application or multi-tenant LocalAI scenarios",
+      "artificial network-latency injection",
+      "provider-backed C1 execution",
+      "proxmox-k3s lifecycle orchestration"
+    ]
+  },
+  "clusterContext": {
+    "clusterContextId": "ORIGINAL_FIXED_K3S_CLUSTER",
+    "description": "Original externally provided K3s cluster used for the first LocalAI worker-mode characterization cycle.",
+    "kubernetesDistribution": "K3s",
+    "workerHardwareClass": "CPU-only",
+    "controlPlaneNodes": [
+      {
+        "name": "sc-master-01",
+        "role": "control-plane",
+        "vcpus": 2,
+        "memoryGiB": 4,
+        "storageGiB": 35
+      }
+    ],
+    "workerNodes": [
+      {
+        "name": "sc-app-01",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "storageGiB": 35
+      },
+      {
+        "name": "sc-app-02",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "storageGiB": 35
+      }
+    ],
+    "knownMethodologicalLimitations": [
+      "The cycle is intentionally tied to the original fixed cluster and to node names available in that environment.",
+      "Unsupported W3 and W4 worker-count scenarios are retained as valid evidence of current placement/resource constraints rather than measured performance samples."
+    ],
+    "infrastructureProfileId": "INFRA_C0_1CP_2W_8C16G",
+    "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C0_1CP_2W_8C16G.json"
+  },
+  "baseline": {
+    "baselineId": "B0",
+    "configPath": "config/scenarios/baseline/B0.json",
+    "roleInCycle": "official_locked_reference_baseline",
+    "modelScenario": "M1",
+    "workerScenario": "W2",
+    "placementScenario": "PL1",
+    "workloadScenario": "WL2"
+  },
+  "pipelineProfiles": {
+    "runConvention": "config/conventions/profiles/RC_STANDARD_RUN_CONVENTION.json",
+    "precheck": "config/precheck/profiles/TC_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "phaseProfile": "config/phases/profiles/WM_STANDARD_WARMUP_MEASUREMENT.json",
+    "protocolProfile": "config/protocol/profiles/EP_STANDARD_BENCHMARK_PROTOCOL.json",
+    "clusterCapture": "config/cluster-capture/profiles/CS_STANDARD_CLUSTER_CAPTURE.json",
+    "metricSet": "config/metric-set/profiles/MS_STANDARD_BENCHMARK_METRICS.json",
+    "statisticalRigor": "config/statistical-rigor/profiles/SR_REPLICATED_BENCHMARK_RIGOR.json",
+    "pilotConsolidation": "config/pilot-consolidation/profiles/PC_CONSOLIDATED_PILOT_CAMPAIGN.json",
+    "technicalDiagnosis": "config/technical-diagnosis/profiles/TD_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "reporting": "config/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "completionGate": "config/completion-gate/profiles/CG_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "infrastructureProfilesIndex": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "clusterLifecyclePoliciesIndex": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "freeze": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "freezeIndex": "config/freeze/FREEZE_INDEX.json"
+  },
+  "evidenceRoots": {
+    "baseline": "results/experimental-cycles/C0/benchmark/baseline",
+    "consolidatedPilot": "results/experimental-cycles/C0/benchmark/pilot-consolidated",
+    "technicalDiagnosis": "results/experimental-cycles/C0/diagnosis",
+    "reporting": "results/experimental-cycles/C0/reporting",
+    "completionGate": "results/experimental-cycles/C0/completion-gate",
+    "clusterLifecycle": "results/experimental-cycles/C0/infrastructure/lifecycle"
+  },
+  "freezeOutputs": {
+    "cycleLockJson": "results/experimental-cycles/C0/freeze/C0-cycle-lock.json",
+    "cycleLockText": "results/experimental-cycles/C0/freeze/C0-cycle-lock.txt",
+    "artifactSnapshotRoot": "results/experimental-cycles/C0/artifacts",
+    "freezeProfile": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "freezeIndex": "config/freeze/FREEZE_INDEX.json",
+    "outputRoot": "results/experimental-cycles/C0/freeze",
+    "latestManifestPath": "results/experimental-cycles/C0/freeze/latest-freeze-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C0/freeze/latest-freeze-summary.txt",
+    "freezeProfileId": "FR_C0_HISTORICAL_FIXED_CLUSTER",
+    "freezeProfilePath": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "freezeIndexPath": "config/freeze/FREEZE_INDEX.json",
+    "freezeManifestJson": "results/experimental-cycles/C0/freeze/latest-freeze-manifest.json",
+    "freezeSummaryText": "results/experimental-cycles/C0/freeze/latest-freeze-summary.txt"
+  },
+  "lockPolicy": {
+    "mutationStatus": "locked_for_historical_reference",
+    "rules": [
+      "Do not mutate B0 or the C0 consolidated evidence when starting provider-backed cluster experiments.",
+      "Do not overwrite C0 reporting, diagnosis, or completion-gate artifacts to represent future infrastructure-aware runs.",
+      "Create a new cycle and a new baseline identifier before running benchmarks on a cluster generated through proxmox-k3s.",
+      "Treat C0 as the historical reference cycle for the original fixed cluster, not as the universal baseline for all future infrastructure profiles.",
+      "Treat results/experimental-cycles/C0/artifacts as the self-contained frozen evidence snapshot for C0.",
+      "A normal freeze rerun must preserve existing C0 artifacts; use an explicit force option only when intentionally rebuilding the historical snapshot.",
+      "Treat C0/B0 as bound to infrastructure profile INFRA_C0_1CP_2W_8C16G; future provider-backed runs must declare a distinct infrastructure profile.",
+      "C0 uses an external retained cluster lifecycle policy and must not trigger provider create or delete operations.",
+      "Any lifecycle manifest generated for C0 is descriptive evidence only and does not imply provider-managed provisioning."
+    ]
+  },
+  "nextCyclePreparation": {
+    "recommendedNextCycleId": "C1",
+    "recommendedNextBaselineId": "B1",
+    "purpose": "Provider-backed baseline and infrastructure-aware characterization based on K3s clusters generated through proxmox-k3s.",
+    "recommendedNextInfrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+    "recommendedNextInfrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json"
+  },
+  "frozenArtifactPolicy": {
+    "artifactSnapshotRoot": "results/experimental-cycles/C0/artifacts",
+    "defaultRerunBehavior": "preserve_existing_snapshot",
+    "forceRerunBehavior": "rebuild_snapshot_from_latest_resolved_source_artifacts",
+    "rationale": "The historical cycle must remain self-contained after freezing, while the freeze operation must remain robust when current diagnosis, reporting, or completion-gate artifacts are regenerated with different timestamps before the final lock is created.",
+    "sourceResolutionBehavior": "technical diagnosis, reporting and completion-gate artifacts are resolved from the canonical C0 cycle-scoped result roots before freeze.",
+    "primaryArtifactPolicy": "The lock records the latest frozen technical diagnosis JSON, its paired TXT summary, the latest completion-gate JSON/TXT pair, and the stable reporting artifacts."
+  },
+  "sourceArtifactResolution": {
+    "technicalDiagnosisJson": {
+      "mode": "latest",
+      "type": "file",
+      "root": "results/experimental-cycles/C0/diagnosis",
+      "pattern": "*_diagnosis.json",
+      "description": "Latest technical diagnosis JSON generated before the C0 freeze is executed."
+    },
+    "technicalDiagnosisText": {
+      "mode": "paired_text",
+      "type": "file",
+      "pairedWith": "technicalDiagnosisJson",
+      "description": "Technical diagnosis TXT paired with the resolved primary technical diagnosis JSON."
+    },
+    "reportingManifest": {
+      "mode": "fixed",
+      "type": "file",
+      "path": "results/experimental-cycles/C0/reporting/reporting-manifest.json"
+    },
+    "reportMarkdown": {
+      "mode": "fixed",
+      "type": "file",
+      "path": "results/experimental-cycles/C0/reporting/report.md"
+    },
+    "reportHtml": {
+      "mode": "fixed",
+      "type": "file",
+      "path": "results/experimental-cycles/C0/reporting/index.html"
+    },
+    "scenarioSummaryCsv": {
+      "mode": "fixed",
+      "type": "file",
+      "path": "results/experimental-cycles/C0/reporting/scenario-summary.csv"
+    },
+    "completionGateJson": {
+      "mode": "latest",
+      "type": "file",
+      "root": "results/experimental-cycles/C0/completion-gate",
+      "pattern": "*_completion_gate.json",
+      "description": "Latest completion-gate JSON generated before the C0 freeze is executed."
+    },
+    "completionGateText": {
+      "mode": "latest",
+      "type": "file",
+      "root": "results/experimental-cycles/C0/completion-gate",
+      "pattern": "*_completion_gate.txt",
+      "description": "Latest completion-gate text summary generated before the C0 freeze is executed."
+    }
+  },
+  "frozenClosureArtifacts": {
+    "reportingManifest": "results/experimental-cycles/C0/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C0/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C0/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C0/reporting/scenario-summary.csv",
+    "completionGateManifest": "results/experimental-cycles/C0/completion-gate/latest-completion-gate-manifest.json",
+    "completionGateSummary": "results/experimental-cycles/C0/completion-gate/latest-completion-gate-summary.txt",
+    "reportingCharts": "results/experimental-cycles/C0/reporting/charts",
+    "reportingSweepReports": "results/experimental-cycles/C0/reporting/sweeps",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C0/diagnosis"
+  },
+  "infrastructureProfile": {
+    "infrastructureProfileId": "INFRA_C0_1CP_2W_8C16G",
+    "profilePath": "config/infrastructure/profiles/INFRA_C0_1CP_2W_8C16G.json",
+    "roleInCycle": "historical_fixed_cluster_profile",
+    "description": "Infrastructure profile formally associated with C0/B0. It describes the original fixed K3s cluster used before introducing provider-backed infrastructure profiles."
+  },
+  "cycleGovernance": {
+    "canonicalCycleId": "C0",
+    "previousCycleIdBeforeProviderBackedGovernance": "C1",
+    "role": "historical_fixed_cluster_cycle",
+    "reason": "The original fixed-cluster cycle is preserved as C0 so that C1 can become the first provider-backed baseline cycle generated through proxmox-k3s.",
+    "mutationPolicy": "locked_historical_reference"
+  },
+  "clusterLifecycle": {
+    "lifecyclePolicyId": "LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN.json",
+    "clusterLifecycleMode": "external",
+    "providerManagedLifecycle": false,
+    "provisioningRequired": false,
+    "destroyClusterAfterCycle": false,
+    "createClusterBeforeWorkload": false,
+    "deleteClusterAfterCycle": false,
+    "lifecycleManifestRequired": true,
+    "lifecycleArtifactRoot": "results/experimental-cycles/C0/infrastructure/lifecycle",
+    "provisioningLogRoot": null,
+    "deletionLogRoot": null,
+    "destructiveActionsAllowed": false
+  },
+  "profileStatus": "historical_locked_completed_cycle",
+  "configurationState": "locked",
+  "executionState": "completed",
+  "stateModel": {
+    "profileStatus": "Configuration-profile lifecycle state. This is the canonical meaning of the backward-compatible status field.",
+    "configurationState": "Whether the cycle configuration is active, locked, superseded, or deprecated.",
+    "executionState": "Latest known execution outcome for the cycle or campaign.",
+    "status": "Backward-compatible alias of profileStatus; execution outcomes must be read from executionState."
+  },
+  "infrastructureSummaryMode": "historical_fixed_cluster",
+  "infrastructureSummarySemantics": {
+    "scope": "historical_fixed_cluster",
+    "description": "The cycle preserves historical fixed-cluster evidence and is not interpreted as a provider-backed materialization."
+  }
+}

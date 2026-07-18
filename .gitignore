@@ -1,0 +1,29 @@
+# Python bytecode and interpreter cache artifacts.
+__pycache__/
+*.pyc
+
+# Fixed-cluster access material.
+# This kubeconfig is environment-specific and must remain local.
+config/cluster-access/fixed-cluster/kubeconfig
+
+# Provider-generated cluster access material.
+# Generated kubeconfig files are runtime/local artifacts; keep only the
+# directory placeholder that documents the expected repository layout.
+config/cluster-access/generated/proxmox-k3s/**
+!config/cluster-access/generated/proxmox-k3s/
+!config/cluster-access/generated/proxmox-k3s/.gitignore
+
+# Local proxmox-k3s provider inputs.
+# Files in this directory may contain environment-specific endpoints, IP ranges,
+# credentials, tokens, or local execution parameters. Keep only the placeholder.
+config/infrastructure/providers/proxmox-k3s/local/*
+!config/infrastructure/providers/proxmox-k3s/local/.gitignore
+
+# Generated execution artifacts.
+# Runtime scratch data and experimental-cycle outputs are produced by local
+# pipeline runs and can be regenerated. Keep them out of version control to
+# avoid committing large, machine-specific, or run-specific evidence artifacts.
+# Curated reporting outputs under results/reporting/ are intentionally not
+# ignored and may be versioned/published when required.
+results/_runtime/
+results/experimental-cycles/

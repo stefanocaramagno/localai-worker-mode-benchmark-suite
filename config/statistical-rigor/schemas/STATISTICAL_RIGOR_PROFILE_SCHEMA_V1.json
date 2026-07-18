@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "STATISTICAL_RIGOR_PROFILE_SCHEMA_V1.json",
+  "title": "Statistical rigor profiles profile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "profileId",
+    "description",
+    "targetRequestType",
+    "targetRequestName",
+    "fallbackToAggregated",
+    "requiredReplicaCount",
+    "minimumSuccessfulReplicaCount",
+    "coolDownBetweenReplicasSeconds",
+    "coolDownBetweenScenariosSeconds",
+    "stabilizationTimeoutSeconds",
+    "stabilizationPollIntervalSeconds",
+    "summaryManifestSuffix",
+    "summaryTextSuffix",
+    "trackedMetrics",
+    "variabilityThresholds"
+  ],
+  "properties": {
+    "profileId": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "targetRequestType": {
+      "type": "string"
+    },
+    "targetRequestName": {
+      "type": "string"
+    },
+    "fallbackToAggregated": {
+      "type": "boolean"
+    },
+    "requiredReplicaCount": {
+      "type": "integer"
+    },
+    "minimumSuccessfulReplicaCount": {
+      "type": "integer"
+    },
+    "coolDownBetweenReplicasSeconds": {
+      "type": "integer"
+    },
+    "coolDownBetweenScenariosSeconds": {
+      "type": "integer"
+    },
+    "stabilizationTimeoutSeconds": {
+      "type": "integer"
+    },
+    "stabilizationPollIntervalSeconds": {
+      "type": "integer"
+    },
+    "summaryManifestSuffix": {
+      "type": "string"
+    },
+    "summaryTextSuffix": {
+      "type": "string"
+    },
+    "trackedMetrics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "variabilityThresholds": {
+      "type": "object"
+    }
+  }
+}

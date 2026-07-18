@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "completion-gate-profile/v1",
+  "completionGateProfileId": "CG_C4_PLACEMENT_VARIATION",
+  "profileId": "CG_C4_PLACEMENT_VARIATION",
+  "profileName": "C4 Placement Variation Completion Gate Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_placement_variation_completion_gate",
+  "description": "Completion gate profile for the provider-backed placement variation campaign.",
+  "cycleId": "C4",
+  "cycleConfigPath": "config/experimental-cycles/C4.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "providerId": "proxmox-k3s",
+  "outputRoot": "results/experimental-cycles/C4/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C4/completion-gate",
+    "latestManifestPath": "results/experimental-cycles/C4/completion-gate/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C4/completion-gate/latest-completion-gate-summary.txt",
+    "writeLatestAliases": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C4.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C4_PLACEMENT_VARIATION.json",
+    "reportingProfile": "config/reporting/profiles/RP_C4_PLACEMENT_VARIATION.json",
+    "freezeProfile": "config/freeze/profiles/FR_C4_PLACEMENT_VARIATION.json",
+    "placementProfile": "config/placement/profiles/PL_SPREAD_WORKERS.json",
+    "placementVariationScenarioIndex": "config/scenarios/placement-variation/PLACEMENT_VARIATION_SCENARIOS_INDEX.json",
+    "referenceScenarioConfig": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C4/execution/latest-campaign-execution-manifest.json",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C4/diagnosis",
+    "reportingManifest": "results/experimental-cycles/C4/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C4/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C4/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C4/reporting/scenario-summary.csv",
+    "benchmarkRoots": [
+      "results/experimental-cycles/C4/benchmark/placement-variation"
+    ],
+    "clusterSideRoots": [
+      "results/experimental-cycles/C4/variants"
+    ],
+    "freezeProfile": "config/freeze/profiles/FR_C4_PLACEMENT_VARIATION.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C4_PLACEMENT_VARIATION.json"
+  },
+  "requiredFamilies": [
+    "placement-variation"
+  ],
+  "minimumReplicasPerScenario": 1,
+  "strictScenarioCoverage": true,
+  "acceptUnsupportedScenariosAsCovered": true,
+  "minimumUnsupportedReplicasPerScenario": 1,
+  "maximumMeanResponseTimeCvPercent": 1000000,
+  "gates": {
+    "profileResolution": {
+      "enabled": true
+    },
+    "providerConfig": {
+      "enabled": false
+    },
+    "provisioning": {
+      "enabled": false
+    },
+    "clusterValidation": {
+      "enabled": false
+    },
+    "applicationDeployment": {
+      "enabled": false
+    },
+    "minimalObservability": {
+      "enabled": false
+    },
+    "benchmarkArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C4/benchmark/placement-variation"
+      ],
+      "patterns": [
+        "*_stats.csv",
+        "*.json",
+        "*.csv",
+        "*.txt"
+      ]
+    },
+    "clusterSideArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C4/variants"
+      ],
+      "patterns": [
+        "*.json",
+        "*.txt",
+        "*.csv",
+        "*.log"
+      ]
+    },
+    "technicalDiagnosis": {
+      "enabled": true,
+      "acceptedClosureStatuses": [
+        "preliminary_diagnosis_available"
+      ],
+      "roots": [
+        "results/experimental-cycles/C4/diagnosis"
+      ],
+      "familyScope": "all",
+      "minimumFamiliesWithCoverage": 1,
+      "minimumFindings": 1
+    },
+    "reporting": {
+      "enabled": true,
+      "reportingRoot": "results/experimental-cycles/C4/reporting",
+      "manifestName": "reporting-manifest.json",
+      "markdownReportName": "report.md",
+      "htmlReportName": "index.html",
+      "scenarioSummaryCsvName": "scenario-summary.csv",
+      "chartsDirectoryName": "charts",
+      "sweepsDirectoryName": "sweeps",
+      "requiredSections": [
+        "Infrastructure Summary",
+        "Scenario Summary",
+        "Metrics Summary",
+        "Unsupported Scenario Summary",
+        "Main Findings"
+      ],
+      "requiredChartFamilies": [
+        "placement-variation"
+      ],
+      "requiredChartMetrics": [
+        "mean_response_time_ms",
+        "p50_response_time_ms",
+        "p95_response_time_ms",
+        "p99_response_time_ms",
+        "throughput_rps"
+      ],
+      "requiredSweepReports": [
+        "placement-variation"
+      ]
+    },
+    "freezeReadiness": {
+      "enabled": true,
+      "requireFreezeOutputsDeclared": false,
+      "requireFrozenArtifacts": false,
+      "requireFreezeProfileDeclared": true,
+      "requireFreezeProfileFile": true,
+      "freezeProfilePath": "config/freeze/profiles/FR_C4_PLACEMENT_VARIATION.json"
+    },
+    "scenarioCoverage": {
+      "requiredFamilies": [
+        "placement-variation"
+      ]
+    }
+  },
+  "decisionPolicy": {
+    "completedStatus": "completed",
+    "completedWithUnsupportedScenariosStatus": "completed_with_unsupported_scenarios",
+    "failedValidationStatus": "failed_validation",
+    "failedBenchmarkStatus": "failed_benchmark",
+    "failedReportingStatus": "failed_reporting",
+    "notCompletedStatus": "not_completed",
+    "unsupportedScenarioSignals": [
+      "unsupported",
+      "unsupported_under_current_constraints"
+    ],
+    "allowUnsupportedScenariosWhenDocumented": true,
+    "dryRunStatus": "dry_run"
+  },
+  "campaignAwareEvaluation": {
+    "enabled": true,
+    "variantEvidenceRoot": "results/experimental-cycles/C4/variants",
+    "campaignExecutionManifest": "results/experimental-cycles/C4/execution/latest-campaign-execution-manifest.json"
+  },
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C4_PLACEMENT_VARIATION.json",
+  "reportingProfilePath": "config/reporting/profiles/RP_C4_PLACEMENT_VARIATION.json",
+  "minimumMeasuredScenariosByFamily": {
+    "placement-variation": 2
+  },
+  "referenceScenarioId": "PLC_SPREAD_WORKERS",
+  "referenceScenarioConfigPath": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+  "referenceScenarioByFamily": {
+    "placement-variation": "PLC_SPREAD_WORKERS"
+  },
+  "referenceScenarioConfigByFamily": {
+    "placement-variation": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+  }
+}

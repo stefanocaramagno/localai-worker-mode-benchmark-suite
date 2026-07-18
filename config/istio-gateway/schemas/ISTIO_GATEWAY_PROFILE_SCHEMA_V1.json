@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "LocalAI Istio Gateway Profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "istioGatewayProfileId",
+    "profileStatus",
+    "kubernetes",
+    "tenantGateways",
+    "benchmarkRouting",
+    "artifactPolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "localai-istio-gateway-profile/v1"
+    },
+    "istioGatewayProfileId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profileName": {
+      "type": "string"
+    },
+    "profileStatus": {
+      "enum": [
+        "active",
+        "draft",
+        "deprecated"
+      ]
+    },
+    "profileRole": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "infrastructureProfileId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "infrastructureProfilePath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "monAgentProfileId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "monAgentProfilePath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "networkObservabilityProfileId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "networkObservabilityProfilePath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kubeconfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kubernetes": {
+      "type": "object",
+      "required": [
+        "kubectl",
+        "gatewayApi",
+        "namespaceLabels"
+      ],
+      "properties": {
+        "kubectl": {
+          "type": "string"
+        },
+        "gatewayApi": {
+          "type": "object",
+          "required": [
+            "apiVersion",
+            "gatewayKind",
+            "routeKind",
+            "gatewayClassName"
+          ],
+          "properties": {
+            "apiVersion": {
+              "type": "string"
+            },
+            "gatewayKind": {
+              "type": "string"
+            },
+            "routeKind": {
+              "type": "string"
+            },
+            "gatewayClassName": {
+              "type": "string"
+            },
+            "expectedGatewayClass": {
+              "type": "string"
+            },
+            "allowedRoutesFrom": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "namespaceLabels": {
+          "type": "object",
+          "required": [
+            "monAgentEnabled",
+            "istioInjection"
+          ],
+          "properties": {
+            "monAgentEnabled": {
+              "type": "object"
+            },
+            "istioInjection": {
+              "type": "object"
+            },
+            "trafficAccessMode": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "tenantGateways": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "tenantId",
+          "namespace",
+          "componentPath",
+          "gatewayName",
+          "httpRouteName",
+          "hostname",
+          "backendServiceName",
+          "backendServicePort",
+          "gatewayServiceName",
+          "benchmarkBaseUrl",
+          "hostHeader"
+        ],
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "namespace": {
+            "type": "string"
+          },
+          "componentPath": {
+            "type": "string"
+          },
+          "gatewayName": {
+            "type": "string"
+          },
+          "httpRouteName": {
+            "type": "string"
+          },
+          "hostname": {
+            "type": "string"
+          },
+          "backendServiceName": {
+            "type": "string"
+          },
+          "backendServicePort": {
+            "type": "integer"
+          },
+          "gatewayServiceName": {
+            "type": "string"
+          },
+          "gatewayPort": {
+            "type": "integer"
+          },
+          "localPort": {
+            "type": "integer"
+          },
+          "benchmarkBaseUrl": {
+            "type": "string"
+          },
+          "hostHeader": {
+            "type": "string"
+          },
+          "routePathPrefix": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "benchmarkRouting": {
+      "type": "object"
+    },
+    "prometheus": {
+      "type": "object"
+    },
+    "validation": {
+      "type": "object"
+    },
+    "artifactPolicy": {
+      "type": "object"
+    },
+    "decisionPolicy": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

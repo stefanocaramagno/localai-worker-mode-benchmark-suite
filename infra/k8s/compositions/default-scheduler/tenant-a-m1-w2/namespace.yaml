@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: genai-tenant-a
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/scheduler-mode: default-scheduler

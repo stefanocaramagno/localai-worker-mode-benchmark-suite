@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "BENCHMARK_PRECHECK_PROFILE_SCHEMA_V1",
+  "title": "Benchmark Technical Pre-Check Profile Schema",
+  "type": "object",
+  "required": [
+    "profileId",
+    "description",
+    "kubeconfig",
+    "namespace",
+    "expectedReadyNodes",
+    "expectedWorkerNodes",
+    "allowedPodPhases",
+    "minimumNamespacePods",
+    "criticalWaitingReasons",
+    "maxTotalRestartsInNamespace",
+    "requireMetricsApi",
+    "maxNodeCpuPercent",
+    "maxNodeMemoryPercent",
+    "defaultOutputRoot"
+  ],
+  "properties": {
+    "profileId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "kubeconfig": {
+      "type": "string",
+      "minLength": 1
+    },
+    "namespace": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expectedReadyNodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "expectedWorkerNodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowedPodPhases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "minimumNamespacePods": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "criticalWaitingReasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "maxTotalRestartsInNamespace": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "requireMetricsApi": {
+      "type": "boolean"
+    },
+    "maxNodeCpuPercent": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "maxNodeMemoryPercent": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "defaultOutputRoot": {
+      "type": "string"
+    },
+    "serviceReadinessTimeoutSeconds": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "serviceReadinessPollIntervalMilliseconds": {
+      "type": "integer",
+      "minimum": 100
+    },
+    "serviceReadinessRequestTimeoutSeconds": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "clusterReadinessPolicy": {
+      "type": "object"
+    },
+    "workerPlacementPolicy": {
+      "type": "object"
+    },
+    "restartTolerancePolicy": {
+      "type": "object",
+      "description": "Optional policy that allows recovered, non-critical pod restarts to be retained as warnings instead of blocking a benchmark pre-check.",
+      "properties": {
+        "treatRecoveredRestartsAsWarning": {
+          "type": "boolean"
+        },
+        "maxRecoveredRestartsInNamespace": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requireAllContainersReady": {
+          "type": "boolean"
+        },
+        "requireServiceEndpointReady": {
+          "type": "boolean"
+        },
+        "warningOnly": {
+          "type": "boolean"
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "additionalNamespaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Additional namespaces that must be checked when a scenario deploys multiple namespace-scoped workload clusters."
+    },
+    "namespaceValidationPolicy": {
+      "type": "object",
+      "description": "Policy for validating the primary namespace and any additional scenario namespaces before benchmark execution."
+    }
+  },
+  "additionalProperties": true
+}

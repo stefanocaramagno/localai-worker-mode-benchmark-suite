@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "completion-gate-profile/v1",
+  "completionGateProfileId": "CG_C1_PROVIDER_BACKED_BASELINE",
+  "profileId": "CG_C1_PROVIDER_BACKED_BASELINE",
+  "profileName": "C1 Provider-Backed Completion Gate",
+  "profileStatus": "active",
+  "profileRole": "canonical_provider_backed_completion_gate_profile",
+  "description": "Provider-aware completion gate for the C1 LocalAI worker-mode baseline cycle. It verifies that the cycle has resolved its infrastructure, provider, lifecycle, validation, deployment, observability, diagnosis and reporting evidence before the cycle is declared complete.",
+  "cycleId": "C1",
+  "cycleConfigPath": "config/experimental-cycles/C1.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+  "providerId": "proxmox-k3s",
+  "providerBindingId": "BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+  "outputRoot": "results/experimental-cycles/C1/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C1/completion-gate",
+    "latestManifestPath": "results/experimental-cycles/C1/completion-gate/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C1/completion-gate/latest-completion-gate-summary.txt",
+    "writeLatestAliases": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C1.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "infrastructureProfile": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+    "providerBinding": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "provisioningIntegrationProfile": "config/provisioning/profiles/PI_C1_PROVIDER_BACKED_BASELINE.json",
+    "clusterValidationProfile": "config/cluster-validation/profiles/CV_C1_PROVIDER_BACKED_BASELINE.json",
+    "applicationDeploymentProfile": "config/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+    "placementProfile": "config/placement/profiles/PL_COLOCATED.json",
+    "minimalObservabilityProfile": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+    "reportingProfile": "config/reporting/profiles/RP_C1_PROVIDER_BACKED_BASELINE.json",
+    "freezeProfile": "config/freeze/profiles/FR_C1_PROVIDER_BACKED_BASELINE.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C1_PROVIDER_BACKED_BASELINE.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "technicalDiagnosisSchema": "config/technical-diagnosis/schemas/TECHNICAL_DIAGNOSIS_PROFILE_SCHEMA_V1.json"
+  },
+  "runtimeEvidence": {
+    "provisioningManifest": "results/experimental-cycles/C1/infrastructure/provisioning/latest-provisioning-integration-manifest.json",
+    "clusterValidationManifest": "results/experimental-cycles/C1/infrastructure/validation/latest-cluster-validation-manifest.json",
+    "applicationDeploymentManifest": "results/experimental-cycles/C1/application/deployment/latest-localai-deployment-manifest.json",
+    "localAiSmokeResult": "results/experimental-cycles/C1/application/deployment/latest-smoke-result.json",
+    "minimalObservabilityManifest": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-manifest.json",
+    "minimalObservabilityMetrics": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-metrics.json",
+    "reportingManifest": "results/experimental-cycles/C1/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C1/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C1/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C1/reporting/scenario-summary.csv",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C1/diagnosis",
+    "technicalDiagnosisFallbackRoots": [],
+    "benchmarkRoots": [
+      "results/experimental-cycles/C1/benchmark/baseline"
+    ],
+    "clusterSideRoots": [
+      "results/experimental-cycles/C1/observability/minimal",
+      "results/experimental-cycles/C1/cluster-side"
+    ],
+    "freezeProfile": "config/freeze/profiles/FR_C1_PROVIDER_BACKED_BASELINE.json",
+    "cycleExecutionManifest": "results/experimental-cycles/C1/execution/latest-cycle-execution-manifest.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C1_PROVIDER_BACKED_BASELINE.json"
+  },
+  "gates": {
+    "profileResolution": {
+      "enabled": true
+    },
+    "providerConfig": {
+      "enabled": true,
+      "requireProviderBindingFile": true,
+      "requireProviderConfigDeclared": true,
+      "requireProviderConfigFile": false,
+      "acceptedProviderConfigStatuses": [
+        "resolved_for_real_execution",
+        "resolved_for_review_or_dry_run"
+      ]
+    },
+    "provisioning": {
+      "enabled": true,
+      "acceptedStatuses": [
+        "completed"
+      ],
+      "requireCanProceedToClusterValidation": true,
+      "manifestPath": "results/experimental-cycles/C1/infrastructure/provisioning/latest-provisioning-integration-manifest.json"
+    },
+    "clusterValidation": {
+      "enabled": true,
+      "acceptedStatuses": [
+        "validated"
+      ],
+      "requireCanProceedToApplicationDeployment": true,
+      "manifestPath": "results/experimental-cycles/C1/infrastructure/validation/latest-cluster-validation-manifest.json"
+    },
+    "applicationDeployment": {
+      "enabled": true,
+      "acceptedStatuses": [
+        "deployed",
+        "smoke_validated"
+      ],
+      "requireCanProceedToBenchmark": true,
+      "requireSmokeValidation": true,
+      "acceptedSmokeStatuses": [
+        "passed"
+      ],
+      "manifestPath": "results/experimental-cycles/C1/application/deployment/latest-localai-deployment-manifest.json"
+    },
+    "benchmarkArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C1/benchmark/baseline",
+        "results/experimental-cycles/C1/benchmark/consolidated/worker-count",
+        "results/experimental-cycles/C1/benchmark/consolidated/workload",
+        "results/experimental-cycles/C1/benchmark/consolidated/models",
+        "results/experimental-cycles/C1/benchmark/consolidated/placement"
+      ],
+      "patterns": [
+        "*_stats.csv",
+        "*_run.json",
+        "*.json",
+        "*.csv"
+      ]
+    },
+    "clusterSideArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C1/observability/minimal",
+        "results/experimental-cycles/C1/cluster-side"
+      ],
+      "patterns": [
+        "*.json",
+        "*.txt",
+        "*.csv"
+      ]
+    },
+    "minimalObservability": {
+      "enabled": true,
+      "acceptedStatuses": [
+        "observability_collected",
+        "collected_with_warnings"
+      ],
+      "requireCanProceedToDiagnosis": true,
+      "manifestPath": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-manifest.json",
+      "metricsSnapshotPath": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-metrics.json"
+    },
+    "technicalDiagnosis": {
+      "enabled": true,
+      "acceptedClosureStatuses": [
+        "preliminary_diagnosis_available"
+      ],
+      "roots": [
+        "results/experimental-cycles/C1/diagnosis"
+      ],
+      "familyScope": "all",
+      "minimumFamiliesWithCoverage": 1,
+      "minimumFindings": 1
+    },
+    "reporting": {
+      "enabled": true,
+      "reportingRoot": "results/experimental-cycles/C1/reporting",
+      "manifestName": "reporting-manifest.json",
+      "markdownReportName": "report.md",
+      "htmlReportName": "index.html",
+      "scenarioSummaryCsvName": "scenario-summary.csv",
+      "chartsDirectoryName": "charts",
+      "sweepsDirectoryName": "sweeps",
+      "requiredSections": [
+        "Infrastructure Summary",
+        "Provider Summary",
+        "Cluster Validation Summary",
+        "Application Topology Summary",
+        "Scenario Summary",
+        "Metrics Summary",
+        "Unsupported Scenario Summary",
+        "Main Findings"
+      ],
+      "requiredChartFamilies": [
+        "baseline"
+      ],
+      "requiredChartMetrics": [
+        "mean_response_time_ms",
+        "p50_response_time_ms",
+        "p95_response_time_ms",
+        "p99_response_time_ms",
+        "throughput_rps"
+      ],
+      "requiredSweepReports": [
+        "baseline"
+      ]
+    },
+    "freezeReadiness": {
+      "enabled": true,
+      "requireFreezeOutputsDeclared": true,
+      "requireFrozenArtifacts": false,
+      "requireFreezeProfileDeclared": true,
+      "requireFreezeProfileFile": true,
+      "freezeProfilePath": "config/freeze/profiles/FR_C1_PROVIDER_BACKED_BASELINE.json"
+    }
+  },
+  "decisionPolicy": {
+    "completedStatus": "completed",
+    "completedWithUnsupportedScenariosStatus": "completed_with_unsupported_scenarios",
+    "failedValidationStatus": "failed_validation",
+    "failedBenchmarkStatus": "failed_benchmark",
+    "failedReportingStatus": "failed_reporting",
+    "notCompletedStatus": "not_completed",
+    "unsupportedScenarioSignals": [
+      "unsupported",
+      "unsupported_under_current_constraints"
+    ],
+    "allowUnsupportedScenariosWhenDocumented": true,
+    "dryRunStatus": "dry_run"
+  },
+  "governance": {
+    "completionBoundary": "The completion gate verifies cycle readiness for freezing. Frozen artifacts are generated by the dedicated freeze workflow after this gate succeeds.",
+    "providerToolBoundary": "The completion gate consumes provider and provisioning artifacts without modifying proxmox-k3s.",
+    "documentationPolicy": "This profile is operational configuration and not project documentation.",
+    "evidencePolicy": "Every provider-backed completion decision must reference cycle, infrastructure, provider, validation, deployment, observability, diagnosis and reporting evidence."
+  }
+}

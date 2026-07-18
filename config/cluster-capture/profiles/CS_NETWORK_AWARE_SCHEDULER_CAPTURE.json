@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "cluster-capture-profile/v1",
+  "profileId": "CS_NETWORK_AWARE_SCHEDULER_CAPTURE",
+  "description": "Cluster-side collection profile for network-aware scheduler runs, including LocalAI placement, tenant labels, scheduler metadata and network-aware annotations.",
+  "collectorScriptRelativePathBash": "scripts/validation/cluster-side/collect-cluster-side-artifacts.sh",
+  "collectorScriptRelativePathPowerShell": "scripts/validation/cluster-side/Collect-ClusterSideArtifacts.ps1",
+  "preStageSuffix": "_cluster_pre",
+  "postStageSuffix": "_cluster_post",
+  "manifestSuffix": "_manifest.json",
+  "textSuffix": "_summary.txt",
+  "artifacts": [
+    {
+      "name": "nodes_wide",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get nodes -o wide",
+      "outputSuffix": "nodes-wide.txt"
+    },
+    {
+      "name": "top_nodes",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" top nodes",
+      "outputSuffix": "top-nodes.txt"
+    },
+    {
+      "name": "pods_wide",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get pods -n {namespace} -o wide",
+      "outputSuffix": "pods-wide.txt"
+    },
+    {
+      "name": "top_pods",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" top pods -n {namespace}",
+      "outputSuffix": "top-pods.txt"
+    },
+    {
+      "name": "services",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get svc -n {namespace}",
+      "outputSuffix": "services.txt"
+    },
+    {
+      "name": "events",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get events -n {namespace} --sort-by=.metadata.creationTimestamp",
+      "outputSuffix": "events.txt"
+    },
+    {
+      "name": "pods_describe",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" describe pods -n {namespace}",
+      "outputSuffix": "pods-describe.txt"
+    },
+    {
+      "name": "nodes_json",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get nodes -o json",
+      "outputSuffix": "nodes.json"
+    },
+    {
+      "name": "pods_json",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get pods -n {namespace} -o json",
+      "outputSuffix": "pods.json"
+    },
+    {
+      "name": "top_pods_containers",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" top pods -n {namespace} --containers",
+      "outputSuffix": "top-pods-containers.txt"
+    },
+    {
+      "name": "events_json",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get events -n {namespace} -o json",
+      "outputSuffix": "events.json"
+    },
+    {
+      "name": "nodes_annotations_json",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get nodes -o json",
+      "outputSuffix": "nodes-annotations.json"
+    },
+    {
+      "name": "tenant_deployments_json",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get deployments -n {namespace} -o json",
+      "outputSuffix": "deployments.json"
+    },
+    {
+      "name": "tenant_deployments_wide",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get deployments -n {namespace} -o wide",
+      "outputSuffix": "deployments-wide.txt"
+    },
+    {
+      "name": "gateway_api_routes",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get gateways,httproutes -n {namespace} -o yaml",
+      "outputSuffix": "gateway-routes.yaml"
+    },
+    {
+      "name": "scheduler_plugins_pods",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get pods -n scheduler-plugins -o wide",
+      "outputSuffix": "scheduler-plugins-pods.txt"
+    }
+  ],
+  "observabilityMode": "network_aware_scheduler_kubernetes_and_annotation_snapshots",
+  "notes": [
+    "This capture profile intentionally relies on kubectl, metrics-server and Kubernetes API snapshots.",
+    "JSON snapshots are collected to make pod placement, restart counts, pending pods and warning events machine-readable.",
+    "When multiple namespaces are provided, namespace-scoped artifacts are collected once per namespace while cluster-scoped artifacts are collected once per stage."
+  ],
+  "namespaceCollectionPolicy": {
+    "primaryNamespacePreservesLegacyArtifactNames": true,
+    "additionalNamespaceArtifactNaming": "<output-prefix>_<namespace-token>_<artifact-output-suffix>",
+    "namespacePlaceholder": "{namespace}",
+    "clusterScopedArtifactsRunOnce": true,
+    "namespaceScopedArtifactsRunPerResolvedNamespace": true
+  },
+  "networkAwareEvidencePolicy": {
+    "requiredPodLabels": [
+      "group",
+      "app",
+      "role"
+    ],
+    "requiredPodFields": [
+      "spec.schedulerName",
+      "spec.nodeName"
+    ],
+    "requiredNodeAnnotationPrefixes": [
+      "network-latency.",
+      "packet-loss.",
+      "network-bandwidth."
+    ],
+    "requiredDeploymentAnnotationPrefixes": [
+      "traffic."
+    ],
+    "gatewayTrafficKey": "traffic.localai-gateway-istio",
+    "schedulerModes": [
+      "default",
+      "loadaware",
+      "netaware"
+    ]
+  },
+  "profileStatus": "active",
+  "schemaPath": "config/cluster-capture/schemas/CLUSTER_CAPTURE_PROFILE_SCHEMA_V1.json",
+  "profileScope": {
+    "usage": [
+      "network_aware_scheduler_evaluation",
+      "telemetry_evidence_capture",
+      "gateway_routed_multi_tenant_benchmark"
+    ],
+    "role": "network_aware_scheduler_cluster_side_capture"
+  }
+}

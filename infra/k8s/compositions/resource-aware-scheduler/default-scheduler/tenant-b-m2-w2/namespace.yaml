@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: genai-tenant-b
+  labels:
+    mon-agent/enabled: 'true'
+    localai.benchmark/tenant: tenant-b
+    localai.benchmark/scheduler-mode: default-scheduler

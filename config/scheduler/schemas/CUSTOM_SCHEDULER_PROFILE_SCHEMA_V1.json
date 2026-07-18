@@ -1,0 +1,373 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "localai-custom-scheduler-profile/v1",
+  "title": "Custom Scheduler Integration Profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "schedulerProfileId",
+    "tooling",
+    "helmRelease",
+    "scheduler",
+    "plugins",
+    "validation",
+    "artifactPolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "localai-custom-scheduler-profile/v1"
+    },
+    "schedulerProfileId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profileName": {
+      "type": "string"
+    },
+    "profileStatus": {
+      "type": "string"
+    },
+    "profileRole": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kubeconfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tooling": {
+      "type": "object",
+      "required": [
+        "kubectl",
+        "helm",
+        "schedulerPluginsRootPath",
+        "chartPathFromSchedulerPluginsRoot"
+      ],
+      "properties": {
+        "kubectl": {
+          "type": "string"
+        },
+        "helm": {
+          "type": "string"
+        },
+        "schedulerPluginsRootPath": {
+          "type": "string"
+        },
+        "chartPathFromSchedulerPluginsRoot": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "helmRelease": {
+      "type": "object",
+      "required": [
+        "name",
+        "namespace"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "namespace": {
+          "type": "string"
+        },
+        "createNamespace": {
+          "type": "boolean"
+        },
+        "wait": {
+          "type": "boolean"
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "atomic": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "installFailureDiagnostics": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "commandTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "logTailLines": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxOutputCharacters": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "includePreviousContainerLogs": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": true
+    },
+    "scheduler": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "image": {
+          "type": "string"
+        },
+        "replicaCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "leaderElect": {
+          "type": "boolean"
+        },
+        "expectedDeploymentName": {
+          "type": "string"
+        },
+        "expectedContainerName": {
+          "type": "string"
+        },
+        "environmentVariables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "gatewayTrafficAnnotationKey": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "controller": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "plugins": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "requiredEnabledPlugins"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "disabled": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredEnabledPlugins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "pluginConfig": {
+          "type": "array"
+        }
+      },
+      "additionalProperties": true
+    },
+    "validation": {
+      "type": "object",
+      "required": [
+        "namespace",
+        "testDeploymentName",
+        "testSchedulerName"
+      ],
+      "additionalProperties": true
+    },
+    "artifactPolicy": {
+      "type": "object",
+      "required": [
+        "root",
+        "manifestsRoot",
+        "summariesRoot"
+      ],
+      "additionalProperties": true
+    },
+    "decisionPolicy": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "chartValidation": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "failOnError": {
+          "type": "boolean"
+        },
+        "requiredChartFiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expectedChart": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "appVersion": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "expectedChartDefaults": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "integer",
+              "boolean",
+              "array",
+              "object",
+              "null"
+            ]
+          }
+        },
+        "expectedRenderedValues": {
+          "type": "object",
+          "properties": {
+            "exact": {
+              "type": "object"
+            },
+            "contains": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": true
+        },
+        "requiredTemplateMarkers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "file",
+              "contains"
+            ],
+            "properties": {
+              "file": {
+                "type": "string"
+              },
+              "contains": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "requiredSchedulerPluginSources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "path",
+              "contains"
+            ],
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "contains": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "chartPatchPolicy": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "useTemporaryPatchedChart": {
+          "type": "boolean"
+        },
+        "preservePluginNameCase": {
+          "type": "boolean"
+        },
+        "enableSchedulerExtraEnv": {
+          "type": "boolean"
+        },
+        "patches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

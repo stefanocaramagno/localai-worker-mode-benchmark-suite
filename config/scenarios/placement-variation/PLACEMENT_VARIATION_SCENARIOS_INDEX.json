@@ -1,0 +1,82 @@
+{
+  "scenarioFamily": "placement-variation",
+  "status": "active",
+  "purpose": "Registry of provider-backed placement-variation scenarios under fixed infrastructure, model, workload and LocalAI worker count.",
+  "scenarioRoot": "config/scenarios/placement-variation",
+  "referenceScenarioId": "PLC_SPREAD_WORKERS",
+  "fixedDimensions": [
+    "infrastructure=INFRA_C4_1CP_4W_8C16G",
+    "model=M1",
+    "LocalAI worker-count=W4",
+    "workload=WL2",
+    "worker node capacity=8 vCPU / 16 GiB"
+  ],
+  "variedDimensions": [
+    "placement profile"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "PLC_COLOCATED",
+      "path": "config/scenarios/placement-variation/PLC_COLOCATED.json",
+      "placementProfileId": "PL_COLOCATED",
+      "placementType": "colocated_server_and_workers_on_genai_pb_worker_02",
+      "status": "active_provider_backed_placement_variation",
+      "resultsRoot": "results/experimental-cycles/C4/benchmark/placement-variation",
+      "outputSubdir": "PLC_COLOCATED_official_locked"
+    },
+    {
+      "scenarioId": "PLC_DISTRIBUTED_TWO_NODE",
+      "path": "config/scenarios/placement-variation/PLC_DISTRIBUTED_TWO_NODE.json",
+      "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+      "placementType": "distributed_workers_across_two_provider_worker_nodes",
+      "status": "active_provider_backed_placement_variation",
+      "resultsRoot": "results/experimental-cycles/C4/benchmark/placement-variation",
+      "outputSubdir": "PLC_DISTRIBUTED_TWO_NODE_official_locked"
+    },
+    {
+      "scenarioId": "PLC_SPREAD_WORKERS",
+      "path": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+      "placementProfileId": "PL_SPREAD_WORKERS",
+      "placementType": "spread_workers_across_four_provider_worker_nodes",
+      "status": "active_provider_backed_placement_variation",
+      "resultsRoot": "results/experimental-cycles/C4/benchmark/placement-variation",
+      "outputSubdir": "PLC_SPREAD_WORKERS_official_locked"
+    },
+    {
+      "scenarioId": "PLC_SERVER_SEPARATED",
+      "path": "config/scenarios/placement-variation/PLC_SERVER_SEPARATED.json",
+      "placementProfileId": "PL_SERVER_SEPARATED",
+      "placementType": "server_separated_from_spread_workers",
+      "status": "active_provider_backed_placement_variation",
+      "resultsRoot": "results/experimental-cycles/C4/benchmark/placement-variation",
+      "outputSubdir": "PLC_SERVER_SEPARATED_official_locked"
+    },
+    {
+      "scenarioId": "PLC_BALANCED_STATIC",
+      "path": "config/scenarios/placement-variation/PLC_BALANCED_STATIC.json",
+      "placementProfileId": "PL_BALANCED_STATIC",
+      "placementType": "balanced_static_server_with_partial_worker_colocation",
+      "status": "active_provider_backed_placement_variation",
+      "resultsRoot": "results/experimental-cycles/C4/benchmark/placement-variation",
+      "outputSubdir": "PLC_BALANCED_STATIC_official_locked"
+    }
+  ],
+  "governanceRules": [
+    "Placement scenarios vary only the placement profile and the Kustomize topology needed to realize that placement.",
+    "Infrastructure, model, workload, LocalAI worker count, benchmark protocol and metric collection remain fixed.",
+    "Unsupported variants must be retained as placement/resource-contention evidence rather than discarded."
+  ],
+  "scenarioIdPrefix": "PLC",
+  "prefixPolicy": {
+    "canonicalScenarioPrefix": "PLC",
+    "canonicalScenarioPrefixMeaning": "placement-campaign scenario",
+    "historicalFixedClusterScenarioPrefix": "PL",
+    "historicalFixedClusterScenarioPrefixMeaning": "legacy fixed-cluster placement scenario such as PL1/PL2",
+    "deprecatedPlacementVariationScenarioPrefix": "PV",
+    "deprecatedPlacementVariationScenarioPrefixMeaning": "do not use for new placement scenarios",
+    "reservedProfilePrefix": "PV_",
+    "reservedProfilePrefixMeaning": "provisioning-validation profile prefix"
+  },
+  "historicalFixedClusterScenarioIdPrefix": "PL",
+  "deprecatedPlacementVariationScenarioIdPrefix": "PV"
+}

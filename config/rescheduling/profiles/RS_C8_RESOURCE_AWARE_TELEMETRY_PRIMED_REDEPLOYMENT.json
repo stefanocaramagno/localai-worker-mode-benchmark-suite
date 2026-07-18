@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "localai-rescheduling-profile/v1",
+  "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+  "profileName": "C8 Resource-Aware Telemetry-Primed Redeployment Profile",
+  "profileStatus": "active",
+  "profileRole": "resource_aware_controlled_redeployment_after_runtime_telemetry_collection",
+  "purpose": "Capture resource-aware telemetry and placement evidence, restart the selected LocalAI deployments, wait for readiness, and capture post-redeployment evidence before the official measurement window.",
+  "cycleId": "C8",
+  "cycleConfigPath": "config/experimental-cycles/C8.json",
+  "kubeconfigPath": null,
+  "kubernetes": {
+    "kubectl": "kubectl"
+  },
+  "targetWorkloads": {
+    "namespaces": [
+      "genai-tenant-a",
+      "genai-tenant-b",
+      "genai-tenant-c"
+    ],
+    "deploymentNames": [
+      "localai-server",
+      "localai-rpc-a",
+      "localai-rpc-b"
+    ],
+    "labelSelector": "localai.benchmark/component",
+    "skipZeroReplicaDeployments": true,
+    "minimumSelectedDeployments": 1,
+    "requireExpectedSelectedDeploymentCount": true,
+    "scenarioOverrides": "enabled_when_scenario_config_is_supplied"
+  },
+  "telemetryPriming": {
+    "enabled": true,
+    "waitSeconds": 90,
+    "expectedMonAgentScrapeCycles": 2,
+    "reason": "Allow the monitoring agent to refresh resource telemetry annotations before triggering a new scheduling decision."
+  },
+  "annotationGate": {
+    "enabled": true,
+    "requiredNodeAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "requiredDeploymentAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "requireAllNodesAnnotated": true,
+    "requireAllSelectedDeploymentsAnnotated": true,
+    "requireAtLeastOneSelectedDeploymentAnnotated": false,
+    "failBeforeRestartWhenMissing": true,
+    "optionalNodeAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ],
+    "optionalDeploymentAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ]
+  },
+  "redeploymentPolicy": {
+    "strategy": "delete_pods_serial",
+    "restartOrder": "namespace_then_deployment_name",
+    "rolloutTimeoutSeconds": 600,
+    "postRestartStabilizationSeconds": 60,
+    "waitForRolloutCompletion": false,
+    "captureEventsAfterRestart": true,
+    "podDeletionTimeoutSeconds": 600,
+    "podReadinessPollSeconds": 5,
+    "reason": "Delete and recreate selected pods serially so that each replacement is scheduled from current telemetry without creating temporary surge pods on capacity-constrained variants."
+  },
+  "measurementBoundary": {
+    "loadGeneratorControl": "external",
+    "officialMeasurementWindowStartsAfterThisProcedure": true,
+    "excludeFromMeasurement": [
+      "telemetry_priming_wait",
+      "pre_redeployment_capture",
+      "post_redeployment_stabilization_wait",
+      "post_redeployment_capture",
+      "serial_pod_deletion",
+      "pod_recreation_readiness_wait"
+    ]
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C8/rescheduling",
+    "logsRoot": "results/experimental-cycles/C8/rescheduling/logs",
+    "snapshotsRoot": "results/experimental-cycles/C8/rescheduling/snapshots",
+    "manifestsRoot": "results/experimental-cycles/C8/rescheduling/manifests",
+    "summariesRoot": "results/experimental-cycles/C8/rescheduling/summaries",
+    "latestManifestPath": "results/experimental-cycles/C8/rescheduling/latest-rescheduling-manifest.json",
+    "latestSummaryPath": "results/experimental-cycles/C8/rescheduling/latest-rescheduling-summary.txt",
+    "latestPreSnapshotPath": "results/experimental-cycles/C8/rescheduling/latest-pre-redeployment-snapshot.json",
+    "latestPostSnapshotPath": "results/experimental-cycles/C8/rescheduling/latest-post-redeployment-snapshot.json",
+    "writeLatestAliases": true
+  },
+  "decisionPolicy": {
+    "plannedStatus": "planned",
+    "capturedStatus": "captured",
+    "executedStatus": "executed",
+    "validatedStatus": "validated",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "requireSelectedDeployments": true,
+    "requirePostRestartReadyPods": true
+  },
+  "governance": {
+    "documentationPolicy": "This profile is operational configuration and not repository documentation.",
+    "schedulerBoundary": "This procedure does not move running pods directly; it deletes selected pods in a controlled serial order so that the owning Deployment recreates them and the configured scheduler makes fresh placement decisions without introducing surge replicas.",
+    "measurementBoundary": "Benchmark measurements must start only after the post-redeployment capture and stabilization period have completed.",
+    "comparisonPolicy": "The same telemetry priming and redeployment procedure is used across default and load-aware variants so scheduler mode remains the controlled variable.",
+    "annotationBoundary": "CPU and memory annotations are required for the controlled rescheduling gate; disk-throughput and network-throughput annotations produced by provider-managed mon-agent are captured as optional evidence when available.",
+    "scenarioScopePolicy": "When a resource-aware-scheduler scenario config is supplied, target namespaces and expected LocalAI deployments are derived from that scenario so that one-, two- and three-tenant variants are handled without stale namespace targets.",
+    "capacityBoundary": "The serial pod recreation strategy avoids temporary maxSurge pods and is suitable for dense variants where resource requests leave insufficient allocatable memory for RollingUpdate surge replicas."
+  }
+}

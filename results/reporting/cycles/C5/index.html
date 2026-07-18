@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C5 — Latency Injection Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1180px; margin: 32px auto; line-height: 1.5; padding: 0 24px; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 28px; font-size: 14px; display: block; overflow-x: auto; }
+    th, td { border: 1px solid #d0d0d0; padding: 7px 9px; vertical-align: top; }
+    th { background: #f2f2f2; }
+    code { background: #f6f6f6; padding: 1px 4px; }
+    img { max-width: 100%; border: 1px solid #e0e0e0; margin: 8px 0 24px; }
+    blockquote { border-left: 4px solid #999; padding-left: 12px; color: #333; }
+    a { color: #0645ad; }
+  </style>
+</head>
+<body>
+<h1>C5 — Latency Injection Report</h1>
+<p><strong>Cycle ID:</strong> <code>C5</code></p>
+<p><strong>Reporting Profile:</strong> <code>RP_C5_LATENCY_INJECTION</code></p>
+<p><strong>Reporting ID:</strong> <code>REP_C5_20260619T174611Z</code></p>
+<p><strong>Generated at UTC:</strong> <code>2026-06-19T17:47:11Z</code></p>
+<h2>Purpose</h2>
+<p>This report compares progressively injected network-latency profiles under fixed provider-backed infrastructure, model, workload, LocalAI worker count and placement. It is intended to expose when distributed worker communication becomes a dominant performance factor.</p>
+<p>The report combines <strong>measurement CSV data</strong>, <strong>minimal observability evidence</strong>, <strong>cluster validation outputs</strong>, <strong>application topology metadata</strong> and <strong>technical diagnosis context</strong> when those artifacts are available.</p>
+<p><a href="../../index.html">Back to cycle report index</a></p>
+<h2>Cross-cycle baseline reference</h2>
+<p>The values below describe the global baseline configuration used as a cross-cycle reference. Scenario-specific and sweep-local sections report the effective infrastructure, placement, worker count and runtime configuration used by each scenario. Percentage deltas are computed against the family-local reference scenario when one is defined for the sweep.</p>
+<table>
+<thead><tr><th>Dimension</th><th>Reference value</th></tr></thead><tbody>
+<tr><td>Baseline ID</td><td>B1</td></tr>
+<tr><td>Model</td><td>llama-3.2-1b-instruct:q4_k_m</td></tr>
+<tr><td>Worker count</td><td>2</td></tr>
+<tr><td>Placement</td><td>colocated_genai_pb_worker_02</td></tr>
+<tr><td>Workload</td><td>users=2, spawnRate=1, runTime=2m</td></tr>
+<tr><td>Prompt</td><td>Reply with only READY.</td></tr>
+<tr><td>Request timeout</td><td>120 s</td></tr>
+<tr><td>Infrastructure profile</td><td>INFRA_C1_1CP_2W_8C16G</td></tr>
+<tr><td>Placement profile</td><td>PL_COLOCATED</td></tr>
+</tbody></table>
+<h2>Family-local reference scenarios</h2>
+<p>The scenarios below are the sweep-local references used to interpret percentage deltas within each family. They may differ from the cross-cycle baseline when a campaign intentionally varies infrastructure, placement, latency or tenancy.</p>
+<table>
+<thead><tr><th>Sweep</th><th>Reference scenario</th><th>Description</th><th>Status</th><th>Varied dimension</th></tr></thead><tbody>
+<tr><td>Latency Injection</td><td><code>LI_L0_NONE</code></td><td>LI_L0_NONE (0 ms, jitter 0 ms)</td><td>measured</td><td>latency profile</td></tr>
+</tbody></table>
+<h2>Data sources</h2>
+<table>
+<thead><tr><th>Layer</th><th>Primary use</th><th>Source</th></tr></thead><tbody>
+<tr><td>Measurement CSV</td><td>Quantitative charts and scenario summary metrics</td><td><code>{&quot;latency-injection&quot;: &quot;results/experimental-cycles/C5/benchmark/latency-injection&quot;}</code></td></tr>
+<tr><td>Technical diagnosis</td><td>Interpretation, family judgments, findings, unsupported-scenario context</td><td><code>results/experimental-cycles/C5/diagnosis/analysis_diagnosis_all_NA_20260619T174711Z_diagnosis.json</code></td></tr>
+<tr><td>Scenario configuration</td><td>Fixed/varied dimensions and scenario labels</td><td><code>config/scenarios/**</code></td></tr>
+<tr><td>Cluster-side artifacts</td><td>CPU/memory snapshots, pod placement and event evidence</td><td><code>minimal observability and cluster capture artifacts</code></td></tr>
+<tr><td>Reporting output</td><td>Current generated report package</td><td><code>results/experimental-cycles/C5/reporting</code></td></tr>
+</tbody></table>
+<h2>Infrastructure Summary</h2>
+<table>
+<thead><tr><th>Item</th><th>Value</th></tr></thead><tbody>
+<tr><td>Cycle ID</td><td>C5</td></tr>
+<tr><td>Baseline ID</td><td>B1</td></tr>
+<tr><td>Infrastructure profile</td><td>INFRA_C5_1CP_4W_8C16G</td></tr>
+<tr><td>Provider</td><td>proxmox-k3s</td></tr>
+<tr><td>Cluster name</td><td>genai-pb</td></tr>
+<tr><td>Kubernetes distribution</td><td>K3s</td></tr>
+<tr><td>K3s version</td><td>v1.35.3+k3s1</td></tr>
+<tr><td>Control-plane nodes</td><td>1</td></tr>
+<tr><td>Worker nodes</td><td>4</td></tr>
+<tr><td>Worker total vCPU</td><td>32</td></tr>
+<tr><td>Worker total memory</td><td>64 GiB</td></tr>
+<tr><td>Lifecycle mode</td><td>ephemeral</td></tr>
+<tr><td>Destroy after cycle</td><td>True</td></tr>
+</tbody></table>
+<h2>Provider Summary</h2>
+<p>This campaign may resolve provider configuration at scenario or variant level. The table below exposes provider bindings and concrete configuration paths per scenario whenever available.</p>
+<p>All configured scenarios currently resolve to the same provider binding. The provider is therefore reported once to avoid repeating identical configuration metadata.</p>
+<table>
+<thead><tr><th>Item</th><th>Value</th></tr></thead><tbody>
+<tr><td>Covered scenarios</td><td><code>LI_L0_NONE</code>, <code>LI_L1_EDGE_NEAR</code>, <code>LI_L2_EDGE_REMOTE</code>, <code>LI_L3_EXTREME</code></td></tr>
+<tr><td>Provider</td><td>proxmox-k3s</td></tr>
+<tr><td>Provider binding</td><td>BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S</td></tr>
+<tr><td>Provider binding path</td><td>config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S.json</td></tr>
+<tr><td>Example config</td><td>config/infrastructure/providers/proxmox-k3s/examples/cluster.c5-1cp-4w-8c16g.example.yaml</td></tr>
+<tr><td>Local config</td><td>config/infrastructure/providers/proxmox-k3s/local/cluster.c5-1cp-4w-8c16g.local.yaml</td></tr>
+<tr><td>Kubeconfig</td><td>config/cluster-access/generated/proxmox-k3s/c5-1cp-4w-8c16g/kubeconfig</td></tr>
+</tbody></table>
+<h2>Cluster Validation Summary</h2>
+<table>
+<thead><tr><th>Item</th><th>Value</th></tr></thead><tbody>
+<tr><td>Validation profile</td><td>CV_PROVIDER_BACKED_VALIDATION_TEMPLATE</td></tr>
+<tr><td>Profile file</td><td>config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json</td></tr>
+<tr><td>Latest manifest</td><td>variant-scoped validation manifests (4 available)</td></tr>
+<tr><td>Current status</td><td>variant-scoped validation available (4/4 validated)</td></tr>
+<tr><td>Variant validation statuses</td><td>validated=4</td></tr>
+<tr><td>Latest raw validation</td><td>variant-scoped validation evidence is recorded in the campaign execution manifest and generated runtime profiles under results/experimental-cycles/C5/execution/generated-runtime-configs</td></tr>
+<tr><td>Accepted provisioning statuses</td><td>completed</td></tr>
+<tr><td>Required kubeconfig status</td><td>verified</td></tr>
+<tr><td>Artifact root</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs</td></tr>
+</tbody></table>
+<h2>Runtime Profile Variant Summary</h2>
+<p>This table links each scenario to the runtime-generated profiles used for precheck, application deployment and minimal observability evidence.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Family</th><th>Precheck profile</th><th>Precheck profile path</th><th>Application deployment profile</th><th>Application deployment profile path</th><th>Minimal observability profile</th><th>Minimal observability profile path</th><th>Cluster validation evidence</th></tr></thead><tbody>
+<tr><td><code>LI_L0_NONE</code></td><td>latency-injection</td><td>TC_C5_LI_L0_NONE</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L0_NONE/TC_LI_L0_NONE.json</td><td>AD_C5_LI_L0_NONE</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L0_NONE/AD_LI_L0_NONE.json</td><td>MO_C5_LI_L0_NONE</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L0_NONE/MO_LI_L0_NONE.json</td><td>results/experimental-cycles/C5/variants/LI_L0_NONE/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+<tr><td><code>LI_L1_EDGE_NEAR</code></td><td>latency-injection</td><td>TC_C5_LI_L1_EDGE_NEAR</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L1_EDGE_NEAR/TC_LI_L1_EDGE_NEAR.json</td><td>AD_C5_LI_L1_EDGE_NEAR</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L1_EDGE_NEAR/AD_LI_L1_EDGE_NEAR.json</td><td>MO_C5_LI_L1_EDGE_NEAR</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L1_EDGE_NEAR/MO_LI_L1_EDGE_NEAR.json</td><td>results/experimental-cycles/C5/variants/LI_L1_EDGE_NEAR/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+<tr><td><code>LI_L2_EDGE_REMOTE</code></td><td>latency-injection</td><td>TC_C5_LI_L2_EDGE_REMOTE</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L2_EDGE_REMOTE/TC_LI_L2_EDGE_REMOTE.json</td><td>AD_C5_LI_L2_EDGE_REMOTE</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L2_EDGE_REMOTE/AD_LI_L2_EDGE_REMOTE.json</td><td>MO_C5_LI_L2_EDGE_REMOTE</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L2_EDGE_REMOTE/MO_LI_L2_EDGE_REMOTE.json</td><td>results/experimental-cycles/C5/variants/LI_L2_EDGE_REMOTE/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+<tr><td><code>LI_L3_EXTREME</code></td><td>latency-injection</td><td>TC_C5_LI_L3_EXTREME</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/TC_LI_L3_EXTREME.json</td><td>AD_C5_LI_L3_EXTREME</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/AD_LI_L3_EXTREME.json</td><td>MO_C5_LI_L3_EXTREME</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/MO_LI_L3_EXTREME.json</td><td>results/experimental-cycles/C5/variants/LI_L3_EXTREME/infrastructure/validation/latest-cluster-validation-manifest.json (validated)</td></tr>
+</tbody></table>
+<h2>Application Topology Summary</h2>
+<p>This campaign may vary placement, tenancy, latency profile or generated deployment profiles at scenario level. The table below exposes the scenario-level application topology used by each configured variant.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Family</th><th>Placement profile</th><th>Placement type</th><th>Topology dir</th><th>Server manifest</th><th>Worker count</th><th>Active RPC workers</th><th>Expected server node</th><th>Expected worker nodes</th><th>Latency profile</th><th>Tenancy profile</th><th>Generated deployment profile</th></tr></thead><tbody>
+<tr><td><code>LI_L0_NONE</code></td><td>latency-injection</td><td>PL_SPREAD_WORKERS</td><td>spread_workers_across_four_provider_worker_nodes</td><td>infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-03, localai-rpc-d=genai-pb-worker-04</td><td>L0_NONE</td><td>not_declared</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L0_NONE/AD_LI_L0_NONE.json</td></tr>
+<tr><td><code>LI_L1_EDGE_NEAR</code></td><td>latency-injection</td><td>PL_SPREAD_WORKERS</td><td>spread_workers_across_four_provider_worker_nodes</td><td>infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-03, localai-rpc-d=genai-pb-worker-04</td><td>L1_EDGE_NEAR</td><td>not_declared</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L1_EDGE_NEAR/AD_LI_L1_EDGE_NEAR.json</td></tr>
+<tr><td><code>LI_L2_EDGE_REMOTE</code></td><td>latency-injection</td><td>PL_SPREAD_WORKERS</td><td>spread_workers_across_four_provider_worker_nodes</td><td>infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-03, localai-rpc-d=genai-pb-worker-04</td><td>L2_EDGE_REMOTE</td><td>not_declared</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L2_EDGE_REMOTE/AD_LI_L2_EDGE_REMOTE.json</td></tr>
+<tr><td><code>LI_L3_EXTREME</code></td><td>latency-injection</td><td>PL_SPREAD_WORKERS</td><td>spread_workers_across_four_provider_worker_nodes</td><td>infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>4</td><td>localai-rpc-a, localai-rpc-b, localai-rpc-c, localai-rpc-d</td><td>genai-pb-worker-02</td><td>localai-rpc-a=genai-pb-worker-01, localai-rpc-b=genai-pb-worker-02, localai-rpc-c=genai-pb-worker-03, localai-rpc-d=genai-pb-worker-04</td><td>L3_EXTREME</td><td>not_declared</td><td>results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/AD_LI_L3_EXTREME.json</td></tr>
+</tbody></table>
+<h2>Scenario Summary</h2>
+<p>The following table summarizes the currently available measurement and constraint evidence for all configured reporting families.</p>
+<table>
+<thead><tr><th>Family</th><th>Scenario</th><th>Status</th><th>Samples</th><th>Mean ms</th><th>P95 ms</th><th>RPS</th><th>Unsupported evidence</th></tr></thead><tbody>
+<tr><td>latency-injection</td><td>LI_L0_NONE</td><td>measured</td><td>3</td><td>1560.12</td><td>1600.00</td><td>0.5630</td><td>NA</td></tr>
+<tr><td>latency-injection</td><td>LI_L1_EDGE_NEAR</td><td>measured</td><td>3</td><td>23467.32</td><td>26000.00</td><td>0.0749</td><td>NA</td></tr>
+<tr><td>latency-injection</td><td>LI_L2_EDGE_REMOTE</td><td>measured</td><td>3</td><td>64483.46</td><td>80333.33</td><td>0.0251</td><td>NA</td></tr>
+<tr><td>latency-injection</td><td>LI_L3_EXTREME</td><td>unsupported_under_current_constraints</td><td>0</td><td>NA</td><td>NA</td><td>NA</td><td>all_worker_nodes_from_infrastructure_profile,api_smoke_failed,api_smoke_or_pre_benchmark_api_unavailable,latency_injection,latency_injection_pre_benchmark,measurement_stats_csv_missing,pre_benchmark_failure</td></tr>
+</tbody></table>
+<h2>Metrics Summary</h2>
+<p>The reporting generator first uses minimal observability metrics when available; missing values are filled from scenario-summary aggregates derived from benchmark CSV files and cluster-capture artifacts whenever possible. Values marked as <code>not_available</code> were not derivable from the available artifact set and are intentionally distinguished from measured zero values.</p>
+<table>
+<thead><tr><th>Metric</th><th>Value</th><th>Source</th></tr></thead><tbody>
+<tr><td>request_count</td><td>25.8889</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>success_rate_percent</td><td>100.0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>failure_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>mean_response_time_ms</td><td>29836.9679</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>p50_response_time_ms</td><td>33622.2222</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>p95_response_time_ms</td><td>35977.7778</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>p99_response_time_ms</td><td>36055.5555</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>throughput_rps</td><td>0.221</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>max_node_cpu_percent</td><td>4.1111</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>max_node_memory_percent</td><td>16.0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>max_pod_cpu_millicores</td><td>326.1111</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>max_pod_memory_mib</td><td>384.2222</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>pod_restart_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>pending_pods_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>failed_pods_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>not_ready_pods_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>kubernetes_events_count</td><td>39</td><td>scenario summary aggregation fallback</td></tr>
+<tr><td>kubernetes_warning_events_count</td><td>0</td><td>scenario summary aggregation fallback</td></tr>
+</tbody></table>
+<h2>Unsupported Scenario Summary</h2>
+<table>
+<thead><tr><th>Family</th><th>Scenario</th><th>Status</th><th>Evidence</th><th>Source</th></tr></thead><tbody>
+<tr><td>latency-injection</td><td>LI_L3_EXTREME</td><td>unsupported_under_current_constraints</td><td>all_worker_nodes_from_infrastructure_profile, api_smoke_failed, api_smoke_or_pre_benchmark_api_unavailable, latency_injection, latency_injection_pre_benchmark, measurement_stats_csv_missing, pre_benchmark_failure</td><td>results/experimental-cycles/C5/benchmark/latency-injection/LI_L3_EXTREME_official_locked/LI_L3_EXTREME_runA_unsupported.json, results/experimental-cycles/C5/benchmark/latency-injection/LI_L3_EXTREME_official_locked/LI_L3_EXTREME_runB_unsupported.json, results/experimental-cycles/C5/benchmark/latency-injection/LI_L3_EXTREME_official_locked/LI_L3_EXTREME_runC_unsupported.json</td></tr>
+</tbody></table>
+<h2>Main Findings</h2>
+<table>
+<thead><tr><th>Family</th><th>Finding</th><th>Status</th><th>Confidence</th><th>Implication</th></tr></thead><tbody>
+<tr><td>latency-injection</td><td>The latency-injection family provides comparable network-sensitivity evidence.</td><td>comparative_signal_available</td><td>medium</td><td>The campaign can be used to reason about when injected inter-node latency degrades LocalAI worker-mode behavior because infrastructure, model, workload, worker count and placement remain fixed while only latency changes.</td></tr>
+<tr><td>latency-injection</td><td>The latency-injection campaign provides measured evidence across multiple network-latency profiles.</td><td>NA</td><td>medium</td><td>The evidence can be used to evaluate whether inter-node communication delay becomes a dominant factor under the fixed distributed placement.</td></tr>
+<tr><td>latency-injection</td><td>The latency-injection campaign identifies the highest-latency measured profile.</td><td>NA</td><td>medium</td><td>This result provides a controlled signal for deciding when distributed worker placement becomes sensitive to network delay.</td></tr>
+<tr><td>baseline</td><td>Minimum end-to-end validation is available as a functional reliability baseline.</td><td>NA</td><td>high</td><td>The benchmark pipeline starts from a verified functional baseline rather than from a purely theoretical setup.</td></tr>
+</tbody></table>
+<h2>Sweep-specific reports</h2>
+<p>The global report below provides the stakeholder-facing overview. Each sweep also has a dedicated report for focused inspection of one varied dimension.</p>
+<table>
+<thead><tr><th>Sweep</th><th>Dedicated HTML report</th><th>Execution status</th><th>Coverage</th><th>Varied dimension</th></tr></thead><tbody>
+<tr><td>Latency Injection</td><td><a href="sweeps/latency-injection/index.html">latency-injection</a></td><td>partially_measured</td><td>measured=3, unsupported=1, missing=0</td><td>latency profile</td></tr>
+</tbody></table>
+<h2>Diagnosis coverage snapshot</h2>
+<table>
+<thead><tr><th>Family</th><th>Scenarios</th><th>Observed</th><th>Measured</th><th>Unsupported</th><th>Samples</th></tr></thead><tbody>
+<tr><td>latency-injection</td><td>4</td><td>4</td><td>3</td><td>1</td><td>9</td></tr>
+</tbody></table>
+<h2>Latency Injection</h2>
+<p><strong>Execution status:</strong> <code>partially_measured</code></p>
+<p><strong>Execution note:</strong> At least one configured scenario has measured benchmark samples, while other scenarios are missing or unsupported.</p>
+<p><strong>Varied dimension:</strong> latency profile</p>
+<p><strong>Fixed dimensions:</strong> infrastructure=INFRA_C5_1CP_4W_8C16G, model=M1, LocalAI worker-count=W4, workload=WL2, placement=PL_SPREAD_WORKERS, worker node capacity=8 vCPU / 16 GiB.</p>
+<p><strong>Reference scenario within the sweep:</strong> <code>LI_L0_NONE</code></p>
+<table>
+<thead><tr><th>Scenario count</th><th>Measured</th><th>Unsupported</th><th>Missing</th></tr></thead><tbody>
+<tr><td>4</td><td>3</td><td>1</td><td>0</td></tr>
+</tbody></table>
+<h3>Controlled scenario parameters</h3>
+<p>This table is derived from resolved scenario metadata. A parameter is marked as controlled only when it has the same effective value across all scenarios in the sweep.</p>
+<table>
+<thead><tr><th>Parameter</th><th>Resolved value</th><th>Interpretation</th></tr></thead><tbody>
+<tr><td>Model</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>controlled</td></tr>
+<tr><td>Worker count</td><td>4</td><td>controlled</td></tr>
+<tr><td>Placement</td><td>spread_workers_across_four_provider_worker_nodes</td><td>controlled</td></tr>
+<tr><td>Workload</td><td>users=2, spawnRate=1, runTime=2m</td><td>controlled</td></tr>
+<tr><td>Topology</td><td>infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4</td><td>controlled</td></tr>
+<tr><td>Server manifest</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>controlled</td></tr>
+<tr><td>Prompt</td><td>Reply with only READY.</td><td>controlled</td></tr>
+<tr><td>Temperature</td><td>0.1</td><td>controlled</td></tr>
+<tr><td>Request timeout (s)</td><td>120</td><td>controlled</td></tr>
+</tbody></table>
+<h3>Scenario parameter matrix</h3>
+<table>
+<thead><tr><th>Scenario</th><th>Status</th><th>Varied value (latency profile)</th><th>Model</th><th>Worker count</th><th>Placement</th><th>Workload</th><th>Timeout (s)</th></tr></thead><tbody>
+<tr><td><code>LI_L0_NONE</code></td><td>measured</td><td>0 ms delay / 0 ms jitter / 0.0% loss</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>spread_workers_across_four_provider_worker_nodes</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>LI_L1_EDGE_NEAR</code></td><td>measured</td><td>50 ms delay / 5 ms jitter / 0.0% loss</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>spread_workers_across_four_provider_worker_nodes</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>LI_L2_EDGE_REMOTE</code></td><td>measured</td><td>150 ms delay / 15 ms jitter / 0.0% loss</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>spread_workers_across_four_provider_worker_nodes</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>LI_L3_EXTREME</code></td><td>unsupported_under_current_constraints</td><td>600 ms delay / 50 ms jitter / 0.0% loss</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>4</td><td>spread_workers_across_four_provider_worker_nodes</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+</tbody></table>
+<h3>Measurement summary</h3>
+<p>This compact table reports the core indicators used to read the sweep at a glance. Detailed percentiles, deltas and resource snapshots are reported in the following extended table.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Description</th><th>Status</th><th>Sample count</th><th>Mean response time (ms)</th><th>P95 response time (ms)</th><th>Throughput (requests/s)</th><th>Unsupported evidence</th></tr></thead><tbody>
+<tr><td><code>LI_L0_NONE</code></td><td>LI_L0_NONE (0 ms, jitter 0 ms)</td><td>measured</td><td>3</td><td>1560.12</td><td>1600.00</td><td>0.5630</td><td></td></tr>
+<tr><td><code>LI_L1_EDGE_NEAR</code></td><td>LI_L1_EDGE_NEAR (50 ms, jitter 5 ms)</td><td>measured</td><td>3</td><td>23467.32</td><td>26000.00</td><td>0.0749</td><td></td></tr>
+<tr><td><code>LI_L2_EDGE_REMOTE</code></td><td>LI_L2_EDGE_REMOTE (150 ms, jitter 15 ms)</td><td>measured</td><td>3</td><td>64483.46</td><td>80333.33</td><td>0.0251</td><td></td></tr>
+<tr><td><code>LI_L3_EXTREME</code></td><td>LI_L3_EXTREME (600 ms, jitter 50 ms)</td><td>unsupported_under_current_constraints</td><td>0</td><td>n/a</td><td>n/a</td><td>n/a</td><td>all_worker_nodes_from_infrastructure_profile, api_smoke_failed, api_smoke_or_pre_benchmark_api_unavailable, latency_injection, latency_injection_pre_benchmark, measurement_stats_csv_missing, pre_benchmark_failure</td></tr>
+</tbody></table>
+<h3>Extended measurement metrics</h3>
+<p>This secondary table keeps the additional metrics aligned with the technical diagnosis while avoiding an excessively wide primary summary table.</p>
+<table>
+<thead><tr><th>Scenario</th><th>P50 response time (ms)</th><th>P99 response time (ms)</th><th>Mean response time delta (%)</th><th>P95 response time delta (%)</th><th>Throughput delta (%)</th><th>Max node CPU snapshot (%)</th><th>Max node memory snapshot (%)</th><th>Max pod CPU snapshot (mCPU)</th><th>Max pod memory snapshot (MiB)</th></tr></thead><tbody>
+<tr><td><code>LI_L0_NONE</code></td><td>1533.33</td><td>1833.33</td><td>0.00</td><td>0.00</td><td>0.00</td><td>10.33</td><td>16.00</td><td>795.67</td><td>384.00</td></tr>
+<tr><td><code>LI_L1_EDGE_NEAR</code></td><td>24333.33</td><td>26000.00</td><td>1404.20</td><td>1525.00</td><td>-86.70</td><td>1.00</td><td>16.00</td><td>117.33</td><td>384.67</td></tr>
+<tr><td><code>LI_L2_EDGE_REMOTE</code></td><td>75000.00</td><td>80333.33</td><td>4033.24</td><td>4920.83</td><td>-95.54</td><td>1.00</td><td>16.00</td><td>65.33</td><td>384.00</td></tr>
+<tr><td><code>LI_L3_EXTREME</code></td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td></tr>
+</tbody></table>
+<h3>Latency-injection context</h3>
+<p>This table makes the network-emulation dimension explicit. Infrastructure, model, workload, LocalAI worker count and placement are kept fixed while the injected latency profile changes.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Latency profile</th><th>Category</th><th>Target node policy</th><th>Delay (ms)</th><th>Jitter (ms)</th><th>Packet loss (%)</th><th>Interface</th><th>Reset after benchmark</th><th>Execution status</th><th>Unsupported reason</th></tr></thead><tbody>
+<tr><td><code>LI_L0_NONE</code></td><td>L0_NONE</td><td>none</td><td>all_worker_nodes_from_infrastructure_profile</td><td>0</td><td>0</td><td>0.0</td><td>eth0</td><td>yes</td><td>measured</td><td>none</td></tr>
+<tr><td><code>LI_L1_EDGE_NEAR</code></td><td>L1_EDGE_NEAR</td><td>edge_near</td><td>all_worker_nodes_from_infrastructure_profile</td><td>50</td><td>5</td><td>0.0</td><td>eth0</td><td>yes</td><td>measured</td><td>none</td></tr>
+<tr><td><code>LI_L2_EDGE_REMOTE</code></td><td>L2_EDGE_REMOTE</td><td>edge_remote</td><td>all_worker_nodes_from_infrastructure_profile</td><td>150</td><td>15</td><td>0.0</td><td>eth0</td><td>yes</td><td>measured</td><td>none</td></tr>
+<tr><td><code>LI_L3_EXTREME</code></td><td>L3_EXTREME</td><td>extreme</td><td>all_worker_nodes_from_infrastructure_profile</td><td>600</td><td>50</td><td>0.0</td><td>eth0</td><td>yes</td><td>unsupported_under_current_constraints</td><td>latency_profile_pre_benchmark_api_unavailable, latency_profile_pre_benchmark_api_unavailable, latency_profile_pre_benchmark_api_unavailable</td></tr>
+</tbody></table>
+<h3>Diagnosis-based reading</h3>
+<ul>
+<li><strong>The latency-injection family provides comparable network-sensitivity evidence.</strong> (status: <code>comparative_signal_available</code>, confidence: <code>medium</code>).</li>
+<li>Implication: The campaign can be used to reason about when injected inter-node latency degrades LocalAI worker-mode behavior because infrastructure, model, workload, worker count and placement remain fixed while only latency changes.</li>
+<li><strong>The latency-injection campaign provides measured evidence across multiple network-latency profiles.</strong> (confidence: <code>medium</code>).</li>
+<li>Implication: The evidence can be used to evaluate whether inter-node communication delay becomes a dominant factor under the fixed distributed placement.</li>
+<li><strong>The latency-injection campaign identifies the highest-latency measured profile.</strong> (confidence: <code>medium</code>).</li>
+<li>Implication: This result provides a controlled signal for deciding when distributed worker placement becomes sensitive to network delay.</li>
+<li><strong>At least one latency-injection scenario produced unsupported evidence under the current constraints.</strong> (confidence: <code>medium</code>).</li>
+<li>Implication: Unsupported latency variants should be treated as instrumentation, timeout or network-sensitivity evidence and not as ordinary benchmark failures.</li>
+</ul>
+<h3>Charts</h3>
+<h4>Mean response time</h4>
+<img src="charts/latency-injection/mean_response_time_ms.svg" alt="Mean response time">
+<h4>P50 response time</h4>
+<img src="charts/latency-injection/p50_response_time_ms.svg" alt="P50 response time">
+<h4>P95 response time</h4>
+<img src="charts/latency-injection/p95_response_time_ms.svg" alt="P95 response time">
+<h4>P99 response time</h4>
+<img src="charts/latency-injection/p99_response_time_ms.svg" alt="P99 response time">
+<h4>Throughput</h4>
+<img src="charts/latency-injection/throughput_rps.svg" alt="Throughput">
+<h4>Maximum node CPU snapshot</h4>
+<img src="charts/latency-injection/max_node_cpu_percent.svg" alt="Maximum node CPU snapshot">
+<h4>Maximum node memory snapshot</h4>
+<img src="charts/latency-injection/max_node_memory_percent.svg" alt="Maximum node memory snapshot">
+<h4>Maximum pod CPU snapshot</h4>
+<img src="charts/latency-injection/max_pod_cpu_millicores.svg" alt="Maximum pod CPU snapshot">
+<h4>Maximum pod memory snapshot</h4>
+<img src="charts/latency-injection/max_pod_memory_mib.svg" alt="Maximum pod memory snapshot">
+<h3>Reading notes</h3>
+<ul>
+<li>Measured scenarios: <strong>3</strong>.</li>
+<li>Unsupported scenarios under current constraints: <strong>1</strong>.</li>
+<li>Percentage deltas are computed against the family reference scenario; positive latency deltas indicate worse response time, while positive throughput deltas indicate higher request throughput.</li>
+<li>Unsupported scenarios are infrastructure/constraint observations and must not be interpreted as measured latency regressions.</li>
+<li>A <code>not_executed</code> sweep means that neither measurement CSV files nor unsupported-scenario evidence were found for any configured scenario in that family.</li>
+</ul>
+<blockquote>Only the latency profile is varied in this campaign; infrastructure, model, workload, LocalAI worker count and placement remain fixed.</blockquote>
+<blockquote>The no-latency profile is the campaign-local reference scenario.</blockquote>
+<blockquote>Latency conclusions require checking both latency/throughput and the latency-injection manifests to ensure the intended profile was applied.</blockquote>
+</body>
+</html>

@@ -1,0 +1,381 @@
+{
+  "schemaVersion": "infrastructure-profile/v1",
+  "infrastructureProfileId": "INFRA_C8_1CP_2W_8C16G",
+  "profileName": "Resource-Aware Scheduler 2-Worker K3s Cluster with Provider-Managed mon-agent",
+  "status": "planned_provider_backed_resource_aware_scheduler_profile",
+  "profileCategory": "resource-aware-scheduler",
+  "profileRole": "2_worker_resource_aware_scheduler_profile",
+  "purpose": "Provider-backed C8 infrastructure profile with provider-managed monitoring and mon-agent add-ons. It supports controlled comparison between Kubernetes default scheduling and the load-aware custom scheduler while preserving runtime placement and annotation evidence.",
+  "clusterIdentity": {
+    "clusterName": "genai-pb",
+    "kubernetesDistribution": "K3s",
+    "k3sVersion": "v1.35.3+k3s1",
+    "hardwareClass": "CPU-only",
+    "gpuAvailable": false
+  },
+  "provider": {
+    "providerId": "proxmox-k3s",
+    "providerType": "proxmox-k3s",
+    "mode": "proxmox_k3s_generated_cluster",
+    "managedByBenchmarkSuite": true,
+    "tool": "proxmox-k3s",
+    "toolRepository": "proxmox-k3s",
+    "providerBindingId": "BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S",
+    "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "providerIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_INDEX.json"
+  },
+  "lifecycle": {
+    "scope": "dynamically_provisioned_cluster",
+    "supportedModes": [
+      "reuse",
+      "ephemeral"
+    ],
+    "recommendedMode": "ephemeral",
+    "destroyAfterCycleDefault": true,
+    "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+    "clusterLifecycleModeDefault": "ephemeral",
+    "destroyClusterAfterCycleDefault": true,
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "lifecycleArtifactRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/lifecycle",
+    "provisioningLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/provisioning",
+    "deletionLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/deletion",
+    "policySelection": "Cycles may override the profile default only when the override is declared in the cycle profile and captured in the lifecycle manifest."
+  },
+  "nodeNaming": {
+    "nodeNamingConventionId": "GENAI_PB_REUSABLE_NODE_NAMING_V1",
+    "nodeNamingConventionPath": "config/infrastructure/node-naming/GENAI_PB_REUSABLE_NODE_NAMING_V1.json",
+    "strategy": "reusable_genai_pb_prefix",
+    "expectedControlPlaneNodeNames": [
+      "genai-pb-cp-01"
+    ],
+    "expectedWorkerNodeNames": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02"
+    ],
+    "notes": "Node names identify generated provider-backed nodes for validation, metrics, latency mapping and evidence capture; C8 application manifests must not use these names as hard pod placement selectors."
+  },
+  "nodeSummary": {
+    "controlPlaneCount": 1,
+    "workerCount": 2,
+    "totalWorkerVcpus": 16,
+    "totalWorkerMemoryGiB": 32,
+    "totalWorkerStorageGiB": 70,
+    "managementNodeCount": 1
+  },
+  "nodes": {
+    "controlPlane": [
+      {
+        "logicalName": "control-plane-01",
+        "role": "control-plane",
+        "vcpus": 2,
+        "memoryGiB": 4,
+        "memoryMiB": 4096,
+        "storageGiB": 20,
+        "configuredName": "cp-01",
+        "expectedKubernetesNodeName": "genai-pb-cp-01",
+        "proxmoxNode": "minis02",
+        "ipAddress": "192.168.1.141",
+        "recommendedLabels": {
+          "nodepool": "management"
+        },
+        "recommendedTaints": [
+          {
+            "key": "nodepool",
+            "operator": "Equal",
+            "value": "management",
+            "effect": "NoSchedule"
+          }
+        ],
+        "managementNodePoolRole": "management"
+      }
+    ],
+    "workers": [
+      {
+        "logicalName": "worker-a",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "configuredName": "worker-01",
+        "expectedKubernetesNodeName": "genai-pb-worker-01",
+        "proxmoxNode": "minis03",
+        "ipAddress": "192.168.1.142",
+        "recommendedLabels": {
+          "nodepool": "workers"
+        },
+        "namingConventionRole": "genai_pb_worker"
+      },
+      {
+        "logicalName": "worker-b",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "configuredName": "worker-02",
+        "expectedKubernetesNodeName": "genai-pb-worker-02",
+        "proxmoxNode": "minis04",
+        "ipAddress": "192.168.1.143",
+        "recommendedLabels": {
+          "nodepool": "workers"
+        },
+        "namingConventionRole": "genai_pb_worker"
+      }
+    ]
+  },
+  "selectors": {
+    "workerSelectorMode": "generic_worker_nodepool_selector",
+    "workerNodeNames": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02"
+    ],
+    "recommendedLabelSelector": {
+      "nodepool": "workers"
+    },
+    "selectorGovernance": "C8 workloads may use generic worker-nodepool constraints, but must not use hostname-specific nodeName, hostname-specific nodeSelector or hostname-specific nodeAffinity controls. Scheduler selection must be expressed through schedulerName only for custom-scheduler variants.",
+    "futureSelectorPreference": "label_based_node_pool",
+    "managementLabelSelector": {
+      "nodepool": "management"
+    }
+  },
+  "provisioning": {
+    "provisioningMode": "proxmox_k3s_generated_cluster",
+    "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c8-1cp-2w-8c16g.example.yaml",
+    "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c8-1cp-2w-8c16g.local.yaml",
+    "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c8-1cp-2w-8c16g/kubeconfig",
+    "providerConfigBindingStatus": "bound",
+    "notes": "Provider configuration is resolved through the proxmox-k3s provider binding associated with this resource-aware scheduler infrastructure profile. The cluster YAML enables monitoring and the provider-managed mon_agent add-on.",
+    "providerBindingId": "BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S",
+    "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C8_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "providerConfigTemplatePath": "config/infrastructure/providers/proxmox-k3s/templates/cluster.proxmox-k3s.template.yaml.tmpl",
+    "selectionPolicy": "prefer_local_config_for_real_execution; use_example_config_for_review_or_dry_run_only"
+  },
+  "validation": {
+    "expectedReadyNodeCount": 3,
+    "expectedControlPlaneNodes": [
+      "genai-pb-cp-01"
+    ],
+    "expectedWorkerNodes": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02"
+    ],
+    "expectedWorkerLabelSelector": "nodepool=workers",
+    "requireK3sDistribution": true,
+    "requireMetricsApi": true,
+    "minimumRequiredOutcomeBeforeBenchmarking": "validated",
+    "expectedManagementNodes": [
+      "genai-pb-cp-01"
+    ],
+    "expectedManagementLabelSelector": "nodepool=management",
+    "expectedManagementTaints": [
+      "nodepool=management:NoSchedule"
+    ],
+    "requireMonitoringStack": true,
+    "expectedMonitoringComponents": [
+      "prometheus",
+      "kube-state-metrics"
+    ],
+    "expectedAddonComponents": [
+      "monitoring",
+      "mon-agent"
+    ],
+    "requireMonAgent": true
+  },
+  "benchmarkCompatibility": {
+    "compatibleWithExistingLocalAiTopologies": true,
+    "intendedScenarioFamilies": [
+      "resource-aware-scheduler"
+    ],
+    "requiresDedicatedProviderConfig": true,
+    "notes": "Use this profile for C8 resource-aware-scheduler scenarios that keep per-worker-node capacity fixed while varying tenant count, worker-node count, tenant traffic pattern and model mix under L0 conditions. Application placement must remain owned by the selected scheduler.",
+    "compatibleWithProviderBackedReusableNodeNaming": true,
+    "compatibleWithHistoricalScNodeNaming": false,
+    "compatibleWithControlledPlacementOverlays": false
+  },
+  "cycleBinding": {
+    "recommendedCycleId": "C8",
+    "recommendedBaselineId": null,
+    "bindingStatus": "available_for_scheduler_comparison",
+    "recommendedScenarioFamily": "resource-aware-scheduler",
+    "scenarioIndexPath": "config/scenarios/resource-aware-scheduler/RESOURCE_AWARE_SCHEDULER_SCENARIOS_INDEX.json"
+  },
+  "comparisonPolicy": {
+    "directComparisonAllowedOnlyWhenDeclared": true,
+    "policy": "Use infrastructureProfileId, worker node count, tenant count, traffic profile, model mix and scheduler mode as explicit comparison dimensions. Latency injection is intentionally disabled for this resource-aware resource-aware scheduler comparison.",
+    "controlledPlacementComparisonReferenceCycles": [
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "telemetrySource": "provider-managed mon_agent add-on plus Prometheus monitoring installed by proxmox-k3s."
+  },
+  "governance": {
+    "profilePath": "config/infrastructure/profiles/INFRA_C8_1CP_2W_8C16G.json",
+    "profileIndexPath": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "doNotInferEquivalenceFromNodeNames": true,
+    "hardPodPlacementControlsAllowed": false,
+    "schedulerDecisionEvidenceRequired": true,
+    "managementNodePolicy": "The control-plane node is explicitly labelled as a management node and tainted for management-only scheduling. This avoids leaving mon-agent and the custom scheduler without a matching preferred node while keeping application workloads on worker nodes.",
+    "addonBoundary": "proxmox-k3s installs monitoring and mon-agent; the benchmark suite validates namespace labels, annotations and runtime evidence without deploying a second mon-agent instance."
+  },
+  "templateAssumptions": {
+    "templateName": "ubuntu-24.04-template",
+    "storage": "pool01",
+    "bridge": "vmbr0",
+    "subnetMask": 24,
+    "gateway": "192.168.1.254",
+    "os": "ubuntu-24.04",
+    "bindingStatus": "informational_defaults"
+  },
+  "k3sServerArguments": {
+    "extraServerArgs": "--disable=traefik --disable=servicelb --disable-network-policy --embedded-registry --node-label=nodepool=management --node-taint=nodepool=management:NoSchedule",
+    "disabledComponents": [
+      "traefik",
+      "servicelb",
+      "network-policy"
+    ],
+    "embeddedRegistryEnabled": true,
+    "taintControlPlane": false,
+    "managementNodeLabel": "nodepool=management",
+    "managementNodeTaint": "nodepool=management:NoSchedule"
+  },
+  "observabilityAssumptions": {
+    "metricsServerExpected": true,
+    "jaegerExpectedByDefault": false,
+    "notes": "C8 requires provider-installed monitoring and mon-agent. The benchmark suite validates and consumes mon-agent annotations instead of reinstalling mon-agent with a divergent manifest.",
+    "managementNodePlacement": "Management components may prefer nodepool=management and tolerate nodepool=management:NoSchedule; tenant workloads remain on worker nodes.",
+    "monitoringStackExpected": true,
+    "monAgentExpected": true
+  },
+  "placementCompatibility": {
+    "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+    "supportedPlacementProfileIds": [],
+    "defaultPlacementProfileId": null,
+    "schedulerMode": "kubernetes_default_scheduler",
+    "hardPodPlacementControlsAllowed": false,
+    "forbiddenPlacementControls": [
+      "spec.nodeName",
+      "hostname_specific_nodeSelector",
+      "hostname_specific_nodeAffinity",
+      "controlled_placement_overlays"
+    ],
+    "allowedGeneralConstraints": [
+      "control_plane_exclusion",
+      "generic_worker_nodepool_selection",
+      "resource_requests",
+      "resource_limits",
+      "tenant_labels",
+      "application_role_labels"
+    ],
+    "notes": "C8 profiles are intentionally not bound to controlled placement profiles; pod placement must be produced by the Kubernetes resource-aware scheduler comparison and captured as scheduler evidence."
+  },
+  "defaultSchedulerBaselineCompatibility": {
+    "scenarioFamily": "resource-aware-scheduler",
+    "scenarioIndexPath": "config/scenarios/resource-aware-scheduler/RESOURCE_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+    "workerNodeCountDimension": 2,
+    "localAiWorkerCountPerTenant": 2,
+    "supportsSingleTenantScenarios": true,
+    "supportsTwoTenantScenarios": true,
+    "supportsThreeTenantStressScenarios": false,
+    "supportsLatencyProfiles": [
+      "L0_NONE"
+    ],
+    "supportsTrafficProfiles": [
+      "TR_1T_UNIFORM_LOW",
+      "TR_2T_UNIFORM_LOW",
+      "TR_2T_DIFFERENTIATED_LOW"
+    ],
+    "decisionEvidenceArtifact": "resource-aware-scheduler-decision-evidence.json",
+    "interpretationRule": "Performance measurements collected on this profile must be interpreted together with captured pod-to-node placement, CPU/memory annotations and per-tenant traffic configuration; network-delay controls are not part of this C8 profile.",
+    "latencyInjectionEnabled": false
+  },
+  "observabilityAddons": {
+    "monitoringRequired": true,
+    "monitoringStack": "kube-prometheus-stack",
+    "requiredComponents": [
+      "Prometheus",
+      "kube-state-metrics",
+      "mon-agent"
+    ],
+    "optionalComponents": [
+      "Grafana"
+    ],
+    "purpose": "Provide CPU and memory telemetry required by runtime annotation and load-aware scheduling workflows. mon-agent is installed through the proxmox-k3s mon_agent add-on and is validated by the benchmark suite.",
+    "monAgentRequired": true,
+    "monAgentVersion": "v0.0.6",
+    "requiredNodeAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "requiredDeploymentAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "optionalNodeAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ],
+    "optionalDeploymentAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ]
+  },
+  "schedulerModeSupport": {
+    "defaultSchedulerSupported": true,
+    "customSchedulerSupported": true,
+    "customSchedulerName": "scheduler-plugins-scheduler",
+    "monAgentRequired": true,
+    "runtimeAnnotationsRequired": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "latencyInjectionEnabled": false,
+    "runtimeAnnotationsOptional": [
+      "disk-throughput",
+      "network-throughput"
+    ],
+    "monAgentInstallationMode": "provider_managed_addon",
+    "monAgentProfileId": "MA_RESOURCE_AWARE",
+    "monAgentProfilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json"
+  },
+  "managementNodePool": {
+    "enabled": true,
+    "nodeLabelSelector": {
+      "nodepool": "management"
+    },
+    "nodeNames": [
+      "genai-pb-cp-01"
+    ],
+    "taints": [
+      {
+        "key": "nodepool",
+        "operator": "Equal",
+        "value": "management",
+        "effect": "NoSchedule"
+      }
+    ],
+    "intendedWorkloads": [
+      "mon-agent",
+      "scheduler-plugins-scheduler",
+      "scheduler-plugins-controller"
+    ],
+    "applicationWorkloadPolicy": "LocalAI tenant workloads remain constrained to nodepool=workers and do not tolerate the nodepool=management taint."
+  },
+  "providerManagedAddons": {
+    "monitoring": {
+      "enabled": true,
+      "providerAddon": "monitoring",
+      "purpose": "Prometheus metrics source for mon-agent annotations."
+    },
+    "mon_agent": {
+      "enabled": true,
+      "version": "v0.0.6",
+      "prometheus_url": "http://prometheus-stack-kube-prom-prometheus.observability:9090",
+      "scrape_period_seconds": 30,
+      "promql_range": "5m",
+      "namespace_label_selector": "mon-agent/enabled=true"
+    }
+  }
+}

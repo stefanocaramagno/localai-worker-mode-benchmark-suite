@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "reportingProfileId": "RP_C1_PROVIDER_BACKED_BASELINE",
+  "profileId": "RP_C1_PROVIDER_BACKED_BASELINE",
+  "profileName": "C1 Provider-Backed Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "canonical_provider_backed_reporting_profile",
+  "description": "Provider-aware reporting profile for the C1 LocalAI worker-mode baseline cycle. The profile combines benchmark measurements, minimal observability snapshots, cluster validation evidence, deployment metadata, placement metadata and diagnosis context into one cycle-scoped reporting package.",
+  "reportTitle": "C1 — Provider-Backed Baseline Report",
+  "reportPurposeMarkdown": "This report provides a cycle-scoped view of the provider-backed LocalAI worker-mode baseline. It combines infrastructure metadata, provider binding information, cluster validation evidence, LocalAI deployment topology, benchmark measurements, minimal observability metrics and diagnosis context so that the cycle can be reviewed without inspecting raw artifacts manually.",
+  "cycleId": "C1",
+  "cycleConfigPath": "config/experimental-cycles/C1.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C1/reporting",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "archiveDirectoryName": "archive",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C1/diagnosis",
+  "technicalDiagnosisFallbackRoots": [],
+  "preferDiagnosisContext": true,
+  "preferCsvMeasurementsForCharts": true,
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "providerAwareContext": {
+    "enabled": true,
+    "cycleConfigPath": "config/experimental-cycles/C1.json",
+    "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+    "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+    "providerId": "proxmox-k3s",
+    "providerBindingId": "BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S",
+    "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "provisioningIntegrationProfileId": "PI_C1_PROVIDER_BACKED_BASELINE",
+    "provisioningIntegrationProfilePath": "config/provisioning/profiles/PI_C1_PROVIDER_BACKED_BASELINE.json",
+    "clusterValidationProfileId": "CV_C1_PROVIDER_BACKED_BASELINE",
+    "clusterValidationProfilePath": "config/cluster-validation/profiles/CV_C1_PROVIDER_BACKED_BASELINE.json",
+    "applicationDeploymentProfileId": "AD_C1_PROVIDER_BACKED_BASELINE",
+    "applicationDeploymentProfilePath": "config/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+    "placementProfileId": "PL_COLOCATED",
+    "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+    "minimalObservabilityProfileId": "MO_C1_PROVIDER_BACKED_BASELINE",
+    "minimalObservabilityProfilePath": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+    "minimalObservabilityMetricsPath": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-metrics.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-manifest.json",
+    "provisioningManifestPath": "results/experimental-cycles/C1/infrastructure/provisioning/latest-provisioning-integration-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C1/infrastructure/validation/latest-cluster-validation-manifest.json",
+    "clusterValidationRawJsonPath": "results/experimental-cycles/C1/infrastructure/validation/latest-validation.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C1/application/deployment/latest-localai-deployment-manifest.json",
+    "localAiSmokeResultPath": "results/experimental-cycles/C1/application/deployment/latest-smoke-result.json",
+    "technicalDiagnosisProfileId": "TD_C1_PROVIDER_BACKED_BASELINE",
+    "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C1_PROVIDER_BACKED_BASELINE.json",
+    "cycleExecutionManifestPath": "results/experimental-cycles/C1/execution/latest-cycle-execution-manifest.json",
+    "technicalDiagnosisIndexPath": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "technicalDiagnosisSchemaPath": "config/technical-diagnosis/schemas/TECHNICAL_DIAGNOSIS_PROFILE_SCHEMA_V1.json"
+  },
+  "campaignResultsRoots": {
+    "baseline": "results/experimental-cycles/C1/benchmark/baseline",
+    "worker-count": "results/experimental-cycles/C1/benchmark/consolidated/worker-count",
+    "workload": "results/experimental-cycles/C1/benchmark/consolidated/workload",
+    "models": "results/experimental-cycles/C1/benchmark/consolidated/models",
+    "placement": "results/experimental-cycles/C1/benchmark/consolidated/placement"
+  },
+  "scenarioConfigRoots": {
+    "baseline": "config/scenarios/baseline",
+    "worker-count": "config/scenarios/pilot/worker-count",
+    "workload": "config/scenarios/pilot/workload",
+    "models": "config/scenarios/pilot/models",
+    "placement": "config/scenarios/pilot/placement"
+  },
+  "familyOrder": [
+    "baseline"
+  ],
+  "familyDisplayNames": {
+    "worker-count": "Worker-Count",
+    "workload": "Workload",
+    "models": "Model",
+    "placement": "Placement",
+    "baseline": "Provider-Backed Baseline"
+  },
+  "variedDimensionByFamily": {
+    "worker-count": "number of LocalAI RPC workers",
+    "workload": "synthetic client-side workload pattern",
+    "models": "model served by the LocalAI worker-mode cluster",
+    "placement": "Kubernetes placement strategy for LocalAI server and workers",
+    "baseline": "provider-backed baseline validation"
+  },
+  "fixedDimensionsByFamily": {
+    "worker-count": [
+      "provider-backed infrastructure profile",
+      "baseline model",
+      "baseline workload",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "workload": [
+      "provider-backed infrastructure profile",
+      "baseline model",
+      "baseline worker count",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "models": [
+      "provider-backed infrastructure profile",
+      "baseline worker count",
+      "baseline workload",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "placement": [
+      "provider-backed infrastructure profile",
+      "baseline model",
+      "baseline worker count",
+      "baseline workload",
+      "baseline protocol"
+    ],
+    "baseline": [
+      "model",
+      "worker_count",
+      "placement",
+      "workload",
+      "infrastructure_profile",
+      "provider_binding"
+    ]
+  },
+  "referenceScenarioByFamily": {
+    "worker-count": "W2",
+    "workload": "WL2",
+    "models": "M1",
+    "placement": "PL_COLOCATED",
+    "baseline": "B1"
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "reportSections": [
+    "Infrastructure Summary",
+    "Provider Summary",
+    "Cluster Validation Summary",
+    "Application Topology Summary",
+    "Scenario Summary",
+    "Metrics Summary",
+    "Unsupported Scenario Summary",
+    "Main Findings"
+  ],
+  "notes": [
+    "The report is generated from the current available artifacts and remains structurally complete even when some execution outputs are not yet present.",
+    "Quantitative charts use measurement CSV files when available; technical diagnosis and minimal observability are used as contextual evidence.",
+    "The report must identify the infrastructure profile and provider binding before comparing provider-backed cycles.",
+    "Unsupported scenarios are infrastructure or constraint observations and are not measured performance regressions."
+  ],
+  "outputPolicy": {
+    "mode": "cycle_scoped_current_report_directory_with_optional_archive",
+    "managedOutputDirectory": "results/experimental-cycles/C1/reporting",
+    "globalReportDirectory": "results/experimental-cycles/C1/reporting",
+    "sweepReportsDirectory": "results/experimental-cycles/C1/reporting/sweeps",
+    "overwriteManagedArtifactsOnEachExecution": true,
+    "archiveDirectory": "results/experimental-cycles/C1/reporting/archive",
+    "archiveEnabledByDefault": false
+  },
+  "scenarioConfigFiles": {
+    "baseline": [
+      "config/scenarios/baseline/B1.json"
+    ]
+  },
+  "qualityRequirements": [
+    "Produce readable charts and summaries rather than requiring manual inspection of raw CSV, JSON and log files.",
+    "Make fixed and varied dimensions explicit for every benchmark family.",
+    "Show infrastructure, provider, validation, topology and minimal observability context in the same reporting package.",
+    "Report unsupported scenarios explicitly without treating them as measured regressions."
+  ],
+  "reportingIdPrefix": "REP_C1",
+  "infrastructureSummaryMode": "fixed_cycle_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "cycle",
+    "interpretation": "A single fixed infrastructure profile is used as cycle-level context for the reporting package."
+  }
+}

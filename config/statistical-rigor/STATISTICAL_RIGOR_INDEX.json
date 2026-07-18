@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "statistical_rigor-index/v1",
+  "defaultStatisticalRigorProfileId": "SR_REPLICATED_BENCHMARK_RIGOR",
+  "statisticalRigorProfiles": [
+    {
+      "profileId": "SR_REPLICATED_BENCHMARK_RIGOR",
+      "profilePath": "config/statistical-rigor/profiles/SR_REPLICATED_BENCHMARK_RIGOR.json",
+      "profileType": "statistical_rigor",
+      "description": "Light statistical rigor profile for consolidated pilot benchmark campaigns. The profile keeps the controlled A/B/C replica regime, adds short cool-down intervals between executions, and requires a scenario-level summary over the primary measurement CSV artifacts."
+    }
+  ]
+}

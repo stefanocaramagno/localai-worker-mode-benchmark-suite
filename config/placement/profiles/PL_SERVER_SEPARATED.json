@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "placement-profile/v1",
+  "placementProfileId": "PL_SERVER_SEPARATED",
+  "profileName": "Server-Separated Spread RPC Worker Placement",
+  "status": "active",
+  "profileRole": "server_separated_spread_worker_profile",
+  "strategy": "server_separated_spread_workers",
+  "placementIntent": "Place the LocalAI server on a dedicated worker node and distribute active RPC workers across separate worker nodes where possible, while retaining controlled partial worker co-location for the fourth worker.",
+  "researchQuestion": "Does separating the server process from a spread RPC-worker layout reduce local contention enough to offset the mandatory inter-node communication path?",
+  "aliases": [],
+  "infrastructureCompatibility": {
+    "supportedInfrastructureProfiles": [
+      "INFRA_C3_1CP_4W_8C16G",
+      "INFRA_C4_1CP_4W_8C16G",
+      "INFRA_C5_1CP_4W_8C16G",
+      "INFRA_C6_1CP_4W_8C16G"
+    ],
+    "requiresWorkerNodePool": true,
+    "requiresControlPlaneExclusion": true,
+    "minimumWorkerNodes": 4,
+    "activeForProviderBackedBaseline": false,
+    "activeForProviderBackedPlacementVariation": true
+  },
+  "selectorPolicy": {
+    "selectorMode": "provider_backed_reusable_node_name_compatibility",
+    "currentCompatibilityMode": "kubernetes.io/hostname",
+    "preferredFutureMode": "label_based_node_pool",
+    "workerNodePoolLabel": {
+      "nodepool": "workers"
+    },
+    "controlPlaneExclusion": {
+      "key": "node-role.kubernetes.io/control-plane",
+      "operator": "DoesNotExist"
+    },
+    "rationale": "Stable node names are retained for compatibility with the current Kustomize overlays; label-based node-pool selection is the preferred direction for future generated clusters.",
+    "supportedInfrastructureWorkerCounts": [
+      4
+    ],
+    "placementType": "server_separated_spread_workers"
+  },
+  "serverPlacement": {
+    "component": "localai-server",
+    "expectedNode": "genai-pb-worker-01",
+    "selector": {
+      "kubernetes.io/hostname": "genai-pb-worker-01"
+    },
+    "nodePool": "workers",
+    "placementNotes": "The current server manifest is still node-name compatible; later topology profiles can replace this with a label-based selector."
+  },
+  "workerPlacement": {
+    "components": [
+      "localai-rpc-a",
+      "localai-rpc-b",
+      "localai-rpc-c",
+      "localai-rpc-d"
+    ],
+    "defaultWorkerNodeMap": {
+      "localai-rpc-a": "genai-pb-worker-02",
+      "localai-rpc-b": "genai-pb-worker-03",
+      "localai-rpc-c": "genai-pb-worker-04",
+      "localai-rpc-d": "genai-pb-worker-02"
+    },
+    "activeWorkerNodeMapByWorkerCount": {
+      "W4": {
+        "localai-rpc-a": "genai-pb-worker-02",
+        "localai-rpc-b": "genai-pb-worker-03",
+        "localai-rpc-c": "genai-pb-worker-04",
+        "localai-rpc-d": "genai-pb-worker-02"
+      }
+    },
+    "nodePoolPolicy": {
+      "nodePool": "workers",
+      "allowControlPlaneScheduling": false,
+      "preferredSelector": {
+        "nodepool": "workers"
+      }
+    },
+    "mappingSemantics": {
+      "activeWorkerNodeMapByWorkerCount": "Application-level worker-count mapping currently defined for W4. The active topology separates the server from the RPC-worker spread and requires four provider-backed Kubernetes worker nodes.",
+      "defaultWorkerNodeMap": "Default mapping aligned with the active server-separated W4 Kustomize overlay at infra/k8s/overlays/topology/placement/server-separated-genai-pb-spread-workers."
+    }
+  },
+  "kustomize": {
+    "implementationStatus": "active",
+    "currentBaselineTopologyPath": "infra/k8s/compositions/topology/server-separated-genai-pb-worker-01-spread-w4",
+    "requiredFutureTargets": [
+      "optional lower-worker-count server-separated compositions if this placement must be evaluated below four infrastructure worker nodes"
+    ],
+    "workerPlacementOverlayPath": "infra/k8s/overlays/topology/placement/server-separated-genai-pb-spread-workers",
+    "serverManifestByModel": {
+      "M1": "infra/k8s/compositions/server/models/m1-provider-backed-worker-01"
+    },
+    "compositionByApplicationWorkerCount": {
+      "W4": "infra/k8s/compositions/topology/server-separated-genai-pb-worker-01-spread-w4"
+    },
+    "compositionSelectionPolicy": {
+      "canonicalProviderBackedSelector": "compositionByApplicationWorkerCount",
+      "selectionRationale": "This placement profile separates the LocalAI server from a spread RPC-worker layout. The active implementation is a W4 topology requiring four provider-backed worker nodes."
+    }
+  },
+  "expectedTradeoffs": {
+    "expectedBenefits": [
+      "server and RPC-worker CPU/memory demand are separated",
+      "RPC workers are spread across multiple provider worker nodes instead of being fully concentrated",
+      "the topology exposes the trade-off between server isolation, worker distribution and inter-node communication"
+    ],
+    "expectedRisks": [
+      "inter-node communication becomes mandatory",
+      "partial worker co-location remains because localai-rpc-a and localai-rpc-d share genai-pb-worker-02",
+      "the active implementation requires at least four provider-backed worker nodes"
+    ]
+  },
+  "evaluationFocus": [
+    "server-worker contention",
+    "server isolation",
+    "resource-vs-network trade-off"
+  ],
+  "constraints": [
+    "requires_four_provider_backed_worker_nodes",
+    "matches_only_the_W4_server_separated_spread_kustomize_composition"
+  ],
+  "governance": {
+    "profileScope": "application_topology",
+    "doesNotChangeInfrastructure": true,
+    "doesNotChangeModel": true,
+    "doesNotChangeWorkload": true,
+    "documentationPolicy": "This profile is operational configuration.",
+    "comparisonPolicy": "Placement comparisons must keep infrastructure, model, workload, worker count, protocol, and metric collection fixed unless a cycle profile explicitly declares otherwise."
+  },
+  "placementType": "server_separated_spread_workers",
+  "supportedInfrastructureWorkerCounts": [
+    4
+  ]
+}

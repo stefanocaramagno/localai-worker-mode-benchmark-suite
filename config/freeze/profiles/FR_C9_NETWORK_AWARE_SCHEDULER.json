@@ -1,0 +1,500 @@
+{
+  "schemaVersion": "freeze-profile/v1",
+  "freezeProfileId": "FR_C9_NETWORK_AWARE_SCHEDULER",
+  "profileId": "FR_C9_NETWORK_AWARE_SCHEDULER",
+  "profileName": "C9 Network-Aware Scheduler Freeze Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_network_aware_scheduler_freeze",
+  "description": "Freeze profile for the provider-backed network-aware-scheduler campaign.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "family": "network-aware-scheduler",
+  "providerId": "proxmox-k3s",
+  "outputRoot": "results/experimental-cycles/C9/freeze",
+  "artifactSnapshotRoot": "results/experimental-cycles/C9/artifacts",
+  "cycleLockJsonPath": "results/experimental-cycles/C9/freeze/C9-cycle-lock.json",
+  "cycleLockTextPath": "results/experimental-cycles/C9/freeze/C9-cycle-lock.txt",
+  "latestManifestPath": "results/experimental-cycles/C9/freeze/latest-freeze-manifest.json",
+  "latestTextSummaryPath": "results/experimental-cycles/C9/freeze/latest-freeze-summary.txt",
+  "manifestSuffix": "_freeze_manifest.json",
+  "textSuffix": "_freeze_summary.txt",
+  "writeLatestAliases": true,
+  "preserveExistingSnapshotByDefault": true,
+  "forceRebuildRequiresExplicitFlag": true,
+  "completionGatePolicy": {
+    "requiredBeforeFreeze": true,
+    "manifestPath": "results/experimental-cycles/C9/completion-gate/latest-completion-gate-manifest.json",
+    "acceptedStatuses": [
+      "completed",
+      "completed_with_unsupported_scenarios"
+    ]
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C9.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "scenarioIndex": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+    "infrastructureProfile": "config/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json",
+    "providerBinding": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S.json",
+    "monAgentProfile": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+    "networkObservabilityProfile": "config/network-observability/profiles/NO_MENTAT_C9.json",
+    "istioGatewayProfile": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+    "customSchedulerProfile": "config/scheduler/profiles/CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER.json",
+    "loadAwareSchedulerProfile": "config/scheduler/profiles/CS_C9_LOADAWARE_SECOND_SCHEDULER.json",
+    "reschedulingProfile": "config/rescheduling/profiles/RS_C9_NETWORK_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+    "clusterCaptureProfile": "config/cluster-capture/profiles/CS_NETWORK_AWARE_SCHEDULER_CAPTURE.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+    "reportingProfile": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+    "completionGateProfile": "config/completion-gate/profiles/CG_C9_NETWORK_AWARE_SCHEDULER.json",
+    "freezeProfile": "config/freeze/profiles/FR_C9_NETWORK_AWARE_SCHEDULER.json",
+    "clusterLensIndex": "config/cluster-lens/CLUSTER_LENS_INDEX.json",
+    "clusterLensProfile": "config/cluster-lens/profiles/CL_C9_PLACEMENT_SNAPSHOT.json",
+    "clusterLensProfileSchema": "config/cluster-lens/schemas/CLUSTER_LENS_PROFILE_SCHEMA_V1.json",
+    "clusterLensCaptureScript": "scripts/observability/cluster-lens/capture-cluster-lens-snapshot.py",
+    "networkAwareTelemetryEvidenceScript": "scripts/analysis/network-aware-telemetry-evidence.py"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C9/execution/latest-campaign-execution-manifest.json",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C9/diagnosis",
+    "reportingManifest": "results/experimental-cycles/C9/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C9/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C9/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C9/reporting/scenario-summary.csv",
+    "benchmarkRoots": [
+      "results/experimental-cycles/C9/benchmark/network-aware-scheduler"
+    ],
+    "clusterSideRoots": [
+      "results/experimental-cycles/C9/variants",
+      "results/experimental-cycles/C9/scheduler"
+    ],
+    "variantEvidenceRoot": "results/experimental-cycles/C9/variants",
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C9/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C9/benchmark/network-aware-scheduler",
+    "minimalObservabilityEvidencePattern": "results/experimental-cycles/C9/variants/<scenario-id>/observability/minimal",
+    "networkTelemetryEvidencePattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/{mon-agent,mentat,istio,telemetry-priming,rescheduling,cluster-lens}",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+    "reportingProfile": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+    "freezeProfile": "config/freeze/profiles/FR_C9_NETWORK_AWARE_SCHEDULER.json",
+    "clusterLensPlacementEvidencePattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/cluster-lens"
+  },
+  "snapshotSources": [
+    {
+      "key": "cycleConfig",
+      "type": "file",
+      "source": "config/experimental-cycles/C9.json",
+      "destination": "configuration/experimental-cycle/C9.json",
+      "required": true
+    },
+    {
+      "key": "scenarioIndex",
+      "type": "file",
+      "source": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+      "destination": "configuration/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "scenarioDefinitions",
+      "type": "directory",
+      "source": "config/scenarios/network-aware-scheduler",
+      "destination": "configuration/scenarios/network-aware-scheduler",
+      "required": true
+    },
+    {
+      "key": "infrastructureProfile",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "providerBinding",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "required": true
+    },
+    {
+      "key": "providerExampleConfig",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c9-1cp-4w-8c16g.example.yaml",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/examples/cluster.c9-1cp-4w-8c16g.example.yaml",
+      "required": true
+    },
+    {
+      "key": "monAgentProfile",
+      "type": "file",
+      "source": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+      "destination": "configuration/mon-agent/profiles/MA_NETWORK_AWARE.json",
+      "required": true
+    },
+    {
+      "key": "networkObservabilityProfile",
+      "type": "file",
+      "source": "config/network-observability/profiles/NO_MENTAT_C9.json",
+      "destination": "configuration/network-observability/profiles/NO_MENTAT_C9.json",
+      "required": true
+    },
+    {
+      "key": "istioGatewayProfile",
+      "type": "file",
+      "source": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+      "destination": "configuration/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+      "required": true
+    },
+    {
+      "key": "latencyProfiles",
+      "type": "directory",
+      "source": "config/latency",
+      "destination": "configuration/latency-or-chaos/latency",
+      "required": true
+    },
+    {
+      "key": "customSchedulerProfile",
+      "type": "file",
+      "source": "config/scheduler/profiles/CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER.json",
+      "destination": "configuration/scheduler/profiles/CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER.json",
+      "required": true
+    },
+    {
+      "key": "loadAwareSchedulerProfile",
+      "type": "file",
+      "source": "config/scheduler/profiles/CS_C9_LOADAWARE_SECOND_SCHEDULER.json",
+      "destination": "configuration/scheduler/profiles/CS_C9_LOADAWARE_SECOND_SCHEDULER.json",
+      "required": true
+    },
+    {
+      "key": "reschedulingProfile",
+      "type": "file",
+      "source": "config/rescheduling/profiles/RS_C9_NETWORK_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+      "destination": "configuration/rescheduling/profiles/RS_C9_NETWORK_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+      "required": true
+    },
+    {
+      "key": "clusterCaptureProfile",
+      "type": "file",
+      "source": "config/cluster-capture/profiles/CS_NETWORK_AWARE_SCHEDULER_CAPTURE.json",
+      "destination": "configuration/cluster-capture/profiles/CS_NETWORK_AWARE_SCHEDULER_CAPTURE.json",
+      "required": true
+    },
+    {
+      "key": "applicationCompositions",
+      "type": "directory",
+      "source": "infra/k8s/compositions/network-aware-scheduler",
+      "destination": "configuration/scenarios/network-aware-scheduler/kubernetes-compositions",
+      "required": true
+    },
+    {
+      "key": "locustWorkload",
+      "type": "file",
+      "source": "load-tests/locust/locustfile.py",
+      "destination": "configuration/scenarios/network-aware-scheduler/workload/locustfile.py",
+      "required": true
+    },
+    {
+      "key": "multiTenantLocustRunner",
+      "type": "file",
+      "source": "scripts/load/multi-tenant/run-multi-tenant-locust.py",
+      "destination": "configuration/scenarios/network-aware-scheduler/supporting-scripts/load/multi-tenant/run-multi-tenant-locust.py",
+      "required": true
+    },
+    {
+      "key": "schedulerDecisionCaptureScript",
+      "type": "file",
+      "source": "scripts/observability/scheduler/capture-scheduler-decisions.py",
+      "destination": "configuration/scenarios/network-aware-scheduler/supporting-scripts/observability/scheduler/capture-scheduler-decisions.py",
+      "required": true
+    },
+    {
+      "key": "monAgentValidationScript",
+      "type": "file",
+      "source": "scripts/observability/mon-agent/run-mon-agent.py",
+      "destination": "configuration/mon-agent/supporting-scripts/run-mon-agent.py",
+      "required": true
+    },
+    {
+      "key": "mentatValidationScript",
+      "type": "file",
+      "source": "scripts/network-observability/validate-mentat.py",
+      "destination": "configuration/network-observability/supporting-scripts/validate-mentat.py",
+      "required": true
+    },
+    {
+      "key": "istioGatewayValidationScript",
+      "type": "file",
+      "source": "scripts/istio/validate-istio-gateway.py",
+      "destination": "configuration/istio-gateway/supporting-scripts/validate-istio-gateway.py",
+      "required": true
+    },
+    {
+      "key": "reschedulingScript",
+      "type": "file",
+      "source": "scripts/rescheduling/run-telemetry-primed-rescheduling.py",
+      "destination": "configuration/rescheduling/supporting-scripts/run-telemetry-primed-rescheduling.py",
+      "required": true
+    },
+    {
+      "key": "schedulerModeManifestValidator",
+      "type": "file",
+      "source": "scripts/validation/scheduler/validate-scheduler-mode-manifests.py",
+      "destination": "configuration/scenarios/network-aware-scheduler/supporting-scripts/validation/scheduler/validate-scheduler-mode-manifests.py",
+      "required": true
+    },
+    {
+      "key": "networkAwareTelemetryEvidenceScript",
+      "type": "file",
+      "source": "scripts/analysis/network-aware-telemetry-evidence.py",
+      "destination": "configuration/analysis/supporting-scripts/network-aware-telemetry-evidence.py",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisProfile",
+      "type": "file",
+      "source": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+      "destination": "configuration/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+      "required": true
+    },
+    {
+      "key": "reportingProfile",
+      "type": "file",
+      "source": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+      "destination": "configuration/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+      "required": true
+    },
+    {
+      "key": "completionGateProfile",
+      "type": "file",
+      "source": "config/completion-gate/profiles/CG_C9_NETWORK_AWARE_SCHEDULER.json",
+      "destination": "configuration/completion-gate/profiles/CG_C9_NETWORK_AWARE_SCHEDULER.json",
+      "required": true
+    },
+    {
+      "key": "freezeProfile",
+      "type": "file",
+      "source": "config/freeze/profiles/FR_C9_NETWORK_AWARE_SCHEDULER.json",
+      "destination": "configuration/freeze/profiles/FR_C9_NETWORK_AWARE_SCHEDULER.json",
+      "required": true
+    },
+    {
+      "key": "campaignExecutionArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C9/execution",
+      "destination": "runtime/execution",
+      "required": true
+    },
+    {
+      "key": "variantEvidenceArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C9/variants",
+      "destination": "runtime/variants",
+      "required": true
+    },
+    {
+      "key": "schedulerDecisionArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C9/scheduler",
+      "destination": "runtime/observability/scheduler-decisions",
+      "required": true
+    },
+    {
+      "key": "multiTenantBenchmarkArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C9/benchmark/network-aware-scheduler",
+      "destination": "runtime/benchmark/network-aware-scheduler",
+      "required": true
+    },
+    {
+      "key": "diagnosisArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C9/diagnosis",
+      "destination": "runtime/diagnosis",
+      "required": true
+    },
+    {
+      "key": "reportingArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C9/reporting",
+      "destination": "runtime/reporting",
+      "required": true
+    },
+    {
+      "key": "completionGateArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C9/completion-gate",
+      "destination": "runtime/completion-gate",
+      "required": true
+    },
+    {
+      "key": "clusterLensConfig",
+      "type": "directory",
+      "source": "config/cluster-lens",
+      "destination": "configuration/cluster-lens",
+      "required": true
+    },
+    {
+      "key": "clusterLensCaptureScript",
+      "type": "file",
+      "source": "scripts/observability/cluster-lens/capture-cluster-lens-snapshot.py",
+      "destination": "configuration/cluster-lens/supporting-scripts/capture-cluster-lens-snapshot.py",
+      "required": true
+    }
+  ],
+  "governance": {
+    "documentationPolicy": "Freeze outputs are retained evidence artifacts, not project documentation source files.",
+    "comparisonPolicy": "The frozen package must preserve C9 configuration, provider-backed infrastructure references, network-aware scheduler manifests, scheduler-decision evidence, gateway-routed tenant benchmark outputs, telemetry annotation evidence, diagnosis, reporting and completion-gate outputs without freezing local credentials.",
+    "runtimeEvidenceLayoutPolicy": "Network-aware runtime evidence is frozen per variant under runtime/variants/<scenario-id>/network-aware-scheduler/<component>; scheduler-decision evidence keeps the shared runtime/observability/scheduler-decisions convention.",
+    "unsupportedScenarioPolicy": "Unsupported network-aware scheduler scenarios remain auditable evidence when documented by the completion gate, diagnosis or scenario-side runtime artifacts."
+  },
+  "artifactPolicy": {
+    "outputRoot": "results/experimental-cycles/C9/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C9/artifacts",
+    "cycleLockJson": "results/experimental-cycles/C9/freeze/C9-cycle-lock.json",
+    "cycleLockText": "results/experimental-cycles/C9/freeze/C9-cycle-lock.txt",
+    "latestManifestPath": "results/experimental-cycles/C9/freeze/latest-freeze-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C9/freeze/latest-freeze-summary.txt",
+    "manifestSuffix": "_freeze_manifest.json",
+    "textSuffix": "_freeze_summary.txt",
+    "writeLatestAliases": true,
+    "preserveExistingSnapshotByDefault": false,
+    "canonicalDirectories": [
+      "configuration",
+      "configuration/cluster-capture",
+      "configuration/completion-gate",
+      "configuration/experimental-cycle",
+      "configuration/freeze",
+      "configuration/infrastructure",
+      "configuration/istio-gateway",
+      "configuration/latency-or-chaos",
+      "configuration/mon-agent",
+      "configuration/network-observability",
+      "configuration/provisioning",
+      "configuration/reporting",
+      "configuration/scenarios",
+      "configuration/rescheduling",
+      "configuration/scenarios/network-aware-scheduler",
+      "configuration/scheduler",
+      "configuration/technical-diagnosis",
+      "configuration/tenancy",
+      "runtime",
+      "runtime/benchmark",
+      "runtime/completion-gate",
+      "runtime/diagnosis",
+      "runtime/execution",
+      "runtime/observability",
+      "runtime/observability/scheduler-decisions",
+      "runtime/reporting",
+      "runtime/variants",
+      "runtime/benchmark/network-aware-scheduler"
+    ]
+  },
+  "primaryFrozenArtifacts": {
+    "reportingManifest": "runtime/reporting/reporting-manifest.json",
+    "reportMarkdown": "runtime/reporting/report.md",
+    "reportHtml": "runtime/reporting/index.html",
+    "scenarioSummaryCsv": "runtime/reporting/scenario-summary.csv",
+    "completionGateManifest": "runtime/completion-gate/latest-completion-gate-manifest.json",
+    "completionGateSummary": "runtime/completion-gate/latest-completion-gate-summary.txt",
+    "schedulerDecisionEvidenceRoot": "runtime/observability/scheduler-decisions",
+    "multiTenantBenchmarkRoot": "runtime/benchmark/network-aware-scheduler",
+    "scenarioSideRuntimeEvidence": "runtime/variants",
+    "networkAwareMonAgentEvidence": {
+      "mode": "latest",
+      "root": "runtime/variants",
+      "pattern": "latest-mon-agent-validation-snapshot.json",
+      "required": true,
+      "description": "Latest frozen mon-agent annotation validation snapshot from a C9 variant."
+    },
+    "networkAwareMentatEvidence": {
+      "mode": "latest",
+      "root": "runtime/variants",
+      "pattern": "latest-mentat-validation-snapshot.json",
+      "required": true,
+      "description": "Latest frozen Mentat inter-node telemetry validation snapshot from a C9 variant."
+    },
+    "networkAwareIstioEvidence": {
+      "mode": "latest",
+      "root": "runtime/variants",
+      "pattern": "latest-istio-gateway-manifest.json",
+      "required": true,
+      "description": "Latest frozen Istio gateway-routed traffic validation manifest from a C9 variant."
+    },
+    "networkAwareReschedulingEvidence": {
+      "mode": "latest",
+      "root": "runtime/variants",
+      "pattern": "latest-rescheduling-manifest.json",
+      "required": true,
+      "description": "Latest frozen telemetry-primed redeployment manifest from a C9 variant."
+    },
+    "diagnosisJson": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.json",
+      "required": true,
+      "description": "Latest frozen campaign-level C9 technical diagnosis JSON."
+    },
+    "diagnosisSummary": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.txt",
+      "required": true,
+      "description": "Latest frozen campaign-level C9 technical diagnosis text summary."
+    },
+    "clusterLensPlacementSummary": {
+      "mode": "latest",
+      "root": "runtime/variants",
+      "pattern": "cluster-lens-placement-summary.json",
+      "required": true,
+      "description": "Latest frozen cluster-lens placement summary captured from a C9 variant."
+    },
+    "clusterLensPlacementSignature": {
+      "mode": "latest",
+      "root": "runtime/variants",
+      "pattern": "cluster-lens-placement-signature.csv",
+      "required": true,
+      "description": "Latest frozen cluster-lens placement signature CSV captured from a C9 variant."
+    },
+    "clusterLensCaptureManifest": {
+      "mode": "latest",
+      "root": "runtime/variants",
+      "pattern": "cluster-lens-capture-manifest.json",
+      "required": true,
+      "description": "Latest frozen cluster-lens capture manifest from a C9 variant."
+    }
+  },
+  "infrastructureProfileIds": [
+    "INFRA_C9_1CP_4W_8C16G"
+  ],
+  "infrastructureProfilePaths": [
+    "config/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json"
+  ],
+  "providerBindingIds": [
+    "BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S"
+  ],
+  "providerBindingPaths": [
+    "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S.json"
+  ],
+  "referenceScenarioId": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+  "referenceScenarioByFamily": {
+    "network-aware-scheduler": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "network-aware-scheduler": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json"
+  },
+  "frozenEvidenceClasses": [
+    "scenario_definitions",
+    "infrastructure_profiles",
+    "provider_bindings",
+    "network_aware_scheduler_manifests",
+    "scheduler_decision_evidence",
+    "gateway_routed_tenant_benchmark_artifacts",
+    "mon_agent_annotation_artifacts",
+    "mentat_inter_node_network_artifacts",
+    "istio_gateway_routing_artifacts",
+    "telemetry_priming_and_rescheduling_artifacts",
+    "cluster_lens_placement_artifacts",
+    "technical_diagnosis",
+    "reporting",
+    "completion_gate"
+  ]
+}

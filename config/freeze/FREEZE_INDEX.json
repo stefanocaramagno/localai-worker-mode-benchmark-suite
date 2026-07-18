@@ -1,0 +1,213 @@
+{
+  "freezeIndexId": "FREEZE_INDEX",
+  "status": "active",
+  "purpose": "Canonical registry for experimental-cycle freeze profiles.",
+  "defaultProviderBackedProfileId": "FR_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "freezeProfileId": "FR_C0_HISTORICAL_FIXED_CLUSTER",
+      "path": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "role": "historical_fixed_cluster_freeze",
+      "cycleId": "C0",
+      "baselineId": "B0",
+      "infrastructureProfileId": "INFRA_C0_1CP_2W_8C16G",
+      "providerId": "external-fixed-cluster",
+      "outputRoot": "results/experimental-cycles/C0/freeze",
+      "artifactSnapshotRoot": "results/experimental-cycles/C0/artifacts",
+      "mode": "historical_fixed_cluster_freeze"
+    },
+    {
+      "freezeProfileId": "FR_C1_PROVIDER_BACKED_BASELINE",
+      "path": "config/freeze/profiles/FR_C1_PROVIDER_BACKED_BASELINE.json",
+      "role": "provider_backed_baseline_freeze",
+      "cycleId": "C1",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C1/freeze",
+      "artifactSnapshotRoot": "results/experimental-cycles/C1/artifacts",
+      "status": "active",
+      "mode": "provider_backed_baseline_freeze",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json"
+    },
+    {
+      "freezeProfileId": "FR_C2_RESOURCE_VARIATION",
+      "path": "config/freeze/profiles/FR_C2_RESOURCE_VARIATION.json",
+      "role": "provider_backed_resource_variation_freeze",
+      "cycleId": "C2",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C2/freeze",
+      "artifactSnapshotRoot": "results/experimental-cycles/C2/artifacts",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "RV_8C16G",
+      "referenceScenarioConfigPath": "config/scenarios/resource-variation/RV_8C16G.json",
+      "referenceScenarioByFamily": {
+        "resource-variation": "RV_8C16G"
+      },
+      "referenceScenarioConfigByFamily": {
+        "resource-variation": "config/scenarios/resource-variation/RV_8C16G.json"
+      },
+      "status": "active",
+      "mode": "resource_variation_campaign_freeze",
+      "infrastructureProfileScope": "scenario_variant"
+    },
+    {
+      "freezeProfileId": "FR_C3_NODE_COUNT_VARIATION",
+      "path": "config/freeze/profiles/FR_C3_NODE_COUNT_VARIATION.json",
+      "role": "provider_backed_node_count_variation_freeze",
+      "cycleId": "C3",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C3/freeze",
+      "artifactSnapshotRoot": "results/experimental-cycles/C3/artifacts",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "NC_2N",
+      "referenceScenarioConfigPath": "config/scenarios/node-count-variation/NC_2N.json",
+      "referenceScenarioByFamily": {
+        "node-count-variation": "NC_2N"
+      },
+      "status": "active",
+      "mode": "node_count_variation_campaign_freeze",
+      "infrastructureProfileScope": "scenario_variant",
+      "referenceScenarioConfigByFamily": {
+        "node-count-variation": "config/scenarios/node-count-variation/NC_2N.json"
+      }
+    },
+    {
+      "freezeProfileId": "FR_C4_PLACEMENT_VARIATION",
+      "path": "config/freeze/profiles/FR_C4_PLACEMENT_VARIATION.json",
+      "role": "provider_backed_placement_variation_freeze",
+      "cycleId": "C4",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C4/freeze",
+      "artifactSnapshotRoot": "results/experimental-cycles/C4/artifacts",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "PLC_SPREAD_WORKERS",
+      "referenceScenarioConfigPath": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+      "referenceScenarioByFamily": {
+        "placement-variation": "PLC_SPREAD_WORKERS"
+      },
+      "status": "active",
+      "mode": "placement_variation_campaign_freeze",
+      "infrastructureProfileId": "INFRA_C4_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "placement-variation": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+      }
+    },
+    {
+      "path": "config/freeze/profiles/FR_C5_LATENCY_INJECTION.json",
+      "cycleId": "C5",
+      "family": "latency-injection",
+      "status": "active",
+      "freezeProfileId": "FR_C5_LATENCY_INJECTION",
+      "role": "provider_backed_latency_injection_freeze",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C5/freeze",
+      "mode": "latency_injection_campaign_freeze",
+      "providerId": "proxmox-k3s",
+      "artifactSnapshotRoot": "results/experimental-cycles/C5/artifacts",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "LI_L0_NONE",
+      "referenceScenarioConfigPath": "config/scenarios/latency-injection/LI_L0_NONE.json",
+      "referenceScenarioByFamily": {
+        "latency-injection": "LI_L0_NONE"
+      },
+      "infrastructureProfileId": "INFRA_C5_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "latency-injection": "config/scenarios/latency-injection/LI_L0_NONE.json"
+      }
+    },
+    {
+      "path": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+      "cycleId": "C6",
+      "family": "multi-tenancy",
+      "status": "active",
+      "freezeProfileId": "FR_C6_MULTI_TENANCY",
+      "role": "provider_backed_multi_tenancy_freeze",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C6/freeze",
+      "mode": "multi_tenancy_campaign_freeze",
+      "providerId": "proxmox-k3s",
+      "artifactSnapshotRoot": "results/experimental-cycles/C6/artifacts",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+      "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+      "referenceScenarioByFamily": {
+        "multi-tenancy": "MT_SINGLE_TENANT_REFERENCE"
+      },
+      "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "multi-tenancy": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+      }
+    },
+    {
+      "path": "config/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "cycleId": "C7",
+      "family": "default-scheduler",
+      "status": "active",
+      "freezeProfileId": "FR_C7_DEFAULT_SCHEDULER_BASELINE",
+      "role": "provider_backed_default_scheduler_baseline_freeze",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C7/freeze",
+      "mode": "default_scheduler_baseline_campaign_freeze",
+      "providerId": "proxmox-k3s",
+      "artifactSnapshotRoot": "results/experimental-cycles/C7/artifacts",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+      "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+      "referenceScenarioByFamily": {
+        "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+      },
+      "infrastructureProfileScope": "scenario_variant",
+      "infrastructureProfileIds": [
+        "INFRA_C7_1CP_2W_8C16G",
+        "INFRA_C7_1CP_3W_8C16G",
+        "INFRA_C7_1CP_4W_8C16G"
+      ],
+      "referenceScenarioConfigByFamily": {
+        "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+      }
+    },
+    {
+      "freezeProfileId": "FR_C8_RESOURCE_AWARE_SCHEDULER",
+      "path": "config/freeze/profiles/FR_C8_RESOURCE_AWARE_SCHEDULER.json",
+      "role": "provider_backed_resource_aware_scheduler_freeze",
+      "cycleId": "C8",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C8/freeze",
+      "status": "active",
+      "mode": "resource_aware_scheduler_campaign_freeze",
+      "scenarioFamily": "resource-aware-scheduler",
+      "scenarioIndexPath": "config/scenarios/resource-aware-scheduler/RESOURCE_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+      "artifactSnapshotRoot": "results/experimental-cycles/C8/artifacts"
+    },
+    {
+      "freezeProfileId": "FR_C9_NETWORK_AWARE_SCHEDULER",
+      "path": "config/freeze/profiles/FR_C9_NETWORK_AWARE_SCHEDULER.json",
+      "role": "provider_backed_network_aware_scheduler_freeze",
+      "cycleId": "C9",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C9/freeze",
+      "status": "active",
+      "mode": "network_aware_scheduler_campaign_freeze",
+      "scenarioFamily": "network-aware-scheduler",
+      "scenarioIndexPath": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+      "artifactSnapshotRoot": "results/experimental-cycles/C9/artifacts",
+      "expectedVariantCount": 36,
+      "expectedLogicalScenarioCount": 12
+    }
+  ],
+  "selectionRules": [
+    "Use FR_C0_HISTORICAL_FIXED_CLUSTER for the historical fixed-cluster evidence package.",
+    "Use FR_C1_PROVIDER_BACKED_BASELINE for the provider-backed C1 cycle.",
+    "Provider-backed freeze profiles must snapshot configuration references, provider evidence, validation artifacts, deployment evidence, minimal observability, benchmark outputs, diagnosis, reporting and completion-gate outputs.",
+    "Freeze outputs are generated artifacts and are not project documentation source files.",
+    "Use FR_C7_DEFAULT_SCHEDULER_BASELINE for the provider-backed C7 default-scheduler baseline campaign.",
+    "Use FR_C9_NETWORK_AWARE_SCHEDULER for the provider-backed C9 network-aware scheduler campaign after completion-gate evidence has been produced."
+  ],
+  "defaultHistoricalProfileId": "FR_C0_HISTORICAL_FIXED_CLUSTER"
+}

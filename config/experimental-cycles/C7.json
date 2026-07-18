@@ -1,0 +1,411 @@
+{
+  "cycleId": "C7",
+  "cycleName": "Default Kubernetes Scheduler Baseline Campaign",
+  "cycleKind": "comparative_campaign",
+  "campaignType": "default_scheduler_baseline",
+  "status": "planned_provider_backed_campaign",
+  "description": "Provider-backed campaign that evaluates Kubernetes default-scheduler placement decisions for distributed LocalAI worker-mode workloads under multi-tenant, latency-aware and traffic-differentiated conditions, without hard-coded pod placement.",
+  "cycleGovernance": {
+    "role": "provider_backed_default_scheduler_baseline_campaign",
+    "predecessorCycleId": "C6",
+    "referenceBaselineId": "B1",
+    "referenceBaselineConfigPath": "config/scenarios/baseline/B1.json",
+    "referenceScenarioFamily": "default-scheduler",
+    "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+    "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+    "governancePolicy": "evaluate_default_scheduler_decisions_without_hard_pod_placement_controls_while_varying_tenant_count_worker_node_count_latency_profile_and_tenant_traffic_profile"
+  },
+  "scope": {
+    "application": "LocalAI worker-mode benchmark suite",
+    "workerMode": "worker",
+    "cycleType": "provider_backed_default_scheduler_baseline",
+    "includedFamilies": [
+      "default-scheduler",
+      "multi-tenancy",
+      "latency-injection",
+      "provisioning",
+      "provisioning-validation",
+      "baseline",
+      "cluster-validation",
+      "application-deployment",
+      "minimal-observability",
+      "scheduler-decision-capture",
+      "technical-diagnosis",
+      "reporting",
+      "completion-gate",
+      "freeze"
+    ],
+    "deferredFamilies": [
+      "custom-scheduler",
+      "scheduler-plugin",
+      "telemetry-aware-placement-policy"
+    ],
+    "primaryQuestion": "How does the Kubernetes default scheduler place distributed LocalAI worker-mode tenant workloads when tenant count, worker-node count, injected latency and tenant traffic patterns vary, and which placements correlate with latency, throughput, failure or resource-contention degradation?"
+  },
+  "defaultSchedulerBaseline": {
+    "schedulerMode": "kubernetes_default_scheduler",
+    "placementPolicy": "no_hard_pod_placement_controls",
+    "forbiddenPlacementControls": [
+      "spec.nodeName",
+      "hostname_specific_nodeSelector",
+      "hostname_specific_nodeAffinity",
+      "controlled_placement_overlays"
+    ],
+    "allowedGeneralConstraints": [
+      "control_plane_exclusion",
+      "generic_worker_nodepool_selection",
+      "resource_requests",
+      "resource_limits",
+      "tenant_labels",
+      "application_role_labels"
+    ],
+    "decisionEvidenceRequired": true,
+    "decisionEvidenceArtifactName": "default-scheduler-decision-evidence.json",
+    "decisionEvidenceArtifactRoot": "results/experimental-cycles/C7/scheduler",
+    "placementClassificationRequired": true,
+    "tenantTrafficDifferentiationSupported": true,
+    "negativeEvidencePolicy": "capture_suboptimal_or_unsupported_default_scheduler_outcomes_as_methodological_evidence"
+  },
+  "providerBackedInfrastructure": {
+    "provider": "proxmox-k3s",
+    "providerIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_INDEX.json",
+    "providerBindingsIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "infrastructureProfilesIndexPath": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "plannedInfrastructureProfileIds": [
+      "INFRA_C7_1CP_2W_8C16G",
+      "INFRA_C7_1CP_3W_8C16G",
+      "INFRA_C7_1CP_4W_8C16G"
+    ],
+    "clusterLifecycleMode": "ephemeral",
+    "destroyClusterAfterCycle": true,
+    "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "cycleExecutionArtifactRoot": "results/experimental-cycles/C7/execution",
+    "campaignArtifactRoot": "results/experimental-cycles/C7",
+    "technicalDiagnosisProfileId": "TD_C7_DEFAULT_SCHEDULER_BASELINE",
+    "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "technicalDiagnosisArtifactRoot": "results/experimental-cycles/C7/diagnosis",
+    "reportingProfileId": "RP_C7_DEFAULT_SCHEDULER_BASELINE",
+    "reportingProfilePath": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "reportingArtifactRoot": "results/experimental-cycles/C7/reporting",
+    "completionGateProfileId": "CG_C7_DEFAULT_SCHEDULER_BASELINE",
+    "completionGateProfilePath": "config/completion-gate/profiles/CG_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "completionGateArtifactRoot": "results/experimental-cycles/C7/completion-gate",
+    "freezeProfileId": "FR_C7_DEFAULT_SCHEDULER_BASELINE",
+    "freezeProfilePath": "config/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "freezeArtifactRoot": "results/experimental-cycles/C7/freeze",
+    "frozenArtifactSnapshotRoot": "results/experimental-cycles/C7/artifacts",
+    "latencyProfilesIndexPath": "config/latency/LATENCY_PROFILES_INDEX.json",
+    "tenancyProfilesIndexPath": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "precheckTemplateId": "TC_PROVIDER_BACKED_PRECHECK_TEMPLATE",
+    "precheckTemplatePath": "config/precheck/templates/TC_PROVIDER_BACKED_PRECHECK_TEMPLATE.json",
+    "precheckProfilesIndexPath": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+    "provisioningValidationTemplateId": "PV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+    "provisioningValidationTemplatePath": "config/provisioning-validation/templates/PV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "provisioningValidationIndexPath": "config/provisioning-validation/PROVISIONING_VALIDATION_INDEX.json",
+    "provisioningIntegrationTemplateId": "PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE",
+    "provisioningIntegrationTemplatePath": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+    "provisioningIntegrationIndexPath": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json",
+    "clusterValidationTemplateId": "CV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+    "clusterValidationTemplatePath": "config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "clusterValidationIndexPath": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+    "applicationDeploymentTemplateId": "AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE",
+    "applicationDeploymentTemplatePath": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+    "applicationDeploymentIndexPath": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+    "minimalObservabilityTemplateId": "MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE",
+    "minimalObservabilityTemplatePath": "config/observability-minimal/templates/MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE.json",
+    "minimalObservabilityIndexPath": "config/observability-minimal/MINIMAL_OBSERVABILITY_INDEX.json",
+    "cycleVariantTemplateId": "PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE",
+    "cycleVariantTemplatePath": "config/experimental-cycles/templates/PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE.json",
+    "activeClusterPolicy": {
+      "policyId": "GENAI_PB_SINGLE_ACTIVE_REUSABLE_CLUSTER",
+      "clusterName": "genai-pb",
+      "maxActiveProviderBackedClustersWithSameName": 1,
+      "clusterNameReusePolicy": "delete_or_reuse_existing_cluster_with_same_name_before_materializing_a_new_variant",
+      "concurrentExecutionPolicy": "exclusive_for_the_reusable_genai_pb_cluster_name",
+      "retentionScope": "ephemeral_campaign_variant_scope",
+      "laterCampaignsMayDeleteRetainedClusterWithSameName": true,
+      "preCleanExistingClusterWithSameNameBeforeVariant": true,
+      "deleteAfterVariantOrCampaign": true
+    }
+  },
+  "campaign": {
+    "campaignId": "C7",
+    "campaignType": "default_scheduler_baseline",
+    "scenarioFamily": "default-scheduler",
+    "scenarioConfigRoot": "config/scenarios/default-scheduler",
+    "scenarioIndexPath": "config/scenarios/default-scheduler/DEFAULT_SCHEDULER_SCENARIOS_INDEX.json",
+    "resultsRoot": "results/experimental-cycles/C7/benchmark/default-scheduler",
+    "defaultBaselineReplicas": [
+      "A",
+      "B",
+      "C"
+    ],
+    "variantExecutionMode": "sequential",
+    "destroyClusterBetweenVariants": true,
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C7/execution/generated-runtime-configs",
+    "scenarioClassCounts": {
+      "official": 12,
+      "diagnostic": 7,
+      "stress": 6,
+      "total": 25
+    },
+    "plannedScenarioIds": {
+      "official": [
+        "DS_1T_2N_L0_UNIFORM_M1_W2",
+        "DS_1T_2N_L1_UNIFORM_M1_W2",
+        "DS_1T_4N_L0_UNIFORM_M1_W2",
+        "DS_1T_4N_L1_UNIFORM_M1_W2",
+        "DS_2T_2N_L0_UNIFORM_M1M1_W2",
+        "DS_2T_2N_L1_UNIFORM_M1M1_W2",
+        "DS_2T_4N_L0_UNIFORM_M1M1_W2",
+        "DS_2T_4N_L1_UNIFORM_M1M1_W2",
+        "DS_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "DS_2T_2N_L1_DIFFERENTIATED_M1M1_W2",
+        "DS_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "DS_2T_4N_L1_DIFFERENTIATED_M1M1_W2"
+      ],
+      "diagnostic": [
+        "DS_1T_3N_L1_UNIFORM_M1_W2",
+        "DS_2T_3N_L1_UNIFORM_M1M1_W2",
+        "DS_2T_3N_L1_DIFFERENTIATED_M1M1_W2",
+        "DS_1T_4N_L2_UNIFORM_M1_W2",
+        "DS_2T_4N_L2_UNIFORM_M1M1_W2",
+        "DS_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+        "DS_2T_2N_L2_DIFFERENTIATED_M1M1_W2"
+      ],
+      "stress": [
+        "DS_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "DS_3T_4N_L1_UNIFORM_M1M1M1_W2",
+        "DS_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2",
+        "DS_2T_4N_L0_UNIFORM_M1M2_W2",
+        "DS_2T_4N_L1_UNIFORM_M1M2_W2",
+        "DS_2T_4N_L1_DIFFERENTIATED_M1M2_W2"
+      ]
+    },
+    "plannedScenarioReferences": [
+      {
+        "scenarioId": "DS_1T_2N_L0_UNIFORM_M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_2N_L0_UNIFORM_M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_1T_2N_L1_UNIFORM_M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_2N_L1_UNIFORM_M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_1T_4N_L1_UNIFORM_M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L1_UNIFORM_M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_2N_L0_UNIFORM_M1M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_2N_L0_UNIFORM_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_2N_L1_UNIFORM_M1M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_2N_L1_UNIFORM_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L0_UNIFORM_M1M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L0_UNIFORM_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L1_UNIFORM_M1M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L1_UNIFORM_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_2N_L1_DIFFERENTIATED_M1M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_2N_L1_DIFFERENTIATED_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L1_DIFFERENTIATED_M1M1_W2",
+        "scenarioClass": "official",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_1T_3N_L1_UNIFORM_M1_W2",
+        "scenarioClass": "diagnostic",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_3N_L1_UNIFORM_M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_3N_L1_UNIFORM_M1M1_W2",
+        "scenarioClass": "diagnostic",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_3N_L1_UNIFORM_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_3N_L1_DIFFERENTIATED_M1M1_W2",
+        "scenarioClass": "diagnostic",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_3N_L1_DIFFERENTIATED_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_1T_4N_L2_UNIFORM_M1_W2",
+        "scenarioClass": "diagnostic",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L2_UNIFORM_M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L2_UNIFORM_M1M1_W2",
+        "scenarioClass": "diagnostic",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L2_UNIFORM_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+        "scenarioClass": "diagnostic",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_2N_L2_DIFFERENTIATED_M1M1_W2",
+        "scenarioClass": "diagnostic",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_2N_L2_DIFFERENTIATED_M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_3T_4N_L0_UNIFORM_M1M1M1_W2",
+        "scenarioClass": "stress",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_3T_4N_L0_UNIFORM_M1M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_3T_4N_L1_UNIFORM_M1M1M1_W2",
+        "scenarioClass": "stress",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_3T_4N_L1_UNIFORM_M1M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2",
+        "scenarioClass": "stress",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L0_UNIFORM_M1M2_W2",
+        "scenarioClass": "stress",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L0_UNIFORM_M1M2_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L1_UNIFORM_M1M2_W2",
+        "scenarioClass": "stress",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L1_UNIFORM_M1M2_W2.json"
+      },
+      {
+        "scenarioId": "DS_2T_4N_L1_DIFFERENTIATED_M1M2_W2",
+        "scenarioClass": "stress",
+        "scenarioConfigPath": "config/scenarios/default-scheduler/DS_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json"
+      }
+    ],
+    "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+    "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+    "referenceScenarioByFamily": {
+      "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+    },
+    "referenceScenarioConfigByFamily": {
+      "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+    },
+    "variants": []
+  },
+  "analysisPolicy": {
+    "compareAgainstControlledCharacterizationCycles": [
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "interpretationPrinciple": "Use controlled placement, latency and tenancy characterization as context for interpreting default-scheduler decisions and their performance consequences.",
+    "unsupportedScenarioPolicy": "unsupported_scenarios_are_methodological_evidence_when_supported_by_cluster_validation_deployment_or_runtime_artifacts"
+  },
+  "reporting": {
+    "reportingProfileId": "RP_C7_DEFAULT_SCHEDULER_BASELINE",
+    "reportingProfilePath": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "artifactRoot": "results/experimental-cycles/C7/reporting"
+  },
+  "completionGate": {
+    "completionGateProfileId": "CG_C7_DEFAULT_SCHEDULER_BASELINE",
+    "completionGateProfilePath": "config/completion-gate/profiles/CG_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "artifactRoot": "results/experimental-cycles/C7/completion-gate"
+  },
+  "freeze": {
+    "freezeProfileId": "FR_C7_DEFAULT_SCHEDULER_BASELINE",
+    "freezeProfilePath": "config/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "artifactRoot": "results/experimental-cycles/C7/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C7/artifacts"
+  },
+  "diagnosis": {
+    "technicalDiagnosisProfileId": "TD_C7_DEFAULT_SCHEDULER_BASELINE",
+    "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "artifactRoot": "results/experimental-cycles/C7/diagnosis"
+  },
+  "pipelineProfiles": {
+    "runConvention": "config/conventions/profiles/RC_STANDARD_RUN_CONVENTION.json",
+    "phaseProfile": "config/phases/profiles/WM_STANDARD_WARMUP_MEASUREMENT.json",
+    "protocolProfile": "config/protocol/profiles/EP_STANDARD_BENCHMARK_PROTOCOL.json",
+    "clusterCapture": "config/cluster-capture/profiles/CS_STANDARD_CLUSTER_CAPTURE.json",
+    "metricSet": "config/metric-set/profiles/MS_STANDARD_BENCHMARK_METRICS.json",
+    "statisticalRigor": "config/statistical-rigor/profiles/SR_REPLICATED_BENCHMARK_RIGOR.json",
+    "infrastructureProfilesIndex": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "providersIndex": "config/infrastructure/providers/PROVIDERS_INDEX.json",
+    "providerBindingsIndex": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "clusterLifecyclePoliciesIndex": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "provisioningValidationIndex": "config/provisioning-validation/PROVISIONING_VALIDATION_INDEX.json",
+    "clusterValidationIndex": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+    "applicationDeploymentIndex": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+    "minimalObservabilityIndex": "config/observability-minimal/MINIMAL_OBSERVABILITY_INDEX.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "reportingIndex": "config/reporting/REPORTING_INDEX.json",
+    "completionGateIndex": "config/completion-gate/COMPLETION_GATE_INDEX.json",
+    "freezeIndex": "config/freeze/FREEZE_INDEX.json",
+    "precheckTemplate": "config/precheck/templates/TC_PROVIDER_BACKED_PRECHECK_TEMPLATE.json",
+    "precheckIndex": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+    "technicalDiagnosis": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "reporting": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "completionGate": "config/completion-gate/profiles/CG_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "freeze": "config/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "latencyProfilesIndex": "config/latency/LATENCY_PROFILES_INDEX.json",
+    "tenancyProfilesIndex": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "provisioningValidationTemplate": "config/provisioning-validation/templates/PV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "provisioningIntegrationTemplate": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+    "provisioningIntegrationIndex": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json",
+    "clusterValidationTemplate": "config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "applicationDeploymentTemplate": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+    "minimalObservabilityTemplate": "config/observability-minimal/templates/MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE.json",
+    "cycleVariantTemplate": "config/experimental-cycles/templates/PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE.json"
+  },
+  "qualityGates": {
+    "requiresDefaultSchedulerManifests": true,
+    "requiresNoHardPlacementControls": true,
+    "requiresSchedulerDecisionEvidence": true,
+    "requiresTenantScopedBenchmarkArtifacts": true,
+    "requiresLatencyProfileTraceability": true,
+    "requiresUnsupportedScenarioEvidenceWhenApplicable": true
+  },
+  "configurationState": "planned",
+  "executionState": "not_started",
+  "profileStatus": "planned_provider_backed_campaign",
+  "stateModel": {
+    "profileStatus": "Configuration-profile lifecycle state. This is the canonical meaning of the backward-compatible status field.",
+    "configurationState": "Whether the cycle configuration is planned, active, locked, superseded, or deprecated.",
+    "executionState": "Latest known execution outcome for the cycle or campaign.",
+    "status": "Backward-compatible alias of profileStatus; execution outcomes must be read from executionState."
+  },
+  "infrastructureSummaryMode": "variant_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "campaign_variant",
+    "description": "The cycle is expected to evaluate several worker-node counts through variant-scoped infrastructure profiles. Scenario-level evidence must identify the concrete infrastructure profile used for each run."
+  }
+}

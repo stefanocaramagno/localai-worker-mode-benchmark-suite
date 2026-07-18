@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "profileId": "RP_C6_MULTI_TENANCY",
+  "reportingProfileId": "RP_C6_MULTI_TENANCY",
+  "profileName": "C6 Multi-Tenancy Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_multi_tenancy_reporting",
+  "description": "Reporting profile for the provider-backed multi-tenancy campaign.",
+  "cycleId": "C6",
+  "cycleConfigPath": "config/experimental-cycles/C6.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C6/diagnosis",
+  "outputRoot": "results/experimental-cycles/C6/reporting",
+  "reportTitle": "C6 — Multi-Tenancy Report",
+  "reportPurposeMarkdown": "This report compares namespace-scoped LocalAI tenant-cluster coexistence scenarios under fixed provider-backed infrastructure and a fixed primary benchmark workload. It is intended to expose co-tenant contention and model-mix effects on the benchmarked tenant.",
+  "familyOrder": [
+    "multi-tenancy"
+  ],
+  "familyDisplayNames": {
+    "multi-tenancy": "Multi-Tenancy"
+  },
+  "scenarioConfigRoots": {
+    "multi-tenancy": "config/scenarios/multi-tenancy"
+  },
+  "scenarioConfigFiles": {
+    "multi-tenancy": [
+      "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+      "config/scenarios/multi-tenancy/MT_TWO_TENANTS_SEPARATED.json",
+      "config/scenarios/multi-tenancy/MT_TWO_TENANTS_MIXED_MODELS.json",
+      "config/scenarios/multi-tenancy/MT_TWO_TENANTS_SHARED_NODEPOOL.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "multi-tenancy": "results/experimental-cycles/C6/benchmark/multi-tenancy"
+  },
+  "referenceScenarioByFamily": {
+    "multi-tenancy": "MT_SINGLE_TENANT_REFERENCE"
+  },
+  "variedDimensionByFamily": {
+    "multi-tenancy": "tenant topology"
+  },
+  "fixedDimensionsByFamily": {
+    "multi-tenancy": [
+      "infrastructure=INFRA_C6_1CP_4W_8C16G",
+      "benchmark tenant=tenant-a",
+      "primary model=M1",
+      "primary worker-count=W2",
+      "workload=WL2"
+    ]
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "archiveDirectoryName": "archive",
+  "providerAwareContext": {
+    "cycleConfigPath": "config/experimental-cycles/C6.json",
+    "provisioningManifestPath": "results/experimental-cycles/C6/execution/latest-campaign-execution-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C6/execution/latest-campaign-execution-manifest.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C6/execution/latest-campaign-execution-manifest.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C6/execution/latest-campaign-execution-manifest.json"
+  },
+  "notes": [
+    "The primary benchmark target remains tenant-a in namespace genai-tenant-a.",
+    "Co-tenant clusters are deployed to model resource contention and tenant coexistence, while benchmark traffic remains intentionally controlled.",
+    "Unsupported multi-tenant topologies are retained as capacity or placement evidence."
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisProfileId": "TD_C6_MULTI_TENANCY",
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+  "reportingContext": {
+    "campaignType": "multi_tenancy",
+    "primaryQuestion": "How do coexisting LocalAI tenant clusters affect the benchmarked tenant under fixed infrastructure and primary workload?",
+    "fixedDimensions": [
+      "infrastructure=INFRA_C6_1CP_4W_8C16G",
+      "benchmark tenant=tenant-a",
+      "primary workload=WL2"
+    ],
+    "variedDimensions": [
+      "tenant topology",
+      "co-tenant model mix",
+      "co-tenant placement"
+    ]
+  },
+  "reportingIdPrefix": "REP_C6",
+  "infrastructureSummaryMode": "fixed_cycle_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "cycle",
+    "interpretation": "A single fixed infrastructure profile is used as cycle-level context for the reporting package."
+  },
+  "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+  "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+  "referenceScenarioConfigByFamily": {
+    "multi-tenancy": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+  }
+}

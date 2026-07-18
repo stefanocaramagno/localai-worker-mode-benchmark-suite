@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "execution_protocol-index/v1",
+  "defaultProtocolProfileId": "EP_STANDARD_BENCHMARK_PROTOCOL",
+  "protocolProfiles": [
+    {
+      "profileId": "EP_STANDARD_BENCHMARK_PROTOCOL",
+      "profilePath": "config/protocol/profiles/EP_STANDARD_BENCHMARK_PROTOCOL.json",
+      "profileType": "execution_protocol",
+      "description": "Standard benchmark execution protocol for LocalAI benchmark runs. The launcher must always resolve and publish the same ordered sequence: controlled cleanup, scenario deployment, technical pre-check, API smoke validation, optional warm-up, measurement, client-side artifact collection, automated required cluster-side collection, automated required final snapshot, and controlled cleanup or restore placeholder."
+    }
+  ]
+}

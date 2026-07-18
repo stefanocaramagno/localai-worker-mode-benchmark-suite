@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "cluster-validation-index/v1",
+  "clusterValidationIndexId": "CLUSTER_VALIDATION_INDEX",
+  "status": "active",
+  "purpose": "Registry of cluster validation profiles used after provider-backed provisioning and before LocalAI application deployment.",
+  "profilesRoot": "config/cluster-validation/profiles",
+  "schemaPath": "config/cluster-validation/schemas/CLUSTER_VALIDATION_PROFILE_SCHEMA_V1.json",
+  "defaultProfileId": "CV_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "clusterValidationProfileId": "CV_C1_PROVIDER_BACKED_BASELINE",
+      "cycleId": "C1",
+      "profilePath": "config/cluster-validation/profiles/CV_C1_PROVIDER_BACKED_BASELINE.json",
+      "provisioningValidationProfilePath": "config/provisioning-validation/profiles/PV_C1_PROVIDER_BACKED_BASELINE.json",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "providerId": "proxmox-k3s",
+      "role": "first_provider_backed_baseline_cluster_validation",
+      "requiredBeforeApplicationDeployment": true,
+      "applicationDeploymentProfileId": "AD_C1_PROVIDER_BACKED_BASELINE",
+      "applicationDeploymentProfilePath": "config/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+      "applicationDeploymentRequiredAfterValidation": true
+    }
+  ],
+  "governanceRules": [
+    "Cluster validation must run after provider-backed provisioning and kubeconfig refresh for official provider-backed cycles.",
+    "Application deployment and workload execution must not start when cluster validation fails.",
+    "Validation evidence must be written under the cycle-specific results tree for official provider-backed cycles.",
+    "Cluster-validation evidence is official only when produced by profiles resolved through an active experimental cycle or by runtime-generated profiles derived from the canonical validation template.",
+    "Minimal K3s readiness, metrics-server, local-path-provisioner, storage class, and Metrics API are sufficient unless later profiles require additional add-ons.",
+    "Validated provider-backed clusters must resolve an application deployment profile before benchmark execution.",
+    "Application deployment evidence must be retained under the cycle-specific results tree before benchmark artifacts are produced.",
+    "Runtime campaign variants must be generated from cluster validation templates rather than from concrete baseline profiles."
+  ],
+  "applicationDeploymentIndexPath": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+  "templatesRoot": "config/cluster-validation/templates",
+  "templates": [
+    {
+      "clusterValidationTemplateId": "CV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+      "templatePath": "config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+      "role": "provider_backed_campaign_runtime_cluster_validation_template",
+      "status": "active_template",
+      "usedFor": "runtime_generated_provider_backed_campaign_variants"
+    }
+  ],
+  "runtimeGeneratedProfilePolicy": {
+    "enabled": true,
+    "generationScope": "provider_backed_campaign_variants",
+    "staticProfilesScope": "concrete_baseline_and_standalone_profiles",
+    "runtimeCycles": [
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C9"
+    ],
+    "templateId": "CV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+    "templatePath": "config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "generatedProfilesRootPattern": "results/experimental-cycles/<cycleId>/execution/generated-runtime-configs/<variantId>/",
+    "rationale": "Campaign-variant cluster validation profiles are generated from the template to validate each provider-backed cluster against the variant-specific infrastructure profile and kubeconfig.",
+    "networkAwareSchedulerToolchainScope": "C9 uses runtime-generated provider-backed profiles with proxmox-k3s v1.0.3 add-on support."
+  }
+}

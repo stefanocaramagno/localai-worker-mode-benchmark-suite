@@ -1,0 +1,206 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-server
+  namespace: localai-benchmark
+  labels: &id001
+    group: tenant-a
+    app: master
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: server
+    localai.benchmark/role: master
+    role: master
+spec:
+  selector:
+    matchLabels:
+      group: tenant-a
+      app: master
+  template:
+    metadata:
+      labels: *id001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-a
+  namespace: localai-benchmark
+  labels: &id001
+    group: tenant-a
+    app: worker-1
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/role: worker
+    localai.benchmark/worker-id: '1'
+    role: worker
+spec:
+  selector:
+    matchLabels:
+      group: tenant-a
+      app: worker-1
+  template:
+    metadata:
+      labels: *id001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-b
+  namespace: localai-benchmark
+  labels: &id001
+    group: tenant-a
+    app: worker-2
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/role: worker
+    localai.benchmark/worker-id: '2'
+    role: worker
+spec:
+  selector:
+    matchLabels:
+      group: tenant-a
+      app: worker-2
+  template:
+    metadata:
+      labels: *id001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-c
+  namespace: localai-benchmark
+  labels: &id001
+    group: tenant-a
+    app: worker-3
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/role: worker
+    localai.benchmark/worker-id: '3'
+    role: worker
+spec:
+  selector:
+    matchLabels:
+      group: tenant-a
+      app: worker-3
+  template:
+    metadata:
+      labels: *id001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-d
+  namespace: localai-benchmark
+  labels: &id001
+    group: tenant-a
+    app: worker-4
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/role: worker
+    localai.benchmark/worker-id: '4'
+    role: worker
+spec:
+  selector:
+    matchLabels:
+      group: tenant-a
+      app: worker-4
+  template:
+    metadata:
+      labels: *id001
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-server
+  namespace: localai-benchmark
+  labels:
+    group: tenant-a
+    app: master
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: server
+    localai.benchmark/role: master
+    role: master
+spec:
+  selector:
+    group: tenant-a
+    app: master
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-rpc-a
+  namespace: localai-benchmark
+  labels:
+    group: tenant-a
+    app: worker-1
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/role: worker
+    localai.benchmark/worker-id: '1'
+    role: worker
+spec:
+  selector:
+    group: tenant-a
+    app: worker-1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-rpc-b
+  namespace: localai-benchmark
+  labels:
+    group: tenant-a
+    app: worker-2
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/role: worker
+    localai.benchmark/worker-id: '2'
+    role: worker
+spec:
+  selector:
+    group: tenant-a
+    app: worker-2
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-rpc-c
+  namespace: localai-benchmark
+  labels:
+    group: tenant-a
+    app: worker-3
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/role: worker
+    localai.benchmark/worker-id: '3'
+    role: worker
+spec:
+  selector:
+    group: tenant-a
+    app: worker-3
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localai-rpc-d
+  namespace: localai-benchmark
+  labels:
+    group: tenant-a
+    app: worker-4
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: rpc-worker
+    localai.benchmark/role: worker
+    localai.benchmark/worker-id: '4'
+    role: worker
+spec:
+  selector:
+    group: tenant-a
+    app: worker-4

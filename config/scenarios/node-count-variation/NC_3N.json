@@ -1,0 +1,165 @@
+{
+  "scenarioId": "NC_3N",
+  "variantId": "NC_3N",
+  "referenceBaselineId": "B1",
+  "referenceScenarioId": "NC_2N",
+  "status": "active_provider_backed_node_count_variation",
+  "purpose": "Node-count variation scenario with 3 provider worker nodes and a fixed four-worker LocalAI topology.",
+  "workerMode": "worker",
+  "modelScenario": "M1",
+  "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "workerScenario": "W4",
+  "resolvedWorkerCount": 4,
+  "placementScenario": "PL_SPREAD_WORKERS",
+  "resolvedPlacementType": "spread_workers_across_3_provider_worker_nodes",
+  "workloadScenario": "WL2",
+  "resolvedWorkload": {
+    "users": 2,
+    "spawnRate": 1,
+    "runTime": "2m"
+  },
+  "topologyDir": "infra/k8s/compositions/topology/spread-genai-pb-3-worker-nodes-w4",
+  "serverManifest": "infra/k8s/compositions/server/models/m1-provider-backed",
+  "namespaceManifest": "infra/k8s/compositions/foundation/namespace",
+  "storageManifest": "infra/k8s/compositions/foundation/storage",
+  "baseUrl": "http://localhost:8080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "resultsRoot": "results/experimental-cycles/C3/benchmark/node-count-variation",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b",
+    "localai-rpc-c",
+    "localai-rpc-d"
+  ],
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "genai-pb-worker-01",
+    "localai-rpc-b": "genai-pb-worker-02",
+    "localai-rpc-c": "genai-pb-worker-03",
+    "localai-rpc-d": "genai-pb-worker-01"
+  },
+  "selectionCriteria": [
+    "Keep model, workload, LocalAI worker count, per-node capacity and placement policy fixed so the campaign isolates infrastructure worker-node count.",
+    "Use four LocalAI RPC workers so adding provider worker nodes can alter actual worker distribution rather than leaving additional nodes idle.",
+    "Use the 8 vCPU / 16 GiB worker-node capacity identified as benchmark-ready by the preceding resource-capacity campaign."
+  ],
+  "lockRules": [
+    "Do not change model, workload, LocalAI worker count or per-node capacity inside this scenario.",
+    "Do not interpret differences without checking placement, CPU, memory and unsupported-scenario evidence.",
+    "Use the scenario only within a declared node-count variation campaign or a documented derivative cycle."
+  ],
+  "notes": "This scenario is designed for provider-backed node-count comparison. Extra provider worker nodes are intentionally paired with a fixed W4 application topology and a spread placement policy so distribution effects are observable.",
+  "infrastructureProfileId": "INFRA_C3_1CP_3W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C3_1CP_3W_8C16G.json",
+  "infrastructureRole": "provider_backed_reference_baseline",
+  "associatedCycleId": "C3",
+  "historicalReferenceBaselineId": "B0",
+  "providerBindingId": "BINDING_INFRA_C3_1CP_3W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C3_1CP_3W_8C16G_PROXMOX_K3S.json",
+  "providerId": "proxmox-k3s",
+  "applicationDeploymentProfileId": "AD_C3_NC_3N",
+  "applicationDeploymentProfilePath": "results/experimental-cycles/C3/execution/generated-runtime-configs/NC_3N/AD_NC_3N.json",
+  "applicationDeploymentIndexPath": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+  "requiresApplicationDeploymentBeforeBenchmark": true,
+  "placementProfileId": "PL_SPREAD_WORKERS",
+  "placementProfilePath": "config/placement/profiles/PL_SPREAD_WORKERS.json",
+  "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+  "requiresMinimalObservabilityBeforeDiagnosis": true,
+  "precheckProfilesIndexPath": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+  "family": "node-count-variation",
+  "outputSubdir": "NC_3N_official_locked",
+  "expectedInactiveRpcWorkers": [],
+  "expectedServerNode": "genai-pb-worker-02",
+  "scenarioLabel": "3 provider worker nodes / fixed W4 spread topology",
+  "applicationTopology": {
+    "localAiWorkerCount": 4,
+    "workerScenario": "W4",
+    "workerScenarioPath": "config/scenarios/pilot/worker-count/W4.json",
+    "topologyDir": "infra/k8s/compositions/topology/spread-genai-pb-3-worker-nodes-w4",
+    "placementType": "spread_workers_across_3_provider_worker_nodes",
+    "placementScenario": "PL_SPREAD_WORKERS",
+    "placementScenarioPath": "config/placement/profiles/PL_SPREAD_WORKERS.json",
+    "expectedActiveRpcWorkers": [
+      "localai-rpc-a",
+      "localai-rpc-b",
+      "localai-rpc-c",
+      "localai-rpc-d"
+    ],
+    "expectedInactiveRpcWorkers": [],
+    "expectedWorkerNodes": {
+      "localai-rpc-a": "genai-pb-worker-01",
+      "localai-rpc-b": "genai-pb-worker-02",
+      "localai-rpc-c": "genai-pb-worker-03",
+      "localai-rpc-d": "genai-pb-worker-01"
+    },
+    "expectedServerNode": "genai-pb-worker-02"
+  },
+  "nodeCountVariant": {
+    "variantId": "NC_3N",
+    "label": "3 provider worker nodes",
+    "controlPlaneNodeCount": 1,
+    "workerNodeCount": 3,
+    "workerVcpusPerNode": 8,
+    "workerMemoryGiBPerNode": 16,
+    "workerStorageGiBPerNode": 35,
+    "totalWorkerVcpus": 24,
+    "totalWorkerMemoryGiB": 48,
+    "totalWorkerStorageGiB": 105,
+    "fixedLocalAiWorkerCount": 4,
+    "fixedPlacementProfileId": "PL_SPREAD_WORKERS",
+    "fixedModelScenario": "M1",
+    "fixedWorkloadScenario": "WL2"
+  },
+  "fixedDimensions": {
+    "modelScenario": "M1",
+    "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+    "workerScenario": "W4",
+    "resolvedWorkerCount": 4,
+    "placementProfileId": "PL_SPREAD_WORKERS",
+    "workloadScenario": "WL2",
+    "prompt": "Reply with only READY.",
+    "temperature": 0.1,
+    "workerVcpusPerNode": 8,
+    "workerMemoryGiBPerNode": 16
+  },
+  "variedDimensions": [
+    "provider worker node count"
+  ],
+  "applicationDeploymentResolution": {
+    "resolutionMode": "generated_at_runtime",
+    "generator": "scripts/experimental-cycles/run-experimental-campaign.py",
+    "templateId": "AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE",
+    "templatePath": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+    "generatedProfileId": "AD_C3_NC_3N",
+    "generatedProfilePath": "results/experimental-cycles/C3/execution/generated-runtime-configs/NC_3N/AD_NC_3N.json",
+    "interpretationRule": "The static scenario profile declares the intended runtime-generated deployment profile instead of leaving the application deployment binding ambiguous."
+  },
+  "scenarioProfileId": "NC_3N",
+  "scenarioProfileName": "3 provider worker nodes / fixed W4 spread topology",
+  "minimalObservabilityProfileId": "MO_C3_NC_3N",
+  "minimalObservabilityProfilePath": "results/experimental-cycles/C3/execution/generated-runtime-configs/NC_3N/MO_NC_3N.json",
+  "precheckProfileId": "TC_C3_NC_3N",
+  "precheckProfilePath": "results/experimental-cycles/C3/execution/generated-runtime-configs/NC_3N/TC_NC_3N.json",
+  "runtimeGeneratedProfiles": {
+    "resolutionMode": "generated_at_runtime",
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C3/execution/generated-runtime-configs",
+    "applicationDeployment": {
+      "profileId": "AD_C3_NC_3N",
+      "path": "results/experimental-cycles/C3/execution/generated-runtime-configs/NC_3N/AD_NC_3N.json",
+      "requiredBeforeBenchmark": true
+    },
+    "minimalObservability": {
+      "profileId": "MO_C3_NC_3N",
+      "path": "results/experimental-cycles/C3/execution/generated-runtime-configs/NC_3N/MO_NC_3N.json",
+      "requiredBeforeDiagnosis": true
+    },
+    "precheck": {
+      "profileId": "TC_C3_NC_3N",
+      "path": "results/experimental-cycles/C3/execution/generated-runtime-configs/NC_3N/TC_NC_3N.json",
+      "requiredBeforeBenchmark": true
+    }
+  },
+  "scenarioProfileSchemaVersion": "1.0",
+  "scenarioProfileScope": "provider_backed_node_count_variation"
+}

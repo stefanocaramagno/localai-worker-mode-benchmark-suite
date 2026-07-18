@@ -1,0 +1,186 @@
+{
+  "providerId": "proxmox-k3s",
+  "schemaVersion": "provider-index/proxmox-k3s/v1",
+  "purpose": "Canonical provider registry for proxmox-k3s bindings, templates, examples, and local files.",
+  "providerTool": {
+    "name": "proxmox-k3s",
+    "expectedCommands": [
+      "cluster create",
+      "cluster delete",
+      "cluster kubeconfig",
+      "template create",
+      "template delete",
+      "registry create",
+      "registry delete",
+      "nfs create",
+      "nfs delete",
+      "setup-all",
+      "delete-all",
+      "cluster mesh"
+    ],
+    "configFormat": "YAML (proxmox-k3s v1.0.3 clusters list schema)",
+    "configFlag": "-c",
+    "minimumCompatibleVersion": "v1.0.3",
+    "clusterLifecycleCommandNamespace": "cluster",
+    "deleteConfirmationPolicy": "interactive_prompt_confirmed_by_wrapper_stdin",
+    "addonManagementSupported": true,
+    "addonConfigurationKeys": [
+      "monitoring",
+      "mon_agent",
+      "mentat",
+      "istio",
+      "chaos_mesh"
+    ]
+  },
+  "directories": {
+    "bindings": "config/infrastructure/providers/proxmox-k3s/bindings",
+    "schemas": "config/infrastructure/providers/proxmox-k3s/schemas",
+    "templates": "config/infrastructure/providers/proxmox-k3s/templates",
+    "examples": "config/infrastructure/providers/proxmox-k3s/examples",
+    "local": "config/infrastructure/providers/proxmox-k3s/local",
+    "lifecyclePolicies": "config/infrastructure/lifecycle/policies",
+    "provisioningIntegrationProfiles": "config/provisioning/profiles",
+    "vmidAllocationPolicies": "config/infrastructure/providers/proxmox-k3s/vmid-allocation",
+    "templateMetadata": "config/infrastructure/providers/proxmox-k3s/templates"
+  },
+  "schemaPaths": {
+    "providerBindingSchema": "config/infrastructure/providers/proxmox-k3s/schemas/PROXMOX_K3S_PROVIDER_BINDING_SCHEMA_V1.json",
+    "clusterLifecyclePolicySchema": "config/infrastructure/lifecycle/schemas/CLUSTER_LIFECYCLE_POLICY_SCHEMA_V1.json"
+  },
+  "indexes": {
+    "bindingsIndex": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "clusterLifecyclePoliciesIndex": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "provisioningIntegrationIndex": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json",
+    "vmidAllocationPoliciesIndex": "config/infrastructure/providers/proxmox-k3s/vmid-allocation/PROXMOX_K3S_VMID_ALLOCATION_POLICIES_INDEX.json"
+  },
+  "resolutionPolicy": {
+    "realExecutionConfigPreferenceOrder": [
+      "localPath"
+    ],
+    "reviewOrDryRunConfigPreferenceOrder": [
+      "examplePath",
+      "templatePath"
+    ],
+    "localConfigRequiredForCreateDelete": true,
+    "exampleConfigContainsSecrets": false,
+    "localConfigMayContainSecrets": true,
+    "vmidAllocation": {
+      "explicitVmidBaseRequiredInClusterYaml": true,
+      "officialProviderBackedDefaultPolicyId": "GENAI_PB_REUSABLE_VMID_RANGE_V1",
+      "partialClusterRetryPolicy": "delete_or_cleanup_generated_partial_cluster_before_retry",
+      "standaloneValidationPolicyResolution": "Resolved only for explicit standalone provider-validation workflows; official benchmark-cycle bindings must use officialProviderBackedDefaultPolicyId unless their binding declares another reviewed policy."
+    },
+    "selectionPrecedence": [
+      "explicitOverride",
+      "modeSpecificPreferenceOrder"
+    ],
+    "resolutionModes": {
+      "realExecution": {
+        "appliesWhen": "action in {provision,kubeconfig,destroy} and dryRun=false",
+        "preferenceOrder": [
+          "localPath"
+        ],
+        "allowedConfigKinds": [
+          "localPath",
+          "explicitOverride"
+        ],
+        "forbiddenConfigKinds": [
+          "examplePath",
+          "templatePath"
+        ],
+        "failurePolicy": "fail_fast_when_no_real_provider_config_exists"
+      },
+      "reviewOrDryRun": {
+        "appliesWhen": "action=plan or dryRun=true",
+        "preferenceOrder": [
+          "examplePath",
+          "templatePath"
+        ],
+        "allowedConfigKinds": [
+          "examplePath",
+          "templatePath",
+          "explicitOverride"
+        ],
+        "forbiddenConfigKinds": [],
+        "failurePolicy": "allow_review_safe_config_without_provider_execution"
+      }
+    },
+    "overridePolicy": {
+      "enabled": true,
+      "precedence": "highest",
+      "realExecutionSafety": "explicit override is allowed for real execution only when the selected file exists and is not the declared review-only example or template path"
+    }
+  },
+  "toolBoundary": {
+    "owns": [
+      "VM creation",
+      "K3s cluster provisioning",
+      "kubeconfig export",
+      "cluster deletion",
+      "Provider-managed add-on installation for monitoring, mon-agent, Mentat, Istio and Chaos Mesh"
+    ],
+    "doesNotOwn": [
+      "LocalAI deployment",
+      "Locust workload execution",
+      "technical diagnosis",
+      "reporting",
+      "completion gate",
+      "cycle freeze",
+      "provider-backed cycle orchestration",
+      "LocalAI tenant labels",
+      "Istio routing resources for LocalAI tenants",
+      "network-aware benchmark scenario semantics"
+    ]
+  },
+  "clusterLifecycleSupport": {
+    "supportedModes": [
+      "reuse",
+      "ephemeral"
+    ],
+    "defaultLifecyclePolicyId": "LC_REUSE_RETAIN_CLUSTER",
+    "ephemeralLifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "deleteRequiresExplicitConfirmation": true,
+    "templateDeletionAllowedByDefault": false
+  },
+  "templateRegistry": {
+    "clusterConfigTemplate": {
+      "templatePath": "config/infrastructure/providers/proxmox-k3s/templates/cluster.proxmox-k3s.template.yaml.tmpl",
+      "metadataPath": "config/infrastructure/providers/proxmox-k3s/templates/cluster.proxmox-k3s.template.metadata.yaml",
+      "renderedConfigFormat": "proxmox-k3s-v1.0.3-clusters-yaml"
+    }
+  },
+  "activeClusterPolicy": {
+    "policyId": "GENAI_PB_SINGLE_ACTIVE_REUSABLE_CLUSTER",
+    "canonicalReusableClusterName": "genai-pb",
+    "maxActiveProviderBackedClustersWithSameName": 1,
+    "clusterNameReusePolicy": "delete_or_reuse_existing_cluster_with_same_name_before_materializing_a_new_variant",
+    "vmNameAndIpReusePolicy": "The genai-pb naming, VMID and IP ranges are reusable across provider-backed campaigns and must not be assumed to represent multiple concurrently active clusters.",
+    "retainedClusterSemantics": "A retained provider-backed baseline cluster remains available for repeated runs until a later provider-backed campaign intentionally reuses, refreshes, or deletes the same reusable cluster name.",
+    "ephemeralCampaignSemantics": "Ephemeral campaigns may clean up an existing cluster with the same reusable name before materializing their own declared infrastructure profile.",
+    "concurrentExecutionPolicy": "Do not run provider-backed campaigns sharing the same cluster name, VMID range, or IP range concurrently unless the provider binding explicitly declares isolated names and ranges."
+  },
+  "supportedAddonToolchain": {
+    "monitoring": {
+      "supported": true,
+      "purpose": "Prometheus and kube-state-metrics telemetry"
+    },
+    "mon_agent": {
+      "supported": true,
+      "minimumVersion": "v0.0.6",
+      "purpose": "Kubernetes node and deployment annotations from Prometheus metrics"
+    },
+    "mentat": {
+      "supported": true,
+      "minimumVersion": "v0.3.0",
+      "purpose": "Inter-node latency, packet-loss and bandwidth metrics"
+    },
+    "istio": {
+      "supported": true,
+      "purpose": "Gateway-routed service-mesh traffic metrics"
+    },
+    "chaos_mesh": {
+      "supported": true,
+      "purpose": "Controlled latency and fault-injection experiments"
+    }
+  }
+}

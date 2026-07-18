@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "localai-istio-gateway-profile/v1",
+  "istioGatewayProfileId": "IG_LOCALAI_GATEWAY_ROUTED_C9",
+  "profileName": "LocalAI Gateway-Routed Traffic Profile",
+  "profileStatus": "active",
+  "profileRole": "gateway_routed_localai_benchmark_access",
+  "purpose": "Route LocalAI benchmark traffic through Istio Gateway API resources so gateway-to-master traffic is observable through Istio metrics and available to annotation workflows.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "infrastructureProfileId": "INFRA_C9_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json",
+  "monAgentProfileId": "MA_NETWORK_AWARE",
+  "monAgentProfilePath": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+  "networkObservabilityProfileId": "NO_MENTAT_C9",
+  "networkObservabilityProfilePath": "config/network-observability/profiles/NO_MENTAT_C9.json",
+  "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c9-1cp-4w-8c16g/kubeconfig",
+  "kubernetes": {
+    "kubectl": "kubectl",
+    "gatewayApi": {
+      "apiVersion": "gateway.networking.k8s.io/v1",
+      "gatewayKind": "Gateway",
+      "routeKind": "HTTPRoute",
+      "gatewayClassName": "istio",
+      "expectedGatewayClass": "istio",
+      "allowedRoutesFrom": "Same"
+    },
+    "namespaceLabels": {
+      "monAgentEnabled": {
+        "key": "mon-agent/enabled",
+        "value": "true",
+        "required": true
+      },
+      "istioInjection": {
+        "key": "istio-injection",
+        "value": "enabled",
+        "required": true
+      },
+      "trafficAccessMode": {
+        "key": "localai.benchmark/traffic-access-mode",
+        "value": "gateway-routed",
+        "required": true
+      }
+    }
+  },
+  "tenantGateways": [
+    {
+      "tenantId": "tenant-a",
+      "namespace": "genai-tenant-a",
+      "componentPath": "infra/k8s/components/istio/tenant-gateway/tenant-a",
+      "gatewayName": "localai-gateway",
+      "gatewayServiceName": "localai-gateway-istio",
+      "httpRouteName": "localai-server-route",
+      "hostname": "tenant-a.localai.local",
+      "hostHeader": "tenant-a.localai.local",
+      "gatewayPort": 80,
+      "localPort": 18080,
+      "benchmarkBaseUrl": "http://localhost:18080",
+      "backendServiceName": "localai-server",
+      "backendServicePort": 8080,
+      "routePathPrefix": "/"
+    },
+    {
+      "tenantId": "tenant-b",
+      "namespace": "genai-tenant-b",
+      "componentPath": "infra/k8s/components/istio/tenant-gateway/tenant-b",
+      "gatewayName": "localai-gateway",
+      "gatewayServiceName": "localai-gateway-istio",
+      "httpRouteName": "localai-server-route",
+      "hostname": "tenant-b.localai.local",
+      "hostHeader": "tenant-b.localai.local",
+      "gatewayPort": 80,
+      "localPort": 18081,
+      "benchmarkBaseUrl": "http://localhost:18081",
+      "backendServiceName": "localai-server",
+      "backendServicePort": 8080,
+      "routePathPrefix": "/"
+    },
+    {
+      "tenantId": "tenant-c",
+      "namespace": "genai-tenant-c",
+      "componentPath": "infra/k8s/components/istio/tenant-gateway/tenant-c",
+      "gatewayName": "localai-gateway",
+      "gatewayServiceName": "localai-gateway-istio",
+      "httpRouteName": "localai-server-route",
+      "hostname": "tenant-c.localai.local",
+      "hostHeader": "tenant-c.localai.local",
+      "gatewayPort": 80,
+      "localPort": 18082,
+      "benchmarkBaseUrl": "http://localhost:18082",
+      "backendServiceName": "localai-server",
+      "backendServicePort": 8080,
+      "routePathPrefix": "/"
+    }
+  ],
+  "benchmarkRouting": {
+    "accessMode": "istio_gateway_routed",
+    "tenantScopedLocalAiPortForwardAllowed": false,
+    "gatewayPortForwardAllowed": true,
+    "gatewayPortForwardTarget": "gateway_service",
+    "baseUrlResolution": "tenant_gateway_profile_or_scenario_benchmark_target",
+    "requiredLocustEnvironmentVariables": [
+      "LOCALAI_HTTP_HOST_HEADER"
+    ],
+    "hostHeaderEnvironmentVariable": "LOCALAI_HTTP_HOST_HEADER",
+    "expectedScenarioTargetFields": [
+      "accessMode",
+      "baseUrl",
+      "hostHeader",
+      "gateway"
+    ],
+    "benchmarkTargetTemplate": {
+      "accessMode": "istio_gateway_routed",
+      "baseUrl": "http://localhost:<tenant-gateway-local-port>",
+      "hostHeader": "<tenant-hostname>",
+      "gateway": {
+        "namespace": "<tenant-namespace>",
+        "serviceName": "localai-gateway-istio",
+        "remotePort": 80
+      }
+    }
+  },
+  "prometheus": {
+    "required": true,
+    "namespace": "observability",
+    "serviceName": "prometheus-stack-kube-prom-prometheus",
+    "port": 9090,
+    "url": "http://prometheus-stack-kube-prom-prometheus.observability:9090",
+    "requiredMetricFamilies": [
+      "istio_requests_total",
+      "istio_request_bytes_sum",
+      "istio_response_bytes_sum"
+    ],
+    "optionalMetricFamilies": [
+      "istio_tcp_sent_bytes_total",
+      "istio_tcp_received_bytes_total",
+      "istio_request_duration_milliseconds_bucket"
+    ],
+    "queries": [
+      {
+        "queryId": "gateway_to_localai_requests",
+        "metricFamily": "istio_requests_total",
+        "promql": "sum by (source_workload_namespace, source_workload, destination_workload_namespace, destination_workload) (rate(istio_requests_total{reporter=\"destination\",destination_workload=\"localai-server\"}[5m]))",
+        "required": true,
+        "minimumSeries": 1
+      },
+      {
+        "queryId": "gateway_to_localai_traffic",
+        "metricFamily": "istio_request_bytes_sum_or_response_bytes_sum",
+        "promql": "sum by (source_workload_namespace, source_workload, destination_workload_namespace, destination_workload) (rate(istio_request_bytes_sum{reporter=\"destination\",destination_workload=\"localai-server\"}[5m]) + rate(istio_response_bytes_sum{reporter=\"destination\",destination_workload=\"localai-server\"}[5m]))",
+        "required": true,
+        "minimumSeries": 1
+      }
+    ]
+  },
+  "validation": {
+    "requireGatewayClass": true,
+    "requireNamespaceLabels": true,
+    "requireGatewayResources": true,
+    "requireHttpRouteResources": true,
+    "requireGatewayService": true,
+    "requireEnvoyMetrics": true,
+    "requireBenchmarkHostHeader": true,
+    "requireBackendServiceName": "localai-server",
+    "requireBackendServicePort": 8080,
+    "waitTimeoutSeconds": 240,
+    "pollIntervalSeconds": 15,
+    "captureGatewayResources": true,
+    "captureHttpRouteResources": true,
+    "captureGatewayService": true,
+    "capturePrometheusQueries": true,
+    "kubectlRetryPolicy": {
+      "enabled": true,
+      "maxAttempts": 5,
+      "delaySeconds": 5,
+      "commandTimeoutSeconds": 45,
+      "retryOnJsonParseError": false
+    }
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/istio",
+    "manifestsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/istio/manifests",
+    "snapshotsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/istio/snapshots",
+    "summariesRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/istio/summaries",
+    "latestManifestPath": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/istio/latest-istio-gateway-manifest.json",
+    "latestSummaryPath": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/istio/latest-istio-gateway-summary.txt",
+    "writeLatestAliases": true,
+    "perVariantOutputRootRequired": true,
+    "perVariantOutputRootPattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/istio"
+  },
+  "decisionPolicy": {
+    "plannedStatus": "planned",
+    "validatedStatus": "validated",
+    "capturedStatus": "captured",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "providerManagedIstio": true,
+    "applyGatewayResourcesThroughApplicationTopology": true,
+    "queryPrometheusByPortForward": true,
+    "allowPrometheusQuerySkipForCaptureOnly": true
+  },
+  "governance": {
+    "installationBoundary": "Istio control-plane components are installed by the infrastructure provider. This profile defines application traffic routing resources and validation evidence only.",
+    "trafficBoundary": "Benchmark traffic must target the tenant gateway endpoint and must not port-forward directly to the LocalAI service when gateway-routed access is selected.",
+    "metricBoundary": "The required Istio metrics are collected from Envoy sidecar and gateway telemetry and are consumed by mon-agent as peer workload annotations.",
+    "runtimeArtifactPolicy": "Istio gateway evidence is stored under the active scenario variant and network-aware-scheduler family runtime root."
+  }
+}

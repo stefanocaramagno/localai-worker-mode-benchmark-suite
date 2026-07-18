@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "istio-gateway-index/v1",
+  "indexId": "ISTIO_GATEWAY_INDEX",
+  "description": "Registry of Istio Gateway API profiles used for gateway-routed LocalAI benchmark traffic.",
+  "defaultProfileId": "IG_LOCALAI_GATEWAY_ROUTED_C9",
+  "profiles": [
+    {
+      "istioGatewayProfileId": "IG_LOCALAI_GATEWAY_ROUTED_C9",
+      "cycleId": "C9",
+      "path": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+      "schemaPath": "config/istio-gateway/schemas/ISTIO_GATEWAY_PROFILE_SCHEMA_V1.json",
+      "status": "active",
+      "role": "gateway_routed_localai_benchmark_access",
+      "gatewayApiVersion": "gateway.networking.k8s.io/v1",
+      "gatewayClassName": "istio",
+      "tenantCountSupported": 3,
+      "accessMode": "istio_gateway_routed",
+      "requiredNamespaceLabels": [
+        "mon-agent/enabled",
+        "istio-injection"
+      ],
+      "requiredMetricFamilies": [
+        "istio_requests_total",
+        "istio_request_bytes_sum",
+        "istio_response_bytes_sum"
+      ]
+    }
+  ],
+  "requirements": {
+    "providerManagedIstioRequired": true,
+    "gatewayApiCrdsRequired": true,
+    "monitoringRequired": true,
+    "monAgentNamespaceSelectionRequired": true,
+    "hostHeaderAwareBenchmarkingRequired": true
+  },
+  "runtimeGeneratedProfilePolicy": {
+    "enabled": false,
+    "profileResolution": "static_profile_with_optional_output_root_override",
+    "perVariantOutputRootPattern": "results/experimental-cycles/<cycleId>/variants/<scenarioId>/network-aware-scheduler/istio"
+  },
+  "governanceRules": [
+    "Istio Gateway API profiles define application routing resources and validation evidence; they do not install Istio control-plane add-ons.",
+    "Gateway-routed benchmarks must use tenant gateway endpoints and host headers instead of tenant-scoped LocalAI service port-forwards.",
+    "Istio traffic metrics must be available before deployment traffic annotations are interpreted."
+  ]
+}

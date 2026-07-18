@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "provisioning-integration-index/v1",
+  "provisioningIntegrationIndexId": "PROVISIONING_INTEGRATION_INDEX",
+  "status": "active",
+  "purpose": "Registry of provider-backed provisioning integration profiles used before cluster validation and application deployment.",
+  "profilesRoot": "config/provisioning/profiles",
+  "schemaPath": "config/provisioning/schemas/PROVISIONING_INTEGRATION_PROFILE_SCHEMA_V1.json",
+  "defaultProfileId": "PI_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "provisioningIntegrationProfileId": "PI_C1_PROVIDER_BACKED_BASELINE",
+      "cycleId": "C1",
+      "profilePath": "config/provisioning/profiles/PI_C1_PROVIDER_BACKED_BASELINE.json",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "providerBindingId": "BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S",
+      "clusterLifecycleMode": "reuse",
+      "destroyClusterAfterCycle": false,
+      "role": "first_provider_backed_baseline_provisioning_profile"
+    }
+  ],
+  "governanceRules": [
+    "Provisioning integration profiles are operational configuration artifacts and must not contain local Proxmox secrets.",
+    "Real provider execution must resolve a local or generated proxmox-k3s configuration file.",
+    "Dry-run execution may use redacted example files for review-only command planning.",
+    "Provider command logs and manifests must be written under the cycle-specific results tree.",
+    "Application deployment and workload execution must not start when provisioning integration fails.",
+    "Runtime campaign variants must be generated from provisioning templates rather than from concrete baseline profiles."
+  ],
+  "templatesRoot": "config/provisioning/templates",
+  "templates": [
+    {
+      "provisioningIntegrationTemplateId": "PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE",
+      "templatePath": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+      "role": "provider_backed_campaign_runtime_provisioning_template",
+      "status": "active_template",
+      "usedFor": "runtime_generated_provider_backed_campaign_variants"
+    }
+  ],
+  "runtimeGeneratedProfilePolicy": {
+    "enabled": true,
+    "generationScope": "provider_backed_campaign_variants",
+    "staticProfilesScope": "concrete_baseline_and_standalone_profiles",
+    "runtimeCycles": [
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6",
+      "C9"
+    ],
+    "templateId": "PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE",
+    "templatePath": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+    "generatedProfilesRootPattern": "results/experimental-cycles/<cycleId>/execution/generated-runtime-configs/<variantId>/",
+    "rationale": "Campaign-variant provisioning profiles are generated from the template to bind each infrastructure profile to its proxmox-k3s provider configuration and lifecycle policy.",
+    "networkAwareSchedulerToolchainScope": "C9 uses runtime-generated provider-backed profiles with proxmox-k3s v1.0.3 add-on support."
+  }
+}

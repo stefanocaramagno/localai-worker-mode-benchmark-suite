@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: localai-server-route
+  labels:
+    localai.benchmark/tenant: tenant-a
+    localai.benchmark/component: istio-httproute
+    localai.benchmark/traffic-access-mode: gateway-routed
+spec:
+  parentRefs:
+    - name: localai-gateway
+  hostnames:
+    - tenant-a.localai.local
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: localai-server
+          port: 8080

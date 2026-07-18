@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "cluster-lifecycle-policies-index/v1",
+  "indexId": "CLUSTER_LIFECYCLE_POLICIES_INDEX",
+  "purpose": "Registry of lifecycle policies controlling whether generated clusters are reused, retained, or deleted after a cycle.",
+  "policiesRoot": "config/infrastructure/lifecycle/policies",
+  "schemasRoot": "config/infrastructure/lifecycle/schemas",
+  "schemaPath": "config/infrastructure/lifecycle/schemas/CLUSTER_LIFECYCLE_POLICY_SCHEMA_V1.json",
+  "defaultProviderBackedPolicyId": "LC_REUSE_RETAIN_CLUSTER",
+  "defaultExternalPolicyId": "LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN",
+  "policies": [
+    {
+      "lifecyclePolicyId": "LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN",
+      "path": "config/infrastructure/lifecycle/policies/LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN.json",
+      "clusterLifecycleMode": "external",
+      "providerId": "external-k3s-cluster",
+      "providerManagedLifecycle": false,
+      "destroyClusterAfterCycleDefault": false,
+      "officialBenchmarkingAllowed": true
+    },
+    {
+      "lifecyclePolicyId": "LC_REUSE_RETAIN_CLUSTER",
+      "path": "config/infrastructure/lifecycle/policies/LC_REUSE_RETAIN_CLUSTER.json",
+      "clusterLifecycleMode": "reuse",
+      "providerId": "proxmox-k3s",
+      "providerManagedLifecycle": true,
+      "destroyClusterAfterCycleDefault": false,
+      "officialBenchmarkingAllowed": true
+    },
+    {
+      "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+      "path": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+      "clusterLifecycleMode": "ephemeral",
+      "providerId": "proxmox-k3s",
+      "providerManagedLifecycle": true,
+      "destroyClusterAfterCycleDefault": true,
+      "officialBenchmarkingAllowed": true
+    }
+  ],
+  "selectionRules": [
+    "Historical or externally managed clusters use LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN.",
+    "Provider-backed baseline cycles use LC_REUSE_RETAIN_CLUSTER unless a clean ephemeral run is explicitly requested.",
+    "Infrastructure variation cycles may use LC_EPHEMERAL_DELETE_CLUSTER when the experiment requires a clean generated cluster per profile."
+  ]
+}

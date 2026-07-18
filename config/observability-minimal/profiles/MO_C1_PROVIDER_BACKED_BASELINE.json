@@ -1,0 +1,243 @@
+{
+  "schemaVersion": "localai-minimal-observability-profile/v1",
+  "minimalObservabilityProfileId": "MO_C1_PROVIDER_BACKED_BASELINE",
+  "profileName": "C1 Provider-Backed Minimal Observability Profile",
+  "profileStatus": "active",
+  "profileRole": "canonical_provider_backed_minimal_observability_profile",
+  "purpose": "Collect and normalize the minimum client-side and Kubernetes-side observability evidence required before benchmark diagnosis and reporting.",
+  "cycleId": "C1",
+  "cycleConfigPath": "config/experimental-cycles/C1.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+  "providerId": "proxmox-k3s",
+  "namespace": "localai-benchmark",
+  "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c1-1cp-2w-8c16g/kubeconfig",
+  "metricSetProfileId": "MS_STANDARD_BENCHMARK_METRICS",
+  "metricSetProfilePath": "config/metric-set/profiles/MS_STANDARD_BENCHMARK_METRICS.json",
+  "clusterCaptureProfileId": "CS_STANDARD_CLUSTER_CAPTURE",
+  "clusterCaptureProfilePath": "config/cluster-capture/profiles/CS_STANDARD_CLUSTER_CAPTURE.json",
+  "applicationDeploymentProfileId": "AD_C1_PROVIDER_BACKED_BASELINE",
+  "applicationDeploymentProfilePath": "config/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+  "placementProfileId": "PL_COLOCATED",
+  "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C1/observability/minimal",
+    "logsRoot": "results/experimental-cycles/C1/observability/minimal/logs",
+    "snapshotsRoot": "results/experimental-cycles/C1/observability/minimal/snapshots",
+    "manifestsRoot": "results/experimental-cycles/C1/observability/minimal/manifests",
+    "summariesRoot": "results/experimental-cycles/C1/observability/minimal/summaries",
+    "latestManifestPath": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-summary.txt",
+    "latestMetricsSnapshotPath": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-metrics.json",
+    "writeLatestAliases": true
+  },
+  "collection": {
+    "defaultStage": "post-deployment",
+    "supportedStages": [
+      "pre-benchmark",
+      "post-deployment",
+      "post-benchmark",
+      "standalone"
+    ],
+    "requiresMetricsServer": true,
+    "kubectlTopRequired": true,
+    "kubectlJsonSnapshotsRequired": true,
+    "commands": [
+      {
+        "name": "nodes_wide",
+        "description": "Node inventory with roles, age, version and internal addresses.",
+        "args": [
+          "get",
+          "nodes",
+          "-o",
+          "wide"
+        ],
+        "outputFile": "nodes-wide.txt",
+        "required": true
+      },
+      {
+        "name": "nodes_json",
+        "description": "Machine-readable node capacity, allocatable resources and labels.",
+        "args": [
+          "get",
+          "nodes",
+          "-o",
+          "json"
+        ],
+        "outputFile": "nodes.json",
+        "required": true
+      },
+      {
+        "name": "top_nodes",
+        "description": "Node CPU and memory snapshots from Metrics API.",
+        "args": [
+          "top",
+          "nodes",
+          "--no-headers"
+        ],
+        "outputFile": "top-nodes.txt",
+        "required": true
+      },
+      {
+        "name": "pods_wide",
+        "description": "Pod placement, readiness, restarts, age and node assignment.",
+        "args": [
+          "get",
+          "pods",
+          "-n",
+          "{namespace}",
+          "-o",
+          "wide"
+        ],
+        "outputFile": "pods-wide.txt",
+        "required": true
+      },
+      {
+        "name": "pods_json",
+        "description": "Machine-readable pod phase, node placement, conditions and restart counts.",
+        "args": [
+          "get",
+          "pods",
+          "-n",
+          "{namespace}",
+          "-o",
+          "json"
+        ],
+        "outputFile": "pods.json",
+        "required": true
+      },
+      {
+        "name": "top_pods",
+        "description": "Pod-level CPU and memory snapshots from Metrics API.",
+        "args": [
+          "top",
+          "pods",
+          "-n",
+          "{namespace}",
+          "--no-headers"
+        ],
+        "outputFile": "top-pods.txt",
+        "required": true
+      },
+      {
+        "name": "top_pods_containers",
+        "description": "Container-level CPU and memory snapshots from Metrics API.",
+        "args": [
+          "top",
+          "pods",
+          "-n",
+          "{namespace}",
+          "--containers",
+          "--no-headers"
+        ],
+        "outputFile": "top-pods-containers.txt",
+        "required": false
+      },
+      {
+        "name": "events",
+        "description": "Namespace event chronology used to identify scheduling, restart and runtime warnings.",
+        "args": [
+          "get",
+          "events",
+          "-n",
+          "{namespace}",
+          "--sort-by=.metadata.creationTimestamp"
+        ],
+        "outputFile": "events.txt",
+        "required": false
+      },
+      {
+        "name": "events_json",
+        "description": "Machine-readable namespace events used for warning counts.",
+        "args": [
+          "get",
+          "events",
+          "-n",
+          "{namespace}",
+          "-o",
+          "json"
+        ],
+        "outputFile": "events.json",
+        "required": false
+      }
+    ]
+  },
+  "clientSideMetrics": {
+    "source": "locust_csv",
+    "measurementCsvPrefixOptional": true,
+    "requestTargetType": "POST",
+    "requestTargetName": "POST /v1/chat/completions",
+    "fallbackToAggregated": true,
+    "metrics": [
+      "request_count",
+      "failure_count",
+      "success_rate_percent",
+      "mean_response_time_ms",
+      "p50_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps"
+    ],
+    "requiredArtifacts": [
+      "_stats.csv",
+      "_failures.csv",
+      "_exceptions.csv",
+      "_stats_history.csv"
+    ]
+  },
+  "clusterSideMetrics": {
+    "source": "k3s_metrics_server_and_kubectl",
+    "metrics": [
+      "max_node_cpu_percent",
+      "max_node_memory_percent",
+      "max_pod_cpu_millicores",
+      "max_pod_memory_mib",
+      "pod_placement",
+      "pod_restart_count",
+      "pending_pods_count",
+      "failed_pods_count",
+      "not_ready_pods_count",
+      "kubernetes_events_count",
+      "kubernetes_warning_events_count"
+    ],
+    "resourceParsingPolicy": {
+      "cpuUnit": "millicores",
+      "memoryUnit": "MiB",
+      "nodeCpuMemoryPercentFromKubectlTopNodes": true,
+      "podCpuMemoryFromKubectlTopPods": true
+    }
+  },
+  "gates": {
+    "requireClusterValidationBeforeCollection": true,
+    "latestClusterValidationManifestPath": "results/experimental-cycles/C1/infrastructure/validation/latest-cluster-validation-manifest.json",
+    "acceptedClusterValidationStatuses": [
+      "validated"
+    ],
+    "requireCanProceedToApplicationDeployment": true,
+    "requireApplicationDeploymentBeforePostDeploymentCollection": true,
+    "latestApplicationDeploymentManifestPath": "results/experimental-cycles/C1/application/deployment/latest-localai-deployment-manifest.json",
+    "acceptedApplicationDeploymentStatuses": [
+      "deployed",
+      "smoke_validated"
+    ],
+    "requireCanProceedToBenchmark": true,
+    "dryRunBypassesGates": true
+  },
+  "decisionPolicy": {
+    "passedStatus": "observability_collected",
+    "dryRunStatus": "dry_run",
+    "partialStatus": "collected_with_warnings",
+    "failedStatus": "failed",
+    "stopBeforeDiagnosisWhenFailed": true,
+    "allowMissingClientCsvWhenNoMeasurementPrefix": true,
+    "allowNonRequiredKubectlCommandFailure": true
+  },
+  "governance": {
+    "minimalObservabilityBoundary": "Minimal observability evidence is collected from K3s, metrics-server, kubectl snapshots and Locust artifacts.",
+    "documentationPolicy": "This profile is operational configuration and not project documentation.",
+    "comparisonPolicy": "Every metric snapshot must be tied to a cycle, infrastructure profile, application deployment profile and placement profile.",
+    "unsupportedScenarioPolicy": "Pending pods, failed pods, scheduling warnings and missing resource snapshots must be preserved as evidence rather than discarded."
+  }
+}

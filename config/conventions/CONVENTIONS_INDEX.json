@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "run_convention-index/v1",
+  "defaultRunConventionProfileId": "RC_STANDARD_RUN_CONVENTION",
+  "runConventionProfiles": [
+    {
+      "runConventionId": "RC_STANDARD_RUN_CONVENTION",
+      "profilePath": "config/conventions/profiles/RC_STANDARD_RUN_CONVENTION.json",
+      "profileType": "run_convention",
+      "description": "All load-test launcher scripts must generate run identifiers and run manifests through the shared helper so that each execution is uniquely traceable and directly comparable."
+    }
+  ]
+}

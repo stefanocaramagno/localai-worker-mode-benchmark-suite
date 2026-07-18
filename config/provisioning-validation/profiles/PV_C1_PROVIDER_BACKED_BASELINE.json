@@ -1,0 +1,127 @@
+{
+  "profileId": "PV_C1_PROVIDER_BACKED_BASELINE",
+  "profileName": "Proxmox K3s Provider-Backed Baseline Cluster Validation",
+  "description": "Standalone provisioning validation profile for the C1 provider-backed K3s cluster generated through the proxmox-k3s provisioning tool before running LocalAI benchmark workloads.",
+  "scope": {
+    "phase": "provider_backed_cluster_validation",
+    "tool": "proxmox-k3s",
+    "purpose": "Validate the C1 provider-backed K3s cluster after provisioning and kubeconfig refresh, before LocalAI deployment and benchmark execution.",
+    "outOfScope": [
+      "LocalAI deployment",
+      "Locust benchmark execution",
+      "technical diagnosis generation",
+      "reporting generation",
+      "completion gate evaluation"
+    ]
+  },
+  "provisioning": {
+    "expectedToolCommand": "proxmox-k3s",
+    "localConfigTemplatePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c1-1cp-2w-8c16g.example.yaml",
+    "recommendedLocalConfigPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c1-1cp-2w-8c16g.local.yaml",
+    "recommendedKubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c1-1cp-2w-8c16g/kubeconfig",
+    "sensitiveConfigPolicy": "Do not version real proxmox-k3s configuration files containing Proxmox API tokens. Keep only redacted example YAML files under version control.",
+    "providerBindingId": "BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S",
+    "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "providerBindingsIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "provisioningIntegrationProfileId": "PI_C1_PROVIDER_BACKED_BASELINE",
+    "provisioningIntegrationProfilePath": "config/provisioning/profiles/PI_C1_PROVIDER_BACKED_BASELINE.json",
+    "provisioningIntegrationIndexPath": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json"
+  },
+  "expectedCluster": {
+    "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+    "nodeNamingConventionId": "GENAI_PB_REUSABLE_NODE_NAMING_V1",
+    "expectedControlPlaneNodes": [
+      "genai-pb-cp-01"
+    ],
+    "expectedWorkerNodes": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02"
+    ],
+    "expectedWorkerLabelSelector": "nodepool=workers",
+    "minimumReadyNodes": 3,
+    "requireAllExpectedNodesReady": true,
+    "requireK3sDistribution": true,
+    "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json"
+  },
+  "kubeSystemChecks": {
+    "namespace": "kube-system",
+    "requiredRunningPodNamePrefixes": [
+      "coredns",
+      "local-path-provisioner",
+      "metrics-server"
+    ],
+    "requireStorageClass": true,
+    "requireMetricsApi": true,
+    "allowMetricsApiWarning": false
+  },
+  "output": {
+    "defaultOutputRoot": "results/experimental-cycles/C1/infrastructure/validation",
+    "writeLatestAliases": true,
+    "jsonSuffix": "validation.json",
+    "textSuffix": "validation.txt",
+    "markdownSuffix": "validation.md",
+    "latestJsonPath": "results/experimental-cycles/C1/infrastructure/validation/latest-validation.json",
+    "latestTextPath": "results/experimental-cycles/C1/infrastructure/validation/latest-validation.txt",
+    "latestMarkdownPath": "results/experimental-cycles/C1/infrastructure/validation/latest-validation.md"
+  },
+  "decisionPolicy": {
+    "passedStatus": "validated",
+    "failedStatus": "failed",
+    "warningStatus": "validated_with_warnings",
+    "minimumRequiredOutcomeBeforeBenchmarking": "validated",
+    "acceptedStatusesBeforeApplicationDeployment": [
+      "validated"
+    ],
+    "blockApplicationDeploymentUnlessStatusIn": [
+      "validated"
+    ]
+  },
+  "clusterLifecycle": {
+    "lifecyclePolicyId": "LC_REUSE_RETAIN_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_REUSE_RETAIN_CLUSTER.json",
+    "clusterLifecycleMode": "reuse",
+    "destroyClusterAfterCycleDefault": false,
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "lifecycleManifestRequired": true,
+    "lifecycleArtifactRoot": "results/experimental-cycles/C1/infrastructure/lifecycle"
+  },
+  "preValidationGate": {
+    "providerConfigResolvedRequired": true,
+    "providerBackedProvisioningManifestRequired": true,
+    "kubeconfigVerificationRequired": true,
+    "minimumProvisioningIntegrationStatus": "completed",
+    "provisioningIntegrationLatestManifestPath": "results/experimental-cycles/C1/infrastructure/provisioning/latest-provisioning-integration-manifest.json"
+  },
+  "schemaVersion": "proxmox-k3s-cluster-validation-profile/v1",
+  "profileRole": "provider_backed_baseline_low_level_cluster_validation",
+  "clusterValidation": {
+    "clusterValidationProfileId": "CV_C1_PROVIDER_BACKED_BASELINE",
+    "clusterValidationProfilePath": "config/cluster-validation/profiles/CV_C1_PROVIDER_BACKED_BASELINE.json",
+    "clusterValidationIndexPath": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+    "requiredBeforeApplicationDeployment": true
+  },
+  "validationChecks": {
+    "requireKubectlAvailable": true,
+    "requireKubeconfigExists": true,
+    "requireKubeconfigNonEmpty": true,
+    "requireApiServerReachable": true,
+    "requireExpectedNodesPresent": true,
+    "requireExpectedNodesReady": true,
+    "requireControlPlaneRoleLabels": true,
+    "requireWorkersNotControlPlane": true,
+    "requireExpectedWorkerLabels": true,
+    "captureNodeCapacityAndAllocatable": true,
+    "captureKubeSystemPodReadiness": true,
+    "requireKubeSystemCorePodsReady": true,
+    "requireStorageClass": true,
+    "requireMetricsApi": true
+  },
+  "profileGovernance": {
+    "scope": "provider_backed_baseline",
+    "cycleId": "C1",
+    "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+    "providerId": "proxmox-k3s",
+    "status": "active",
+    "pathRole": "concrete_profile"
+  }
+}

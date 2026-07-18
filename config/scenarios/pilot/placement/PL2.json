@@ -1,0 +1,33 @@
+{
+  "scenarioId": "PL2",
+  "purpose": "Historical compatibility placement scenario for distributed two-node LocalAI RPC worker placement.",
+  "placementType": "distributed",
+  "outputSubdir": "PL2_distributed_two_node",
+  "referenceBaselineId": "B0",
+  "topologyDir": "infra/k8s/compositions/topology/distributed-two-node-w2",
+  "notes": "Placement-only variation anchored to the historical baseline. This scenario now resolves to the explicit PL_DISTRIBUTED_TWO_NODE placement profile while preserving the original distributed two-node worker topology and keeping model, worker count, workload, prompt, temperature, and request timeout fixed.",
+  "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+  "placementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+  "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+  "compatiblePlacementProfileAliases": [
+    "PL_SPREAD_WORKERS"
+  ],
+  "selectorPolicy": "stable_node_name_compatibility",
+  "expectedServerNode": "sc-app-02",
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "sc-app-01",
+    "localai-rpc-b": "sc-app-02"
+  },
+  "placementResearchQuestion": "Does spreading RPC workers across two nodes reduce local resource contention enough to compensate for the additional inter-node communication path?",
+  "status": "legacy_historical_compatibility",
+  "legacyScenarioId": "PL2",
+  "canonicalPlacementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+  "canonicalPlacementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+  "canonicalNamingPolicy": "Use placementProfileId for provider-backed cycles; keep PL1/PL2 only for historical fixed-cluster and legacy pilot compatibility.",
+  "supersededByPlacementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+  "profileResolutionMode": "legacy_scenario_to_canonical_placement_profile_alias",
+  "scenarioProfileId": "PL2",
+  "scenarioProfileName": "Historical compatibility placement scenario for distributed two-node LocalAI RPC worker placement.",
+  "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+  "scenarioProfileSchemaVersion": "1.0"
+}

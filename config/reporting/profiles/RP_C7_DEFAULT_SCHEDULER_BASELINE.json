@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "profileId": "RP_C7_DEFAULT_SCHEDULER_BASELINE",
+  "reportingProfileId": "RP_C7_DEFAULT_SCHEDULER_BASELINE",
+  "profileName": "C7 Default Scheduler Baseline Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_default_scheduler_baseline_reporting",
+  "description": "Reporting profile for the provider-backed Kubernetes default-scheduler baseline campaign.",
+  "cycleId": "C7",
+  "cycleConfigPath": "config/experimental-cycles/C7.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C7/diagnosis",
+  "outputRoot": "results/experimental-cycles/C7/reporting",
+  "reportTitle": "C7 — Default Kubernetes Scheduler Baseline Report",
+  "reportPurposeMarkdown": "This report summarizes the default-scheduler baseline campaign for distributed LocalAI tenant workloads. It combines performance measurements, tenant-level traffic evidence, runtime pod-to-node placement, placement classification and technical diagnosis context to determine whether Kubernetes default scheduling produces adequate or suboptimal placements under multi-tenancy, latency injection, variable worker-node count and differentiated tenant traffic.",
+  "familyOrder": [
+    "default-scheduler"
+  ],
+  "familyDisplayNames": {
+    "default-scheduler": "Default Kubernetes Scheduler Baseline"
+  },
+  "scenarioConfigRoots": {
+    "default-scheduler": "config/scenarios/default-scheduler"
+  },
+  "scenarioConfigFiles": {
+    "default-scheduler": [
+      "config/scenarios/default-scheduler/DS_1T_2N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_2N_L1_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_4N_L1_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_3N_L1_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_3N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_3N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_1T_4N_L2_UNIFORM_M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L2_UNIFORM_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_2N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_3T_4N_L0_UNIFORM_M1M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_3T_4N_L1_UNIFORM_M1M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L0_UNIFORM_M1M2_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L1_UNIFORM_M1M2_W2.json",
+      "config/scenarios/default-scheduler/DS_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "default-scheduler": "results/experimental-cycles/C7/benchmark/default-scheduler"
+  },
+  "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C7/scheduler",
+  "schedulerDecisionEvidenceArtifactName": "default-scheduler-decision-evidence.json",
+  "multiTenantSummaryArtifactName": "multi-tenant-summary.json",
+  "referenceScenarioByFamily": {
+    "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+  },
+  "variedDimensionByFamily": {
+    "default-scheduler": "tenant count, worker-node count, latency profile, tenant traffic profile, model mix"
+  },
+  "fixedDimensionsByFamily": {
+    "default-scheduler": [
+      "application=LocalAI worker-mode",
+      "scheduler=Kubernetes default scheduler",
+      "hard-placement-controls=disabled",
+      "worker-count-per-tenant=W2",
+      "worker capacity=8 vCPU / 16 GiB / 35 GiB per worker node",
+      "request target=POST /v1/chat/completions"
+    ]
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "archiveDirectoryName": "archive",
+  "providerAwareContext": {
+    "cycleConfigPath": "config/experimental-cycles/C7.json",
+    "provisioningManifestPath": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "latencyInjectionManifestPath": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C7/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C7/benchmark/default-scheduler"
+  },
+  "notes": [
+    "C7 reports runtime default-scheduler behavior; pod placement must be interpreted from captured scheduler evidence rather than from predefined node assignments.",
+    "Tenant-level metrics are reported separately because differentiated traffic can affect tenants asymmetrically.",
+    "Unsupported scenarios are retained as infrastructure, scheduling or capacity-boundary evidence and are not interpreted as measured latency regressions.",
+    "Comparative claims should combine performance metrics with placement classification, latency profile and resource-pressure evidence."
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisProfileId": "TD_C7_DEFAULT_SCHEDULER_BASELINE",
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+  "reportingContext": {
+    "campaignType": "default_scheduler_baseline",
+    "primaryQuestion": "Whether Kubernetes default scheduling produces adequate or suboptimal placements for distributed LocalAI tenant workloads under multi-tenancy, latency injection, variable worker-node count and differentiated tenant traffic.",
+    "fixedDimensions": [
+      "application=LocalAI worker-mode",
+      "scheduler=Kubernetes default scheduler",
+      "hard-placement-controls=disabled",
+      "worker-count-per-tenant=W2",
+      "request target=POST /v1/chat/completions"
+    ],
+    "variedDimensions": [
+      "tenant count",
+      "worker-node count",
+      "latency profile",
+      "tenant traffic profile",
+      "model mix"
+    ]
+  },
+  "reportingIdPrefix": "REP_C7",
+  "infrastructureSummaryMode": "scenario_variant_scoped",
+  "infrastructureProfileScope": "scenario_variant",
+  "infrastructureSummarySemantics": {
+    "scope": "scenario",
+    "interpretation": "Infrastructure is scenario-scoped because C7 varies the number of provider worker nodes."
+  },
+  "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+  "defaultSchedulerReporting": {
+    "enabled": true,
+    "schedulerDecisionEvidenceRequired": true,
+    "multiTenantSummaryRequired": true,
+    "tenantLevelMetricsRequired": true,
+    "placementClassificationRequired": true,
+    "negativeEvidenceRequiredForSuboptimalPlacementClaims": true,
+    "placementCategoriesOfInterest": [
+      "server_worker_colocated",
+      "server_worker_split",
+      "tenant_interference_risk",
+      "fully_spread",
+      "resource_contention_risk",
+      "latency_sensitive_split",
+      "default_scheduler_unclassified"
+    ],
+    "criticalPlacementCategories": [
+      "latency_sensitive_split",
+      "missing_server_pod",
+      "missing_worker_pods",
+      "unscheduled_pods"
+    ],
+    "warningPlacementCategories": [
+      "server_worker_split",
+      "tenant_interference_risk",
+      "resource_contention_risk",
+      "server_worker_partially_colocated"
+    ]
+  }
+}

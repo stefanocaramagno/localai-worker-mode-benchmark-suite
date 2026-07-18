@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "PILOT_CONSOLIDATION_PROFILE_SCHEMA_V1.json",
+  "title": "Pilot consolidation profiles profile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "profileId",
+    "description",
+    "outputRoot",
+    "campaignManifestSuffix",
+    "campaignTextSuffix",
+    "stopOnFirstFailure",
+    "precheckConfig",
+    "phaseConfig",
+    "protocolConfig",
+    "clusterCaptureConfig",
+    "metricSetConfig",
+    "statisticalRigorConfig",
+    "warmUpDuration",
+    "measurementDuration",
+    "families"
+  ],
+  "properties": {
+    "profileId": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "outputRoot": {
+      "type": "string"
+    },
+    "campaignManifestSuffix": {
+      "type": "string"
+    },
+    "campaignTextSuffix": {
+      "type": "string"
+    },
+    "stopOnFirstFailure": {
+      "type": "boolean"
+    },
+    "precheckConfig": {
+      "type": "string"
+    },
+    "phaseConfig": {
+      "type": "string"
+    },
+    "protocolConfig": {
+      "type": "string"
+    },
+    "clusterCaptureConfig": {
+      "type": "string"
+    },
+    "metricSetConfig": {
+      "type": "string"
+    },
+    "statisticalRigorConfig": {
+      "type": "string"
+    },
+    "warmUpDuration": {
+      "type": "string"
+    },
+    "measurementDuration": {
+      "type": "string"
+    },
+    "families": {
+      "type": "object"
+    },
+    "launcherResolutionPolicy": {
+      "type": "object"
+    }
+  }
+}

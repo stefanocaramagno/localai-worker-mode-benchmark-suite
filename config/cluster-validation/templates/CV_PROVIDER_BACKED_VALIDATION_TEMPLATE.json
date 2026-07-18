@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "cluster-validation-profile/v1",
+  "clusterValidationProfileId": "CV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+  "profileName": "Provider-Backed Runtime Cluster Validation Template",
+  "profileStatus": "template",
+  "profileRole": "provider_backed_runtime_cluster_validation_template",
+  "purpose": "Template used to generate variant-specific cluster validation profiles for provider-backed campaign executions.",
+  "cycleId": "__CYCLE_ID__",
+  "cycleConfigPath": "__CYCLE_CONFIG_PATH__",
+  "infrastructureProfileId": "__INFRASTRUCTURE_PROFILE_ID__",
+  "infrastructureProfilePath": "__INFRASTRUCTURE_PROFILE_PATH__",
+  "providerId": "proxmox-k3s",
+  "providerBindingId": "__PROVIDER_BINDING_ID__",
+  "providerBindingPath": "__PROVIDER_BINDING_PATH__",
+  "provisioningIntegrationProfileId": "__PI_PROFILE_ID__",
+  "provisioningIntegrationProfilePath": "__PI_PROFILE_PATH__",
+  "provisioningValidationProfilePath": "__PV_PROFILE_PATH__",
+  "kubeconfigPath": "__KUBECONFIG_PATH__",
+  "preValidationGate": {
+    "enabled": true,
+    "requireLatestProvisioningIntegrationManifest": true,
+    "latestProvisioningIntegrationManifestPath": "__PROVISIONING_ROOT__/latest-provisioning-integration-manifest.json",
+    "acceptedProvisioningStatuses": [
+      "completed"
+    ],
+    "acceptedProvisioningActions": [
+      "provision",
+      "kubeconfig"
+    ],
+    "requireKubeconfigVerificationStatus": "verified",
+    "allowBypassWithExplicitFlag": true,
+    "dryRunBypassesGate": true,
+    "failureBehavior": "stop_before_kubectl_validation"
+  },
+  "validationExecution": {
+    "runner": "scripts/infrastructure/validation/run-provider-backed-cluster-validation.py",
+    "lowLevelValidator": "scripts/infrastructure/validation/validate-proxmox-k3s-cluster.py",
+    "powershellWrapper": "scripts/infrastructure/validation/Start-ProviderBackedClusterValidation.ps1",
+    "bashWrapper": "scripts/infrastructure/validation/start-provider-backed-cluster-validation.sh",
+    "cycleLauncherPowerShell": "scripts/experimental-cycles/Start-ExperimentalCycle.ps1",
+    "cycleLauncherBash": "scripts/experimental-cycles/start-experimental-cycle.sh"
+  },
+  "artifactPolicy": {
+    "root": "__VALIDATION_ROOT__",
+    "logsRoot": "__VALIDATION_ROOT__/logs",
+    "manifestsRoot": "__VALIDATION_ROOT__/manifests",
+    "latestManifestPath": "__VALIDATION_ROOT__/latest-cluster-validation-manifest.json",
+    "latestTextSummaryPath": "__VALIDATION_ROOT__/latest-cluster-validation-summary.txt",
+    "latestRawValidationJsonPath": "__VALIDATION_ROOT__/latest-validation.json",
+    "latestRawValidationTextPath": "__VALIDATION_ROOT__/latest-validation.txt",
+    "writeLatestAliases": true
+  },
+  "decisionPolicy": {
+    "passedStatus": "validated",
+    "warningStatus": "validated_with_warnings",
+    "failedStatus": "failed",
+    "dryRunStatus": "dry_run",
+    "minimumRequiredOutcomeBeforeApplicationDeployment": "validated",
+    "acceptedStatusesBeforeApplicationDeployment": [
+      "validated"
+    ],
+    "stopBeforeApplicationDeploymentOnFailure": true,
+    "warningsDoNotPermitApplicationDeploymentByDefault": true
+  },
+  "executionGuards": {
+    "dryRunSupported": true,
+    "realExecutionRequiresKubeconfig": true,
+    "realExecutionRequiresKubectl": true,
+    "realExecutionRequiresProvisioningManifestByDefault": true,
+    "allowMetricsWarningOverride": true,
+    "stopBeforeLocalAiDeploymentOnValidationFailure": true
+  },
+  "governance": {
+    "providerToolBoundary": "Cluster validation consumes the kubeconfig produced by the provider workflow but does not modify proxmox-k3s.",
+    "documentationPolicy": "This profile is operational configuration and not project documentation.",
+    "comparisonPolicy": "Cluster validation artifacts must be retained under the cycle-specific results tree before application deployment and benchmark execution.",
+    "templatePolicy": "This file is a generation template. Runtime campaign variants must materialize concrete cluster validation profiles from it before execution."
+  },
+  "applicationDeployment": {
+    "applicationDeploymentProfileId": "__AD_PROFILE_ID__",
+    "applicationDeploymentProfilePath": "__AD_PROFILE_PATH__",
+    "requiredAfterSuccessfulValidation": true,
+    "runner": "scripts/application/deployment/run-provider-backed-localai-deployment.py"
+  },
+  "downstreamConsumers": {
+    "minimalObservabilityProfileId": "__MO_PROFILE_ID__",
+    "minimalObservabilityProfilePath": "__MO_PROFILE_PATH__",
+    "reason": "Minimal observability consumes the validated kubeconfig, Metrics API and Kubernetes snapshots after the cluster validation gate passes."
+  },
+  "expectedCluster": {
+    "expectedManagementNodes": [],
+    "expectedManagementLabelSelector": "",
+    "expectedManagementTaints": []
+  }
+}

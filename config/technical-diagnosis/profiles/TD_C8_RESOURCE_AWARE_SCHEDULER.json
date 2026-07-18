@@ -1,0 +1,181 @@
+{
+  "technicalDiagnosisProfileId": "TD_C8_RESOURCE_AWARE_SCHEDULER",
+  "profileId": "TD_C8_RESOURCE_AWARE_SCHEDULER",
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "profileName": "C8 Resource-Aware Scheduler Technical Diagnosis Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_resource_aware_scheduler_technical_diagnosis",
+  "description": "Technical diagnosis profile for the provider-backed resource-aware-scheduler campaign.",
+  "cycleId": "C8",
+  "cycleConfigPath": "config/experimental-cycles/C8.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "validationSummaryRelativePath": "results/experimental-cycles/C1/diagnosis/C1_regeneration_diagnosis_all_diagnosis.json",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "familyOrder": [
+    "resource-aware-scheduler"
+  ],
+  "scenarioConfigRoots": {
+    "resource-aware-scheduler": "config/scenarios/resource-aware-scheduler"
+  },
+  "scenarioConfigFiles": {
+    "resource-aware-scheduler": [
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "resource-aware-scheduler": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler"
+  },
+  "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C8/scheduler",
+  "schedulerDecisionEvidenceArtifactName": "resource-aware-scheduler-decision-evidence.json",
+  "multiTenantSummaryArtifactName": "multi-tenant-summary.json",
+  "referenceScenarioByFamily": {
+    "resource-aware-scheduler": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "resource-aware-scheduler": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json"
+  },
+  "referenceScenarioId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+  "outputRoot": "results/experimental-cycles/C8/diagnosis",
+  "familyScope": "all",
+  "expectedFamilies": [
+    "resource-aware-scheduler"
+  ],
+  "families": [
+    "resource-aware-scheduler"
+  ],
+  "minimumScenarioSamples": 1,
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "acceptUnsupportedScenariosAsObserved": true,
+  "minimumUnsupportedReplicasPerScenario": 1,
+  "fixedDimensionsByFamily": {
+    "resource-aware-scheduler": [
+      "application=LocalAI worker-mode",
+      "worker-count-per-tenant=W2",
+      "scheduler-mode=paired default and load-aware",
+      "hard-placement-controls=disabled",
+      "latency-injection=disabled"
+    ]
+  },
+  "variedDimensionByFamily": {
+    "resource-aware-scheduler": "scheduler mode, tenant count, worker-node count, tenant traffic profile and model mix"
+  },
+  "familyDisplayNames": {
+    "resource-aware-scheduler": "C8 Resource-Aware Scheduler"
+  },
+  "campaignAwareDiagnosis": {
+    "enabled": true,
+    "campaignExecutionManifest": "results/experimental-cycles/C8/execution/latest-campaign-execution-manifest.json",
+    "variantEvidenceRoot": "results/experimental-cycles/C8/variants",
+    "retainUnsupportedScenarioEvidence": true,
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C8/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler"
+  },
+  "interpretationPolicy": {
+    "minimumMeasuredVariantsForComparativeClaims": 2,
+    "treatUnsupportedAsEvidence": true,
+    "treatSchedulerNegativeEvidenceAsPrimaryEvidence": true,
+    "avoidOverstatingWeakSignals": true,
+    "primaryQuestion": "Whether the load-aware custom scheduler produces better resource-aware placement evidence or better performance than Kubernetes default scheduling under paired L0 LocalAI worker-mode scenarios.",
+    "latencyInjectionPolicy": "Latency injection is out of scope for this resource-aware-scheduler diagnosis; only L0_NONE scenarios are interpreted."
+  },
+  "defaultSchedulerBaseline": {
+    "referenceScenarioId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+    "scenarioOrdering": [
+      "DS_1T_2N_L0_UNIFORM_M1_W2",
+      "DS_1T_2N_L1_UNIFORM_M1_W2",
+      "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+      "DS_1T_4N_L1_UNIFORM_M1_W2",
+      "DS_2T_2N_L0_UNIFORM_M1M1_W2",
+      "DS_2T_2N_L1_UNIFORM_M1M1_W2",
+      "DS_2T_4N_L0_UNIFORM_M1M1_W2",
+      "DS_2T_4N_L1_UNIFORM_M1M1_W2",
+      "DS_2T_2N_L0_DIFFERENTIATED_M1M1_W2",
+      "DS_2T_2N_L1_DIFFERENTIATED_M1M1_W2",
+      "DS_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+      "DS_2T_4N_L1_DIFFERENTIATED_M1M1_W2",
+      "DS_1T_3N_L1_UNIFORM_M1_W2",
+      "DS_2T_3N_L1_UNIFORM_M1M1_W2",
+      "DS_2T_3N_L1_DIFFERENTIATED_M1M1_W2",
+      "DS_1T_4N_L2_UNIFORM_M1_W2",
+      "DS_2T_4N_L2_UNIFORM_M1M1_W2",
+      "DS_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+      "DS_2T_2N_L2_DIFFERENTIATED_M1M1_W2",
+      "DS_3T_4N_L0_UNIFORM_M1M1M1_W2",
+      "DS_3T_4N_L1_UNIFORM_M1M1M1_W2",
+      "DS_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2",
+      "DS_2T_4N_L0_UNIFORM_M1M2_W2",
+      "DS_2T_4N_L1_UNIFORM_M1M2_W2",
+      "DS_2T_4N_L1_DIFFERENTIATED_M1M2_W2"
+    ],
+    "minimumMeasuredVariantsForPerformanceComparison": 2,
+    "requiredEvidenceArtifacts": [
+      "resource-aware-scheduler-decision-evidence.json",
+      "multi-tenant-summary.json"
+    ],
+    "placementCategoriesOfInterest": [
+      "server_worker_colocated",
+      "server_worker_split",
+      "tenant_interference_risk",
+      "fully_spread",
+      "resource_contention_risk",
+      "resource_aware_scheduler_unclassified"
+    ],
+    "criticalPlacementCategories": [
+      "missing_server_pod",
+      "missing_worker_pods",
+      "unscheduled_pods"
+    ],
+    "warningPlacementCategories": [
+      "server_worker_split",
+      "tenant_interference_risk",
+      "resource_contention_risk",
+      "server_worker_partially_colocated"
+    ],
+    "trafficDifferentiationProfiles": [
+      "TR_2T_DIFFERENTIATED_LOW",
+      "TR_3T_DIFFERENTIATED_LOW"
+    ],
+    "latencyProfilesOfInterest": [
+      "L0_NONE"
+    ],
+    "interpretation": "Measured variants are interpreted together with scheduler-decision evidence, CPU/memory annotations, tenant traffic and resource-balance signals. Latency injection is intentionally excluded from the C8 resource-aware resource-aware scheduler."
+  },
+  "schedulerModePairwiseDiagnosis": {
+    "enabled": true,
+    "family": "resource-aware-scheduler",
+    "pairingKey": "logicalScenarioId",
+    "defaultRoleValue": "default",
+    "loadAwareRoleValue": "loadaware",
+    "latencyImprovementThresholdPercent": -5.0,
+    "latencyRegressionThresholdPercent": 5.0,
+    "throughputImprovementThresholdPercent": 5.0,
+    "throughputRegressionThresholdPercent": -5.0,
+    "resourceBalanceMetrics": [
+      "maxNodeCpuPercentObserved",
+      "maxNodeMemoryPercentObserved"
+    ]
+  }
+}

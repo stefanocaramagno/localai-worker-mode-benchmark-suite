@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C2 — Resource Variation Sweep Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 1180px; margin: 32px auto; line-height: 1.5; padding: 0 24px; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 28px; font-size: 14px; display: block; overflow-x: auto; }
+    th, td { border: 1px solid #d0d0d0; padding: 7px 9px; vertical-align: top; }
+    th { background: #f2f2f2; }
+    code { background: #f6f6f6; padding: 1px 4px; }
+    img { max-width: 100%; border: 1px solid #e0e0e0; margin: 8px 0 24px; }
+    blockquote { border-left: 4px solid #999; padding-left: 12px; color: #333; }
+    a { color: #0645ad; }
+  </style>
+</head>
+<body>
+<h1>C2 — Resource Variation Sweep Report</h1>
+<p><strong>Cycle ID:</strong> <code>C2</code></p>
+<p><strong>Sweep:</strong> <code>resource-variation</code></p>
+<p><strong>Reporting Profile:</strong> <code>RP_C2_RESOURCE_VARIATION</code></p>
+<p><strong>Reporting ID:</strong> <code>REP_C2_20260619T174611Z</code></p>
+<p><strong>Generated at UTC:</strong> <code>2026-06-19T17:46:38Z</code></p>
+<p><a href="../../index.html">Back to cycle report</a></p>
+<h2>Scope</h2>
+<p>This sweep-specific report isolates <strong>Resource Variation</strong> so that the varied dimension, fixed dimensions, measured values, unsupported evidence and diagnosis-based reading can be inspected without navigating the full consolidated report.</p>
+<h2>Resource Variation</h2>
+<p><strong>Execution status:</strong> <code>partially_measured</code></p>
+<p><strong>Execution note:</strong> At least one configured scenario has measured benchmark samples, while other scenarios are missing or unsupported.</p>
+<p><strong>Varied dimension:</strong> worker CPU and memory capacity</p>
+<p><strong>Fixed dimensions:</strong> model=M1, workload=WL2, LocalAI worker count=W2, placement=PL_COLOCATED, request payload.</p>
+<p><strong>Reference scenario within the sweep:</strong> <code>RV_8C16G</code></p>
+<table>
+<thead><tr><th>Scenario count</th><th>Measured</th><th>Unsupported</th><th>Missing</th></tr></thead><tbody>
+<tr><td>3</td><td>1</td><td>2</td><td>0</td></tr>
+</tbody></table>
+<h3>Controlled scenario parameters</h3>
+<p>This table is derived from resolved scenario metadata. A parameter is marked as controlled only when it has the same effective value across all scenarios in the sweep.</p>
+<table>
+<thead><tr><th>Parameter</th><th>Resolved value</th><th>Interpretation</th></tr></thead><tbody>
+<tr><td>Model</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>controlled</td></tr>
+<tr><td>Worker count</td><td>2</td><td>controlled</td></tr>
+<tr><td>Placement</td><td>colocated_genai_pb_worker_02</td><td>controlled</td></tr>
+<tr><td>Workload</td><td>users=2, spawnRate=1, runTime=2m</td><td>controlled</td></tr>
+<tr><td>Topology</td><td>infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w2</td><td>controlled</td></tr>
+<tr><td>Server manifest</td><td>infra/k8s/compositions/server/models/m1-provider-backed</td><td>controlled</td></tr>
+<tr><td>Prompt</td><td>Reply with only READY.</td><td>controlled</td></tr>
+<tr><td>Temperature</td><td>0.1</td><td>controlled</td></tr>
+<tr><td>Request timeout (s)</td><td>120</td><td>controlled</td></tr>
+</tbody></table>
+<h3>Scenario parameter matrix</h3>
+<table>
+<thead><tr><th>Scenario</th><th>Status</th><th>Varied value (worker CPU and memory capacity)</th><th>Model</th><th>Worker count</th><th>Placement</th><th>Workload</th><th>Timeout (s)</th></tr></thead><tbody>
+<tr><td><code>RV_4C16G</code></td><td>unsupported_under_current_constraints</td><td>4 vCPU / 16 GiB per worker</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>2</td><td>colocated_genai_pb_worker_02</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>RV_4C8G</code></td><td>unsupported_under_current_constraints</td><td>4 vCPU / 8 GiB per worker</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>2</td><td>colocated_genai_pb_worker_02</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+<tr><td><code>RV_8C16G</code></td><td>measured</td><td>8 vCPU / 16 GiB per worker</td><td>llama-3.2-1b-instruct:q4_k_m</td><td>2</td><td>colocated_genai_pb_worker_02</td><td>users=2, spawnRate=1, runTime=2m</td><td>120</td></tr>
+</tbody></table>
+<h3>Measurement summary</h3>
+<p>This compact table reports the core indicators used to read the sweep at a glance. Detailed percentiles, deltas and resource snapshots are reported in the following extended table.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Description</th><th>Status</th><th>Sample count</th><th>Mean response time (ms)</th><th>P95 response time (ms)</th><th>Throughput (requests/s)</th><th>Unsupported evidence</th></tr></thead><tbody>
+<tr><td><code>RV_4C16G</code></td><td>RV_4C16G (4 vCPU / 16 GiB per worker)</td><td>unsupported_under_current_constraints</td><td>0</td><td>n/a</td><td>n/a</td><td>n/a</td><td>application_not_ready, failed_scheduling, insufficient_cpu, latency_injection, localai_deployment, no_preemption_victims_found, node_affinity_selector_mismatch, pending_pod, preemption_not_helpful, rollout_timeout</td></tr>
+<tr><td><code>RV_4C8G</code></td><td>RV_4C8G (4 vCPU / 8 GiB per worker)</td><td>unsupported_under_current_constraints</td><td>0</td><td>n/a</td><td>n/a</td><td>n/a</td><td>application_not_ready, failed_scheduling, insufficient_memory, latency_injection, localai_deployment, no_preemption_victims_found, node_affinity_selector_mismatch, pending_pod, preemption_not_helpful, rollout_timeout</td></tr>
+<tr><td><code>RV_8C16G</code></td><td>RV_8C16G (8 vCPU / 16 GiB per worker)</td><td>measured</td><td>3</td><td>1503.11</td><td>1500.00</td><td>0.5728</td><td></td></tr>
+</tbody></table>
+<h3>Extended measurement metrics</h3>
+<p>This secondary table keeps the additional metrics aligned with the technical diagnosis while avoiding an excessively wide primary summary table.</p>
+<table>
+<thead><tr><th>Scenario</th><th>P50 response time (ms)</th><th>P99 response time (ms)</th><th>Mean response time delta (%)</th><th>P95 response time delta (%)</th><th>Throughput delta (%)</th><th>Max node CPU snapshot (%)</th><th>Max node memory snapshot (%)</th><th>Max pod CPU snapshot (mCPU)</th><th>Max pod memory snapshot (MiB)</th></tr></thead><tbody>
+<tr><td><code>RV_4C16G</code></td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td></tr>
+<tr><td><code>RV_4C8G</code></td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td><td>n/a</td></tr>
+<tr><td><code>RV_8C16G</code></td><td>1500.00</td><td>1700.00</td><td>0.00</td><td>0.00</td><td>0.00</td><td>34.00</td><td>15.67</td><td>1447.33</td><td>592.00</td></tr>
+</tbody></table>
+<h3>Resource-capacity context</h3>
+<p>This table makes the resource-capacity dimension explicit. Model, workload, LocalAI worker count and placement are kept fixed while worker-node CPU and memory capacity change; unsupported variants are reported in the same context to preserve capacity-boundary evidence without introducing a separate asymmetric section.</p>
+<table>
+<thead><tr><th>Scenario</th><th>Worker nodes</th><th>Worker-node shape</th><th>Total worker CPU</th><th>Total worker memory</th><th>Reference shape</th><th>Execution status</th><th>Unsupported reason</th></tr></thead><tbody>
+<tr><td><code>RV_4C16G</code></td><td>2</td><td>4 vCPU / 16 GiB</td><td>8 vCPU</td><td>32 GiB</td><td>no</td><td>unsupported_under_current_constraints</td><td>localai_deployment_not_ready, localai_deployment_not_ready, localai_deployment_not_ready</td></tr>
+<tr><td><code>RV_4C8G</code></td><td>2</td><td>4 vCPU / 8 GiB</td><td>8 vCPU</td><td>16 GiB</td><td>no</td><td>unsupported_under_current_constraints</td><td>localai_deployment_not_ready, localai_deployment_not_ready, localai_deployment_not_ready</td></tr>
+<tr><td><code>RV_8C16G</code></td><td>2</td><td>8 vCPU / 16 GiB</td><td>16 vCPU</td><td>32 GiB</td><td>yes</td><td>measured</td><td>none</td></tr>
+</tbody></table>
+<h3>Diagnosis-based reading</h3>
+<ul>
+<li><strong>The resource-variation family provides deployability-boundary evidence, but not yet a full latency/throughput comparison.</strong> (status: <code>capacity_boundary_signal_available</code>, confidence: <code>medium</code>).</li>
+<li>Implication: At least two measured resource shapes are still required for a robust performance comparison; however, the campaign already identifies which lower resource shapes cannot host the fixed LocalAI topology under the current constraints.</li>
+<li><strong>The resource-variation campaign identifies a deployability boundary under fixed application-level conditions.</strong> (confidence: <code>high</code>).</li>
+<li>Implication: The campaign should be read as capacity-feasibility evidence: lower worker-node shapes are not benchmark-ready under the fixed co-located topology and current LocalAI resource requests, while the reference shape is measurable.</li>
+<li><strong>Unsupported resource-variation variants expose Kubernetes scheduler resource constraints.</strong> (confidence: <code>high</code>).</li>
+<li>Implication: The unsupported variants provide concrete evidence about CPU and memory feasibility limits and should not be treated as ordinary benchmark failures.</li>
+</ul>
+<h3>Charts</h3>
+<h4>Mean response time</h4>
+<img src="../../charts/resource-variation/mean_response_time_ms.svg" alt="Mean response time">
+<h4>P50 response time</h4>
+<img src="../../charts/resource-variation/p50_response_time_ms.svg" alt="P50 response time">
+<h4>P95 response time</h4>
+<img src="../../charts/resource-variation/p95_response_time_ms.svg" alt="P95 response time">
+<h4>P99 response time</h4>
+<img src="../../charts/resource-variation/p99_response_time_ms.svg" alt="P99 response time">
+<h4>Throughput</h4>
+<img src="../../charts/resource-variation/throughput_rps.svg" alt="Throughput">
+<h4>Maximum node CPU snapshot</h4>
+<img src="../../charts/resource-variation/max_node_cpu_percent.svg" alt="Maximum node CPU snapshot">
+<h4>Maximum node memory snapshot</h4>
+<img src="../../charts/resource-variation/max_node_memory_percent.svg" alt="Maximum node memory snapshot">
+<h4>Maximum pod CPU snapshot</h4>
+<img src="../../charts/resource-variation/max_pod_cpu_millicores.svg" alt="Maximum pod CPU snapshot">
+<h4>Maximum pod memory snapshot</h4>
+<img src="../../charts/resource-variation/max_pod_memory_mib.svg" alt="Maximum pod memory snapshot">
+<h3>Reading notes</h3>
+<ul>
+<li>Measured scenarios: <strong>1</strong>.</li>
+<li>Unsupported scenarios under current constraints: <strong>2</strong>.</li>
+<li>Percentage deltas are computed against the family reference scenario; positive latency deltas indicate worse response time, while positive throughput deltas indicate higher request throughput.</li>
+<li>Unsupported scenarios are infrastructure/constraint observations and must not be interpreted as measured latency regressions.</li>
+<li>A <code>not_executed</code> sweep means that neither measurement CSV files nor unsupported-scenario evidence were found for any configured scenario in that family.</li>
+</ul>
+</body>
+</html>

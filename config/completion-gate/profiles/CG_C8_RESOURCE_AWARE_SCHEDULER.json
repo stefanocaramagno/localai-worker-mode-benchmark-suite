@@ -1,0 +1,306 @@
+{
+  "schemaVersion": "completion-gate-profile/v1",
+  "completionGateProfileId": "CG_C8_RESOURCE_AWARE_SCHEDULER",
+  "profileId": "CG_C8_RESOURCE_AWARE_SCHEDULER",
+  "profileName": "C8 Resource-Aware Scheduler Completion Gate Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_resource_aware_scheduler_completion_gate",
+  "description": "Completion gate profile for the provider-backed resource-aware-scheduler campaign.",
+  "cycleId": "C8",
+  "cycleConfigPath": "config/experimental-cycles/C8.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "providerId": "proxmox-k3s",
+  "outputRoot": "results/experimental-cycles/C8/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C8/completion-gate",
+    "latestManifestPath": "results/experimental-cycles/C8/completion-gate/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C8/completion-gate/latest-completion-gate-summary.txt",
+    "writeLatestAliases": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C8.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "scenarioIndex": "config/scenarios/resource-aware-scheduler/RESOURCE_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "reportingProfile": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "reportingIndex": "config/reporting/REPORTING_INDEX.json",
+    "schedulerDecisionCaptureScript": "scripts/observability/scheduler/capture-scheduler-decisions.py",
+    "multiTenantLocustRunner": "scripts/load/multi-tenant/run-multi-tenant-locust.py",
+    "customSchedulerProfile": "config/scheduler/profiles/CS_C8_LOADAWARE_SECOND_SCHEDULER.json",
+    "monAgentProfile": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+    "reschedulingProfile": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+    "schedulerModeManifestValidator": "scripts/validation/scheduler/validate-scheduler-mode-manifests.py"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C8/execution/latest-campaign-execution-manifest.json",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C8/diagnosis",
+    "reportingManifest": "results/experimental-cycles/C8/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C8/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C8/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C8/reporting/scenario-summary.csv",
+    "benchmarkRoots": [
+      "results/experimental-cycles/C8/benchmark/resource-aware-scheduler"
+    ],
+    "clusterSideRoots": [
+      "results/experimental-cycles/C8/variants",
+      "results/experimental-cycles/C8/scheduler"
+    ],
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C8/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "reportingProfile": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+    "freezeProfile": "config/freeze/profiles/FR_C8_RESOURCE_AWARE_SCHEDULER.json"
+  },
+  "requiredFamilies": [
+    "resource-aware-scheduler"
+  ],
+  "minimumReplicasPerScenario": 3,
+  "strictScenarioCoverage": true,
+  "acceptUnsupportedScenariosAsCovered": true,
+  "minimumUnsupportedReplicasPerScenario": 3,
+  "minimumMeasuredScenariosByFamily": {
+    "resource-aware-scheduler": 4
+  },
+  "maximumMeanResponseTimeCvPercent": 1000000,
+  "minimumFindings": 1,
+  "gates": {
+    "profileResolution": {
+      "enabled": true
+    },
+    "providerConfig": {
+      "enabled": false
+    },
+    "provisioning": {
+      "enabled": false
+    },
+    "clusterValidation": {
+      "enabled": false
+    },
+    "applicationDeployment": {
+      "enabled": false
+    },
+    "minimalObservability": {
+      "enabled": false
+    },
+    "clusterValidationArtifacts": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C8/variants"
+      ],
+      "artifactNames": [
+        "latest-cluster-validation-manifest.json"
+      ],
+      "minimumArtifactCount": 1,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false
+    },
+    "applicationDeploymentArtifacts": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C8/variants"
+      ],
+      "artifactNames": [
+        "latest-localai-deployment-manifest.json"
+      ],
+      "minimumArtifactCount": 1,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false
+    },
+    "schedulerDecisionEvidence": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C8/scheduler"
+      ],
+      "artifactNames": [
+        "resource-aware-scheduler-decision-evidence.json",
+        "latest-resource-aware-scheduler-decision-evidence.json"
+      ],
+      "minimumArtifactCount": 1,
+      "maxArtifactsToInspect": 25,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": true,
+      "acceptedStatuses": [
+        "captured"
+      ],
+      "requiredDottedPaths": [
+        "schemaVersion",
+        "scenario.scenarioId",
+        "placementClassification.schemaVersion",
+        "summary.scheduledPodCount"
+      ],
+      "minimumNumericDottedPaths": {
+        "summary.scheduledPodCount": 1
+      },
+      "statusPolicy": {
+        "acceptedRuntimeStatus": "captured",
+        "rejectedRuntimeStatuses": [
+          "captured_without_matching_pods"
+        ],
+        "reason": "Scheduler-comparison completion requires pod-to-node evidence for at least one scheduled LocalAI pod; no-pod captures are valid only as debugging artifacts and are not accepted as successful runtime scheduler evidence."
+      }
+    },
+    "multiTenantBenchmarkSummary": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C8/benchmark/resource-aware-scheduler"
+      ],
+      "artifactNames": [
+        "multi-tenant-summary.json",
+        "latest-multi-tenant-summary.json"
+      ],
+      "minimumArtifactCount": 1,
+      "maxArtifactsToInspect": 25,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false,
+      "requiredDottedPaths": [
+        "schemaVersion",
+        "scenarioId",
+        "tenantResults"
+      ]
+    },
+    "benchmarkArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C8/benchmark/resource-aware-scheduler"
+      ],
+      "patterns": [
+        "*_stats.csv",
+        "multi-tenant-summary.json",
+        "multi-tenant-summary.txt",
+        "*.json",
+        "*.csv",
+        "*.txt"
+      ]
+    },
+    "clusterSideArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C8/variants",
+        "results/experimental-cycles/C8/scheduler"
+      ],
+      "patterns": [
+        "*.json",
+        "*.txt",
+        "*.csv",
+        "*.log"
+      ]
+    },
+    "technicalDiagnosis": {
+      "enabled": true,
+      "acceptedClosureStatuses": [
+        "preliminary_diagnosis_available"
+      ],
+      "roots": [
+        "results/experimental-cycles/C8/diagnosis"
+      ],
+      "familyScope": "all",
+      "minimumFamiliesWithCoverage": 1,
+      "minimumFindings": 1
+    },
+    "reporting": {
+      "enabled": true,
+      "reportingRoot": "results/experimental-cycles/C8/reporting",
+      "manifestName": "reporting-manifest.json",
+      "markdownReportName": "report.md",
+      "htmlReportName": "index.html",
+      "scenarioSummaryCsvName": "scenario-summary.csv",
+      "chartsDirectoryName": "charts",
+      "sweepsDirectoryName": "sweeps",
+      "requiredSections": [
+        "Scheduler-comparison scenario context",
+        "Tenant traffic context",
+        "Scheduler decision table",
+        "Placement classification summary",
+        "Per-tenant benchmark metrics",
+        "Placement negative evidence",
+        "Scenario Summary",
+        "Metrics Summary",
+        "Main Findings"
+      ],
+      "requiredChartFamilies": [],
+      "requiredChartMetrics": [],
+      "requiredSweepReports": [
+        "resource-aware-scheduler"
+      ]
+    },
+    "freezeReadiness": {
+      "enabled": true,
+      "requireFreezeOutputsDeclared": false,
+      "requireFrozenArtifacts": false,
+      "requireFreezeProfileDeclared": true,
+      "requireFreezeProfileFile": false,
+      "freezeProfilePath": "config/freeze/profiles/FR_C8_RESOURCE_AWARE_SCHEDULER.json"
+    },
+    "scenarioCoverage": {
+      "requiredFamilies": [
+        "resource-aware-scheduler"
+      ]
+    },
+    "schedulerPairwiseComparisonEvidence": {
+      "enabled": true,
+      "description": "Reporting and diagnosis should expose paired default vs load-aware scheduler evidence for each logical scenario.",
+      "reportingProfilePath": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+      "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json"
+    },
+    "schedulerModeManifestPolicyValidation": {
+      "enabled": true,
+      "roots": [
+        "infra/k8s/compositions/resource-aware-scheduler"
+      ],
+      "minimumInspectedFileCount": 1,
+      "fileExtensions": [
+        ".yaml",
+        ".yml",
+        ".json"
+      ],
+      "forbiddenLiteralPatterns": [
+        "nodeName:",
+        "kubernetes.io/hostname"
+      ],
+      "forbiddenPathFragments": [
+        "placement-variation",
+        "controlled-placement",
+        "node-pinning"
+      ]
+    }
+  },
+  "decisionPolicy": {
+    "completedStatus": "completed",
+    "completedWithUnsupportedScenariosStatus": "completed_with_unsupported_scenarios",
+    "failedValidationStatus": "failed_validation",
+    "failedBenchmarkStatus": "failed_benchmark",
+    "failedReportingStatus": "failed_reporting",
+    "notCompletedStatus": "not_completed",
+    "unsupportedScenarioSignals": [
+      "unsupported",
+      "unsupported_under_current_constraints"
+    ],
+    "allowUnsupportedScenariosWhenDocumented": true,
+    "dryRunStatus": "dry_run"
+  },
+  "campaignAwareEvaluation": {
+    "enabled": true,
+    "variantEvidenceRoot": "results/experimental-cycles/C8/variants",
+    "benchmarkEvidenceRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler",
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C8/scheduler",
+    "campaignExecutionManifest": "results/experimental-cycles/C8/execution/latest-campaign-execution-manifest.json",
+    "retainUnsupportedScenarioEvidence": true
+  },
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json",
+  "reportingProfilePath": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+  "referenceScenarioId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+  "referenceScenarioByFamily": {
+    "resource-aware-scheduler": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "resource-aware-scheduler": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json"
+  },
+  "ignoreCycleFreezeProfileInProfileResolution": true
+}

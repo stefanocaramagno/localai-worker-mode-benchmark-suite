@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "application-deployment-index/v1",
+  "applicationDeploymentIndexId": "APPLICATION_DEPLOYMENT_INDEX",
+  "status": "active",
+  "purpose": "Registry of LocalAI application deployment profiles used after cluster validation and before benchmark execution.",
+  "profilesRoot": "config/application-deployment/profiles",
+  "schemaPath": "config/application-deployment/schemas/LOCALAI_APPLICATION_DEPLOYMENT_PROFILE_SCHEMA_V1.json",
+  "defaultProfileId": "AD_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "applicationDeploymentProfileId": "AD_C1_PROVIDER_BACKED_BASELINE",
+      "cycleId": "C1",
+      "baselineId": "B1",
+      "profilePath": "config/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "clusterValidationProfileId": "CV_C1_PROVIDER_BACKED_BASELINE",
+      "role": "first_provider_backed_baseline_localai_deployment",
+      "requiredBeforeBenchmarkExecution": true,
+      "placementProfileId": "PL_COLOCATED",
+      "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+      "minimalObservabilityProfileId": "MO_C1_PROVIDER_BACKED_BASELINE",
+      "minimalObservabilityProfilePath": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json"
+    }
+  ],
+  "governanceRules": [
+    "Application deployment profiles are operational configuration artifacts and must not contain local provider secrets.",
+    "Provider-backed application deployment must run only after cluster validation reaches an accepted status unless an explicit dry-run or recovery override is used.",
+    "Deployment logs, manifests, snapshots, and smoke-test outputs must be written under the cycle-specific results tree.",
+    "Benchmark execution must not start when LocalAI deployment or smoke validation fails.",
+    "Application deployment profiles must resolve placement profiles explicitly before placement-sensitive comparisons are executed.",
+    "Runtime campaign variants must be generated from application deployment templates rather than from concrete baseline profiles."
+  ],
+  "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+  "minimalObservabilityIndexPath": "config/observability-minimal/MINIMAL_OBSERVABILITY_INDEX.json",
+  "templatesRoot": "config/application-deployment/templates",
+  "templates": [
+    {
+      "applicationDeploymentTemplateId": "AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE",
+      "templatePath": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+      "role": "provider_backed_campaign_runtime_application_deployment_template",
+      "status": "active_template",
+      "usedFor": "runtime_generated_provider_backed_campaign_variants"
+    }
+  ],
+  "runtimeGeneratedProfilePolicy": {
+    "enabled": true,
+    "generationScope": "provider_backed_campaign_variants",
+    "staticProfilesScope": "concrete_baseline_and_standalone_profiles",
+    "runtimeCycles": [
+      "C2",
+      "C3",
+      "C4",
+      "C5",
+      "C6"
+    ],
+    "templateId": "AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE",
+    "templatePath": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+    "generatedProfilesRootPattern": "results/experimental-cycles/<cycleId>/execution/generated-runtime-configs/<variantId>/",
+    "rationale": "Campaign-variant application deployment profiles are generated from the template so each variant can bind its own infrastructure, placement, kubeconfig and output roots without duplicating static profile files."
+  }
+}

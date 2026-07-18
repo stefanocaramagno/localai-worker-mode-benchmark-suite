@@ -1,0 +1,538 @@
+{
+  "cycleId": "C6",
+  "cycleName": "Provider-Backed Multi-Tenancy Campaign",
+  "cycleKind": "comparative_campaign",
+  "campaignType": "multi_tenancy",
+  "status": "active_provider_backed_campaign",
+  "description": "Provider-backed campaign that evaluates LocalAI multi-cluster tenant coexistence by keeping infrastructure and the primary benchmark workload fixed while varying tenant count, co-tenant model mix and co-tenant placement.",
+  "cycleGovernance": {
+    "role": "provider_backed_multi_tenancy_campaign",
+    "predecessorCycleId": "C5",
+    "referenceBaselineId": "B1",
+    "referenceBaselineConfigPath": "config/scenarios/baseline/B1.json",
+    "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+    "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+    "governancePolicy": "vary_only_tenant_topology_keep_infrastructure_primary_workload_and_primary_benchmark_target_fixed"
+  },
+  "scope": {
+    "application": "LocalAI worker-mode benchmark suite",
+    "workerMode": "worker",
+    "cycleType": "provider_backed_multi_tenancy",
+    "includedFamilies": [
+      "multi-tenancy",
+      "provisioning",
+      "provisioning-validation",
+      "baseline",
+      "cluster-validation",
+      "application-deployment",
+      "placement-profile",
+      "minimal-observability",
+      "technical-diagnosis",
+      "reporting",
+      "completion-gate",
+      "freeze"
+    ],
+    "deferredFamilies": [],
+    "primaryQuestion": "How does the coexistence of multiple namespace-scoped LocalAI tenant clusters affect the benchmarked tenant when infrastructure and primary workload remain fixed?"
+  },
+  "providerBackedInfrastructure": {
+    "provider": "proxmox-k3s",
+    "providerIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_INDEX.json",
+    "providerBindingsIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "infrastructureProfilesIndexPath": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "fixedInfrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+    "fixedInfrastructureProfilePath": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+    "clusterLifecycleMode": "ephemeral",
+    "destroyClusterAfterCycle": true,
+    "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "cycleExecutionArtifactRoot": "results/experimental-cycles/C6/execution",
+    "campaignArtifactRoot": "results/experimental-cycles/C6",
+    "technicalDiagnosisProfileId": "TD_C6_MULTI_TENANCY",
+    "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+    "technicalDiagnosisArtifactRoot": "results/experimental-cycles/C6/diagnosis",
+    "reportingProfileId": "RP_C6_MULTI_TENANCY",
+    "reportingProfilePath": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+    "reportingArtifactRoot": "results/experimental-cycles/C6/reporting",
+    "completionGateProfileId": "CG_C6_MULTI_TENANCY",
+    "completionGateProfilePath": "config/completion-gate/profiles/CG_C6_MULTI_TENANCY.json",
+    "completionGateArtifactRoot": "results/experimental-cycles/C6/completion-gate",
+    "freezeProfileId": "FR_C6_MULTI_TENANCY",
+    "freezeProfilePath": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+    "freezeArtifactRoot": "results/experimental-cycles/C6/freeze",
+    "frozenArtifactSnapshotRoot": "results/experimental-cycles/C6/artifacts",
+    "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+    "latencyProfilesIndexPath": "config/latency/LATENCY_PROFILES_INDEX.json",
+    "tenancyProfilesIndexPath": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "fixedLatencyProfileId": "L0_NONE",
+    "fixedLatencyProfilePath": "config/latency/profiles/L0_NONE.json",
+    "latencyInjectionEnabled": false,
+    "precheckTemplateId": "TC_PROVIDER_BACKED_PRECHECK_TEMPLATE",
+    "precheckTemplatePath": "config/precheck/templates/TC_PROVIDER_BACKED_PRECHECK_TEMPLATE.json",
+    "precheckProfilesIndexPath": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+    "provisioningValidationTemplateId": "PV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+    "provisioningValidationTemplatePath": "config/provisioning-validation/templates/PV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "provisioningValidationIndexPath": "config/provisioning-validation/PROVISIONING_VALIDATION_INDEX.json",
+    "provisioningIntegrationTemplateId": "PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE",
+    "provisioningIntegrationTemplatePath": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+    "provisioningIntegrationIndexPath": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json",
+    "clusterValidationTemplateId": "CV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+    "clusterValidationTemplatePath": "config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "clusterValidationIndexPath": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+    "applicationDeploymentTemplateId": "AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE",
+    "applicationDeploymentTemplatePath": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+    "applicationDeploymentIndexPath": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+    "minimalObservabilityTemplateId": "MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE",
+    "minimalObservabilityTemplatePath": "config/observability-minimal/templates/MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE.json",
+    "minimalObservabilityIndexPath": "config/observability-minimal/MINIMAL_OBSERVABILITY_INDEX.json",
+    "cycleVariantTemplateId": "PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE",
+    "cycleVariantTemplatePath": "config/experimental-cycles/templates/PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE.json",
+    "activeClusterPolicy": {
+      "policyId": "GENAI_PB_SINGLE_ACTIVE_REUSABLE_CLUSTER",
+      "clusterName": "genai-pb",
+      "maxActiveProviderBackedClustersWithSameName": 1,
+      "clusterNameReusePolicy": "delete_or_reuse_existing_cluster_with_same_name_before_materializing_a_new_variant",
+      "concurrentExecutionPolicy": "exclusive_for_the_reusable_genai_pb_cluster_name",
+      "retentionScope": "ephemeral_campaign_variant_scope",
+      "laterCampaignsMayDeleteRetainedClusterWithSameName": true,
+      "preCleanExistingClusterWithSameNameBeforeVariant": true,
+      "deleteAfterVariantOrCampaign": true
+    }
+  },
+  "campaign": {
+    "campaignId": "C6",
+    "campaignType": "multi_tenancy",
+    "scenarioFamily": "multi-tenancy",
+    "scenarioConfigRoot": "config/scenarios/multi-tenancy",
+    "scenarioIndexPath": "config/scenarios/multi-tenancy/MULTI_TENANCY_SCENARIOS_INDEX.json",
+    "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+    "defaultBaselineReplicas": [
+      "A",
+      "B",
+      "C"
+    ],
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C6/execution/generated-runtime-configs",
+    "variants": [
+      {
+        "variantId": "MT_SINGLE_TENANT_REFERENCE",
+        "scenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+        "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c6-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c6-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c6-1cp-4w-8c16g/kubeconfig",
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+        "placementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+        "applicationTopology": {
+          "namespace": "genai-tenant-a",
+          "localAiWorkerCount": 2,
+          "workerScenario": "W2",
+          "topologyDir": "infra/k8s/compositions/tenancy/single-tenant-reference",
+          "serverManifest": "infra/k8s/compositions/tenancy/single-tenant-reference",
+          "placementScenario": "PL_DISTRIBUTED_TWO_NODE",
+          "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+          "placementType": "tenant_primary_distributed_two_node",
+          "expectedServerNode": "genai-pb-worker-01",
+          "expectedWorkerNodes": {
+            "localai-rpc-a": "genai-pb-worker-01",
+            "localai-rpc-b": "genai-pb-worker-02"
+          },
+          "expectedActiveRpcWorkers": [
+            "localai-rpc-a",
+            "localai-rpc-b"
+          ],
+          "expectedInactiveRpcWorkers": [
+            "localai-rpc-c",
+            "localai-rpc-d"
+          ],
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "multi-tenant-application-topology",
+              "path": "infra/k8s/compositions/tenancy/single-tenant-reference",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "deployments": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "inactiveDeployments": [
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "services": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "configMaps": [
+              "localai-runtime-config"
+            ],
+            "persistentVolumeClaims": [
+              "localai-models-pvc"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeployments": 3
+          },
+          "additionalRolloutTargets": [],
+          "tenancyProfileId": "TP_SINGLE_TENANT_REFERENCE",
+          "tenancyProfilePath": "config/tenancy/profiles/TP_SINGLE_TENANT_REFERENCE.json"
+        },
+        "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+        "outputSubdir": "MT_SINGLE_TENANT_REFERENCE_official_locked"
+      },
+      {
+        "variantId": "MT_TWO_TENANTS_SEPARATED",
+        "scenarioConfigPath": "config/scenarios/multi-tenancy/MT_TWO_TENANTS_SEPARATED.json",
+        "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c6-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c6-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c6-1cp-4w-8c16g/kubeconfig",
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+        "placementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+        "applicationTopology": {
+          "namespace": "genai-tenant-a",
+          "localAiWorkerCount": 2,
+          "workerScenario": "W2",
+          "topologyDir": "infra/k8s/compositions/tenancy/two-tenants-separated",
+          "serverManifest": "infra/k8s/compositions/tenancy/two-tenants-separated",
+          "placementScenario": "PL_DISTRIBUTED_TWO_NODE",
+          "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+          "placementType": "tenant_primary_distributed_two_node",
+          "expectedServerNode": "genai-pb-worker-01",
+          "expectedWorkerNodes": {
+            "localai-rpc-a": "genai-pb-worker-01",
+            "localai-rpc-b": "genai-pb-worker-02"
+          },
+          "expectedActiveRpcWorkers": [
+            "localai-rpc-a",
+            "localai-rpc-b"
+          ],
+          "expectedInactiveRpcWorkers": [
+            "localai-rpc-c",
+            "localai-rpc-d"
+          ],
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "multi-tenant-application-topology",
+              "path": "infra/k8s/compositions/tenancy/two-tenants-separated",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "deployments": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "inactiveDeployments": [
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "services": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "configMaps": [
+              "localai-runtime-config"
+            ],
+            "persistentVolumeClaims": [
+              "localai-models-pvc"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeployments": 3
+          },
+          "additionalRolloutTargets": [
+            {
+              "tenantId": "tenant-b",
+              "namespace": "genai-tenant-b",
+              "deployments": [
+                "localai-server",
+                "localai-rpc-a",
+                "localai-rpc-b"
+              ],
+              "rolloutTimeoutSeconds": 900
+            }
+          ],
+          "tenancyProfileId": "TP_TWO_TENANTS_SEPARATED",
+          "tenancyProfilePath": "config/tenancy/profiles/TP_TWO_TENANTS_SEPARATED.json"
+        },
+        "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+        "outputSubdir": "MT_TWO_TENANTS_SEPARATED_official_locked"
+      },
+      {
+        "variantId": "MT_TWO_TENANTS_MIXED_MODELS",
+        "scenarioConfigPath": "config/scenarios/multi-tenancy/MT_TWO_TENANTS_MIXED_MODELS.json",
+        "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c6-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c6-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c6-1cp-4w-8c16g/kubeconfig",
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+        "placementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+        "applicationTopology": {
+          "namespace": "genai-tenant-a",
+          "localAiWorkerCount": 2,
+          "workerScenario": "W2",
+          "topologyDir": "infra/k8s/compositions/tenancy/two-tenants-mixed-models",
+          "serverManifest": "infra/k8s/compositions/tenancy/two-tenants-mixed-models",
+          "placementScenario": "PL_DISTRIBUTED_TWO_NODE",
+          "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+          "placementType": "tenant_primary_distributed_two_node",
+          "expectedServerNode": "genai-pb-worker-01",
+          "expectedWorkerNodes": {
+            "localai-rpc-a": "genai-pb-worker-01",
+            "localai-rpc-b": "genai-pb-worker-02"
+          },
+          "expectedActiveRpcWorkers": [
+            "localai-rpc-a",
+            "localai-rpc-b"
+          ],
+          "expectedInactiveRpcWorkers": [
+            "localai-rpc-c",
+            "localai-rpc-d"
+          ],
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "multi-tenant-application-topology",
+              "path": "infra/k8s/compositions/tenancy/two-tenants-mixed-models",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "deployments": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "inactiveDeployments": [
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "services": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "configMaps": [
+              "localai-runtime-config"
+            ],
+            "persistentVolumeClaims": [
+              "localai-models-pvc"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeployments": 3
+          },
+          "additionalRolloutTargets": [
+            {
+              "tenantId": "tenant-b",
+              "namespace": "genai-tenant-b",
+              "deployments": [
+                "localai-server",
+                "localai-rpc-a",
+                "localai-rpc-b"
+              ],
+              "rolloutTimeoutSeconds": 900
+            }
+          ],
+          "tenancyProfileId": "TP_TWO_TENANTS_MIXED_MODELS",
+          "tenancyProfilePath": "config/tenancy/profiles/TP_TWO_TENANTS_MIXED_MODELS.json"
+        },
+        "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+        "outputSubdir": "MT_TWO_TENANTS_MIXED_MODELS_official_locked"
+      },
+      {
+        "variantId": "MT_TWO_TENANTS_SHARED_NODEPOOL",
+        "scenarioConfigPath": "config/scenarios/multi-tenancy/MT_TWO_TENANTS_SHARED_NODEPOOL.json",
+        "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+        "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C6_1CP_4W_8C16G.json",
+        "providerBindingId": "BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S",
+        "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C6_1CP_4W_8C16G_PROXMOX_K3S.json",
+        "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c6-1cp-4w-8c16g.example.yaml",
+        "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c6-1cp-4w-8c16g.local.yaml",
+        "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c6-1cp-4w-8c16g/kubeconfig",
+        "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+        "clusterLifecycleMode": "ephemeral",
+        "destroyClusterAfterVariant": true,
+        "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+        "placementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+        "applicationTopology": {
+          "namespace": "genai-tenant-a",
+          "localAiWorkerCount": 2,
+          "workerScenario": "W2",
+          "topologyDir": "infra/k8s/compositions/tenancy/two-tenants-shared-nodepool",
+          "serverManifest": "infra/k8s/compositions/tenancy/two-tenants-shared-nodepool",
+          "placementScenario": "PL_DISTRIBUTED_TWO_NODE",
+          "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+          "placementType": "tenant_primary_distributed_two_node",
+          "expectedServerNode": "genai-pb-worker-01",
+          "expectedWorkerNodes": {
+            "localai-rpc-a": "genai-pb-worker-01",
+            "localai-rpc-b": "genai-pb-worker-02"
+          },
+          "expectedActiveRpcWorkers": [
+            "localai-rpc-a",
+            "localai-rpc-b"
+          ],
+          "expectedInactiveRpcWorkers": [
+            "localai-rpc-c",
+            "localai-rpc-d"
+          ],
+          "kustomizeApplyOrder": [
+            {
+              "stepId": "multi-tenant-application-topology",
+              "path": "infra/k8s/compositions/tenancy/two-tenants-shared-nodepool",
+              "kind": "kustomize",
+              "required": true
+            }
+          ],
+          "expectedResources": {
+            "deployments": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b"
+            ],
+            "inactiveDeployments": [
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "services": [
+              "localai-server",
+              "localai-rpc-a",
+              "localai-rpc-b",
+              "localai-rpc-c",
+              "localai-rpc-d"
+            ],
+            "configMaps": [
+              "localai-runtime-config"
+            ],
+            "persistentVolumeClaims": [
+              "localai-models-pvc"
+            ],
+            "rolloutTimeoutSeconds": 900,
+            "minimumReadyDeployments": 3
+          },
+          "additionalRolloutTargets": [
+            {
+              "tenantId": "tenant-b",
+              "namespace": "genai-tenant-b",
+              "deployments": [
+                "localai-server",
+                "localai-rpc-a",
+                "localai-rpc-b"
+              ],
+              "rolloutTimeoutSeconds": 900
+            }
+          ],
+          "tenancyProfileId": "TP_TWO_TENANTS_SHARED_NODEPOOL",
+          "tenancyProfilePath": "config/tenancy/profiles/TP_TWO_TENANTS_SHARED_NODEPOOL.json"
+        },
+        "resultsRoot": "results/experimental-cycles/C6/benchmark/multi-tenancy",
+        "outputSubdir": "MT_TWO_TENANTS_SHARED_NODEPOOL_official_locked"
+      }
+    ]
+  },
+  "reporting": {
+    "reportingProfileId": "RP_C6_MULTI_TENANCY",
+    "reportingProfilePath": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+    "artifactRoot": "results/experimental-cycles/C6/reporting"
+  },
+  "completionGate": {
+    "completionGateProfileId": "CG_C6_MULTI_TENANCY",
+    "completionGateProfilePath": "config/completion-gate/profiles/CG_C6_MULTI_TENANCY.json",
+    "artifactRoot": "results/experimental-cycles/C6/completion-gate"
+  },
+  "freeze": {
+    "freezeProfileId": "FR_C6_MULTI_TENANCY",
+    "freezeProfilePath": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+    "artifactRoot": "results/experimental-cycles/C6/freeze"
+  },
+  "diagnosis": {
+    "technicalDiagnosisProfileId": "TD_C6_MULTI_TENANCY",
+    "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+    "artifactRoot": "results/experimental-cycles/C6/diagnosis"
+  },
+  "configurationState": "active",
+  "executionState": "completed_with_unsupported_scenarios",
+  "pipelineProfiles": {
+    "runConvention": "config/conventions/profiles/RC_STANDARD_RUN_CONVENTION.json",
+    "phaseProfile": "config/phases/profiles/WM_STANDARD_WARMUP_MEASUREMENT.json",
+    "protocolProfile": "config/protocol/profiles/EP_STANDARD_BENCHMARK_PROTOCOL.json",
+    "clusterCapture": "config/cluster-capture/profiles/CS_STANDARD_CLUSTER_CAPTURE.json",
+    "metricSet": "config/metric-set/profiles/MS_STANDARD_BENCHMARK_METRICS.json",
+    "statisticalRigor": "config/statistical-rigor/profiles/SR_REPLICATED_BENCHMARK_RIGOR.json",
+    "infrastructureProfilesIndex": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "providersIndex": "config/infrastructure/providers/PROVIDERS_INDEX.json",
+    "providerBindingsIndex": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "clusterLifecyclePoliciesIndex": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "provisioningValidationIndex": "config/provisioning-validation/PROVISIONING_VALIDATION_INDEX.json",
+    "clusterValidationIndex": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+    "applicationDeploymentIndex": "config/application-deployment/APPLICATION_DEPLOYMENT_INDEX.json",
+    "placementProfilesIndex": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+    "minimalObservabilityIndex": "config/observability-minimal/MINIMAL_OBSERVABILITY_INDEX.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "reportingIndex": "config/reporting/REPORTING_INDEX.json",
+    "completionGateIndex": "config/completion-gate/COMPLETION_GATE_INDEX.json",
+    "freezeIndex": "config/freeze/FREEZE_INDEX.json",
+    "precheckTemplate": "config/precheck/templates/TC_PROVIDER_BACKED_PRECHECK_TEMPLATE.json",
+    "precheckIndex": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+    "technicalDiagnosis": "config/technical-diagnosis/profiles/TD_C6_MULTI_TENANCY.json",
+    "reporting": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+    "completionGate": "config/completion-gate/profiles/CG_C6_MULTI_TENANCY.json",
+    "freeze": "config/freeze/profiles/FR_C6_MULTI_TENANCY.json",
+    "latencyProfilesIndex": "config/latency/LATENCY_PROFILES_INDEX.json",
+    "tenancyProfilesIndex": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "provisioningValidationTemplate": "config/provisioning-validation/templates/PV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "provisioningIntegrationTemplate": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+    "provisioningIntegrationIndex": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json",
+    "clusterValidationTemplate": "config/cluster-validation/templates/CV_PROVIDER_BACKED_VALIDATION_TEMPLATE.json",
+    "applicationDeploymentTemplate": "config/application-deployment/templates/AD_PROVIDER_BACKED_LOCALAI_DEPLOYMENT_TEMPLATE.json",
+    "minimalObservabilityTemplate": "config/observability-minimal/templates/MO_PROVIDER_BACKED_OBSERVABILITY_TEMPLATE.json",
+    "cycleVariantTemplate": "config/experimental-cycles/templates/PROVIDER_BACKED_CAMPAIGN_VARIANT_CYCLE_TEMPLATE.json"
+  },
+  "profileStatus": "active_provider_backed_campaign",
+  "stateModel": {
+    "profileStatus": "Configuration-profile lifecycle state. This is the canonical meaning of the backward-compatible status field.",
+    "configurationState": "Whether the cycle configuration is active, locked, superseded, or deprecated.",
+    "executionState": "Latest known execution outcome for the cycle or campaign.",
+    "status": "Backward-compatible alias of profileStatus; execution outcomes must be read from executionState."
+  },
+  "infrastructureSummaryMode": "fixed_cycle_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "cycle",
+    "description": "The cycle uses one fixed infrastructure profile as the common context for all scenarios."
+  }
+}

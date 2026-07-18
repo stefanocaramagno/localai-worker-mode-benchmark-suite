@@ -1,0 +1,553 @@
+{
+  "scenarioId": "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+  "variantId": "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+  "scenarioProfileId": "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+  "scenarioProfileName": "C9 DEFAULT 2T 4N L2 DIFFERENTIATED M1M1 W2",
+  "scenarioProfileSchemaVersion": "network-aware-scheduler-scenario/v1",
+  "scenarioProfileScope": "provider_backed_network_aware_scheduler_campaign",
+  "associatedCycleId": "C9",
+  "campaignId": "C9",
+  "family": "network-aware-scheduler",
+  "scenarioClass": "official",
+  "scenarioOrdinal": 6,
+  "priorityClass": "P0",
+  "status": "planned_provider_backed_network_aware_scheduler_scenario",
+  "purpose": "Network-aware scheduler scenario for 2T_4N_L2_DIFFERENTIATED_M1M1_W2 using Kubernetes default scheduler.",
+  "roleInCampaign": "default_scheduler_variant",
+  "logicalScenarioId": "2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+  "experimentalVariantId": "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+  "referenceBaselineId": "B1",
+  "referenceBaselineConfigPath": "config/scenarios/baseline/B1.json",
+  "referenceScenarioId": "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+  "infrastructureProfileId": "INFRA_C9_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json",
+  "providerBindingId": "BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "workerNodeCount": 4,
+  "workerVcpusPerNode": 8,
+  "workerMemoryGiBPerNode": 16,
+  "workerStorageGiBPerNode": 35,
+  "controlPlaneNodeCount": 1,
+  "providerId": "proxmox-k3s",
+  "resultsRoot": "results/experimental-cycles/C9/benchmark/network-aware-scheduler",
+  "outputSubdir": "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+  "workerMode": "worker",
+  "workerScenario": "W2",
+  "resolvedWorkerCount": 2,
+  "localAiWorkerCountPerTenant": 2,
+  "tenantCount": 2,
+  "tenantIds": [
+    "tenant-a",
+    "tenant-b"
+  ],
+  "namespaces": [
+    "genai-tenant-a",
+    "genai-tenant-b"
+  ],
+  "namespace": "genai-tenant-a",
+  "benchmarkAccessMode": "istio_gateway_routed",
+  "baseUrl": "http://localhost:18080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "modelMix": "M1M1",
+  "modelScenario": "M1",
+  "modelScenarios": [
+    "M1",
+    "M1"
+  ],
+  "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "resolvedModelNames": [
+    "llama-3.2-1b-instruct:q4_k_m",
+    "llama-3.2-1b-instruct:q4_k_m"
+  ],
+  "primaryModelScenario": "M1",
+  "primaryResolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "trafficProfileId": "TR_C9_2T_DIFFERENTIATED_GATEWAY",
+  "trafficProfile": {
+    "trafficProfileId": "TR_C9_2T_DIFFERENTIATED_GATEWAY",
+    "trafficShape": "differentiated",
+    "profileLabel": "2 tenant gateway-routed differentiated workload",
+    "tenantProfiles": [
+      {
+        "tenantId": "tenant-a",
+        "users": 3,
+        "spawnRate": 1,
+        "runTime": "2m",
+        "waitTimeSeconds": 2,
+        "environment": {
+          "LOCALAI_WAIT_TIME_SECONDS": "2"
+        }
+      },
+      {
+        "tenantId": "tenant-b",
+        "users": 1,
+        "spawnRate": 1,
+        "runTime": "2m",
+        "waitTimeSeconds": 6,
+        "environment": {
+          "LOCALAI_WAIT_TIME_SECONDS": "6"
+        }
+      }
+    ],
+    "loadGenerator": "locust",
+    "runnerMode": "one_locust_process_per_tenant",
+    "requestTarget": "POST /v1/chat/completions",
+    "requestFrequencyPolicy": "gateway_routed_constant_wait_per_tenant",
+    "trafficDifferentiationEnabled": true,
+    "accessMode": "istio_gateway_routed"
+  },
+  "workloadScenario": "TR_C9_2T_DIFFERENTIATED_GATEWAY",
+  "resolvedWorkload": {
+    "users": 4,
+    "spawnRate": 2.0,
+    "runTime": "2m",
+    "trafficShape": "differentiated",
+    "perTenantWaitTimeSeconds": {
+      "tenant-a": 2,
+      "tenant-b": 6
+    },
+    "accessMode": "istio_gateway_routed"
+  },
+  "latencyAlias": "L2",
+  "latencyProfileId": "L2_INTER_GROUP_HIGH",
+  "latencyProfilePath": "config/latency/profiles/L2_INTER_GROUP_HIGH.json",
+  "latencyProfile": {
+    "schemaVersion": "latency-profile/v1",
+    "latencyProfileId": "L2_INTER_GROUP_HIGH",
+    "profileId": "L2_INTER_GROUP_HIGH",
+    "profileName": "High inter-group latency for network-aware scheduling",
+    "profileStatus": "active",
+    "profileRole": "network_aware_inter_group_latency_profile",
+    "purpose": "High C9 inter-group latency profile for a four-worker topology split into two low-latency worker groups with a substantially higher cross-group cost.",
+    "enabled": true,
+    "latencyCategory": "inter_group_high",
+    "target": {
+      "targetNodePolicy": "inter_group_worker_nodes_from_infrastructure_profile",
+      "nodeRole": "worker",
+      "excludeControlPlane": true,
+      "workerGroups": [
+        {
+          "groupId": "worker-group-a",
+          "workerOrdinals": [
+            1,
+            2
+          ]
+        },
+        {
+          "groupId": "worker-group-b",
+          "workerOrdinals": [
+            3,
+            4
+          ]
+        }
+      ],
+      "intraGroupDelayMs": 0,
+      "interGroupDelayMs": 150,
+      "rationale": "Model a C9 network-aware topology with two internally close worker groups and a higher inter-group communication cost."
+    },
+    "networkEmulation": {
+      "tool": "annotation_controlled_inter_group_latency_matrix",
+      "mode": "inter_group_worker_latency_matrix",
+      "networkInterface": "eth0",
+      "delayMs": 150,
+      "jitterMs": 15,
+      "packetLossPercent": 0.0,
+      "correlationPercent": 0,
+      "distribution": "normal",
+      "intraGroupDelayMs": 0,
+      "interGroupDelayMs": 150,
+      "resetExistingQdiscBeforeApply": true,
+      "resetAfterBenchmark": true,
+      "telemetryVisibilityRequired": true,
+      "requiredNodeAnnotationPrefix": "network-latency.",
+      "annotationControl": {
+        "enabled": true,
+        "applyNodeAnnotations": true,
+        "latencyAnnotationPrefix": "network-latency.",
+        "packetLossAnnotationPrefix": "packet-loss.",
+        "bandwidthAnnotationPrefix": "network-bandwidth.",
+        "defaultIntraGroupBandwidthBytesPerSecond": 1000000000,
+        "defaultInterGroupBandwidthBytesPerSecond": 1000000000,
+        "resetRemovesGeneratedAnnotations": true,
+        "generatedAnnotationOwner": "localai.benchmark/network-aware-latency-profile"
+      }
+    },
+    "runtimeImplementation": {
+      "runner": "scripts/latency/apply-latency-profile.py",
+      "powershellWrapper": "scripts/latency/Apply-LatencyProfile.ps1",
+      "bashWrapper": "scripts/latency/apply-latency-profile.sh",
+      "kubernetesNamespace": "latency-control",
+      "jobImage": "docker.io/nicolaka/netshoot:latest",
+      "jobTimeoutSeconds": 180,
+      "cleanupJobsAfterCompletion": false,
+      "requiresPrivilegedPod": false,
+      "requiredLinuxCapabilities": [],
+      "dryRunSupported": true,
+      "implementationBoundary": "The runner materializes the declared inter-group latency matrix as node annotations consumed by NetworkAwareLocalAi. Before controlled rescheduling, the active node annotations must be validated against this profile so mon-agent refreshes cannot silently replace the intended C9 topology.",
+      "implementationMode": "annotation_controlled_inter_group_latency_matrix"
+    },
+    "safetyPolicy": {
+      "applyOnlyAfterClusterValidation": true,
+      "applyOnlyAfterApplicationDeployment": true,
+      "resetBeforeApply": true,
+      "resetAfterBenchmark": true,
+      "controlPlaneExcluded": true,
+      "failurePolicy": "fail_variant_before_rescheduling_if_inter_group_latency_matrix_annotations_do_not_match_the_configured_profile"
+    },
+    "methodologicalRole": {
+      "variedDimension": "inter-group latency profile",
+      "fixedDimensions": [
+        "infrastructure=1 control-plane and 4 worker nodes",
+        "worker topology=two worker groups",
+        "LocalAI worker count per tenant=W2",
+        "traffic access=Istio gateway routed",
+        "placement owner=scheduler mode"
+      ],
+      "interpretation": "This profile is a C9 network-aware high inter-group latency condition. The declared inter-group cost is materialized as node annotations consumed by NetworkAwareLocalAi; Mentat evidence remains a runtime observability cross-check for the underlying inter-node network state."
+    }
+  },
+  "networkTopology": {
+    "workerNodeGroups": [
+      {
+        "groupId": "group-a",
+        "logicalWorkers": [
+          "worker-1",
+          "worker-2"
+        ]
+      },
+      {
+        "groupId": "group-b",
+        "logicalWorkers": [
+          "worker-3",
+          "worker-4"
+        ]
+      }
+    ],
+    "expectedRelationship": "intra_group_latency_lower_than_inter_group_latency",
+    "latencyAlias": "L2"
+  },
+  "placementScenario": "RUNTIME_SCHEDULER_DECISION",
+  "placementProfileId": "RUNTIME_SCHEDULER_DECISION",
+  "placementProfilePath": "",
+  "resolvedPlacementType": "runtime_scheduler_decision",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b"
+  ],
+  "expectedInactiveRpcWorkers": [
+    "localai-rpc-c",
+    "localai-rpc-d"
+  ],
+  "expectedWorkerNodes": "captured_at_runtime",
+  "expectedServerNode": "captured_at_runtime",
+  "namespaceManifest": "infra/k8s/compositions/network-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+  "storageManifest": "infra/k8s/compositions/network-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+  "topologyDir": "infra/k8s/compositions/network-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+  "serverManifest": "infra/k8s/compositions/network-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+  "tenantClusters": [
+    {
+      "tenantId": "tenant-a",
+      "namespace": "genai-tenant-a",
+      "role": "primary_benchmark_tenant",
+      "modelScenario": "M1",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "trafficProfile": {
+        "tenantId": "tenant-a",
+        "users": 3,
+        "spawnRate": 1,
+        "runTime": "2m",
+        "waitTimeSeconds": 2,
+        "environment": {
+          "LOCALAI_WAIT_TIME_SECONDS": "2"
+        }
+      },
+      "placementPolicy": "kubernetes_default_scheduler_decides_at_runtime",
+      "expectedPlacement": "captured_at_runtime",
+      "serviceName": "localai-server",
+      "baseUrlMode": "istio_gateway_routed",
+      "accessMode": "istio_gateway_routed",
+      "gateway": {
+        "serviceName": "localai-gateway-istio",
+        "gatewayServiceName": "localai-gateway-istio",
+        "namespace": "genai-tenant-a",
+        "hostname": "tenant-a.localai.local",
+        "hostHeader": "tenant-a.localai.local",
+        "port": 80,
+        "remotePort": 80,
+        "localPort": 18080,
+        "targetKind": "istio_gateway_service"
+      },
+      "hostHeader": "tenant-a.localai.local",
+      "gatewayHost": "tenant-a.localai.local"
+    },
+    {
+      "tenantId": "tenant-b",
+      "namespace": "genai-tenant-b",
+      "role": "concurrent_tenant",
+      "modelScenario": "M1",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "workerScenario": "W2",
+      "workerCount": 2,
+      "trafficProfile": {
+        "tenantId": "tenant-b",
+        "users": 1,
+        "spawnRate": 1,
+        "runTime": "2m",
+        "waitTimeSeconds": 6,
+        "environment": {
+          "LOCALAI_WAIT_TIME_SECONDS": "6"
+        }
+      },
+      "placementPolicy": "kubernetes_default_scheduler_decides_at_runtime",
+      "expectedPlacement": "captured_at_runtime",
+      "serviceName": "localai-server",
+      "baseUrlMode": "istio_gateway_routed",
+      "accessMode": "istio_gateway_routed",
+      "gateway": {
+        "serviceName": "localai-gateway-istio",
+        "gatewayServiceName": "localai-gateway-istio",
+        "namespace": "genai-tenant-b",
+        "hostname": "tenant-b.localai.local",
+        "hostHeader": "tenant-b.localai.local",
+        "port": 80,
+        "remotePort": 80,
+        "localPort": 18081,
+        "targetKind": "istio_gateway_service"
+      },
+      "hostHeader": "tenant-b.localai.local",
+      "gatewayHost": "tenant-b.localai.local"
+    }
+  ],
+  "benchmarkTargets": [
+    {
+      "tenantId": "tenant-a",
+      "namespace": "genai-tenant-a",
+      "baseUrl": "http://localhost:18080",
+      "accessMode": "istio_gateway_routed",
+      "baseUrlMode": "istio_gateway_routed",
+      "requestTarget": "POST /v1/chat/completions",
+      "hostHeader": "tenant-a.localai.local",
+      "gateway": {
+        "serviceName": "localai-gateway-istio",
+        "gatewayServiceName": "localai-gateway-istio",
+        "namespace": "genai-tenant-a",
+        "hostname": "tenant-a.localai.local",
+        "hostHeader": "tenant-a.localai.local",
+        "port": 80,
+        "remotePort": 80,
+        "localPort": 18080,
+        "targetKind": "istio_gateway_service"
+      },
+      "outputSubdir": "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2/tenant-a"
+    },
+    {
+      "tenantId": "tenant-b",
+      "namespace": "genai-tenant-b",
+      "baseUrl": "http://localhost:18081",
+      "accessMode": "istio_gateway_routed",
+      "baseUrlMode": "istio_gateway_routed",
+      "requestTarget": "POST /v1/chat/completions",
+      "hostHeader": "tenant-b.localai.local",
+      "gateway": {
+        "serviceName": "localai-gateway-istio",
+        "gatewayServiceName": "localai-gateway-istio",
+        "namespace": "genai-tenant-b",
+        "hostname": "tenant-b.localai.local",
+        "hostHeader": "tenant-b.localai.local",
+        "port": 80,
+        "remotePort": 80,
+        "localPort": 18081,
+        "targetKind": "istio_gateway_service"
+      },
+      "outputSubdir": "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2/tenant-b"
+    }
+  ],
+  "applicationTopology": {
+    "topologyDir": "infra/k8s/compositions/network-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+    "kustomizeApplyOrder": [
+      {
+        "stepId": "network-aware-scheduler-application-topology",
+        "path": "infra/k8s/compositions/network-aware-scheduler/default-scheduler/two-tenants-m1m1-w2",
+        "kind": "kustomize",
+        "required": true
+      }
+    ],
+    "expectedResources": {
+      "namespaces": [
+        "genai-tenant-a",
+        "genai-tenant-b"
+      ],
+      "deploymentsPerTenant": [
+        "localai-server",
+        "localai-rpc-a",
+        "localai-rpc-b"
+      ],
+      "servicesPerTenant": [
+        "localai-server",
+        "localai-rpc-a",
+        "localai-rpc-b",
+        "localai-rpc-c",
+        "localai-rpc-d"
+      ],
+      "gatewayResourcesPerTenant": [
+        "localai-gateway",
+        "localai-server-route"
+      ],
+      "rolloutTimeoutSeconds": 900,
+      "minimumReadyDeploymentsPerTenant": 3
+    },
+    "schedulerMode": "kubernetes_default_scheduler",
+    "schedulerName": null,
+    "hardPlacementControlsAllowed": false,
+    "additionalRolloutTargets": [],
+    "trafficAccessMode": "istio_gateway_routed",
+    "gatewayRoutedTraffic": true
+  },
+  "schedulerMode": "kubernetes_default_scheduler",
+  "schedulerName": null,
+  "schedulerModePolicy": {
+    "schedulerMode": "kubernetes_default_scheduler",
+    "schedulerName": null,
+    "schedulerDisplayName": "Kubernetes default scheduler",
+    "enabledPlugins": [],
+    "customSchedulerProfileId": null,
+    "customSchedulerProfilePath": null,
+    "monAgentProfileId": "MA_NETWORK_AWARE",
+    "monAgentProfilePath": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+    "networkObservabilityProfileId": "NO_MENTAT_C9",
+    "networkObservabilityProfilePath": "config/network-observability/profiles/NO_MENTAT_C9.json",
+    "istioGatewayProfileId": "IG_LOCALAI_GATEWAY_ROUTED_C9",
+    "istioGatewayProfilePath": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+    "gatewayTrafficKey": "traffic.localai-gateway-istio",
+    "latencyProfileId": "L2_INTER_GROUP_HIGH",
+    "latencyProfilePath": "config/latency/profiles/L2_INTER_GROUP_HIGH.json",
+    "latencyInjectionEnabled": true,
+    "runtimeTelemetryRequired": false,
+    "resourceAwareEnabled": false,
+    "networkAwareEnabled": false
+  },
+  "defaultSchedulerPolicy": {
+    "enabled": true,
+    "schedulerName": null,
+    "hardPlacementControlsAllowed": false,
+    "placementDecisionOwner": "kubernetes_default_scheduler"
+  },
+  "schedulerEvidence": {
+    "required": true,
+    "artifactRoot": "results/experimental-cycles/C9/scheduler/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+    "artifactName": "network-aware-scheduler-decision-evidence.json",
+    "latestArtifactName": "latest-network-aware-scheduler-decision-evidence.json",
+    "captureScope": "all_tenant_namespaces",
+    "schedulerName": "default-scheduler",
+    "requiredFields": [
+      "scenarioId",
+      "tenantId",
+      "namespace",
+      "deployment",
+      "podName",
+      "podUid",
+      "nodeName",
+      "podPhase",
+      "labels",
+      "annotations",
+      "resourceRequests",
+      "resourceLimits",
+      "restartCount",
+      "events",
+      "schedulerName",
+      "placementClassification"
+    ],
+    "evidenceScope": "network-aware-scheduler"
+  },
+  "telemetryEvidence": {
+    "monAgentProfileId": "MA_NETWORK_AWARE",
+    "monAgentProfilePath": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+    "networkObservabilityProfileId": "NO_MENTAT_C9",
+    "networkObservabilityProfilePath": "config/network-observability/profiles/NO_MENTAT_C9.json",
+    "istioGatewayProfileId": "IG_LOCALAI_GATEWAY_ROUTED_C9",
+    "istioGatewayProfilePath": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+    "requiredNodeAnnotationPrefixes": [
+      "network-latency.",
+      "packet-loss.",
+      "network-bandwidth."
+    ],
+    "requiredDeploymentAnnotationPrefixes": [
+      "traffic."
+    ],
+    "gatewayTrafficKey": "traffic.localai-gateway-istio",
+    "requiredGatewayTrafficKey": "traffic.localai-gateway-istio",
+    "gatewayTrafficRequiredRoleLabelValue": "master",
+    "gatewayTrafficRequiredOnlyForMasterRole": true
+  },
+  "metricCollectionPolicy": {
+    "benchmarkArtifactsPerTenant": true,
+    "aggregateSummaryRequired": true,
+    "resourcePressureRequired": true,
+    "schedulerDecisionEvidenceRequired": true,
+    "annotationEvidenceRequired": true,
+    "networkTelemetryEvidenceRequired": true,
+    "gatewayTrafficEvidenceRequired": true,
+    "placementComparisonEvidenceRequired": true,
+    "negativeEvidencePolicy": "retain_unsupported_or_inconclusive_network_aware_scheduler_outcomes"
+  },
+  "fixedDimensions": {
+    "localAiWorkerCountPerTenant": 2,
+    "workerVcpusPerNode": 8,
+    "workerMemoryGiBPerNode": 16,
+    "requestTarget": "POST /v1/chat/completions",
+    "hardPlacementControls": "disabled",
+    "schedulerCampaign": "C9",
+    "monitoringStack": "enabled",
+    "monAgent": "MA_NETWORK_AWARE",
+    "networkObservability": "NO_MENTAT_C9",
+    "istioGateway": "IG_LOCALAI_GATEWAY_ROUTED_C9",
+    "trafficAccessMode": "istio_gateway_routed",
+    "reschedulingPolicy": "RESCHEDULE_AFTER_TELEMETRY_PRIMING"
+  },
+  "variedDimensions": {
+    "tenantCount": 2,
+    "workerNodeCount": 4,
+    "latencyProfileId": "L2_INTER_GROUP_HIGH",
+    "latencyAlias": "L2",
+    "trafficProfileId": "TR_C9_2T_DIFFERENTIATED_GATEWAY",
+    "trafficShape": "differentiated",
+    "modelMix": "M1M1",
+    "schedulerMode": "kubernetes_default_scheduler"
+  },
+  "selectionCriteria": [
+    "Keep infrastructure, worker count, traffic profile, model mix, namespace labels and access path constant inside each logical scenario.",
+    "Change only the scheduler mode across DEFAULT, LOADAWARE and NETAWARE variants of the same logical scenario.",
+    "Use gateway-routed traffic so tenant intensity is observable by the telemetry stack.",
+    "Preserve runtime placement and annotation evidence for every variant."
+  ],
+  "lockRules": [
+    "Do not introduce spec.nodeName or hostname-specific placement constraints.",
+    "Do not add schedulerName to DEFAULT variants.",
+    "Use schedulerName: scheduler-plugins-scheduler only for LOADAWARE and NETAWARE variants.",
+    "Use Istio Gateway routing instead of tenant-scoped LocalAI Service port-forwarding.",
+    "Keep group, app and role labels on all LocalAI deployments and pod templates."
+  ],
+  "runtimeGeneratedProfiles": {
+    "resolutionMode": "generated_at_runtime",
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C9/execution/generated-runtime-configs",
+    "applicationDeployment": {
+      "profileId": "AD_NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+      "path": "results/experimental-cycles/C9/execution/generated-runtime-configs/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2/AD_NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json"
+    },
+    "minimalObservability": {
+      "profileId": "MO_NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+      "path": "results/experimental-cycles/C9/execution/generated-runtime-configs/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2/MO_NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json"
+    },
+    "benchmark": {
+      "path": "results/experimental-cycles/C9/execution/generated-runtime-configs/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2/BENCHMARK_NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json"
+    },
+    "cycleVariant": {
+      "path": "results/experimental-cycles/C9/execution/generated-runtime-configs/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2.cycle.json"
+    }
+  },
+  "profileStatus": "planned"
+}

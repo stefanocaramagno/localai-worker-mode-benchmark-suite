@@ -1,0 +1,227 @@
+{
+    "schemaVersion": "provisioning-integration-profile/v1",
+    "provisioningIntegrationProfileId": "PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE",
+    "profileName": "Provider-Backed Runtime Provisioning Template",
+    "profileStatus": "template",
+    "profileRole": "provider_backed_runtime_provisioning_template",
+    "purpose": "Template used to generate variant-specific provisioning integration profiles for provider-backed campaign executions.",
+    "cycleId": "__CYCLE_ID__",
+    "cycleConfigPath": "__CYCLE_CONFIG_PATH__",
+    "providerId": "proxmox-k3s",
+    "infrastructureProfileId": "__INFRASTRUCTURE_PROFILE_ID__",
+    "infrastructureProfilePath": "__INFRASTRUCTURE_PROFILE_PATH__",
+    "providerBindingId": "__PROVIDER_BINDING_ID__",
+    "providerBindingPath": "__PROVIDER_BINDING_PATH__",
+    "providerIndexes": {
+        "providersIndexPath": "config/infrastructure/providers/PROVIDERS_INDEX.json",
+        "providerIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_INDEX.json",
+        "providerBindingsIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json"
+    },
+    "providerConfigResolution": {
+        "realExecutionConfigPreferenceOrder": [
+            "localPath"
+        ],
+        "reviewOrDryRunConfigPreferenceOrder": [
+            "examplePath",
+            "templatePath"
+        ],
+        "localConfigRequiredForRealCreateDelete": true,
+        "allowExampleConfigForDryRun": true,
+        "allowExampleConfigForRealExecution": false,
+        "failFastWhenRealExecutionConfigIsMissing": true,
+        "providerConfigOverrideAllowed": true,
+        "selectionPrecedence": [
+            "explicitOverride",
+            "modeSpecificPreferenceOrder"
+        ],
+        "resolutionModes": {
+            "realExecution": {
+                "appliesWhen": "action in {provision,kubeconfig,destroy} and dryRun=false",
+                "preferenceOrder": [
+                    "localPath"
+                ],
+                "forbiddenConfigKinds": [
+                    "examplePath",
+                    "templatePath"
+                ]
+            },
+            "reviewOrDryRun": {
+                "appliesWhen": "action=plan or dryRun=true",
+                "preferenceOrder": [
+                    "examplePath",
+                    "templatePath"
+                ],
+                "reviewSafe": true
+            }
+        }
+    },
+    "lifecycle": {
+        "lifecyclePolicyId": "LC_REUSE_RETAIN_CLUSTER",
+        "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_REUSE_RETAIN_CLUSTER.json",
+        "clusterLifecycleMode": "reuse",
+        "destroyClusterAfterCycle": false,
+        "deleteClusterAfterCycle": false,
+        "allowDestroyOverride": true,
+        "destroyOverrideRequiresConfirmation": true
+    },
+    "actions": {
+        "plan": {
+            "description": "Resolve cycle, infrastructure, provider binding, lifecycle, and provider configuration without executing provider commands.",
+            "steps": [
+                "resolve_cycle_profile",
+                "resolve_infrastructure_profile",
+                "resolve_provider_binding",
+                "resolve_cluster_lifecycle_policy",
+                "resolve_provider_config",
+                "write_provisioning_integration_manifest"
+            ]
+        },
+        "provision": {
+            "description": "Create or converge the provider-backed cluster, structurally validate the kubeconfig, and refresh it when the provider create output is malformed or incomplete.",
+            "steps": [
+                "resolve_cycle_profile",
+                "resolve_infrastructure_profile",
+                "resolve_provider_binding",
+                "resolve_cluster_lifecycle_policy",
+                "resolve_provider_config",
+                "prepare_kubeconfig_parent_directory",
+                "run_proxmox_k3s_create_with_timeout_and_streaming_log",
+                "capture_provider_command_failure_diagnostics",
+                "structurally_verify_kubeconfig",
+                "refresh_kubeconfig_when_invalid",
+                "verify_refreshed_kubeconfig",
+                "write_provisioning_integration_manifest"
+            ]
+        },
+        "kubeconfig": {
+            "description": "Refresh kubeconfig for an already-created provider-backed cluster.",
+            "steps": [
+                "resolve_provider_config",
+                "run_proxmox_k3s_kubeconfig_with_timeout_and_streaming_log",
+                "verify_kubeconfig",
+                "write_provisioning_integration_manifest"
+            ]
+        },
+        "destroy": {
+            "description": "Delete a provider-backed cluster only when explicitly confirmed and allowed by lifecycle policy.",
+            "steps": [
+                "resolve_provider_config",
+                "check_destroy_confirmation",
+                "run_proxmox_k3s_delete_with_timeout_and_streaming_log",
+                "write_provisioning_integration_manifest"
+            ]
+        }
+    },
+    "commandTemplates": {
+        "create": "proxmox-k3s cluster create -c <resolved-provider-config>",
+        "kubeconfig": "proxmox-k3s cluster kubeconfig -c <resolved-provider-config>",
+        "delete": "proxmox-k3s cluster delete -c <resolved-provider-config>"
+    },
+    "artifactPolicy": {
+        "root": "__PROVISIONING_ROOT__",
+        "logsRoot": "__PROVISIONING_ROOT__/logs",
+        "manifestsRoot": "__PROVISIONING_ROOT__/manifests",
+        "commandsRoot": "__PROVISIONING_ROOT__/commands",
+        "latestManifestPath": "__PROVISIONING_ROOT__/latest-provisioning-integration-manifest.json",
+        "latestTextSummaryPath": "__PROVISIONING_ROOT__/latest-provisioning-integration-summary.txt",
+        "writeLatestAliases": true
+    },
+    "kubeconfigVerification": {
+        "requiredAfterProvision": true,
+        "requiredAfterKubeconfigRefresh": true,
+        "expectedPath": "__KUBECONFIG_PATH__",
+        "mustExist": true,
+        "mustBeNonEmpty": true,
+        "dryRunPolicy": "record_expected_path_without_enforcing_file_presence",
+        "mustBeYamlParseable": true,
+        "mustContainKubernetesConfigShape": true,
+        "requiredTopLevelKeys": [
+            "apiVersion",
+            "kind",
+            "clusters",
+            "contexts",
+            "current-context",
+            "users"
+        ],
+        "requiredKind": "Config",
+        "requiredApiVersion": "v1",
+        "requireHttpsClusterServer": true,
+        "refreshAfterCreatePolicy": "when_invalid",
+        "maxRefreshAttemptsAfterInvalid": 1,
+        "diagnosticBackupPolicy": "backup_invalid_file_before_refresh"
+    },
+    "executionGuards": {
+        "dryRunSupported": true,
+        "realExecutionRequiresProviderConfig": true,
+        "realExecutionRequiresExistingProviderConfigFile": true,
+        "deleteRequiresExplicitConfirmation": true,
+        "templateDeletionNotHandledByThisProfile": true,
+        "stopBeforeApplicationDeploymentOnProvisioningFailure": true
+    },
+    "failurePolicy": {
+        "missingProviderConfig": "fail_fast_for_real_execution",
+        "proxmoxK3sCreateFailure": "fail_cycle_before_cluster_validation",
+        "kubeconfigRefreshFailure": "fail_cycle_before_cluster_validation",
+        "kubeconfigVerificationFailure": "fail_cycle_before_cluster_validation",
+        "destroyFailure": "fail_cleanup_and_preserve_logs",
+        "clusterValidationSkippedAfterProvisioningFailure": "stop_before_cluster_validation",
+        "malformedKubeconfigAfterRefresh": "fail_cycle_before_cluster_validation",
+        "proxmoxK3sCreateTimeout": "fail_cycle_before_cluster_validation_and_preserve_provider_logs",
+        "proxmoxK3sKubeconfigTimeout": "fail_cycle_before_cluster_validation_and_preserve_provider_logs",
+        "proxmoxK3sDeleteTimeout": "fail_cleanup_and_preserve_logs",
+        "providerCommandTimeoutDiagnostics": "capture_structured_provider_log_diagnostics_and_fail_before_cluster_validation",
+        "providerCommandFailureDiagnostics": "capture_structured_provider_log_diagnostics_and_fail_before_cluster_validation"
+    },
+    "governance": {
+        "providerToolBoundary": "This profile orchestrates provider execution from the benchmark suite but does not change proxmox-k3s or make it aware of LocalAI workloads.",
+        "documentationPolicy": "This profile is operational configuration and not project documentation.",
+        "comparisonPolicy": "Provisioning artifacts must be retained under the cycle-specific results tree so future comparisons can distinguish infrastructure differences from workload differences.",
+        "templatePolicy": "This file is a generation template. Runtime campaign variants must materialize concrete provisioning integration profiles from it before execution."
+    },
+    "clusterValidation": {
+        "clusterValidationProfileId": "__CV_PROFILE_ID__",
+        "clusterValidationProfilePath": "__CV_PROFILE_PATH__",
+        "clusterValidationIndexPath": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+        "requiredAfterSuccessfulProvisioning": true,
+        "runner": "scripts/infrastructure/validation/run-provider-backed-cluster-validation.py"
+    },
+    "lifecycleCollisionGuard": {
+        "enabled": true,
+        "enforcement": "warn_only",
+        "checkClusterName": true,
+        "checkConfiguredIpAddresses": true,
+        "checkPreExistingKubeconfigBeforeEphemeralProvisioning": true,
+        "allowReusableClusterIdentityAcrossProfiles": true,
+        "decisionPolicy": {
+            "identityMismatch": "warning",
+            "preExistingEphemeralKubeconfig": "warning",
+            "providerCommandFailure": "blocking"
+        },
+        "rationale": "The benchmark suite may reuse stable provider cluster names and IP allocations across infrastructure profiles. The guard records identity and collision evidence before provider execution without making proxmox-k3s workload-aware."
+    },
+    "providerCommandExecution": {
+        "mode": "streamed_with_timeout",
+        "defaultTimeoutSeconds": 3600,
+        "perStepTimeoutSeconds": {
+            "create": 5400,
+            "kubeconfig": 600,
+            "delete": 1800
+        },
+        "heartbeatIntervalSeconds": 60,
+        "gracefulTerminationSeconds": 30,
+        "outputTailLines": 80,
+        "timeoutStatus": "timed_out",
+        "timeoutPolicy": "fail_current_provider_action_before_cluster_validation",
+        "logStreamingPolicy": "write_provider_output_and_heartbeat_incrementally_to_command_log",
+        "failureDiagnostics": {
+            "enabled": true,
+            "captureProviderLogAnalysis": true,
+            "captureProviderConfigNodeInventory": true,
+            "captureVmidEvents": true,
+            "diagnosticsRoot": "__PROVISIONING_ROOT__/provider-diagnostics",
+            "classificationPolicy": "classify_timeout_or_failure_from_provider_log_without_reexecuting_provider_commands",
+            "remoteInspectionPolicy": "not_executed_by_default",
+            "operatorFollowUpPolicy": "record_safe_follow_up_checks_for_residual_vms_k3s_systemd_and_worker_join_state"
+        }
+    }
+}

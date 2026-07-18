@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "localai-network-observability-profile/v1",
+  "networkObservabilityProfileId": "NO_MENTAT_C9",
+  "profileName": "Mentat Network Observability Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_managed_inter_node_network_observability",
+  "purpose": "Validate and capture provider-managed Mentat inter-node network telemetry required by resource and network-aware scheduler workflows.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "infrastructureProfileId": "INFRA_C9_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json",
+  "monAgentProfileId": "MA_NETWORK_AWARE",
+  "monAgentProfilePath": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+  "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c9-1cp-4w-8c16g/kubeconfig",
+  "kubernetes": {
+    "kubectl": "kubectl",
+    "namespace": "observability",
+    "daemonSetName": "mentat",
+    "serviceAccountName": "mentat",
+    "podLabelSelector": "app=mentat",
+    "podMonitorName": "mentat",
+    "podMonitorRequired": true,
+    "nodeSelector": {
+      "workerLabelKey": "nodepool",
+      "workerLabelValue": "workers",
+      "managementLabelKey": "nodepool",
+      "managementLabelValue": "management"
+    }
+  },
+  "mentat": {
+    "installationMode": "provider_managed",
+    "providerAddon": "mentat",
+    "providerVersion": "v1.0.3",
+    "managedByProvider": true,
+    "image": "ghcr.io/unict-cclab/mentat:v0.3.0",
+    "version": "v0.3.0",
+    "metricsPort": 2112,
+    "bandwidthPort": 2113,
+    "sleepSeconds": 5,
+    "pingAttempts": 5,
+    "pingTimeoutSeconds": 1,
+    "bandwidthBytes": 262144,
+    "bandwidthIntervalSeconds": 90,
+    "bandwidthJitterSeconds": 30,
+    "bandwidthTimeoutSeconds": 30
+  },
+  "prometheus": {
+    "required": true,
+    "namespace": "observability",
+    "serviceName": "prometheus-stack-kube-prom-prometheus",
+    "port": 9090,
+    "url": "http://prometheus-stack-kube-prom-prometheus.observability:9090",
+    "localPortForwardHost": "127.0.0.1",
+    "queryTimeoutSeconds": 10,
+    "portForwardReadyTimeoutSeconds": 20,
+    "requiredMetricFamilies": [
+      "node_latency",
+      "node_latency_bucket",
+      "node_latency_sum",
+      "node_latency_count",
+      "node_packet_loss_ratio",
+      "node_bandwidth_bytes_per_second",
+      "node_bandwidth_probe_failures_total"
+    ],
+    "requiredLabelKeys": [
+      "origin_node",
+      "destination_node"
+    ],
+    "queries": [
+      {
+        "queryId": "latency_samples",
+        "metricFamily": "node_latency_count",
+        "promql": "node_latency_count",
+        "required": true,
+        "minimumSeries": 1
+      },
+      {
+        "queryId": "packet_loss_ratio",
+        "metricFamily": "node_packet_loss_ratio",
+        "promql": "node_packet_loss_ratio",
+        "required": true,
+        "minimumSeries": 1
+      },
+      {
+        "queryId": "bandwidth_bytes_per_second",
+        "metricFamily": "node_bandwidth_bytes_per_second",
+        "promql": "node_bandwidth_bytes_per_second",
+        "required": true,
+        "minimumSeries": 1
+      },
+      {
+        "queryId": "bandwidth_probe_failures",
+        "metricFamily": "node_bandwidth_probe_failures_total",
+        "promql": "node_bandwidth_probe_failures_total",
+        "required": false,
+        "minimumSeries": 0
+      }
+    ]
+  },
+  "validation": {
+    "expectedMinimumReadyPods": 4,
+    "expectedDaemonSetName": "mentat",
+    "requireDaemonSet": true,
+    "requirePrometheusService": true,
+    "requirePrometheusMetrics": true,
+    "requirePodMonitorWhenMonitoringEnabled": true,
+    "requireNodeAnnotations": true,
+    "requiredNodeAnnotationPrefixes": [
+      "network-latency.",
+      "packet-loss.",
+      "network-bandwidth."
+    ],
+    "requiredWorkerNodeCount": 4,
+    "workerNodeLabelSelector": {
+      "nodepool": "workers"
+    },
+    "expectedMetricLabels": [
+      "origin_node",
+      "destination_node"
+    ],
+    "minimumPeerSeriesPerMetric": 1,
+    "waitTimeoutSeconds": 240,
+    "pollIntervalSeconds": 15,
+    "captureNodeAnnotations": true,
+    "capturePodLogs": true,
+    "capturePodMonitor": true
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mentat",
+    "logsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mentat/logs",
+    "snapshotsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mentat/snapshots",
+    "manifestsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mentat/manifests",
+    "summariesRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mentat/summaries",
+    "latestManifestPath": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mentat/latest-mentat-observability-manifest.json",
+    "latestSummaryPath": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mentat/latest-mentat-observability-summary.txt",
+    "latestValidationSnapshotPath": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mentat/latest-mentat-validation-snapshot.json",
+    "writeLatestAliases": true,
+    "perVariantOutputRootRequired": true,
+    "perVariantOutputRootPattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/mentat"
+  },
+  "decisionPolicy": {
+    "plannedStatus": "planned",
+    "capturedStatus": "captured",
+    "validatedStatus": "validated",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "providerManagedDeployment": true,
+    "requireExistingDaemonSetWhenProviderManaged": true,
+    "queryPrometheusByPortForward": true,
+    "allowPrometheusQuerySkipForCaptureOnly": true
+  },
+  "governance": {
+    "installationBoundary": "Mentat is installed by the infrastructure provider. This profile validates and captures the existing DaemonSet and related telemetry instead of applying a separate manifest.",
+    "metricBoundary": "The required Prometheus metrics are node_latency, node_packet_loss_ratio and node_bandwidth_bytes_per_second with origin_node and destination_node labels.",
+    "annotationBridge": "mon-agent consumes Mentat metrics from Prometheus and annotates Kubernetes nodes with network-latency.<node>, packet-loss.<node> and network-bandwidth.<node> keys.",
+    "runtimeArtifactPolicy": "Mentat evidence is stored under the active scenario variant and network-aware-scheduler family runtime root. Frozen artifacts must preserve the same per-variant layout."
+  }
+}

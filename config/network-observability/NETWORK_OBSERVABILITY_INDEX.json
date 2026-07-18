@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "network-observability-index/v1",
+  "indexId": "NETWORK_OBSERVABILITY_INDEX",
+  "description": "Registry of network observability profiles used to validate provider-managed inter-node telemetry exporters and Prometheus metrics.",
+  "defaultProfileId": "NO_MENTAT_C9",
+  "profiles": [
+    {
+      "networkObservabilityProfileId": "NO_MENTAT_C9",
+      "cycleId": "C9",
+      "path": "config/network-observability/profiles/NO_MENTAT_C9.json",
+      "schemaPath": "config/network-observability/schemas/NETWORK_OBSERVABILITY_PROFILE_SCHEMA_V1.json",
+      "status": "active",
+      "role": "provider_managed_mentat_network_observability",
+      "providerAddon": "mentat",
+      "providerMinimumCompatibleVersion": "v1.0.3",
+      "exporterVersion": "v0.3.0",
+      "requiredMetricFamilies": [
+        "node_latency",
+        "node_packet_loss_ratio",
+        "node_bandwidth_bytes_per_second"
+      ],
+      "requiredNodeAnnotationPrefixes": [
+        "network-latency.",
+        "packet-loss.",
+        "network-bandwidth."
+      ]
+    }
+  ],
+  "requirements": {
+    "prometheusRequired": true,
+    "podMonitorRequired": true,
+    "providerManagedMentatSupported": true,
+    "nodeAnnotationBridgeProvidedByMonAgent": true,
+    "expectedMetricLabels": [
+      "origin_node",
+      "destination_node"
+    ]
+  },
+  "runtimeGeneratedProfilePolicy": {
+    "enabled": false,
+    "profileResolution": "static_profile_with_optional_output_root_override",
+    "perVariantOutputRootPattern": "results/experimental-cycles/<cycleId>/variants/<scenarioId>/network-aware-scheduler/mentat"
+  },
+  "governanceRules": [
+    "Network observability profiles validate telemetry exporters and metric availability; they do not install provider-managed add-ons.",
+    "Provider-managed Mentat deployment evidence must be captured before network-aware scheduler decisions are interpreted.",
+    "Node annotation validation is performed through the mon-agent profile, while this profile verifies that the upstream Mentat metrics are present and labeled correctly."
+  ]
+}

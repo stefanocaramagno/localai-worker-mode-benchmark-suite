@@ -1,0 +1,58 @@
+{
+  "resourceVariationScenariosIndexId": "RESOURCE_VARIATION_SCENARIOS_INDEX",
+  "schemaVersion": "resource-variation-scenarios-index/v1",
+  "status": "active",
+  "purpose": "Registry of resource-variation scenarios used by comparative experimental campaigns.",
+  "scenariosRoot": "config/scenarios/resource-variation",
+  "referenceScenarioId": "RV_8C16G",
+  "fixedDimensions": [
+    "model",
+    "workload",
+    "LocalAI worker count",
+    "placement profile",
+    "request payload",
+    "worker storage capacity"
+  ],
+  "variedDimensions": [
+    "worker CPU capacity",
+    "worker memory capacity"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "RV_4C8G",
+      "path": "config/scenarios/resource-variation/RV_4C8G.json",
+      "infrastructureProfileId": "INFRA_C2_1CP_2W_4C8G",
+      "providerBindingId": "BINDING_INFRA_C2_1CP_2W_4C8G_PROXMOX_K3S",
+      "workerVcpusPerNode": 4,
+      "workerMemoryGiBPerNode": 8,
+      "referenceScenario": false,
+      "resultsRoot": "results/experimental-cycles/C2/benchmark/resource-variation",
+      "outputSubdir": "RV_4C8G_official_locked",
+      "workerStorageGiBPerNode": 35
+    },
+    {
+      "scenarioId": "RV_4C16G",
+      "path": "config/scenarios/resource-variation/RV_4C16G.json",
+      "infrastructureProfileId": "INFRA_C2_1CP_2W_4C16G",
+      "providerBindingId": "BINDING_INFRA_C2_1CP_2W_4C16G_PROXMOX_K3S",
+      "workerVcpusPerNode": 4,
+      "workerMemoryGiBPerNode": 16,
+      "referenceScenario": false,
+      "resultsRoot": "results/experimental-cycles/C2/benchmark/resource-variation",
+      "outputSubdir": "RV_4C16G_official_locked",
+      "workerStorageGiBPerNode": 35
+    },
+    {
+      "scenarioId": "RV_8C16G",
+      "path": "config/scenarios/resource-variation/RV_8C16G.json",
+      "infrastructureProfileId": "INFRA_C2_1CP_2W_8C16G",
+      "providerBindingId": "BINDING_INFRA_C2_1CP_2W_8C16G_PROXMOX_K3S",
+      "workerVcpusPerNode": 8,
+      "workerMemoryGiBPerNode": 16,
+      "referenceScenario": true,
+      "resultsRoot": "results/experimental-cycles/C2/benchmark/resource-variation",
+      "outputSubdir": "RV_8C16G_official_locked",
+      "workerStorageGiBPerNode": 35
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "technicalDiagnosisProfileId": "TD_C3_NODE_COUNT_VARIATION",
+  "profileId": "TD_C3_NODE_COUNT_VARIATION",
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "profileName": "C3 Node-Count Variation Technical Diagnosis Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_node_count_variation_technical_diagnosis",
+  "description": "Technical diagnosis profile for the provider-backed node-count variation campaign.",
+  "cycleId": "C3",
+  "cycleConfigPath": "config/experimental-cycles/C3.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "validationSummaryRelativePath": "results/experimental-cycles/C1/diagnosis/C1_regeneration_diagnosis_all_diagnosis.json",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "familyOrder": [
+    "node-count-variation"
+  ],
+  "scenarioConfigRoots": {
+    "node-count-variation": "config/scenarios/node-count-variation"
+  },
+  "scenarioConfigFiles": {
+    "node-count-variation": [
+      "config/scenarios/node-count-variation/NC_2N.json",
+      "config/scenarios/node-count-variation/NC_3N.json",
+      "config/scenarios/node-count-variation/NC_4N.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "node-count-variation": "results/experimental-cycles/C3/benchmark/node-count-variation"
+  },
+  "referenceScenarioByFamily": {
+    "node-count-variation": "NC_2N"
+  },
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "governance": {
+    "comparisonPolicy": "Node-count diagnosis must compare scenarios only after verifying that application-level dimensions and per-node worker capacity are fixed.",
+    "evidencePolicy": "Unsupported variants are retained as capacity or scheduling evidence and not discarded as execution noise.",
+    "interpretationPolicy": "If fewer than two node-count variants are measured, diagnosis must avoid claiming a comparative node-count effect."
+  },
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C3/diagnosis",
+  "familyScope": "all",
+  "expectedFamilies": [
+    "node-count-variation"
+  ],
+  "families": [
+    "node-count-variation"
+  ],
+  "fixedDimensionsByFamily": {
+    "node-count-variation": [
+      "model=M1",
+      "LocalAI worker-count=W4",
+      "placement=PL_SPREAD_WORKERS",
+      "workload=WL2",
+      "worker node capacity=8 vCPU / 16 GiB"
+    ]
+  },
+  "variedDimensionByFamily": {
+    "node-count-variation": "provider worker node count"
+  },
+  "familyDisplayNames": {
+    "node-count-variation": "C3 Node-Count Variation"
+  },
+  "campaignAwareDiagnosis": {
+    "enabled": true,
+    "campaignExecutionManifest": "results/experimental-cycles/C3/execution/latest-campaign-execution-manifest.json",
+    "variantEvidenceRoot": "results/experimental-cycles/C3/variants",
+    "retainUnsupportedScenarioEvidence": true
+  },
+  "interpretationPolicy": {
+    "minimumMeasuredVariantsForComparativeClaims": 2,
+    "treatUnsupportedAsEvidence": true,
+    "avoidOverstatingWeakSignals": true,
+    "primaryQuestion": "Whether additional provider worker nodes improve distribution and performance or introduce overhead under fixed application-level dimensions."
+  },
+  "nodeCountVariation": {
+    "fixedDimensions": [
+      "model",
+      "workload",
+      "LocalAI worker count",
+      "per-node worker capacity",
+      "placement policy"
+    ],
+    "variedDimensions": [
+      "provider worker node count"
+    ],
+    "referenceScenarioId": "NC_2N",
+    "scenarioOrdering": [
+      "NC_2N",
+      "NC_3N",
+      "NC_4N"
+    ],
+    "minimumMeasuredVariantsForPerformanceComparison": 2,
+    "interpretation": "Measured node-count variants are compared only when model, workload, LocalAI worker count, per-node capacity and placement policy remain fixed."
+  },
+  "minimumScenarioSamples": 1,
+  "referenceScenarioId": "NC_2N",
+  "referenceScenarioConfigPath": "config/scenarios/node-count-variation/NC_2N.json",
+  "referenceScenarioConfigByFamily": {
+    "node-count-variation": "config/scenarios/node-count-variation/NC_2N.json"
+  }
+}

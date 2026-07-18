@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "localai-rescheduling-index/v1",
+  "indexId": "RESCHEDULING_INDEX",
+  "indexStatus": "active",
+  "purpose": "Catalog controlled redeployment and rescheduling profiles used to re-evaluate workload placement after telemetry has been collected.",
+  "profiles": [
+    {
+      "reschedulingProfileId": "RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+      "profilePath": "config/rescheduling/profiles/RS_C8_RESOURCE_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+      "cycleId": "C8",
+      "status": "active",
+      "role": "telemetry_primed_redeployment"
+    },
+    {
+      "reschedulingProfileId": "RS_C9_NETWORK_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+      "profilePath": "config/rescheduling/profiles/RS_C9_NETWORK_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+      "cycleId": "C9",
+      "status": "active",
+      "role": "network_aware_telemetry_primed_redeployment"
+    }
+  ]
+}

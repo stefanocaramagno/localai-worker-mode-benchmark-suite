@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "localai-application-deployment-profile-schema/v1",
+  "schemaId": "LOCALAI_APPLICATION_DEPLOYMENT_PROFILE_SCHEMA_V1",
+  "status": "active",
+  "purpose": "Validation schema for LocalAI application deployment profiles used after provider-backed cluster validation and before benchmark execution.",
+  "requiredTopLevelFields": [
+    "schemaVersion",
+    "applicationDeploymentProfileId",
+    "cycleId",
+    "baselineId",
+    "deploymentTopology",
+    "preDeploymentGate",
+    "artifactPolicy",
+    "smokeValidation",
+    "decisionPolicy"
+  ],
+  "requiredDeploymentTopologyFields": [
+    "namespace",
+    "kubeconfigPath",
+    "kustomizeApplyOrder",
+    "model",
+    "workerCount",
+    "placement",
+    "expectedResources"
+  ],
+  "validationRules": [
+    "The deployment profile must resolve a cycle profile and a baseline profile before application resources are applied.",
+    "The deployment profile must declare the Kustomize targets in the order required to create namespace, storage, shared services, server, and worker topology resources.",
+    "The deployment profile must declare the model, worker count, placement, namespace, expected active worker deployments, and smoke-test contract.",
+    "Application deployment must not proceed when the required cluster-validation gate does not allow application deployment.",
+    "Application deployment artifacts must be written under the cycle-specific results tree.",
+    "When a placement profile is declared, the deployment profile must include placementProfileId and placementProfilePath under deploymentTopology.placement.",
+    "Smoke validation should distinguish Kubernetes rollout from application-level HTTP readiness and should support retries, backoff, port-forward restarts, and failure diagnostics."
+  ],
+  "optionalSmokeValidationFields": [
+    "initialDelaySeconds",
+    "readinessTimeoutSeconds",
+    "readinessRequestTimeoutSeconds",
+    "retryIntervalSeconds",
+    "chatCompletionTimeoutSeconds",
+    "chatCompletionMaxAttempts",
+    "chatCompletionRetryIntervalSeconds",
+    "captureDiagnosticsOnFailure",
+    "portForward.maxRestartAttempts",
+    "portForward.restartBackoffSeconds"
+  ]
+}

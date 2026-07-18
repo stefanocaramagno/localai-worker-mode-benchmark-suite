@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "cluster-lens-index/v1",
+  "indexId": "CLUSTER_LENS_INDEX",
+  "status": "active",
+  "profileSchemaPath": "config/cluster-lens/schemas/CLUSTER_LENS_PROFILE_SCHEMA_V1.json",
+  "description": "Registry of cluster-lens capture profiles used to collect Kubernetes topology and LocalAI placement evidence.",
+  "defaultProfileId": "CL_C9_PLACEMENT_SNAPSHOT",
+  "profilesRoot": "config/cluster-lens/profiles",
+  "profiles": [
+    {
+      "clusterLensProfileId": "CL_C9_PLACEMENT_SNAPSHOT",
+      "cycleId": "C9",
+      "path": "config/cluster-lens/profiles/CL_C9_PLACEMENT_SNAPSHOT.json",
+      "schemaPath": "config/cluster-lens/schemas/CLUSTER_LENS_PROFILE_SCHEMA_V1.json",
+      "status": "active",
+      "role": "network_aware_scheduler_placement_capture",
+      "providerAddon": "cluster_lens",
+      "providerMinimumCompatibleVersion": "v1.0.3",
+      "clusterLensVersion": "v0.0.5",
+      "artifactRootPattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/cluster-lens"
+    }
+  ],
+  "collectorScripts": {
+    "python": "scripts/observability/cluster-lens/capture-cluster-lens-snapshot.py",
+    "bash": "scripts/observability/cluster-lens/capture-cluster-lens-snapshot.sh",
+    "powershell": "scripts/observability/cluster-lens/Capture-ClusterLensSnapshot.ps1"
+  },
+  "requirements": {
+    "providerManagedClusterLensSupported": true,
+    "providerAddonName": "cluster_lens",
+    "kubernetesSnapshotEnrichmentRequired": true,
+    "expectedNamespace": "observability",
+    "expectedServiceName": "cluster-lens",
+    "expectedApiPath": "/api/snapshot",
+    "placementComparisonRequiresScenarioContext": true
+  },
+  "governanceRules": [
+    "cluster-lens is installed by the infrastructure provider; this registry only defines capture and artifact conventions.",
+    "Captured cluster-lens snapshots must be stored together with Kubernetes pods, deployments and nodes snapshots to preserve schedulerName, labels, annotations and node placement evidence.",
+    "Profile references and artifact paths must remain repository-relative unless a runtime command explicitly overrides the output root.",
+    "The collector must not mutate cluster resources. It is a read-only placement evidence capture utility."
+  ]
+}

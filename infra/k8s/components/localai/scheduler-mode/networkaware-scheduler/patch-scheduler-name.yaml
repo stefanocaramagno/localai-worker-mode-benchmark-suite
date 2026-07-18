@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-server
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      schedulerName: scheduler-plugins-scheduler
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-a
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      schedulerName: scheduler-plugins-scheduler
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-b
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      schedulerName: scheduler-plugins-scheduler
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-c
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      schedulerName: scheduler-plugins-scheduler
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai-rpc-d
+  namespace: localai-benchmark
+spec:
+  template:
+    spec:
+      schedulerName: scheduler-plugins-scheduler

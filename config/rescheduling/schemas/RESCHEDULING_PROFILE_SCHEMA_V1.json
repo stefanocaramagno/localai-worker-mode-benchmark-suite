@@ -1,0 +1,345 @@
+{
+  "schemaVersion": "localai-rescheduling-profile-schema/v1",
+  "schemaId": "RESCHEDULING_PROFILE_SCHEMA_V1",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "reschedulingProfileId",
+    "kubernetes",
+    "targetWorkloads",
+    "redeploymentPolicy",
+    "artifactPolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string",
+      "const": "localai-rescheduling-profile/v1"
+    },
+    "reschedulingProfileId": {
+      "type": "string"
+    },
+    "profileName": {
+      "type": "string"
+    },
+    "profileStatus": {
+      "type": "string"
+    },
+    "profileRole": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "cycleId": {
+      "type": "string"
+    },
+    "cycleConfigPath": {
+      "type": "string"
+    },
+    "kubeconfigPath": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "kubernetes": {
+      "type": "object",
+      "properties": {
+        "kubectl": {
+          "type": "string"
+        }
+      }
+    },
+    "targetWorkloads": {
+      "type": "object",
+      "properties": {
+        "namespaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deploymentNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "labelSelector": {
+          "type": "string"
+        },
+        "skipZeroReplicaDeployments": {
+          "type": "boolean"
+        },
+        "minimumSelectedDeployments": {
+          "type": "integer"
+        },
+        "expectedSelectedDeploymentCount": {
+          "type": "integer"
+        },
+        "requireExpectedSelectedDeploymentCount": {
+          "type": "boolean"
+        },
+        "scenarioOverrides": {
+          "type": "string"
+        },
+        "requiredWorkloadLabels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "masterRoleLabelValue": {
+          "type": "string"
+        },
+        "workerRoleLabelValue": {
+          "type": "string"
+        }
+      }
+    },
+    "telemetryPriming": {
+      "type": "object"
+    },
+    "annotationGate": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "requiredNodeAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredDeploymentAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optionalNodeAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "optionalDeploymentAnnotations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alternativeDeploymentAnnotationGroups": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "dynamicAnnotationSyntax": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "requireAllNodesAnnotated": {
+          "type": "boolean"
+        },
+        "requireAllSelectedDeploymentsAnnotated": {
+          "type": "boolean"
+        },
+        "requireAtLeastOneSelectedDeploymentAnnotated": {
+          "type": "boolean"
+        },
+        "failBeforeRestartWhenMissing": {
+          "type": "boolean"
+        },
+        "annotationControlledLatencyMatrixGate": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "source": {
+              "type": "string"
+            },
+            "requiredForProfiles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "latencyAnnotationPrefix": {
+              "type": "string"
+            },
+            "latencyToleranceMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "validateBeforeRedeployment": {
+              "type": "boolean"
+            },
+            "failBeforeRestartOnMismatch": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "reapplyBeforeRedeployment": {
+              "type": "boolean"
+            },
+            "reapplyScriptPath": {
+              "type": "string"
+            },
+            "cycleConfigPath": {
+              "type": "string"
+            },
+            "reapplyTimeoutSeconds": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "validateAfterReapplyBeforeRedeployment": {
+              "type": "boolean"
+            },
+            "maxReapplyAttempts": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "delayAfterReapplySeconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "delayBetweenAttemptsSeconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "controlledAnnotationWindow": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "maxAttempts": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "delayAfterReapplySeconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "delayBetweenAttemptsSeconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "stabilityValidationDelaySeconds": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "capturePhasePrefix": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "redeploymentPolicy": {
+      "type": "object",
+      "required": [
+        "strategy",
+        "rolloutTimeoutSeconds",
+        "postRestartStabilizationSeconds"
+      ],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": [
+            "rollout_restart",
+            "delete_pods_serial"
+          ],
+          "description": "Redeployment mechanism used to force fresh scheduling decisions. delete_pods_serial avoids temporary surge pods on dense variants."
+        },
+        "restartOrder": {
+          "type": "string"
+        },
+        "rolloutTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "postRestartStabilizationSeconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "waitForRolloutCompletion": {
+          "type": "boolean"
+        },
+        "captureEventsAfterRestart": {
+          "type": "boolean"
+        },
+        "podDeletionTimeoutSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "podReadinessPollSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reason": {
+          "type": "string"
+        },
+        "kubectlRetryPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "maxAttempts": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "delaySeconds": {
+              "type": "number",
+              "minimum": 0
+            },
+            "commandTimeoutSeconds": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "retryOnJsonParseError": {
+              "type": "boolean"
+            },
+            "reason": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "measurementBoundary": {
+      "type": "object"
+    },
+    "artifactPolicy": {
+      "type": "object"
+    },
+    "decisionPolicy": {
+      "type": "object"
+    },
+    "governance": {
+      "type": "object"
+    },
+    "networkAwareTelemetry": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

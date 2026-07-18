@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "placement-profiles-index/v1",
+  "placementProfilesIndexId": "PLACEMENT_PROFILES_INDEX",
+  "status": "active",
+  "purpose": "Registry of LocalAI placement profiles used to decouple placement intent from infrastructure, model, workload, and cycle definitions.",
+  "profilesRoot": "config/placement/profiles",
+  "schemaPath": "config/placement/schemas/PLACEMENT_PROFILE_SCHEMA_V1.json",
+  "defaultBaselinePlacementProfileId": "PL_COLOCATED",
+  "activePlacementProfiles": [
+    "PL_COLOCATED",
+    "PL_DISTRIBUTED_TWO_NODE",
+    "PL_SPREAD_WORKERS",
+    "PL_SERVER_SEPARATED",
+    "PL_BALANCED_STATIC"
+  ],
+  "profiles": [
+    {
+      "placementProfileId": "PL_COLOCATED",
+      "path": "config/placement/profiles/PL_COLOCATED.json",
+      "status": "active",
+      "strategy": "colocated",
+      "profileRole": "baseline_colocated_placement_profile",
+      "currentBaselineCompatible": true,
+      "hasActiveKustomizeTarget": true,
+      "currentBaselineTopologyPath": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w4",
+      "activeForProviderBackedPlacementVariation": true,
+      "placementType": "colocated_single_worker_node",
+      "supportedInfrastructureWorkerCounts": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "placementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+      "path": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+      "status": "active",
+      "strategy": "distributed_two_node",
+      "profileRole": "two_node_distributed_worker_placement_profile",
+      "currentBaselineCompatible": false,
+      "hasActiveKustomizeTarget": true,
+      "currentBaselineTopologyPath": "infra/k8s/compositions/topology/distributed-genai-pb-two-node-w4",
+      "activeForProviderBackedPlacementVariation": true,
+      "placementType": "distributed_two_node",
+      "supportedInfrastructureWorkerCounts": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "placementProfileId": "PL_SERVER_SEPARATED",
+      "path": "config/placement/profiles/PL_SERVER_SEPARATED.json",
+      "status": "active",
+      "strategy": "server_separated_spread_workers",
+      "profileRole": "server_separated_spread_worker_profile",
+      "currentBaselineCompatible": false,
+      "hasActiveKustomizeTarget": true,
+      "currentBaselineTopologyPath": "infra/k8s/compositions/topology/server-separated-genai-pb-worker-01-spread-w4",
+      "activeForProviderBackedPlacementVariation": true,
+      "placementType": "server_separated_spread_workers",
+      "supportedInfrastructureWorkerCounts": [
+        4
+      ]
+    },
+    {
+      "placementProfileId": "PL_SPREAD_WORKERS",
+      "path": "config/placement/profiles/PL_SPREAD_WORKERS.json",
+      "status": "active",
+      "strategy": "spread_workers",
+      "profileRole": "worker_spread_profile",
+      "currentBaselineCompatible": false,
+      "hasActiveKustomizeTarget": true,
+      "currentBaselineTopologyPath": "infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4",
+      "currentNodeCountVariationTopologyPaths": {
+        "2": "infra/k8s/compositions/topology/spread-genai-pb-2-worker-nodes-w4",
+        "3": "infra/k8s/compositions/topology/spread-genai-pb-3-worker-nodes-w4",
+        "4": "infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4"
+      },
+      "activeForProviderBackedPlacementVariation": true,
+      "placementType": "spread_workers_by_infrastructure_worker_count",
+      "supportedInfrastructureWorkerCounts": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "placementProfileId": "PL_BALANCED_STATIC",
+      "path": "config/placement/profiles/PL_BALANCED_STATIC.json",
+      "status": "active",
+      "strategy": "balanced_static",
+      "profileRole": "balanced_static_profile",
+      "currentBaselineCompatible": false,
+      "hasActiveKustomizeTarget": true,
+      "currentBaselineTopologyPath": "infra/k8s/compositions/topology/balanced-static-genai-pb-w4",
+      "activeForProviderBackedPlacementVariation": true,
+      "placementType": "balanced_static_resource_aware",
+      "supportedInfrastructureWorkerCounts": [
+        3,
+        4
+      ]
+    }
+  ],
+  "governanceRules": [
+    "Placement profiles describe topology intent and must not change model, workload, benchmark protocol, or infrastructure resources.",
+    "Profiles that use stable node names are compatibility profiles; label-based node-pool selection remains the preferred direction for future generated clusters.",
+    "Deployment profiles must reference placement profiles explicitly through placementProfileId and placementProfilePath.",
+    "Placement profiles referenced by active scenarios must expose concrete Kustomize topology targets."
+  ],
+  "legacyPlacementScenarioPolicy": {
+    "legacyScenarioRoot": "config/scenarios/pilot/placement",
+    "legacyScenarioIds": [
+      "PL1",
+      "PL2"
+    ],
+    "canonicalIdentifier": "placementProfileId",
+    "rationale": "Historical fixed-cluster and legacy pilot workflows may still refer to PL1/PL2. Provider-backed cycles must resolve placement intent through explicit PL_* placement profiles.",
+    "legacyScenarioIdentifierField": "legacyScenarioId",
+    "legacyScenarioIdsAreCanonicalProfiles": false,
+    "providerBackedCyclesMayUseLegacyScenarioIds": false,
+    "resolutionMode": "legacy_scenario_id_to_canonical_placement_profile_id"
+  },
+  "legacyPlacementScenarioAliases": [
+    {
+      "legacyScenarioId": "PL1",
+      "legacyScenarioPath": "config/scenarios/pilot/placement/PL1.json",
+      "canonicalPlacementProfileId": "PL_COLOCATED",
+      "canonicalPlacementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+      "identifierClass": "historical_fixed_cluster_scenario",
+      "canonicalIdentifierField": "placementProfileId"
+    },
+    {
+      "legacyScenarioId": "PL2",
+      "legacyScenarioPath": "config/scenarios/pilot/placement/PL2.json",
+      "canonicalPlacementProfileId": "PL_DISTRIBUTED_TWO_NODE",
+      "canonicalPlacementProfilePath": "config/placement/profiles/PL_DISTRIBUTED_TWO_NODE.json",
+      "identifierClass": "historical_fixed_cluster_scenario",
+      "canonicalIdentifierField": "placementProfileId"
+    }
+  ],
+  "identifierPolicy": {
+    "canonicalIdentifierField": "placementProfileId",
+    "canonicalPlacementProfilePrefix": "PL_",
+    "providerBackedScenarioIdentifierField": "scenarioId",
+    "providerBackedScenarioPrefix": "PLC_",
+    "historicalFixedClusterScenarioPrefix": "PL",
+    "provisioningValidationPrefix": "PV_",
+    "rules": [
+      "Use placementProfileId for reusable placement profiles and deployment resolution.",
+      "Use scenarioId for campaign-specific placement-variation scenarios.",
+      "Use PL1/PL2 only as historical fixed-cluster scenario identifiers.",
+      "Do not use PV_* for placement scenarios because PV_* is reserved for provisioning-validation profiles."
+    ]
+  }
+}

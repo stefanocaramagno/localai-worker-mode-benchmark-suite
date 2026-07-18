@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "cluster-capture-profile/v1",
+  "profileId": "CS_STANDARD_CLUSTER_CAPTURE",
+  "description": "Default cluster-side collection profile for standard benchmark runs and resource-aware scheduler evaluations.",
+  "collectorScriptRelativePathBash": "scripts/validation/cluster-side/collect-cluster-side-artifacts.sh",
+  "collectorScriptRelativePathPowerShell": "scripts/validation/cluster-side/Collect-ClusterSideArtifacts.ps1",
+  "preStageSuffix": "_cluster_pre",
+  "postStageSuffix": "_cluster_post",
+  "manifestSuffix": "_manifest.json",
+  "textSuffix": "_summary.txt",
+  "artifacts": [
+    {
+      "name": "nodes_wide",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get nodes -o wide",
+      "outputSuffix": "nodes-wide.txt"
+    },
+    {
+      "name": "top_nodes",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" top nodes",
+      "outputSuffix": "top-nodes.txt"
+    },
+    {
+      "name": "pods_wide",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get pods -n {namespace} -o wide",
+      "outputSuffix": "pods-wide.txt"
+    },
+    {
+      "name": "top_pods",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" top pods -n {namespace}",
+      "outputSuffix": "top-pods.txt"
+    },
+    {
+      "name": "services",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get svc -n {namespace}",
+      "outputSuffix": "services.txt"
+    },
+    {
+      "name": "events",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get events -n {namespace} --sort-by=.metadata.creationTimestamp",
+      "outputSuffix": "events.txt"
+    },
+    {
+      "name": "pods_describe",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" describe pods -n {namespace}",
+      "outputSuffix": "pods-describe.txt"
+    },
+    {
+      "name": "nodes_json",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get nodes -o json",
+      "outputSuffix": "nodes.json"
+    },
+    {
+      "name": "pods_json",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get pods -n {namespace} -o json",
+      "outputSuffix": "pods.json"
+    },
+    {
+      "name": "top_pods_containers",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" top pods -n {namespace} --containers",
+      "outputSuffix": "top-pods-containers.txt"
+    },
+    {
+      "name": "events_json",
+      "command": "kubectl --kubeconfig \"{kubeconfig}\" get events -n {namespace} -o json",
+      "outputSuffix": "events.json"
+    }
+  ],
+  "observabilityMode": "minimal_k3s_metrics_server",
+  "notes": [
+    "This capture profile intentionally relies on kubectl, metrics-server and Kubernetes API snapshots.",
+    "JSON snapshots are collected to make pod placement, restart counts, pending pods and warning events machine-readable.",
+    "When multiple namespaces are provided, namespace-scoped artifacts are collected once per namespace while cluster-scoped artifacts are collected once per stage."
+  ],
+  "namespaceCollectionPolicy": {
+    "primaryNamespacePreservesLegacyArtifactNames": true,
+    "additionalNamespaceArtifactNaming": "<output-prefix>_<namespace-token>_<artifact-output-suffix>",
+    "namespacePlaceholder": "{namespace}",
+    "clusterScopedArtifactsRunOnce": true,
+    "namespaceScopedArtifactsRunPerResolvedNamespace": true
+  },
+  "profileStatus": "active",
+  "schemaPath": "config/cluster-capture/schemas/CLUSTER_CAPTURE_PROFILE_SCHEMA_V1.json",
+  "profileScope": {
+    "usage": [
+      "standard_benchmark_run",
+      "resource_aware_scheduler_evaluation",
+      "minimal_cluster_side_observability"
+    ],
+    "role": "standard_cluster_side_capture"
+  }
+}

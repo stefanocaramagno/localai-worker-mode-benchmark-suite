@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "infrastructure-profile/v1",
+  "infrastructureProfileId": "INFRA_C7_1CP_2W_8C16G",
+  "profileName": "Default Scheduler Baseline 2-Worker K3s Cluster with Fixed Worker Capacity",
+  "status": "planned_provider_backed_default_scheduler_baseline_profile",
+  "profileCategory": "default-scheduler-baseline",
+  "profileRole": "2_worker_default_scheduler_baseline_profile",
+  "purpose": "Provider-backed C7 infrastructure profile with 2 worker nodes and fixed per-node capacity for evaluating Kubernetes default-scheduler placement decisions without hard pod placement controls under tenant-count, latency-profile and tenant-traffic variation.",
+  "clusterIdentity": {
+    "clusterName": "genai-pb",
+    "kubernetesDistribution": "K3s",
+    "k3sVersion": "v1.35.3+k3s1",
+    "hardwareClass": "CPU-only",
+    "gpuAvailable": false
+  },
+  "provider": {
+    "providerId": "proxmox-k3s",
+    "providerType": "proxmox-k3s",
+    "mode": "proxmox_k3s_generated_cluster",
+    "managedByBenchmarkSuite": true,
+    "tool": "proxmox-k3s",
+    "toolRepository": "proxmox-k3s",
+    "providerBindingId": "BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S",
+    "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "providerIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_INDEX.json"
+  },
+  "lifecycle": {
+    "scope": "dynamically_provisioned_cluster",
+    "supportedModes": [
+      "reuse",
+      "ephemeral"
+    ],
+    "recommendedMode": "ephemeral",
+    "destroyAfterCycleDefault": true,
+    "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+    "clusterLifecycleModeDefault": "ephemeral",
+    "destroyClusterAfterCycleDefault": true,
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "lifecycleArtifactRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/lifecycle",
+    "provisioningLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/provisioning",
+    "deletionLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/deletion",
+    "policySelection": "Cycles may override the profile default only when the override is declared in the cycle profile and captured in the lifecycle manifest."
+  },
+  "nodeNaming": {
+    "nodeNamingConventionId": "GENAI_PB_REUSABLE_NODE_NAMING_V1",
+    "nodeNamingConventionPath": "config/infrastructure/node-naming/GENAI_PB_REUSABLE_NODE_NAMING_V1.json",
+    "strategy": "reusable_genai_pb_prefix",
+    "expectedControlPlaneNodeNames": [
+      "genai-pb-cp-01"
+    ],
+    "expectedWorkerNodeNames": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02"
+    ],
+    "notes": "Node names identify generated provider-backed nodes for validation, metrics, latency mapping and evidence capture; C7 application manifests must not use these names as hard pod placement selectors."
+  },
+  "nodeSummary": {
+    "controlPlaneCount": 1,
+    "workerCount": 2,
+    "totalWorkerVcpus": 16,
+    "totalWorkerMemoryGiB": 32,
+    "totalWorkerStorageGiB": 70
+  },
+  "nodes": {
+    "controlPlane": [
+      {
+        "logicalName": "control-plane-01",
+        "role": "control-plane",
+        "vcpus": 2,
+        "memoryGiB": 4,
+        "memoryMiB": 4096,
+        "storageGiB": 20,
+        "configuredName": "cp-01",
+        "expectedKubernetesNodeName": "genai-pb-cp-01",
+        "proxmoxNode": "minis02",
+        "ipAddress": "192.168.1.141"
+      }
+    ],
+    "workers": [
+      {
+        "logicalName": "worker-a",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "configuredName": "worker-01",
+        "expectedKubernetesNodeName": "genai-pb-worker-01",
+        "proxmoxNode": "minis03",
+        "ipAddress": "192.168.1.142",
+        "recommendedLabels": {
+          "nodepool": "workers"
+        },
+        "namingConventionRole": "genai_pb_worker"
+      },
+      {
+        "logicalName": "worker-b",
+        "role": "worker",
+        "vcpus": 8,
+        "memoryGiB": 16,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "configuredName": "worker-02",
+        "expectedKubernetesNodeName": "genai-pb-worker-02",
+        "proxmoxNode": "minis04",
+        "ipAddress": "192.168.1.143",
+        "recommendedLabels": {
+          "nodepool": "workers"
+        },
+        "namingConventionRole": "genai_pb_worker"
+      }
+    ]
+  },
+  "selectors": {
+    "workerSelectorMode": "generic_worker_nodepool_selector",
+    "workerNodeNames": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02"
+    ],
+    "recommendedLabelSelector": {
+      "nodepool": "workers"
+    },
+    "selectorGovernance": "C7 workloads may use generic worker-nodepool constraints, but must not use hostname-specific nodeName, nodeSelector or nodeAffinity controls.",
+    "futureSelectorPreference": "label_based_node_pool"
+  },
+  "provisioning": {
+    "provisioningMode": "proxmox_k3s_generated_cluster",
+    "providerConfigExamplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c7-1cp-2w-8c16g.example.yaml",
+    "providerConfigLocalPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c7-1cp-2w-8c16g.local.yaml",
+    "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c7-1cp-2w-8c16g/kubeconfig",
+    "providerConfigBindingStatus": "bound",
+    "notes": "Provider configuration is resolved through the proxmox-k3s provider binding associated with this infrastructure profile.",
+    "providerBindingId": "BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S",
+    "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "providerConfigTemplatePath": "config/infrastructure/providers/proxmox-k3s/templates/cluster.proxmox-k3s.template.yaml.tmpl",
+    "selectionPolicy": "prefer_local_config_for_real_execution; use_example_config_for_review_or_dry_run_only"
+  },
+  "validation": {
+    "expectedReadyNodeCount": 3,
+    "expectedControlPlaneNodes": [
+      "genai-pb-cp-01"
+    ],
+    "expectedWorkerNodes": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02"
+    ],
+    "expectedWorkerLabelSelector": "nodepool=workers",
+    "requireK3sDistribution": true,
+    "requireMetricsApi": true,
+    "minimumRequiredOutcomeBeforeBenchmarking": "validated"
+  },
+  "benchmarkCompatibility": {
+    "compatibleWithExistingLocalAiTopologies": true,
+    "intendedScenarioFamilies": [
+      "default-scheduler"
+    ],
+    "requiresDedicatedProviderConfig": true,
+    "notes": "Use this profile for C7 default-scheduler baseline scenarios that keep per-worker-node capacity fixed while varying tenant count, latency profile and tenant traffic pattern. Application placement must be selected by the Kubernetes default scheduler.",
+    "compatibleWithProviderBackedReusableNodeNaming": true,
+    "compatibleWithHistoricalScNodeNaming": false,
+    "compatibleWithControlledPlacementOverlays": false
+  },
+  "cycleBinding": {
+    "recommendedCycleId": "C7",
+    "recommendedBaselineId": null,
+    "bindingStatus": "available_for_default_scheduler_baseline",
+    "recommendedScenarioFamily": "default-scheduler",
+    "scenarioIndexPath": "config/scenarios/default-scheduler/DEFAULT_SCHEDULER_SCENARIOS_INDEX.json"
+  },
+  "comparisonPolicy": {
+    "directComparisonAllowedOnlyWhenDeclared": true,
+    "policy": "Use infrastructureProfileId, worker node count, latency profile, tenant count and traffic profile as explicit comparison dimensions. Identical node names do not imply equivalent placement decisions or runtime conditions.",
+    "controlledPlacementComparisonReferenceCycles": [
+      "C4",
+      "C5",
+      "C6"
+    ]
+  },
+  "governance": {
+    "profilePath": "config/infrastructure/profiles/INFRA_C7_1CP_2W_8C16G.json",
+    "profileIndexPath": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+    "doNotInferEquivalenceFromNodeNames": true,
+    "hardPodPlacementControlsAllowed": false,
+    "defaultSchedulerDecisionEvidenceRequired": true
+  },
+  "templateAssumptions": {
+    "templateName": "ubuntu-24.04-template",
+    "storage": "pool01",
+    "bridge": "vmbr0",
+    "subnetMask": 24,
+    "gateway": "192.168.1.254",
+    "os": "ubuntu-24.04",
+    "bindingStatus": "informational_defaults"
+  },
+  "k3sServerArguments": {
+    "extraServerArgs": "--disable=traefik --disable=servicelb --disable-network-policy --embedded-registry",
+    "disabledComponents": [
+      "traefik",
+      "servicelb",
+      "network-policy"
+    ],
+    "embeddedRegistryEnabled": true
+  },
+  "observabilityAssumptions": {
+    "metricsServerExpected": true,
+    "jaegerExpectedByDefault": false,
+    "notes": "Minimal K3s observability is sufficient for this profile unless a later configuration explicitly requires additional add-ons."
+  },
+  "placementCompatibility": {
+    "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+    "supportedPlacementProfileIds": [],
+    "defaultPlacementProfileId": null,
+    "schedulerMode": "kubernetes_default_scheduler",
+    "hardPodPlacementControlsAllowed": false,
+    "forbiddenPlacementControls": [
+      "spec.nodeName",
+      "hostname_specific_nodeSelector",
+      "hostname_specific_nodeAffinity",
+      "controlled_placement_overlays"
+    ],
+    "allowedGeneralConstraints": [
+      "control_plane_exclusion",
+      "generic_worker_nodepool_selection",
+      "resource_requests",
+      "resource_limits",
+      "tenant_labels",
+      "application_role_labels"
+    ],
+    "notes": "C7 profiles are intentionally not bound to controlled placement profiles; pod placement must be produced by the Kubernetes default scheduler and captured as scheduler evidence."
+  },
+  "defaultSchedulerBaselineCompatibility": {
+    "scenarioFamily": "default-scheduler",
+    "scenarioIndexPath": "config/scenarios/default-scheduler/DEFAULT_SCHEDULER_SCENARIOS_INDEX.json",
+    "workerNodeCountDimension": 2,
+    "localAiWorkerCountPerTenant": 2,
+    "supportsSingleTenantScenarios": true,
+    "supportsTwoTenantScenarios": true,
+    "supportsThreeTenantStressScenarios": false,
+    "supportsLatencyProfiles": [
+      "L0_NONE",
+      "L1_EDGE_NEAR",
+      "L2_EDGE_REMOTE"
+    ],
+    "supportsTrafficProfiles": [
+      "TR_1T_UNIFORM_LOW",
+      "TR_2T_UNIFORM_LOW",
+      "TR_2T_DIFFERENTIATED_LOW"
+    ],
+    "decisionEvidenceArtifact": "default-scheduler-decision-evidence.json",
+    "interpretationRule": "Performance measurements collected on this profile must be interpreted together with captured pod-to-node placement, injected latency and per-tenant traffic configuration."
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "completionGateIndexId": "COMPLETION_GATE_INDEX",
+  "status": "active",
+  "purpose": "Canonical registry for completion gate profiles used by historical and provider-backed LocalAI worker-mode benchmark cycles.",
+  "defaultHistoricalProfileId": "CG_C0_HISTORICAL_FIXED_CLUSTER",
+  "defaultProviderBackedProfileId": "CG_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "completionGateProfileId": "CG_C0_HISTORICAL_FIXED_CLUSTER",
+      "path": "config/completion-gate/profiles/CG_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "role": "historical_fixed_cluster_completion_gate",
+      "cycleId": "C0",
+      "baselineId": "B0",
+      "outputRoot": "results/experimental-cycles/C0/completion-gate",
+      "mode": "legacy_diagnosis_and_reporting_gate",
+      "status": "active"
+    },
+    {
+      "completionGateProfileId": "CG_C1_PROVIDER_BACKED_BASELINE",
+      "path": "config/completion-gate/profiles/CG_C1_PROVIDER_BACKED_BASELINE.json",
+      "role": "provider_backed_baseline_completion_gate",
+      "cycleId": "C1",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C1/completion-gate",
+      "mode": "provider_aware_cycle_gate",
+      "status": "active",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json"
+    },
+    {
+      "completionGateProfileId": "CG_C2_RESOURCE_VARIATION",
+      "path": "config/completion-gate/profiles/CG_C2_RESOURCE_VARIATION.json",
+      "role": "provider_backed_resource_variation_completion_gate",
+      "cycleId": "C2",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C2/completion-gate",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "RV_8C16G",
+      "referenceScenarioConfigPath": "config/scenarios/resource-variation/RV_8C16G.json",
+      "referenceScenarioByFamily": {
+        "resource-variation": "RV_8C16G"
+      },
+      "referenceScenarioConfigByFamily": {
+        "resource-variation": "config/scenarios/resource-variation/RV_8C16G.json"
+      },
+      "status": "active",
+      "mode": "provider_aware_resource_variation_campaign_gate",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant"
+    },
+    {
+      "completionGateProfileId": "CG_C3_NODE_COUNT_VARIATION",
+      "path": "config/completion-gate/profiles/CG_C3_NODE_COUNT_VARIATION.json",
+      "role": "provider_backed_node_count_variation_completion_gate",
+      "cycleId": "C3",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C3/completion-gate",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "NC_2N",
+      "referenceScenarioConfigPath": "config/scenarios/node-count-variation/NC_2N.json",
+      "referenceScenarioByFamily": {
+        "node-count-variation": "NC_2N"
+      },
+      "status": "active",
+      "mode": "provider_aware_node_count_variation_campaign_gate",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant",
+      "referenceScenarioConfigByFamily": {
+        "node-count-variation": "config/scenarios/node-count-variation/NC_2N.json"
+      }
+    },
+    {
+      "completionGateProfileId": "CG_C4_PLACEMENT_VARIATION",
+      "path": "config/completion-gate/profiles/CG_C4_PLACEMENT_VARIATION.json",
+      "role": "provider_backed_placement_variation_completion_gate",
+      "cycleId": "C4",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C4/completion-gate",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "PLC_SPREAD_WORKERS",
+      "referenceScenarioConfigPath": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+      "referenceScenarioByFamily": {
+        "placement-variation": "PLC_SPREAD_WORKERS"
+      },
+      "status": "active",
+      "mode": "provider_aware_placement_variation_campaign_gate",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C4_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "placement-variation": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+      }
+    },
+    {
+      "path": "config/completion-gate/profiles/CG_C5_LATENCY_INJECTION.json",
+      "cycleId": "C5",
+      "family": "latency-injection",
+      "status": "active",
+      "completionGateProfileId": "CG_C5_LATENCY_INJECTION",
+      "role": "provider_backed_latency_injection_completion_gate",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C5/completion-gate",
+      "mode": "provider_aware_latency_injection_campaign_gate",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "LI_L0_NONE",
+      "referenceScenarioConfigPath": "config/scenarios/latency-injection/LI_L0_NONE.json",
+      "referenceScenarioByFamily": {
+        "latency-injection": "LI_L0_NONE"
+      },
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C5_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "latency-injection": "config/scenarios/latency-injection/LI_L0_NONE.json"
+      }
+    },
+    {
+      "path": "config/completion-gate/profiles/CG_C6_MULTI_TENANCY.json",
+      "cycleId": "C6",
+      "family": "multi-tenancy",
+      "status": "active",
+      "completionGateProfileId": "CG_C6_MULTI_TENANCY",
+      "role": "provider_backed_multi_tenancy_completion_gate",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C6/completion-gate",
+      "mode": "provider_aware_multi_tenancy_campaign_gate",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+      "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+      "referenceScenarioByFamily": {
+        "multi-tenancy": "MT_SINGLE_TENANT_REFERENCE"
+      },
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+      "referenceScenarioConfigByFamily": {
+        "multi-tenancy": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+      }
+    },
+    {
+      "path": "config/completion-gate/profiles/CG_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "cycleId": "C7",
+      "family": "default-scheduler",
+      "status": "active",
+      "completionGateProfileId": "CG_C7_DEFAULT_SCHEDULER_BASELINE",
+      "role": "provider_backed_default_scheduler_baseline_completion_gate",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C7/completion-gate",
+      "mode": "provider_aware_default_scheduler_baseline_campaign_gate",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+      "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+      "referenceScenarioByFamily": {
+        "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+      },
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant",
+      "referenceScenarioConfigByFamily": {
+        "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+      }
+    },
+    {
+      "completionGateProfileId": "CG_C8_RESOURCE_AWARE_SCHEDULER",
+      "path": "config/completion-gate/profiles/CG_C8_RESOURCE_AWARE_SCHEDULER.json",
+      "role": "provider_backed_resource_aware_scheduler_completion_gate",
+      "cycleId": "C8",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C8/completion-gate",
+      "status": "active",
+      "mode": "resource_aware_scheduler_campaign_gate",
+      "scenarioFamily": "resource-aware-scheduler",
+      "scenarioIndexPath": "config/scenarios/resource-aware-scheduler/RESOURCE_AWARE_SCHEDULER_SCENARIOS_INDEX.json"
+    },
+    {
+      "completionGateProfileId": "CG_C9_NETWORK_AWARE_SCHEDULER",
+      "path": "config/completion-gate/profiles/CG_C9_NETWORK_AWARE_SCHEDULER.json",
+      "role": "provider_backed_network_aware_scheduler_completion_gate",
+      "cycleId": "C9",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C9/completion-gate",
+      "status": "active",
+      "mode": "network_aware_scheduler_campaign_gate",
+      "scenarioFamily": "network-aware-scheduler",
+      "scenarioIndexPath": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+      "expectedVariantCount": 36,
+      "expectedLogicalScenarioCount": 12
+    }
+  ],
+  "selectionRules": [
+    "Use CG_C0_HISTORICAL_FIXED_CLUSTER only for the historical fixed-cluster completion gate.",
+    "Use CG_C1_PROVIDER_BACKED_BASELINE for the provider-backed C1 cycle.",
+    "Provider-backed completion gates must verify configuration resolution, provider binding, provisioning evidence, cluster validation, application deployment, smoke validation, benchmark evidence, minimal observability, diagnosis and reporting before declaring a cycle complete.",
+    "Freeze execution is evaluated as readiness at completion-gate time; frozen artifacts are produced by the dedicated freeze step after the gate succeeds.",
+    "Use CG_C7_DEFAULT_SCHEDULER_BASELINE for provider-backed default-scheduler baseline campaigns where Kubernetes owns pod placement decisions and scheduler-decision evidence is required.",
+    "Use CG_C9_NETWORK_AWARE_SCHEDULER for the provider-backed C9 network-aware scheduler campaign, where DEFAULT, LOADAWARE and NETAWARE variants must be backed by scheduler, gateway, annotation and telemetry evidence."
+  ]
+}

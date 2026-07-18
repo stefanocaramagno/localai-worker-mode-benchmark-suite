@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "completion-gate-profile/v1",
+  "completionGateProfileId": "CG_C0_HISTORICAL_FIXED_CLUSTER",
+  "profileId": "CG_C0_HISTORICAL_FIXED_CLUSTER",
+  "profileName": "C0 Historical Fixed-Cluster Completion Gate",
+  "profileStatus": "active",
+  "profileRole": "historical_fixed_cluster_completion_gate",
+  "evaluationEngine": "legacy_completion_gate",
+  "description": "Completion gate profile for the historical fixed-cluster LocalAI worker-mode characterization cycle.",
+  "cycleId": "C0",
+  "cycleConfigPath": "config/experimental-cycles/C0.json",
+  "baselineId": "B0",
+  "outputRoot": "results/experimental-cycles/C0/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "acceptedDiagnosisClosureStatuses": [
+    "preliminary_diagnosis_available"
+  ],
+  "requiredFamilies": [
+    "worker-count",
+    "workload",
+    "models",
+    "placement"
+  ],
+  "strictScenarioCoverage": true,
+  "minimumReplicasPerScenario": 2,
+  "maximumMeanResponseTimeCvPercent": 35,
+  "minimumFindings": 3,
+  "requiredFindingGroups": {
+    "worker_count_signal": [
+      "worker_count_initial_gain",
+      "worker_count_diminishing_returns"
+    ],
+    "workload_stress_signal": [
+      "workload_saturation_signal"
+    ],
+    "model_penalty_signal": [
+      "model_size_penalty"
+    ],
+    "placement_signal": [
+      "placement_effect"
+    ]
+  },
+  "minimumFindingGroupsSatisfied": 2,
+  "requireClusterSideEvidence": true,
+  "clusterSideGapPatterns": [
+    "cluster-side",
+    "cluster-side artifacts"
+  ],
+  "acceptUnsupportedScenariosAsCovered": true,
+  "minimumUnsupportedReplicasPerScenario": 2,
+  "requiredReportingArtifacts": {
+    "enabled": true,
+    "reportingRoot": "results/experimental-cycles/C0/reporting",
+    "manifestName": "reporting-manifest.json",
+    "markdownReportName": "report.md",
+    "htmlReportName": "index.html",
+    "scenarioSummaryCsvName": "scenario-summary.csv",
+    "chartsDirectoryName": "charts",
+    "requiredChartFamilies": [
+      "worker-count",
+      "workload",
+      "models",
+      "placement"
+    ],
+    "requiredChartMetrics": [
+      "mean_response_time_ms",
+      "p50_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps"
+    ],
+    "description": "Required stakeholder-facing reporting artifacts generated after technical diagnosis and before completion-gate evaluation, including one consolidated report and one dedicated report per sweep.",
+    "sweepsDirectoryName": "sweeps",
+    "requiredSweepReports": [
+      "worker-count",
+      "workload",
+      "models",
+      "placement"
+    ]
+  },
+  "recommendedPipelineOrder": [
+    "technical_diagnosis",
+    "reporting_and_visualization",
+    "completion_gate"
+  ],
+  "profileGovernance": {
+    "scope": "historical_fixed_cluster",
+    "cycleId": "C0",
+    "baselineId": "B0",
+    "status": "active_historical_profile",
+    "pathRole": "concrete_profile"
+  },
+  "gates": {
+    "legacyDiagnosisAndReportingGate": {
+      "enabled": true,
+      "evaluationEngine": "legacy_completion_gate",
+      "description": "Evaluate the historical fixed-cluster completion gate through the legacy diagnosis and reporting checks while retaining the modern profile registry metadata."
+    }
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C0/completion-gate",
+    "latestManifestPath": "results/experimental-cycles/C0/completion-gate/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C0/completion-gate/latest-completion-gate-summary.txt",
+    "writeLatestAliases": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C0.json",
+    "baselineConfig": "config/scenarios/baseline/B0.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "reportingProfile": "config/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "freezeProfile": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json"
+  }
+}

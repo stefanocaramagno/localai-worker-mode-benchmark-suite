@@ -1,0 +1,127 @@
+{
+  "profileId": "PV_PROVIDER_BACKED_VALIDATION_TEMPLATE",
+  "profileName": "Provider-Backed Runtime Cluster Validation Template",
+  "description": "Template used to generate concrete provisioning validation profiles for provider-backed campaign variants before application deployment and benchmark execution.",
+  "scope": {
+    "phase": "provider_backed_cluster_validation_template",
+    "tool": "proxmox-k3s",
+    "purpose": "Provide shared validation defaults for runtime-generated provider-backed cluster validation profiles.",
+    "outOfScope": [
+      "LocalAI deployment",
+      "Locust benchmark execution",
+      "technical diagnosis generation",
+      "reporting generation",
+      "completion gate evaluation"
+    ]
+  },
+  "provisioning": {
+    "expectedToolCommand": "proxmox-k3s",
+    "localConfigTemplatePath": "__RESOLVED_AT_RUNTIME__",
+    "recommendedLocalConfigPath": "__RESOLVED_AT_RUNTIME__",
+    "recommendedKubeconfigPath": "__RESOLVED_AT_RUNTIME__",
+    "sensitiveConfigPolicy": "Do not version real proxmox-k3s configuration files containing Proxmox API tokens. Keep only redacted example YAML files under version control.",
+    "providerBindingId": "__RESOLVED_AT_RUNTIME__",
+    "providerBindingPath": "__RESOLVED_AT_RUNTIME__",
+    "providerBindingsIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+    "provisioningIntegrationProfileId": "__RESOLVED_AT_RUNTIME__",
+    "provisioningIntegrationProfilePath": "__RESOLVED_AT_RUNTIME__",
+    "provisioningIntegrationIndexPath": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json"
+  },
+  "expectedCluster": {
+    "infrastructureProfileId": "__RESOLVED_AT_RUNTIME__",
+    "nodeNamingConventionId": "__RESOLVED_AT_RUNTIME__",
+    "expectedControlPlaneNodes": [],
+    "expectedWorkerNodes": [],
+    "expectedWorkerLabelSelector": "nodepool=workers",
+    "minimumReadyNodes": 0,
+    "requireAllExpectedNodesReady": true,
+    "requireK3sDistribution": true,
+    "infrastructureProfilePath": "__RESOLVED_AT_RUNTIME__",
+    "expectedManagementNodes": [],
+    "expectedManagementLabelSelector": "",
+    "expectedManagementTaints": []
+  },
+  "kubeSystemChecks": {
+    "namespace": "kube-system",
+    "requiredRunningPodNamePrefixes": [
+      "coredns",
+      "local-path-provisioner",
+      "metrics-server"
+    ],
+    "requireStorageClass": true,
+    "requireMetricsApi": true,
+    "allowMetricsApiWarning": false
+  },
+  "output": {
+    "defaultOutputRoot": "__RESOLVED_AT_RUNTIME__",
+    "writeLatestAliases": true,
+    "jsonSuffix": "validation.json",
+    "textSuffix": "validation.txt",
+    "markdownSuffix": "validation.md",
+    "latestJsonPath": "__RESOLVED_AT_RUNTIME__",
+    "latestTextPath": "__RESOLVED_AT_RUNTIME__",
+    "latestMarkdownPath": "__RESOLVED_AT_RUNTIME__"
+  },
+  "decisionPolicy": {
+    "passedStatus": "validated",
+    "failedStatus": "failed",
+    "warningStatus": "validated_with_warnings",
+    "minimumRequiredOutcomeBeforeBenchmarking": "validated",
+    "acceptedStatusesBeforeApplicationDeployment": [
+      "validated"
+    ],
+    "blockApplicationDeploymentUnlessStatusIn": [
+      "validated"
+    ]
+  },
+  "clusterLifecycle": {
+    "lifecyclePolicyId": "__RESOLVED_AT_RUNTIME__",
+    "lifecyclePolicyPath": "__RESOLVED_AT_RUNTIME__",
+    "clusterLifecycleMode": "__RESOLVED_AT_RUNTIME__",
+    "destroyClusterAfterCycleDefault": true,
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "lifecycleManifestRequired": true,
+    "lifecycleArtifactRoot": "__RESOLVED_AT_RUNTIME__"
+  },
+  "preValidationGate": {
+    "providerConfigResolvedRequired": true,
+    "providerBackedProvisioningManifestRequired": true,
+    "kubeconfigVerificationRequired": true,
+    "minimumProvisioningIntegrationStatus": "completed",
+    "provisioningIntegrationLatestManifestPath": "__RESOLVED_AT_RUNTIME__"
+  },
+  "schemaVersion": "proxmox-k3s-cluster-validation-profile/v1",
+  "profileRole": "provider_backed_campaign_variant_validation_template",
+  "clusterValidation": {
+    "clusterValidationProfileId": "__RESOLVED_AT_RUNTIME__",
+    "clusterValidationProfilePath": "__RESOLVED_AT_RUNTIME__",
+    "clusterValidationIndexPath": "config/cluster-validation/CLUSTER_VALIDATION_INDEX.json",
+    "requiredBeforeApplicationDeployment": true
+  },
+  "validationChecks": {
+    "requireKubectlAvailable": true,
+    "requireKubeconfigExists": true,
+    "requireKubeconfigNonEmpty": true,
+    "requireApiServerReachable": true,
+    "requireExpectedNodesPresent": true,
+    "requireExpectedNodesReady": true,
+    "requireControlPlaneRoleLabels": true,
+    "requireWorkersNotControlPlane": true,
+    "requireExpectedWorkerLabels": true,
+    "captureNodeCapacityAndAllocatable": true,
+    "captureKubeSystemPodReadiness": true,
+    "requireKubeSystemCorePodsReady": true,
+    "requireStorageClass": true,
+    "requireMetricsApi": true,
+    "requireExpectedManagementLabels": false,
+    "requireExpectedManagementTaints": false
+  },
+  "profileGovernance": {
+    "scope": "provider_backed_campaign_variant_template",
+    "cycleId": "__RESOLVED_AT_RUNTIME__",
+    "infrastructureProfileId": "__RESOLVED_AT_RUNTIME__",
+    "providerId": "proxmox-k3s",
+    "status": "template",
+    "pathRole": "runtime_generation_template"
+  }
+}

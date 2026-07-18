@@ -1,0 +1,18 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: localai-gateway
+  labels:
+    localai.benchmark/tenant: tenant-c
+    localai.benchmark/component: istio-gateway
+    localai.benchmark/traffic-access-mode: gateway-routed
+spec:
+  gatewayClassName: istio
+  listeners:
+    - name: http
+      hostname: tenant-c.localai.local
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same

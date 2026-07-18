@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "profileId": "RP_C5_LATENCY_INJECTION",
+  "reportingProfileId": "RP_C5_LATENCY_INJECTION",
+  "profileName": "C5 Latency Injection Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_latency_injection_reporting",
+  "description": "Reporting profile for the provider-backed latency-injection campaign.",
+  "cycleId": "C5",
+  "cycleConfigPath": "config/experimental-cycles/C5.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C5/diagnosis",
+  "outputRoot": "results/experimental-cycles/C5/reporting",
+  "reportTitle": "C5 — Latency Injection Report",
+  "reportPurposeMarkdown": "This report compares progressively injected network-latency profiles under fixed provider-backed infrastructure, model, workload, LocalAI worker count and placement. It is intended to expose when distributed worker communication becomes a dominant performance factor.",
+  "familyOrder": [
+    "latency-injection"
+  ],
+  "familyDisplayNames": {
+    "latency-injection": "Latency Injection"
+  },
+  "scenarioConfigRoots": {
+    "latency-injection": "config/scenarios/latency-injection"
+  },
+  "scenarioConfigFiles": {
+    "latency-injection": [
+      "config/scenarios/latency-injection/LI_L0_NONE.json",
+      "config/scenarios/latency-injection/LI_L1_EDGE_NEAR.json",
+      "config/scenarios/latency-injection/LI_L2_EDGE_REMOTE.json",
+      "config/scenarios/latency-injection/LI_L3_EXTREME.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "latency-injection": "results/experimental-cycles/C5/benchmark/latency-injection"
+  },
+  "referenceScenarioByFamily": {
+    "latency-injection": "LI_L0_NONE"
+  },
+  "variedDimensionByFamily": {
+    "latency-injection": "latency profile"
+  },
+  "fixedDimensionsByFamily": {
+    "latency-injection": [
+      "infrastructure=INFRA_C5_1CP_4W_8C16G",
+      "model=M1",
+      "LocalAI worker-count=W4",
+      "workload=WL2",
+      "placement=PL_SPREAD_WORKERS",
+      "worker node capacity=8 vCPU / 16 GiB"
+    ]
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "archiveDirectoryName": "archive",
+  "providerAwareContext": {
+    "cycleConfigPath": "config/experimental-cycles/C5.json",
+    "provisioningManifestPath": "results/experimental-cycles/C5/execution/latest-campaign-execution-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C5/execution/latest-campaign-execution-manifest.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C5/execution/latest-campaign-execution-manifest.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C5/execution/latest-campaign-execution-manifest.json",
+    "latencyInjectionManifestPath": "results/experimental-cycles/C5/execution/latest-campaign-execution-manifest.json"
+  },
+  "notes": [
+    "Only the latency profile is varied in this campaign; infrastructure, model, workload, LocalAI worker count and placement remain fixed.",
+    "The no-latency profile is the campaign-local reference scenario.",
+    "Latency conclusions require checking both latency/throughput and the latency-injection manifests to ensure the intended profile was applied."
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisProfileId": "TD_C5_LATENCY_INJECTION",
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C5_LATENCY_INJECTION.json",
+  "reportingContext": {
+    "campaignType": "latency_injection",
+    "primaryQuestion": "How does controlled network latency affect LocalAI worker-mode performance under fixed infrastructure and placement?",
+    "fixedDimensions": [
+      "infrastructure=INFRA_C5_1CP_4W_8C16G",
+      "model=M1",
+      "LocalAI worker-count=W4",
+      "workload=WL2",
+      "placement=PL_SPREAD_WORKERS",
+      "worker node capacity=8 vCPU / 16 GiB"
+    ],
+    "variedDimensions": [
+      "latency profile"
+    ]
+  },
+  "reportingIdPrefix": "REP_C5",
+  "infrastructureSummaryMode": "fixed_cycle_scoped",
+  "infrastructureSummarySemantics": {
+    "scope": "cycle",
+    "interpretation": "A single fixed infrastructure profile is used as cycle-level context for the reporting package."
+  },
+  "referenceScenarioId": "LI_L0_NONE",
+  "referenceScenarioConfigPath": "config/scenarios/latency-injection/LI_L0_NONE.json",
+  "referenceScenarioConfigByFamily": {
+    "latency-injection": "config/scenarios/latency-injection/LI_L0_NONE.json"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "tenancy-profile-schema/v1",
+  "description": "Lightweight schema descriptor for LocalAI multi-tenant application-cluster profiles.",
+  "requiredTopLevelFields": [
+    "tenancyProfileId",
+    "profileName",
+    "tenantClusters",
+    "benchmarkTenantId",
+    "governance"
+  ]
+}

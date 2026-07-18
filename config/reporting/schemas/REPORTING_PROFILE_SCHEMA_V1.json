@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "reporting-profile-schema/v1",
+  "schemaId": "REPORTING_PROFILE_SCHEMA_V1",
+  "description": "Schema-level contract for provider-aware reporting profiles used by the LocalAI worker-mode benchmark suite.",
+  "requiredTopLevelFields": [
+    "reportingProfileId",
+    "profileName",
+    "profileStatus",
+    "cycleId",
+    "cycleConfigPath",
+    "baselineConfig",
+    "outputRoot",
+    "reportMarkdownName",
+    "reportHtmlName",
+    "summaryCsvName",
+    "manifestName",
+    "familyOrder",
+    "campaignResultsRoots",
+    "scenarioConfigRoots",
+    "chartDefinitions",
+    "reportTitle",
+    "reportingIdPrefix",
+    "familyDisplayNames"
+  ],
+  "providerAwareFields": [
+    "infrastructureProfilePath",
+    "providerBindingPath",
+    "provisioningIntegrationProfilePath",
+    "clusterValidationProfilePath",
+    "applicationDeploymentProfilePath",
+    "placementProfilePath",
+    "minimalObservabilityProfilePath",
+    "minimalObservabilityMetricsPath"
+  ],
+  "artifactSections": [
+    "Infrastructure Summary",
+    "Provider Summary",
+    "Cluster Validation Summary",
+    "Application Topology Summary",
+    "Scenario Summary",
+    "Metrics Summary",
+    "Unsupported Scenario Summary",
+    "Main Findings"
+  ],
+  "rules": [
+    "Provider-backed reports must identify the cycle, infrastructure profile, provider binding, validation profile, deployment profile, placement profile and minimal observability profile.",
+    "Reports must preserve fixed and varied dimensions for every sweep family.",
+    "Unsupported scenarios must be reported explicitly and must not be interpreted as measured performance regressions.",
+    "Reporting and diagnosis profiles must use campaignResultsRoots as the canonical measurement-root map.",
+    "Report titles, sweep titles, reporting identifiers and UTC timestamps must be generated with a uniform cycle-aware editorial pattern across C0-C6.",
+    "Generated at UTC values must use second-level ISO-8601 UTC format with Z suffix."
+  ],
+  "editorialConsistencyFields": [
+    "cycleId",
+    "reportTitle",
+    "reportingIdPrefix",
+    "familyDisplayNames",
+    "chartDefinitions"
+  ]
+}

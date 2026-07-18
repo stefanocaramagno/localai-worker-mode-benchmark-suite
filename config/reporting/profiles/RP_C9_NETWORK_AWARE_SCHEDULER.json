@@ -1,0 +1,391 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "profileId": "RP_C9_NETWORK_AWARE_SCHEDULER",
+  "reportingProfileId": "RP_C9_NETWORK_AWARE_SCHEDULER",
+  "profileName": "C9 Network-Aware Scheduler Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_network_aware_scheduler_reporting",
+  "description": "Reporting profile for the provider-backed network-aware scheduler campaign.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C9/diagnosis",
+  "outputRoot": "results/experimental-cycles/C9/reporting",
+  "reportTitle": "C9 — Network-Aware Scheduler Campaign Report",
+  "reportPurposeMarkdown": "This report compares Kubernetes default scheduling, the load-aware custom scheduler and the LocalAI resource/network-aware custom scheduler for gateway-routed LocalAI worker-mode scenarios. It summarizes application performance, placement evidence, resource telemetry, network telemetry, tenant traffic annotations and supported or unsupported outcomes.",
+  "familyOrder": [
+    "network-aware-scheduler"
+  ],
+  "familyDisplayNames": {
+    "network-aware-scheduler": "Network-Aware Scheduler"
+  },
+  "scenarioConfigRoots": {
+    "network-aware-scheduler": "config/scenarios/network-aware-scheduler"
+  },
+  "scenarioConfigFiles": {
+    "network-aware-scheduler": [
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L2_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L2_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L2_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L3_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L3_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L3_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_1T_4N_L2_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_1T_4N_L2_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_1T_4N_L2_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L2_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L2_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L3_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L3_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L3_DIFFERENTIATED_M1M2_W2.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "network-aware-scheduler": "results/experimental-cycles/C9/benchmark/network-aware-scheduler"
+  },
+  "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C9/scheduler",
+  "schedulerDecisionEvidenceArtifactName": "network-aware-scheduler-decision-evidence.json",
+  "multiTenantSummaryArtifactName": "multi-tenant-summary.json",
+  "referenceScenarioByFamily": {
+    "network-aware-scheduler": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "network-aware-scheduler": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json"
+  },
+  "variedDimensionByFamily": {
+    "network-aware-scheduler": "scheduler mode, latency profile, tenant count, traffic profile and model mix"
+  },
+  "fixedDimensionsByFamily": {
+    "network-aware-scheduler": [
+      "application=LocalAI worker-mode",
+      "worker-node-count=4",
+      "worker-count-per-tenant=W2",
+      "traffic-access=Istio gateway routed",
+      "monitoring=enabled",
+      "mon-agent=enabled",
+      "Mentat=enabled",
+      "hard-placement-controls=disabled",
+      "cluster-lens=placement evidence captured"
+    ]
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "archiveDirectoryName": "archive",
+  "providerAwareContext": {
+    "cycleConfigPath": "config/experimental-cycles/C9.json",
+    "provisioningManifestPath": "results/experimental-cycles/C9/execution/latest-campaign-execution-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C9/execution/latest-campaign-execution-manifest.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C9/execution/latest-campaign-execution-manifest.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C9/execution/latest-campaign-execution-manifest.json",
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C9/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C9/benchmark/network-aware-scheduler",
+    "variantEvidenceRoot": "results/experimental-cycles/C9/variants"
+  },
+  "notes": [
+    "C9 reports runtime network-aware-scheduler behavior; pod placement must be interpreted from captured scheduler, annotation and telemetry evidence rather than from predefined node assignments.",
+    "C9 compares DEFAULT, LOADAWARE and NETAWARE variants by logical scenario; comparative claims must preserve the latency profile, traffic profile, tenant count and model mix.",
+    "Gateway-routed traffic is the official access path for C9 so Istio-derived deployment traffic annotations can be used as scheduler evidence.",
+    "Latency metrics in this report must be interpreted together with the inter-node telemetry matrix and the offered load generated per tenant.",
+    "Unsupported or inconclusive scenarios are retained as infrastructure, telemetry, scheduling or capacity-boundary evidence and are not interpreted as measured latency regressions.",
+    "cluster-lens placement summaries and signatures are used to interpret response-time results together with scheduler placement evidence.",
+    "The C9 report includes latency-profile context and cluster-lens placement tables so response-time results can be interpreted together with the observed scheduler placement."
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisProfileId": "TD_C9_NETWORK_AWARE_SCHEDULER",
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+  "reportingContext": {
+    "campaignType": "network_aware_scheduler",
+    "primaryQuestion": "Whether the LocalAI resource/network-aware custom scheduler produces more appropriate placement or better latency behavior than Kubernetes default scheduling and resource-only load-aware scheduling when tenant traffic and inter-node latency differ.",
+    "fixedDimensions": [
+      "application=LocalAI worker-mode",
+      "worker-node-count=4",
+      "worker-count-per-tenant=W2",
+      "traffic-access=Istio gateway routed",
+      "monitoring=enabled",
+      "mon-agent=enabled",
+      "Mentat=enabled",
+      "hard-placement-controls=disabled",
+      "request target=POST /v1/chat/completions",
+      "cluster-lens=placement evidence captured"
+    ],
+    "variedDimensions": [
+      "scheduler mode",
+      "latency profile",
+      "tenant count",
+      "tenant traffic profile",
+      "model mix"
+    ]
+  },
+  "reportingIdPrefix": "REP_C9",
+  "infrastructureSummaryMode": "scenario_variant_scoped",
+  "infrastructureProfileScope": "scenario_variant",
+  "infrastructureSummarySemantics": {
+    "scope": "scenario_variant_scoped",
+    "interpretation": "Infrastructure is scenario-scoped because C9 uses a fixed four-worker provider-backed cluster while varying scheduler mode, latency profile, tenant count, traffic profile and model mix."
+  },
+  "referenceScenarioId": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+  "defaultSchedulerReporting": {
+    "enabled": true,
+    "schedulerDecisionEvidenceRequired": true,
+    "multiTenantSummaryRequired": true,
+    "tenantLevelMetricsRequired": true,
+    "placementClassificationRequired": true,
+    "negativeEvidenceRequiredForSuboptimalPlacementClaims": true,
+    "placementCategoriesOfInterest": [
+      "server_worker_colocated",
+      "server_worker_split",
+      "tenant_interference_risk",
+      "fully_spread",
+      "resource_contention_risk",
+      "latency_sensitive_split",
+      "network_aware_scheduler_unclassified"
+    ],
+    "criticalPlacementCategories": [
+      "latency_sensitive_split",
+      "missing_server_pod",
+      "missing_worker_pods",
+      "unscheduled_pods"
+    ],
+    "warningPlacementCategories": [
+      "server_worker_split",
+      "tenant_interference_risk",
+      "resource_contention_risk",
+      "server_worker_partially_colocated"
+    ]
+  },
+  "schedulerModeScope": {
+    "latencyInjectionEnabled": true,
+    "networkEmulation": "inter_group_latency_profile",
+    "resourceAwareScope": "CPU and memory annotation-driven scoring remains enabled for LOADAWARE and NETAWARE custom-scheduler variants.",
+    "networkAwareScope": "NETAWARE variants additionally consume node latency annotations and gateway traffic annotations."
+  },
+  "scenarioFamily": "network-aware-scheduler",
+  "scenarioIndexPath": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "monAgentProfilePath": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+  "networkObservabilityProfilePath": "config/network-observability/profiles/NO_MENTAT_C9.json",
+  "istioGatewayProfilePath": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+  "customSchedulerProfilePath": "config/scheduler/profiles/CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER.json",
+  "reschedulingProfilePath": "config/rescheduling/profiles/RS_C9_NETWORK_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+  "networkAwareReportingPolicy": {
+    "enabled": true,
+    "family": "network-aware-scheduler",
+    "tripletComparisonEnabled": true,
+    "schedulerModes": [
+      "DEFAULT",
+      "LOADAWARE",
+      "NETAWARE"
+    ],
+    "pairingKey": "logicalScenarioId",
+    "gatewayTrafficKey": "traffic.localai-gateway-istio",
+    "includeTelemetryEvidenceSection": true,
+    "includePlacementEvidenceSection": true,
+    "includeTenantMetricsSection": true,
+    "includeClusterLensPlacementEvidence": true,
+    "placementEvidenceSource": "primary cluster-lens placement summary and signature artifacts, with stage-specific fallbacks preserved per variant",
+    "includeLatencyProfileEvidenceTable": true,
+    "includeClusterLensPlacementSummaryTable": true,
+    "includeClusterLensTenantPlacementTable": true,
+    "clusterLensPrimaryStagePolicy": {
+      "default": "pre-benchmark",
+      "loadaware": "post-rescheduling",
+      "netaware": "post-rescheduling",
+      "fallbackStages": [
+        "post-rescheduling",
+        "pre-benchmark",
+        "post-benchmark",
+        "post-telemetry-priming",
+        "post-deployment",
+        "pre-rescheduling"
+      ]
+    }
+  },
+  "networkAwareTelemetryEvidencePolicy": {
+    "requiredNodeAnnotationPrefixes": [
+      "network-latency.",
+      "packet-loss.",
+      "network-bandwidth."
+    ],
+    "requiredDeploymentAnnotationPrefixes": [
+      "traffic."
+    ],
+    "requiredPodLabels": [
+      "group",
+      "app",
+      "role"
+    ],
+    "officialTrafficAccessMode": "istio_gateway_routed",
+    "variantEvidenceRoot": "results/experimental-cycles/C9/variants",
+    "componentArtifactNames": {
+      "monAgent": [
+        "latest-mon-agent-manifest.json",
+        "latest-mon-agent-validation-snapshot.json"
+      ],
+      "mentat": [
+        "latest-mentat-observability-manifest.json",
+        "latest-mentat-validation-snapshot.json"
+      ],
+      "istio": [
+        "latest-istio-gateway-manifest.json"
+      ],
+      "rescheduling": [
+        "latest-rescheduling-manifest.json",
+        "latest-pre-redeployment-snapshot.json"
+      ],
+      "clusterLens": [
+        "cluster-lens-placement-summary.json",
+        "cluster-lens-capture-manifest.json",
+        "cluster-lens-primary-stage-manifest.json"
+      ]
+    },
+    "requiredGatewayTrafficKey": "traffic.localai-gateway-istio",
+    "componentAcceptedStatuses": {
+      "monAgent": [
+        "applied",
+        "captured",
+        "validated"
+      ],
+      "mentat": [
+        "captured",
+        "validated"
+      ],
+      "istio": [
+        "validated"
+      ],
+      "rescheduling": [
+        "captured",
+        "validated",
+        "executed"
+      ],
+      "clusterLens": [
+        "captured",
+        "partial"
+      ]
+    },
+    "gatewayTrafficRequiredRoleLabelValue": "master",
+    "gatewayTrafficRequiredOnlyForMasterRole": true,
+    "requireClusterLensPlacementEvidence": true,
+    "clusterLensPrimaryStagePolicy": {
+      "default": "pre-benchmark",
+      "loadaware": "post-rescheduling",
+      "netaware": "post-rescheduling",
+      "fallbackStages": [
+        "post-rescheduling",
+        "pre-benchmark",
+        "post-benchmark",
+        "post-telemetry-priming",
+        "post-deployment",
+        "pre-rescheduling"
+      ]
+    },
+    "requirePrimaryClusterLensPlacementEvidence": true
+  },
+  "schedulerModePairwiseReporting": {
+    "enabled": true,
+    "family": "network-aware-scheduler",
+    "pairingKey": "logicalScenarioId",
+    "defaultRoleValue": "default",
+    "loadAwareRoleValue": "loadaware",
+    "networkAwareRoleValue": "netaware",
+    "defaultVariantPrefix": "NA_DEFAULT_",
+    "loadAwareVariantPrefix": "NA_LOADAWARE_",
+    "networkAwareVariantPrefix": "NA_NETAWARE_",
+    "tripletComparisonEnabled": true,
+    "metrics": [
+      "mean_response_time_ms",
+      "p50_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps",
+      "failure_count",
+      "success_rate_percent",
+      "max_node_cpu_percent",
+      "max_node_memory_percent"
+    ]
+  }
+}

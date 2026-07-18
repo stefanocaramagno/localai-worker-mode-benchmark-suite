@@ -1,0 +1,30 @@
+{
+  "scenarioId": "PL1",
+  "purpose": "Historical compatibility placement scenario for co-located LocalAI server and RPC workers.",
+  "placementType": "colocated_sc_app_02",
+  "outputSubdir": "PL1_colocated_scapp02",
+  "referenceBaselineId": "B0",
+  "topologyDir": "infra/k8s/compositions/topology/colocated-sc-app-02-w2",
+  "notes": "Placement-only variation anchored to the historical baseline. This scenario now resolves to the explicit PL_COLOCATED placement profile while preserving the original co-located sc-app-02 topology and keeping model, worker count, workload, prompt, temperature, and request timeout fixed.",
+  "placementProfileId": "PL_COLOCATED",
+  "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+  "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+  "selectorPolicy": "stable_node_name_compatibility",
+  "expectedServerNode": "sc-app-02",
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "sc-app-02",
+    "localai-rpc-b": "sc-app-02"
+  },
+  "placementResearchQuestion": "How does a compact LocalAI topology behave when communication distance is minimized but CPU and memory contention may increase?",
+  "status": "legacy_historical_compatibility",
+  "legacyScenarioId": "PL1",
+  "canonicalPlacementProfileId": "PL_COLOCATED",
+  "canonicalPlacementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+  "canonicalNamingPolicy": "Use placementProfileId for provider-backed cycles; keep PL1/PL2 only for historical fixed-cluster and legacy pilot compatibility.",
+  "supersededByPlacementProfileId": "PL_COLOCATED",
+  "profileResolutionMode": "legacy_scenario_to_canonical_placement_profile_alias",
+  "scenarioProfileId": "PL1",
+  "scenarioProfileName": "Historical compatibility placement scenario for co-located LocalAI server and RPC workers.",
+  "scenarioProfileScope": "legacy_fixed_cluster_compatibility",
+  "scenarioProfileSchemaVersion": "1.0"
+}

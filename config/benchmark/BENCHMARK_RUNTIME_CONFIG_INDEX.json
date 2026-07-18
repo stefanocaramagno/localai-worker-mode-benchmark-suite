@@ -1,0 +1,47 @@
+{
+  "benchmarkRuntimeConfigIndexId": "BENCHMARK_RUNTIME_CONFIG_INDEX",
+  "schemaVersion": "benchmark-runtime-config-index/v1",
+  "purpose": "Registry for provider-backed runtime benchmark configuration profiles generated from reference baselines and scenario variants.",
+  "canonicalConfigRole": "runtime_benchmark_config",
+  "schemaId": "BENCHMARK_RUNTIME_CONFIG_SCHEMA_V1",
+  "schemaPath": "config/benchmark/schemas/BENCHMARK_RUNTIME_CONFIG_SCHEMA_V1.json",
+  "generatedProfileNamingPolicy": "BENCHMARK_<VARIANT_ID>.json",
+  "runtimeProfileGenerator": "scripts/experimental-cycles/run-experimental-campaign.py",
+  "runtimeProfileRootTemplate": "results/experimental-cycles/{cycleId}/execution/generated-runtime-configs/{variantId}",
+  "canonicalManifestKeys": [
+    "benchmarkConfig",
+    "runtimeBenchmarkConfig",
+    "referenceBaselineConfig",
+    "scenarioConfig"
+  ],
+  "legacyAliasPolicy": {
+    "legacyKey": "baselineConfig",
+    "canonicalReplacement": "benchmarkConfig",
+    "status": "retained_for_backward_compatibility"
+  },
+  "validationPolicy": {
+    "mode": "schema_driven",
+    "schemaRequiredBeforeWritingGeneratedProfile": true,
+    "failOnMissingRequiredFields": true,
+    "failOnInvalidSchemaIdentifiers": true,
+    "implementation": "internal_json_schema_subset",
+    "supportedSchemaKeywords": [
+      "required",
+      "properties",
+      "type",
+      "const",
+      "minLength",
+      "minimum",
+      "items"
+    ]
+  },
+  "nonGoals": [
+    "This index does not register concrete generated profiles because those are runtime artifacts.",
+    "This index does not replace scenario profiles or reference baseline profiles."
+  ],
+  "runtimeProfileRootResolution": {
+    "primarySource": "cycle.campaign.generatedRuntimeConfigRoot",
+    "variantSubdirectory": "{variantId}",
+    "fallbackTemplate": "results/experimental-cycles/{cycleId}/execution/generated-runtime-configs/{variantId}"
+  }
+}

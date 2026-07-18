@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "mon-agent-index/v1",
+  "indexId": "MON_AGENT_INDEX",
+  "status": "active",
+  "purpose": "Registry of mon-agent integration profiles used to validate runtime node and deployment annotations before scheduler-aware experiments.",
+  "profilesRoot": "config/mon-agent/profiles",
+  "schemaPath": "config/mon-agent/schemas/MON_AGENT_PROFILE_SCHEMA_V1.json",
+  "defaultProfileId": "MA_RESOURCE_AWARE",
+  "profiles": [
+    {
+      "monAgentProfileId": "MA_RESOURCE_AWARE",
+      "cycleId": "C8",
+      "profilePath": "config/mon-agent/profiles/MA_RESOURCE_AWARE.json",
+      "schemaPath": "config/mon-agent/schemas/MON_AGENT_PROFILE_SCHEMA_V1.json",
+      "status": "active",
+      "role": "resource_aware_scheduler_metrics_annotation_agent"
+    },
+    {
+      "monAgentProfileId": "MA_NETWORK_AWARE",
+      "cycleId": "C9",
+      "profilePath": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+      "schemaPath": "config/mon-agent/schemas/MON_AGENT_PROFILE_SCHEMA_V1.json",
+      "status": "active",
+      "role": "network_aware_scheduler_metrics_annotation_agent"
+    }
+  ],
+  "requirements": {
+    "prometheusRequired": true,
+    "kubeStateMetricsRequired": true,
+    "namespaceLabelSelectorRequired": true,
+    "deploymentLabelsRequired": [
+      "group",
+      "app"
+    ],
+    "requiredNodeAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "requiredDeploymentAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "optionalNodeAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ],
+    "optionalDeploymentAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ]
+  },
+  "manifestRoots": [
+    "infra/k8s/observability/mon-agent"
+  ],
+  "governanceRules": [
+    "mon-agent must be used only on clusters where Prometheus and kube-state-metrics are available.",
+    "Application namespaces selected by mon-agent must be labeled explicitly with the configured namespace selector.",
+    "Deployment and pod labels used by mon-agent must remain aligned with scheduler requirements.",
+    "Annotation validation artifacts must be preserved before scheduler-aware placement experiments are executed.",
+    "Resource-aware profiles use the v0.0.6 annotation contract while requiring only CPU and memory annotations for scheduler validation.",
+    "Network-aware profiles use the v0.0.6 annotation contract with dynamic node peer annotations and dynamic Istio peer-workload annotations.",
+    "Provider-installed mon-agent deployments must be validated and captured instead of reinstalled with a divergent version."
+  ],
+  "toolVersion": "v0.0.6",
+  "supportedToolVersions": [
+    "v0.0.6"
+  ],
+  "defaultToolVersion": "v0.0.6",
+  "profileSpecificRequirements": {
+    "MA_RESOURCE_AWARE": {
+      "toolVersion": "v0.0.6",
+      "requiredNodeAnnotations": [
+        "cpu-usage",
+        "memory-usage"
+      ],
+      "requiredDeploymentAnnotations": [
+        "cpu-usage",
+        "memory-usage"
+      ],
+      "optionalNodeAnnotations": [
+        "disk-throughput",
+        "network-throughput"
+      ],
+      "optionalDeploymentAnnotations": [
+        "disk-throughput",
+        "network-throughput"
+      ],
+      "deploymentLabelsRequired": [
+        "group",
+        "app"
+      ]
+    },
+    "MA_NETWORK_AWARE": {
+      "toolVersion": "v0.0.6",
+      "requiredNodeAnnotations": [
+        "cpu-usage",
+        "memory-usage"
+      ],
+      "requiredNodeAnnotationPrefixes": [
+        "network-latency.",
+        "network-bandwidth.",
+        "packet-loss."
+      ],
+      "requiredDeploymentAnnotations": [
+        "cpu-usage",
+        "memory-usage"
+      ],
+      "requiredDeploymentAnnotationPrefixes": [
+        "traffic."
+      ],
+      "optionalNodeAnnotations": [
+        "disk-throughput",
+        "network-throughput"
+      ],
+      "optionalDeploymentAnnotations": [
+        "disk-throughput",
+        "network-throughput"
+      ],
+      "deploymentLabelsRequired": [
+        "group",
+        "app",
+        "role"
+      ]
+    }
+  },
+  "compatibilityPolicy": {
+    "activeContractVersion": "v0.0.6",
+    "previousRuntimeContractsAccepted": false,
+    "reason": "All active resource-aware and network-aware profiles use the provider-managed mon-agent v0.0.6 annotation contract."
+  }
+}

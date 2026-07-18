@@ -1,0 +1,47 @@
+{
+  "providersIndexId": "INFRASTRUCTURE_PROVIDERS_INDEX",
+  "schemaVersion": "infrastructure-providers-index/v1",
+  "purpose": "Registry of provisioning providers that can materialize infrastructure profiles for benchmark cycles.",
+  "providersRoot": "config/infrastructure/providers",
+  "defaultProviderId": "proxmox-k3s",
+  "providers": [
+    {
+      "providerId": "proxmox-k3s",
+      "providerType": "proxmox-k3s",
+      "providerIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_INDEX.json",
+      "providerBindingsIndexPath": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+      "role": "primary_provider_for_k3s_clusters_on_proxmox",
+      "boundary": "Creates and deletes K3s clusters; does not know LocalAI workload semantics.",
+      "supportedClusterLifecycleModes": [
+        "reuse",
+        "ephemeral"
+      ],
+      "defaultLifecyclePolicyId": "LC_REUSE_RETAIN_CLUSTER",
+      "provisioningIntegrationSupported": true,
+      "defaultProvisioningIntegrationProfileId": "PI_C1_PROVIDER_BACKED_BASELINE",
+      "minimumCompatibleVersion": "v1.0.3",
+      "providerManagedAddonInstallationSupported": true,
+      "networkAwareSchedulerAddonToolchainSupported": true
+    },
+    {
+      "providerId": "external-k3s-cluster",
+      "providerType": "external-k3s",
+      "role": "historical_reference_only",
+      "boundary": "Represents pre-existing K3s clusters that are not materialized by the provider-backed pipeline.",
+      "supportedClusterLifecycleModes": [
+        "external"
+      ],
+      "defaultLifecyclePolicyId": "LC_C0_EXTERNAL_FIXED_CLUSTER_RETAIN"
+    }
+  ],
+  "governanceRules": [
+    "Infrastructure profiles declare which provider materializes them.",
+    "Provider bindings resolve provider-specific configuration without embedding local secrets.",
+    "Provider tools remain infrastructure-level components and must not depend on LocalAI scenarios or benchmark semantics.",
+    "Provider indexes declare lifecycle policy indexes so execution logic can resolve create/delete behavior through metadata.",
+    "Provider-backed cluster deletion must be controlled by lifecycle policy and explicit confirmation, not by ad-hoc command construction.",
+    "Provider-backed provisioning integration profiles mediate command execution and evidence capture for provider-backed cycles."
+  ],
+  "clusterLifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+  "provisioningIntegrationIndexPath": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json"
+}

@@ -1,0 +1,252 @@
+{
+  "schemaVersion": "freeze-profile/v1",
+  "freezeProfileId": "FR_C5_LATENCY_INJECTION",
+  "profileId": "FR_C5_LATENCY_INJECTION",
+  "profileName": "C5 Latency Injection Freeze Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_latency_injection_freeze",
+  "description": "Freeze profile for the latency-injection campaign evidence package.",
+  "cycleId": "C5",
+  "cycleConfigPath": "config/experimental-cycles/C5.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C5/freeze",
+  "artifactSnapshotRoot": "results/experimental-cycles/C5/artifacts",
+  "cycleLockJsonPath": "results/experimental-cycles/C5/freeze/C5-cycle-lock.json",
+  "cycleLockTextPath": "results/experimental-cycles/C5/freeze/C5-cycle-lock.txt",
+  "latestManifestPath": "results/experimental-cycles/C5/freeze/latest-freeze-manifest.json",
+  "latestTextSummaryPath": "results/experimental-cycles/C5/freeze/latest-freeze-summary.txt",
+  "manifestSuffix": "_freeze_manifest.json",
+  "textSuffix": "_freeze_summary.txt",
+  "writeLatestAliases": true,
+  "preserveExistingSnapshotByDefault": true,
+  "forceRebuildRequiresExplicitFlag": true,
+  "completionGatePolicy": {
+    "requiredBeforeFreeze": true,
+    "manifestPath": "results/experimental-cycles/C5/completion-gate/latest-completion-gate-manifest.json",
+    "acceptedStatuses": [
+      "completed",
+      "completed_with_unsupported_scenarios"
+    ],
+    "dryRunMayBypassRuntimeEvidence": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C5.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "scenarioIndex": "config/scenarios/latency-injection/LATENCY_INJECTION_SCENARIOS_INDEX.json",
+    "latencyProfilesIndex": "config/latency/LATENCY_PROFILES_INDEX.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C5_LATENCY_INJECTION.json",
+    "reportingProfile": "config/reporting/profiles/RP_C5_LATENCY_INJECTION.json",
+    "completionGateProfile": "config/completion-gate/profiles/CG_C5_LATENCY_INJECTION.json",
+    "freezeProfile": "config/freeze/profiles/FR_C5_LATENCY_INJECTION.json",
+    "infrastructureProfile": "config/infrastructure/profiles/INFRA_C5_1CP_4W_8C16G.json",
+    "providerBinding": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S.json",
+    "providerConfigExample": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c5-1cp-4w-8c16g.example.yaml",
+    "referenceScenarioConfig": "config/scenarios/latency-injection/LI_L0_NONE.json"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C5/execution/latest-campaign-execution-manifest.json",
+    "diagnosisRoot": "results/experimental-cycles/C5/diagnosis",
+    "reportingRoot": "results/experimental-cycles/C5/reporting",
+    "completionGateManifest": "results/experimental-cycles/C5/completion-gate/latest-completion-gate-manifest.json"
+  },
+  "snapshotSources": [
+    {
+      "key": "cycleConfig",
+      "type": "file",
+      "source": "config/experimental-cycles/C5.json",
+      "destination": "configuration/experimental-cycle/C5.json",
+      "required": true
+    },
+    {
+      "key": "infrastructureProfile",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C5_1CP_4W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C5_1CP_4W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "providerBinding",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "required": true
+    },
+    {
+      "key": "providerConfigExample",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c5-1cp-4w-8c16g.example.yaml",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/examples/cluster.c5-1cp-4w-8c16g.example.yaml",
+      "required": true
+    },
+    {
+      "key": "scenarioIndex",
+      "type": "file",
+      "source": "config/scenarios/latency-injection/LATENCY_INJECTION_SCENARIOS_INDEX.json",
+      "destination": "configuration/scenarios/latency-injection/LATENCY_INJECTION_SCENARIOS_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "latencyInjectionScenarios",
+      "type": "directory",
+      "source": "config/scenarios/latency-injection",
+      "destination": "configuration/scenarios/latency-injection",
+      "required": true
+    },
+    {
+      "key": "latencyProfiles",
+      "type": "directory",
+      "source": "config/latency",
+      "destination": "configuration/latency",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisProfile",
+      "type": "file",
+      "source": "config/technical-diagnosis/profiles/TD_C5_LATENCY_INJECTION.json",
+      "destination": "configuration/technical-diagnosis/profiles/TD_C5_LATENCY_INJECTION.json",
+      "required": true
+    },
+    {
+      "key": "reportingProfile",
+      "type": "file",
+      "source": "config/reporting/profiles/RP_C5_LATENCY_INJECTION.json",
+      "destination": "configuration/reporting/profiles/RP_C5_LATENCY_INJECTION.json",
+      "required": true
+    },
+    {
+      "key": "completionGateProfile",
+      "type": "file",
+      "source": "config/completion-gate/profiles/CG_C5_LATENCY_INJECTION.json",
+      "destination": "configuration/completion-gate/profiles/CG_C5_LATENCY_INJECTION.json",
+      "required": true
+    },
+    {
+      "key": "freezeProfile",
+      "source": "config/freeze/profiles/FR_C5_LATENCY_INJECTION.json",
+      "destination": "configuration/freeze/profiles/FR_C5_LATENCY_INJECTION.json",
+      "type": "file",
+      "required": true
+    },
+    {
+      "key": "campaignExecutionArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C5/execution",
+      "destination": "runtime/execution",
+      "required": true
+    },
+    {
+      "key": "variantArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C5/variants",
+      "destination": "runtime/variants",
+      "required": true
+    },
+    {
+      "key": "benchmarkArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C5/benchmark",
+      "destination": "runtime/benchmark",
+      "required": true
+    },
+    {
+      "key": "diagnosisArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C5/diagnosis",
+      "destination": "runtime/diagnosis",
+      "required": true
+    },
+    {
+      "key": "reportingArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C5/reporting",
+      "destination": "runtime/reporting",
+      "required": true
+    },
+    {
+      "key": "completionGateArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C5/completion-gate",
+      "destination": "runtime/completion-gate",
+      "required": true
+    }
+  ],
+  "governance": {
+    "documentationPolicy": "Freeze outputs are retained evidence artifacts, not project documentation source files.",
+    "comparisonPolicy": "The frozen package must preserve the C5 cycle-scoped infrastructure profile, provider binding, latency profiles and latency scenario evidence so latency-only comparisons remain auditable without freezing local credentials."
+  },
+  "artifactPolicy": {
+    "outputRoot": "results/experimental-cycles/C5/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C5/artifacts",
+    "cycleLockJson": "results/experimental-cycles/C5/freeze/C5-cycle-lock.json",
+    "cycleLockText": "results/experimental-cycles/C5/freeze/C5-cycle-lock.txt",
+    "latestManifestPath": "results/experimental-cycles/C5/freeze/latest-freeze-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C5/freeze/latest-freeze-summary.txt",
+    "manifestSuffix": "_freeze_manifest.json",
+    "textSuffix": "_freeze_summary.txt",
+    "writeLatestAliases": true,
+    "preserveExistingSnapshotByDefault": false,
+    "canonicalDirectories": [
+      "configuration",
+      "configuration/application-deployment",
+      "configuration/cluster-validation",
+      "configuration/completion-gate",
+      "configuration/experimental-cycle",
+      "configuration/freeze",
+      "configuration/infrastructure",
+      "configuration/latency",
+      "configuration/observability-minimal",
+      "configuration/placement",
+      "configuration/precheck",
+      "configuration/provisioning",
+      "configuration/reporting",
+      "configuration/scenarios",
+      "configuration/technical-diagnosis",
+      "configuration/tenancy",
+      "runtime",
+      "runtime/application",
+      "runtime/benchmark",
+      "runtime/completion-gate",
+      "runtime/diagnosis",
+      "runtime/execution",
+      "runtime/infrastructure",
+      "runtime/observability",
+      "runtime/reporting",
+      "runtime/variants"
+    ]
+  },
+  "primaryFrozenArtifacts": {
+    "reportingManifest": "runtime/reporting/reporting-manifest.json",
+    "reportMarkdown": "runtime/reporting/report.md",
+    "reportHtml": "runtime/reporting/index.html",
+    "scenarioSummaryCsv": "runtime/reporting/scenario-summary.csv",
+    "completionGateManifest": "runtime/completion-gate/latest-completion-gate-manifest.json",
+    "completionGateSummary": "runtime/completion-gate/latest-completion-gate-summary.txt",
+    "diagnosisJson": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.json",
+      "required": true,
+      "description": "Latest frozen campaign-level technical diagnosis JSON."
+    },
+    "diagnosisSummary": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.txt",
+      "required": true,
+      "description": "Latest frozen campaign-level technical diagnosis text diagnosis summary."
+    }
+  },
+  "infrastructureProfileId": "INFRA_C5_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C5_1CP_4W_8C16G.json",
+  "providerBindingId": "BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "referenceScenarioId": "LI_L0_NONE",
+  "referenceScenarioConfigPath": "config/scenarios/latency-injection/LI_L0_NONE.json",
+  "referenceScenarioByFamily": {
+    "latency-injection": "LI_L0_NONE"
+  },
+  "referenceScenarioConfigByFamily": {
+    "latency-injection": "config/scenarios/latency-injection/LI_L0_NONE.json"
+  }
+}

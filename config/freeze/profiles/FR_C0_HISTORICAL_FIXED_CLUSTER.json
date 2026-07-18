@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "freeze-profile/v1",
+  "freezeProfileId": "FR_C0_HISTORICAL_FIXED_CLUSTER",
+  "profileId": "FR_C0_HISTORICAL_FIXED_CLUSTER",
+  "profileName": "C0 Historical Fixed-Cluster Freeze Profile",
+  "profileStatus": "active",
+  "profileRole": "historical_fixed_cluster_freeze",
+  "description": "Freeze profile for the historical fixed-cluster LocalAI worker-mode characterization evidence. It preserves the original configuration references and generated evidence without reinterpreting the cycle as provider-backed.",
+  "cycleId": "C0",
+  "cycleConfigPath": "config/experimental-cycles/C0.json",
+  "baselineId": "B0",
+  "baselineConfigPath": "config/scenarios/baseline/B0.json",
+  "infrastructureProfileId": "INFRA_C0_1CP_2W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C0_1CP_2W_8C16G.json",
+  "providerId": "external-fixed-cluster",
+  "artifactPolicy": {
+    "outputRoot": "results/experimental-cycles/C0/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C0/artifacts",
+    "cycleLockJson": "results/experimental-cycles/C0/freeze/C0-cycle-lock.json",
+    "cycleLockText": "results/experimental-cycles/C0/freeze/C0-cycle-lock.txt",
+    "latestManifestPath": "results/experimental-cycles/C0/freeze/latest-freeze-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C0/freeze/latest-freeze-summary.txt",
+    "manifestSuffix": "_freeze_manifest.json",
+    "textSuffix": "_freeze_summary.txt",
+    "writeLatestAliases": true,
+    "preserveExistingSnapshotByDefault": true,
+    "forceRebuildRequiresExplicitFlag": true,
+    "canonicalDirectories": [
+      "configuration",
+      "configuration/application-deployment",
+      "configuration/cluster-validation",
+      "configuration/completion-gate",
+      "configuration/experimental-cycle",
+      "configuration/freeze",
+      "configuration/infrastructure",
+      "configuration/latency",
+      "configuration/observability-minimal",
+      "configuration/placement",
+      "configuration/precheck",
+      "configuration/provisioning",
+      "configuration/reporting",
+      "configuration/scenarios",
+      "configuration/technical-diagnosis",
+      "configuration/tenancy",
+      "runtime",
+      "runtime/application",
+      "runtime/benchmark",
+      "runtime/completion-gate",
+      "runtime/diagnosis",
+      "runtime/execution",
+      "runtime/infrastructure",
+      "runtime/observability",
+      "runtime/reporting",
+      "runtime/variants"
+    ]
+  },
+  "completionGatePolicy": {
+    "requiredBeforeFreeze": false,
+    "manifestPath": "results/experimental-cycles/C0/completion-gate/latest-completion-gate-manifest.json",
+    "acceptedStatuses": [
+      "completed",
+      "completed_with_unsupported_scenarios"
+    ],
+    "dryRunMayBypassRuntimeEvidence": true,
+    "historicalCycleCanUseExistingLock": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C0.json",
+    "baselineConfig": "config/scenarios/baseline/B0.json",
+    "infrastructureProfile": "config/infrastructure/profiles/INFRA_C0_1CP_2W_8C16G.json",
+    "precheckProfile": "config/precheck/profiles/TC_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "reportingProfile": "config/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "completionGateProfile": "config/completion-gate/profiles/CG_C0_HISTORICAL_FIXED_CLUSTER.json",
+    "freezeProfile": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json"
+  },
+  "runtimeEvidence": {
+    "baselineRoot": "results/experimental-cycles/C0/benchmark/baseline",
+    "consolidatedPilotRoot": "results/experimental-cycles/C0/benchmark/pilot-consolidated",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C0/diagnosis",
+    "reportingRoot": "results/experimental-cycles/C0/reporting",
+    "completionGateRoot": "results/experimental-cycles/C0/completion-gate",
+    "existingCycleLockJson": "results/experimental-cycles/C0/freeze/C0-cycle-lock.json",
+    "existingCycleLockText": "results/experimental-cycles/C0/freeze/C0-cycle-lock.txt"
+  },
+  "snapshotSources": [
+    {
+      "key": "cycleConfig",
+      "type": "file",
+      "source": "config/experimental-cycles/C0.json",
+      "destination": "configuration/experimental-cycle/C0.json",
+      "required": true
+    },
+    {
+      "key": "baselineConfig",
+      "type": "file",
+      "source": "config/scenarios/baseline/B0.json",
+      "destination": "configuration/scenarios/baseline/B0.json",
+      "required": true
+    },
+    {
+      "key": "infrastructureProfile",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C0_1CP_2W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C0_1CP_2W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "precheckProfile",
+      "type": "file",
+      "source": "config/precheck/profiles/TC_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "destination": "configuration/precheck/profiles/TC_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisProfile",
+      "type": "file",
+      "source": "config/technical-diagnosis/profiles/TD_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "destination": "configuration/technical-diagnosis/profiles/TD_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "required": true
+    },
+    {
+      "key": "reportingProfile",
+      "type": "file",
+      "source": "config/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "destination": "configuration/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "required": true
+    },
+    {
+      "key": "completionGateProfile",
+      "type": "file",
+      "source": "config/completion-gate/profiles/CG_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "destination": "configuration/completion-gate/profiles/CG_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "required": true
+    },
+    {
+      "key": "freezeProfile",
+      "type": "file",
+      "source": "config/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "destination": "configuration/freeze/profiles/FR_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "required": true
+    },
+    {
+      "key": "baselineArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C0/benchmark/baseline",
+      "destination": "runtime/benchmark/baseline",
+      "required": false
+    },
+    {
+      "key": "consolidatedPilotArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C0/benchmark/pilot-consolidated",
+      "destination": "runtime/benchmark/pilot-consolidated",
+      "required": false
+    },
+    {
+      "key": "technicalDiagnosisArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C0/diagnosis",
+      "destination": "runtime/diagnosis",
+      "required": false
+    },
+    {
+      "key": "reportingArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C0/reporting",
+      "destination": "runtime/reporting",
+      "required": false
+    },
+    {
+      "key": "completionGateArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C0/completion-gate",
+      "destination": "runtime/completion-gate",
+      "required": false
+    }
+  ],
+  "primaryFrozenArtifacts": {
+    "reportingManifest": "runtime/reporting/reporting-manifest.json",
+    "reportMarkdown": "runtime/reporting/report.md",
+    "reportHtml": "runtime/reporting/index.html",
+    "completionGateManifest": "runtime/completion-gate/latest-completion-gate-manifest.json",
+    "diagnosisRoot": "runtime/diagnosis",
+    "scenarioSummaryCsv": "runtime/reporting/scenario-summary.csv"
+  },
+  "governance": {
+    "documentationPolicy": "Freeze outputs are generated evidence artifacts, not project documentation source files.",
+    "historicalEvidencePolicy": "C0 must preserve the fixed-cluster evidence as historical reference evidence and must not be reinterpreted as a provider-backed cycle.",
+    "executionPolicy": "The profile can be used to rebuild or verify the historical freeze package, but existing locked artifacts should not be overwritten without an explicit operator decision.",
+    "freezeOutputLayoutPolicy": "Cycle lock, latest aliases and timestamped freeze manifests are written under the cycle-scoped freeze directory. Generated freeze outputs are not treated as runtime evidence sources for the freeze snapshot."
+  }
+}

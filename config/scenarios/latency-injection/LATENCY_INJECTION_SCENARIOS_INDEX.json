@@ -1,0 +1,77 @@
+{
+  "scenarioFamily": "latency-injection",
+  "status": "active",
+  "purpose": "Registry of provider-backed latency-injection scenarios under fixed infrastructure, model, workload, LocalAI worker count and placement.",
+  "scenarioRoot": "config/scenarios/latency-injection",
+  "referenceScenarioId": "LI_L0_NONE",
+  "fixedDimensions": [
+    "infrastructure=INFRA_C5_1CP_4W_8C16G",
+    "model=M1",
+    "LocalAI worker-count=W4",
+    "workload=WL2",
+    "placement=PL_SPREAD_WORKERS",
+    "worker node capacity=8 vCPU / 16 GiB"
+  ],
+  "variedDimensions": [
+    "latency profile"
+  ],
+  "scenarios": [
+    {
+      "scenarioId": "LI_L0_NONE",
+      "path": "config/scenarios/latency-injection/LI_L0_NONE.json",
+      "latencyProfileId": "L0_NONE",
+      "latencyProfilePath": "config/latency/profiles/L0_NONE.json",
+      "delayMs": 0,
+      "jitterMs": 0,
+      "enabled": true,
+      "placementProfileId": "PL_SPREAD_WORKERS",
+      "status": "active_provider_backed_latency_injection",
+      "resultsRoot": "results/experimental-cycles/C5/benchmark/latency-injection",
+      "outputSubdir": "LI_L0_NONE_official_locked"
+    },
+    {
+      "scenarioId": "LI_L1_EDGE_NEAR",
+      "path": "config/scenarios/latency-injection/LI_L1_EDGE_NEAR.json",
+      "latencyProfileId": "L1_EDGE_NEAR",
+      "latencyProfilePath": "config/latency/profiles/L1_EDGE_NEAR.json",
+      "delayMs": 50,
+      "jitterMs": 5,
+      "enabled": true,
+      "placementProfileId": "PL_SPREAD_WORKERS",
+      "status": "active_provider_backed_latency_injection",
+      "resultsRoot": "results/experimental-cycles/C5/benchmark/latency-injection",
+      "outputSubdir": "LI_L1_EDGE_NEAR_official_locked"
+    },
+    {
+      "scenarioId": "LI_L2_EDGE_REMOTE",
+      "path": "config/scenarios/latency-injection/LI_L2_EDGE_REMOTE.json",
+      "latencyProfileId": "L2_EDGE_REMOTE",
+      "latencyProfilePath": "config/latency/profiles/L2_EDGE_REMOTE.json",
+      "delayMs": 150,
+      "jitterMs": 15,
+      "enabled": true,
+      "placementProfileId": "PL_SPREAD_WORKERS",
+      "status": "active_provider_backed_latency_injection",
+      "resultsRoot": "results/experimental-cycles/C5/benchmark/latency-injection",
+      "outputSubdir": "LI_L2_EDGE_REMOTE_official_locked"
+    },
+    {
+      "scenarioId": "LI_L3_EXTREME",
+      "path": "config/scenarios/latency-injection/LI_L3_EXTREME.json",
+      "latencyProfileId": "L3_EXTREME",
+      "latencyProfilePath": "config/latency/profiles/L3_EXTREME.json",
+      "delayMs": 600,
+      "jitterMs": 50,
+      "enabled": true,
+      "placementProfileId": "PL_SPREAD_WORKERS",
+      "status": "active_provider_backed_latency_injection",
+      "resultsRoot": "results/experimental-cycles/C5/benchmark/latency-injection",
+      "outputSubdir": "LI_L3_EXTREME_official_locked"
+    }
+  ],
+  "governanceRules": [
+    "Latency-injection scenarios vary only the latency profile applied before benchmark execution.",
+    "Infrastructure, model, workload, LocalAI worker count, placement, benchmark protocol and metric collection remain fixed.",
+    "Instrumentation failures, timeouts or unsupported benchmark outcomes must be retained as evidence rather than silently discarded."
+  ]
+}

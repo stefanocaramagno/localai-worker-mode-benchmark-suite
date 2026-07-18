@@ -1,0 +1,2 @@
+# Runtime dependency for load generation.
+locust==2.43.3

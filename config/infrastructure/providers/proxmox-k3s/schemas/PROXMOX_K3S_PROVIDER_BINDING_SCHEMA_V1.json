@@ -1,0 +1,87 @@
+{
+  "schemaId": "PROXMOX_K3S_PROVIDER_BINDING_SCHEMA_V1",
+  "schemaVersion": "provider-binding/proxmox-k3s/v1",
+  "purpose": "Machine-readable contract that binds infrastructure profiles to proxmox-k3s cluster configuration files without embedding local credentials.",
+  "requiredTopLevelFields": [
+    "schemaVersion",
+    "providerBindingId",
+    "providerId",
+    "infrastructureProfileId",
+    "bindingStatus",
+    "sourceInfrastructureProfilePath",
+    "providerConfig",
+    "resolutionPolicy",
+    "templateVariables",
+    "validation",
+    "governance",
+    "lifecycleCompatibility",
+    "clusterLifecycle"
+  ],
+  "providerConfigRequiredFields": [
+    "examplePath",
+    "templatePath",
+    "localPath",
+    "recommendedKubeconfigPath"
+  ],
+  "resolutionRules": [
+    "Provider-backed cycles resolve provider configuration through providerBindingId before invoking proxmox-k3s.",
+    "Local provider configuration is required for real create/delete/kubeconfig/template operations.",
+    "Example provider configuration is redacted and may be used for review, dry-run, or template derivation only.",
+    "Local provider configuration is the operational input for real provider execution; example and template files are review-safe inputs only.",
+    "Provider bindings must not contain Proxmox token secrets or kubeconfig credential material.",
+    "Provider bindings must expose the default lifecycle policy that will be applied when the cycle does not override it.",
+    "Create and delete command planning must use lifecycleCompatibility rather than inferring deletion from provider availability.",
+    "Delete commands require explicit confirmation even when an ephemeral lifecycle policy plans cluster teardown.",
+    "Provider bindings may declare templateVariables.template.vmidBase to render template.vmid_base in proxmox-k3s v1.0.3 cluster YAML files.",
+    "Provider bindings may declare vmidAllocationPolicy to document the intended VMID range and partial-provisioning cleanup behavior.",
+    "VMID allocation policy metadata must not be treated as proof of Proxmox state; real create operations remain authoritative through provider command results.",
+    "Real provider execution must resolve only localPath or an explicit safe override; examplePath and templatePath are review-only inputs.",
+    "Plan and dry-run workflows use review-safe provider configurations unless an explicit override is supplied.",
+    "When multiple worker VMs are materialized on the same Proxmox host, the binding should document that physical-host consolidation explicitly.",
+    "Provider bindings that rely on runtime-generated provisioning profiles must declare status=runtime_generated_per_variant and the provisioning template used for generation.",
+    "Operational provider invocations must use the proxmox-k3s v1.0.3 cluster command namespace: cluster create, cluster kubeconfig, and cluster delete.",
+    "Provider bindings may declare templateVariables.addons to document provider-managed add-ons used by proxmox-k3s v1.0.3 cluster YAML files."
+  ],
+  "clusterLifecycleRequiredFields": [
+    "lifecyclePolicyId",
+    "lifecyclePolicyPath",
+    "clusterLifecycleModeDefault",
+    "destroyClusterAfterCycleDefault",
+    "lifecyclePoliciesIndexPath",
+    "lifecycleManifestRequired"
+  ],
+  "optionalTopLevelFields": [
+    "vmidAllocationPolicy",
+    "physicalHostMaterialization",
+    "provisioningIntegration",
+    "lifecycleCollisionGuard"
+  ],
+  "templateVariableOptionalFields": [
+    "template.vmidBase"
+  ],
+  "lifecycleCollisionGuardOptionalFields": [
+    "enabled",
+    "enforcement",
+    "checkClusterName",
+    "checkConfiguredIpAddresses",
+    "checkPreExistingKubeconfigBeforeEphemeralProvisioning",
+    "allowReusableClusterIdentityAcrossProfiles"
+  ],
+  "provisioningIntegrationOptionalFields": [
+    "provisioningIntegrationProfileId",
+    "provisioningIntegrationProfilePath",
+    "provisioningIntegrationIndexPath",
+    "defaultAction",
+    "requiredBeforeClusterValidation",
+    "requiredBeforeApplicationDeployment",
+    "status",
+    "profileGenerationMode",
+    "runtimeProfileSource",
+    "runtimeProfileTemplateId",
+    "runtimeProfileTemplatePath",
+    "generatedProfileNamingPolicy",
+    "generationScope",
+    "staticProfileRequired",
+    "notes"
+  ]
+}

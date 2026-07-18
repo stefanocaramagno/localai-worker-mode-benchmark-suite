@@ -1,0 +1,304 @@
+{
+  "schemaVersion": "freeze-profile/v1",
+  "freezeProfileId": "FR_C1_PROVIDER_BACKED_BASELINE",
+  "profileId": "FR_C1_PROVIDER_BACKED_BASELINE",
+  "profileName": "C1 Provider-Backed Freeze Profile",
+  "profileStatus": "active",
+  "profileRole": "canonical_provider_backed_freeze_profile",
+  "description": "Cycle-scoped freeze profile for the C1 provider-backed LocalAI worker-mode baseline. It preserves configuration references, provider evidence, validation outputs, deployment evidence, minimal observability snapshots, benchmark artifacts, diagnosis, reporting and completion-gate outputs as a self-contained cycle snapshot.",
+  "cycleId": "C1",
+  "cycleConfigPath": "config/experimental-cycles/C1.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+  "providerId": "proxmox-k3s",
+  "providerBindingId": "BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+  "artifactPolicy": {
+    "outputRoot": "results/experimental-cycles/C1/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C1/artifacts",
+    "cycleLockJson": "results/experimental-cycles/C1/freeze/C1-cycle-lock.json",
+    "cycleLockText": "results/experimental-cycles/C1/freeze/C1-cycle-lock.txt",
+    "latestManifestPath": "results/experimental-cycles/C1/freeze/latest-freeze-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C1/freeze/latest-freeze-summary.txt",
+    "manifestSuffix": "_freeze_manifest.json",
+    "textSuffix": "_freeze_summary.txt",
+    "writeLatestAliases": true,
+    "preserveExistingSnapshotByDefault": true,
+    "forceRebuildRequiresExplicitFlag": true,
+    "canonicalDirectories": [
+      "configuration",
+      "configuration/application-deployment",
+      "configuration/cluster-validation",
+      "configuration/completion-gate",
+      "configuration/experimental-cycle",
+      "configuration/freeze",
+      "configuration/infrastructure",
+      "configuration/latency",
+      "configuration/observability-minimal",
+      "configuration/placement",
+      "configuration/precheck",
+      "configuration/provisioning",
+      "configuration/reporting",
+      "configuration/scenarios",
+      "configuration/technical-diagnosis",
+      "configuration/tenancy",
+      "runtime",
+      "runtime/application",
+      "runtime/benchmark",
+      "runtime/completion-gate",
+      "runtime/diagnosis",
+      "runtime/execution",
+      "runtime/infrastructure",
+      "runtime/observability",
+      "runtime/reporting",
+      "runtime/variants"
+    ]
+  },
+  "completionGatePolicy": {
+    "requiredBeforeFreeze": true,
+    "manifestPath": "results/experimental-cycles/C1/completion-gate/latest-completion-gate-manifest.json",
+    "acceptedStatuses": [
+      "completed",
+      "completed_with_unsupported_scenarios"
+    ],
+    "dryRunMayBypassRuntimeEvidence": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C1.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "infrastructureProfile": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+    "providerBinding": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "provisioningIntegrationProfile": "config/provisioning/profiles/PI_C1_PROVIDER_BACKED_BASELINE.json",
+    "clusterValidationProfile": "config/cluster-validation/profiles/CV_C1_PROVIDER_BACKED_BASELINE.json",
+    "applicationDeploymentProfile": "config/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+    "placementProfile": "config/placement/profiles/PL_COLOCATED.json",
+    "minimalObservabilityProfile": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+    "reportingProfile": "config/reporting/profiles/RP_C1_PROVIDER_BACKED_BASELINE.json",
+    "completionGateProfile": "config/completion-gate/profiles/CG_C1_PROVIDER_BACKED_BASELINE.json",
+    "freezeProfile": "config/freeze/profiles/FR_C1_PROVIDER_BACKED_BASELINE.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C1_PROVIDER_BACKED_BASELINE.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "technicalDiagnosisSchema": "config/technical-diagnosis/schemas/TECHNICAL_DIAGNOSIS_PROFILE_SCHEMA_V1.json"
+  },
+  "runtimeEvidence": {
+    "provisioningManifest": "results/experimental-cycles/C1/infrastructure/provisioning/latest-provisioning-integration-manifest.json",
+    "clusterValidationManifest": "results/experimental-cycles/C1/infrastructure/validation/latest-cluster-validation-manifest.json",
+    "applicationDeploymentManifest": "results/experimental-cycles/C1/application/deployment/latest-localai-deployment-manifest.json",
+    "localAiSmokeResult": "results/experimental-cycles/C1/application/deployment/latest-smoke-result.json",
+    "minimalObservabilityManifest": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-manifest.json",
+    "minimalObservabilityMetrics": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-metrics.json",
+    "reportingManifest": "results/experimental-cycles/C1/reporting/reporting-manifest.json",
+    "completionGateManifest": "results/experimental-cycles/C1/completion-gate/latest-completion-gate-manifest.json",
+    "cycleExecutionManifest": "results/experimental-cycles/C1/execution/latest-cycle-execution-manifest.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C1_PROVIDER_BACKED_BASELINE.json"
+  },
+  "snapshotSources": [
+    {
+      "key": "cycleConfig",
+      "type": "file",
+      "source": "config/experimental-cycles/C1.json",
+      "destination": "configuration/experimental-cycle/C1.json",
+      "required": true,
+      "description": "Cycle configuration used to freeze C1."
+    },
+    {
+      "key": "baselineConfig",
+      "type": "file",
+      "source": "config/scenarios/baseline/B1.json",
+      "destination": "configuration/scenarios/baseline/B1.json",
+      "required": true
+    },
+    {
+      "key": "infrastructureProfile",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "providerBinding",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C1_1CP_2W_8C16G_PROXMOX_K3S.json",
+      "required": true
+    },
+    {
+      "key": "provisioningIntegrationProfile",
+      "type": "file",
+      "source": "config/provisioning/profiles/PI_C1_PROVIDER_BACKED_BASELINE.json",
+      "destination": "configuration/provisioning/profiles/PI_C1_PROVIDER_BACKED_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "clusterValidationProfile",
+      "type": "file",
+      "source": "config/cluster-validation/profiles/CV_C1_PROVIDER_BACKED_BASELINE.json",
+      "destination": "configuration/cluster-validation/profiles/CV_C1_PROVIDER_BACKED_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "applicationDeploymentProfile",
+      "type": "file",
+      "source": "config/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+      "destination": "configuration/application-deployment/profiles/AD_C1_PROVIDER_BACKED_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "placementProfile",
+      "type": "file",
+      "source": "config/placement/profiles/PL_COLOCATED.json",
+      "destination": "configuration/placement/profiles/PL_COLOCATED.json",
+      "required": true
+    },
+    {
+      "key": "minimalObservabilityProfile",
+      "type": "file",
+      "source": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+      "destination": "configuration/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "reportingProfile",
+      "type": "file",
+      "source": "config/reporting/profiles/RP_C1_PROVIDER_BACKED_BASELINE.json",
+      "destination": "configuration/reporting/profiles/RP_C1_PROVIDER_BACKED_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "completionGateProfile",
+      "type": "file",
+      "source": "config/completion-gate/profiles/CG_C1_PROVIDER_BACKED_BASELINE.json",
+      "destination": "configuration/completion-gate/profiles/CG_C1_PROVIDER_BACKED_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "freezeProfile",
+      "type": "file",
+      "source": "config/freeze/profiles/FR_C1_PROVIDER_BACKED_BASELINE.json",
+      "destination": "configuration/freeze/profiles/FR_C1_PROVIDER_BACKED_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisProfile",
+      "type": "file",
+      "source": "config/technical-diagnosis/profiles/TD_C1_PROVIDER_BACKED_BASELINE.json",
+      "destination": "configuration/technical-diagnosis/profiles/TD_C1_PROVIDER_BACKED_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisIndex",
+      "type": "file",
+      "source": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+      "destination": "configuration/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisSchema",
+      "type": "file",
+      "source": "config/technical-diagnosis/schemas/TECHNICAL_DIAGNOSIS_PROFILE_SCHEMA_V1.json",
+      "destination": "configuration/technical-diagnosis/schemas/TECHNICAL_DIAGNOSIS_PROFILE_SCHEMA_V1.json",
+      "required": true
+    },
+    {
+      "key": "provisioningArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/infrastructure/provisioning",
+      "destination": "runtime/infrastructure/provisioning",
+      "required": true
+    },
+    {
+      "key": "clusterValidationArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/infrastructure/validation",
+      "destination": "runtime/infrastructure/validation",
+      "required": true
+    },
+    {
+      "key": "applicationDeploymentArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/application/deployment",
+      "destination": "runtime/application/deployment",
+      "required": true
+    },
+    {
+      "key": "minimalObservabilityArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/observability/minimal",
+      "destination": "runtime/observability/minimal",
+      "required": true
+    },
+    {
+      "key": "benchmarkArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/benchmark",
+      "destination": "runtime/benchmark",
+      "required": true
+    },
+    {
+      "key": "diagnosisArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/diagnosis",
+      "destination": "runtime/diagnosis",
+      "required": true
+    },
+    {
+      "key": "reportingArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/reporting",
+      "destination": "runtime/reporting",
+      "required": true
+    },
+    {
+      "key": "completionGateArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/completion-gate",
+      "destination": "runtime/completion-gate",
+      "required": true
+    },
+    {
+      "key": "lifecycleArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/infrastructure/lifecycle",
+      "destination": "runtime/infrastructure/lifecycle",
+      "required": false
+    },
+    {
+      "key": "clusterDeletionArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C1/infrastructure/deletion",
+      "destination": "runtime/infrastructure/deletion",
+      "required": false
+    },
+    {
+      "key": "cycleExecutionEvidence",
+      "source": "results/experimental-cycles/C1/execution",
+      "destination": "runtime/execution",
+      "required": false,
+      "description": "Provider-backed cycle execution manifest and execution summary.",
+      "type": "directory"
+    }
+  ],
+  "primaryFrozenArtifacts": {
+    "provisioningManifest": "runtime/infrastructure/provisioning/latest-provisioning-integration-manifest.json",
+    "clusterValidationManifest": "runtime/infrastructure/validation/latest-cluster-validation-manifest.json",
+    "applicationDeploymentManifest": "runtime/application/deployment/latest-localai-deployment-manifest.json",
+    "localAiSmokeResult": "runtime/application/deployment/latest-smoke-result.json",
+    "minimalObservabilityManifest": "runtime/observability/minimal/latest-minimal-observability-manifest.json",
+    "minimalObservabilityMetrics": "runtime/observability/minimal/latest-minimal-observability-metrics.json",
+    "reportingManifest": "runtime/reporting/reporting-manifest.json",
+    "reportMarkdown": "runtime/reporting/report.md",
+    "reportHtml": "runtime/reporting/index.html",
+    "scenarioSummaryCsv": "runtime/reporting/scenario-summary.csv",
+    "completionGateManifest": "runtime/completion-gate/latest-completion-gate-manifest.json",
+    "completionGateSummary": "runtime/completion-gate/latest-completion-gate-summary.txt",
+    "cycleExecutionManifest": "runtime/execution/latest-cycle-execution-manifest.json"
+  },
+  "governance": {
+    "freezeBoundary": "The freeze workflow snapshots already generated cycle evidence. It does not execute provisioning, validation, deployment, benchmark, diagnosis, reporting or completion-gate steps.",
+    "providerToolBoundary": "The freeze workflow consumes proxmox-k3s evidence without invoking or modifying proxmox-k3s.",
+    "documentationPolicy": "This profile is operational configuration and not project documentation.",
+    "evidencePolicy": "A provider-backed cycle can be frozen only after completion-gate evidence is available, unless the workflow is explicitly executed in dry-run mode."
+  }
+}

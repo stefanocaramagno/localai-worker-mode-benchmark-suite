@@ -1,0 +1,55 @@
+{
+    "schemaVersion": "cluster-lifecycle-policy/v1",
+    "lifecyclePolicyId": "LC_REUSE_RETAIN_CLUSTER",
+    "policyName": "Provider-Backed Reuse and Retain Policy",
+    "policyCategory": "provider-backed-reuse",
+    "clusterLifecycleMode": "reuse",
+    "providerId": "proxmox-k3s",
+    "providerManagedLifecycle": true,
+    "provisioningRequired": true,
+    "destroyClusterAfterCycleDefault": false,
+    "description": "Creates or reuses a provider-backed K3s cluster and keeps it available after the cycle for additional runs on the same infrastructure profile.",
+    "commands": {
+        "createCluster": {
+            "required": true,
+            "allowed": true,
+            "commandName": "proxmox-k3s cluster create"
+        },
+        "refreshKubeconfig": {
+            "required": true,
+            "allowed": true,
+            "commandName": "proxmox-k3s cluster kubeconfig"
+        },
+        "deleteCluster": {
+            "required": false,
+            "allowed": true,
+            "commandName": "proxmox-k3s cluster delete"
+        },
+        "deleteTemplate": {
+            "required": false,
+            "allowed": false,
+            "commandName": "proxmox-k3s template delete"
+        }
+    },
+    "executionGuards": {
+        "allowCreate": true,
+        "allowDelete": true,
+        "requireExplicitDeleteConfirmation": true,
+        "allowTemplateDeletion": false,
+        "failFastOnMissingProviderConfig": true
+    },
+    "artifactPolicy": {
+        "writeLifecycleManifest": true,
+        "writeProvisioningCommandManifest": true,
+        "writeDeleteCommandManifest": false,
+        "writeLogs": true,
+        "defaultLifecycleArtifactRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/lifecycle",
+        "defaultProvisioningLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/provisioning",
+        "defaultDeleteLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/deletion"
+    },
+    "governance": {
+        "officialBenchmarkingAllowed": true,
+        "comparisonPolicy": "Use this policy when several benchmark runs must share the same generated infrastructure profile.",
+        "destructiveActionPolicy": "Cluster deletion is available only through an explicit destroy override or a later cleanup operation."
+    }
+}

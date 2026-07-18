@@ -1,0 +1,454 @@
+{
+  "schemaVersion": "completion-gate-profile/v1",
+  "completionGateProfileId": "CG_C9_NETWORK_AWARE_SCHEDULER",
+  "profileId": "CG_C9_NETWORK_AWARE_SCHEDULER",
+  "profileName": "C9 Network-Aware Scheduler Completion Gate Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_network_aware_scheduler_completion_gate",
+  "description": "Completion gate profile for the provider-backed network-aware-scheduler campaign.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "providerId": "proxmox-k3s",
+  "outputRoot": "results/experimental-cycles/C9/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C9/completion-gate",
+    "latestManifestPath": "results/experimental-cycles/C9/completion-gate/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C9/completion-gate/latest-completion-gate-summary.txt",
+    "writeLatestAliases": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C9.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "scenarioIndex": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "reportingProfile": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+    "reportingIndex": "config/reporting/REPORTING_INDEX.json",
+    "freezeProfile": "config/freeze/profiles/FR_C9_NETWORK_AWARE_SCHEDULER.json",
+    "scenarioConfigRoot": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+    "infrastructureProfile": "config/infrastructure/profiles/INFRA_C9_1CP_4W_8C16G.json",
+    "providerBinding": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C9_1CP_4W_8C16G_PROXMOX_K3S.json",
+    "schedulerDecisionCaptureScript": "scripts/observability/scheduler/capture-scheduler-decisions.py",
+    "multiTenantLocustRunner": "scripts/load/multi-tenant/run-multi-tenant-locust.py",
+    "clusterCaptureProfile": "config/cluster-capture/profiles/CS_NETWORK_AWARE_SCHEDULER_CAPTURE.json",
+    "customSchedulerProfile": "config/scheduler/profiles/CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER.json",
+    "loadAwareSchedulerProfile": "config/scheduler/profiles/CS_C9_LOADAWARE_SECOND_SCHEDULER.json",
+    "monAgentProfile": "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+    "networkObservabilityProfile": "config/network-observability/profiles/NO_MENTAT_C9.json",
+    "istioGatewayProfile": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+    "reschedulingProfile": "config/rescheduling/profiles/RS_C9_NETWORK_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT.json",
+    "schedulerModeManifestValidator": "scripts/validation/scheduler/validate-scheduler-mode-manifests.py",
+    "monAgentValidationScript": "scripts/observability/mon-agent/run-mon-agent.py",
+    "mentatValidationScript": "scripts/network-observability/validate-mentat.py",
+    "istioGatewayValidationScript": "scripts/istio/validate-istio-gateway.py",
+    "reschedulingScript": "scripts/rescheduling/run-telemetry-primed-rescheduling.py",
+    "clusterLensIndex": "config/cluster-lens/CLUSTER_LENS_INDEX.json",
+    "clusterLensProfile": "config/cluster-lens/profiles/CL_C9_PLACEMENT_SNAPSHOT.json",
+    "clusterLensCaptureScript": "scripts/observability/cluster-lens/capture-cluster-lens-snapshot.py"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C9/execution/latest-campaign-execution-manifest.json",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C9/diagnosis",
+    "reportingManifest": "results/experimental-cycles/C9/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C9/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C9/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C9/reporting/scenario-summary.csv",
+    "benchmarkRoots": [
+      "results/experimental-cycles/C9/benchmark/network-aware-scheduler"
+    ],
+    "clusterSideRoots": [
+      "results/experimental-cycles/C9/variants",
+      "results/experimental-cycles/C9/scheduler"
+    ],
+    "variantEvidenceRoot": "results/experimental-cycles/C9/variants",
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C9/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C9/benchmark/network-aware-scheduler",
+    "minimalObservabilityEvidencePattern": "results/experimental-cycles/C9/variants/<scenario-id>/observability/minimal",
+    "networkTelemetryEvidencePattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/{mon-agent,mentat,istio,telemetry-priming,rescheduling,cluster-lens}",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+    "reportingProfile": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+    "freezeProfile": "config/freeze/profiles/FR_C9_NETWORK_AWARE_SCHEDULER.json",
+    "clusterLensPlacementEvidencePattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/cluster-lens",
+    "clusterLensPlacementSummaryPattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/cluster-lens/cluster-lens-placement-summary.json"
+  },
+  "requiredFamilies": [
+    "network-aware-scheduler"
+  ],
+  "minimumReplicasPerScenario": 3,
+  "strictScenarioCoverage": true,
+  "acceptUnsupportedScenariosAsCovered": true,
+  "minimumUnsupportedReplicasPerScenario": 3,
+  "minimumMeasuredScenariosByFamily": {
+    "network-aware-scheduler": 12
+  },
+  "maximumMeanResponseTimeCvPercent": 1000000,
+  "minimumFindings": 1,
+  "gates": {
+    "profileResolution": {
+      "enabled": true
+    },
+    "providerConfig": {
+      "enabled": false
+    },
+    "provisioning": {
+      "enabled": false
+    },
+    "clusterValidation": {
+      "enabled": false
+    },
+    "applicationDeployment": {
+      "enabled": false
+    },
+    "minimalObservability": {
+      "enabled": false
+    },
+    "clusterValidationArtifacts": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C9/variants"
+      ],
+      "artifactNames": [
+        "latest-cluster-validation-manifest.json"
+      ],
+      "minimumArtifactCount": 1,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false
+    },
+    "applicationDeploymentArtifacts": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C9/variants"
+      ],
+      "artifactNames": [
+        "latest-localai-deployment-manifest.json"
+      ],
+      "minimumArtifactCount": 1,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false
+    },
+    "schedulerDecisionEvidence": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C9/scheduler"
+      ],
+      "artifactNames": [
+        "network-aware-scheduler-decision-evidence.json",
+        "latest-network-aware-scheduler-decision-evidence.json"
+      ],
+      "minimumArtifactCount": 1,
+      "maxArtifactsToInspect": 60,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": true,
+      "acceptedStatuses": [
+        "captured"
+      ],
+      "requiredDottedPaths": [
+        "schemaVersion",
+        "scenario.scenarioId",
+        "placementClassification.schemaVersion",
+        "summary.scheduledPodCount"
+      ],
+      "minimumNumericDottedPaths": {
+        "summary.scheduledPodCount": 1
+      },
+      "statusPolicy": {
+        "acceptedRuntimeStatus": "captured",
+        "rejectedRuntimeStatuses": [
+          "captured_without_matching_pods"
+        ],
+        "reason": "Network-aware scheduler completion requires pod-to-node evidence for at least one scheduled LocalAI pod; no-pod captures are debugging artifacts and are not accepted as successful runtime scheduler evidence."
+      }
+    },
+    "multiTenantBenchmarkSummary": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C9/benchmark/network-aware-scheduler"
+      ],
+      "artifactNames": [
+        "multi-tenant-summary.json",
+        "latest-multi-tenant-summary.json"
+      ],
+      "minimumArtifactCount": 1,
+      "maxArtifactsToInspect": 60,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false,
+      "requiredDottedPaths": [
+        "schemaVersion",
+        "scenarioId",
+        "tenantResults"
+      ]
+    },
+    "benchmarkArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C9/benchmark/network-aware-scheduler"
+      ],
+      "patterns": [
+        "*_stats.csv",
+        "multi-tenant-summary.json",
+        "multi-tenant-summary.txt",
+        "*.json",
+        "*.csv",
+        "*.txt"
+      ]
+    },
+    "clusterSideArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C9/variants",
+        "results/experimental-cycles/C9/scheduler"
+      ],
+      "patterns": [
+        "*.json",
+        "*.txt",
+        "*.csv",
+        "*.log"
+      ]
+    },
+    "technicalDiagnosis": {
+      "enabled": true,
+      "acceptedClosureStatuses": [
+        "preliminary_diagnosis_available"
+      ],
+      "roots": [
+        "results/experimental-cycles/C9/diagnosis"
+      ],
+      "familyScope": "all",
+      "minimumFamiliesWithCoverage": 1,
+      "minimumFindings": 1
+    },
+    "reporting": {
+      "enabled": true,
+      "reportingRoot": "results/experimental-cycles/C9/reporting",
+      "manifestName": "reporting-manifest.json",
+      "markdownReportName": "report.md",
+      "htmlReportName": "index.html",
+      "scenarioSummaryCsvName": "scenario-summary.csv",
+      "chartsDirectoryName": "charts",
+      "sweepsDirectoryName": "sweeps",
+      "requiredSections": [
+        "Scheduler triplet comparison",
+        "Network-aware telemetry evidence",
+        "Tenant traffic context",
+        "Scheduler decision table",
+        "Placement classification summary",
+        "Per-tenant benchmark metrics",
+        "Placement negative evidence",
+        "Scenario Summary",
+        "Metrics Summary",
+        "Main Findings"
+      ],
+      "requiredChartFamilies": [],
+      "requiredChartMetrics": [],
+      "requiredSweepReports": [
+        "network-aware-scheduler"
+      ]
+    },
+    "freezeReadiness": {
+      "enabled": true,
+      "requireFreezeOutputsDeclared": false,
+      "requireFrozenArtifacts": false,
+      "requireFreezeProfileDeclared": true,
+      "requireFreezeProfileFile": true,
+      "freezeProfilePath": "config/freeze/profiles/FR_C9_NETWORK_AWARE_SCHEDULER.json"
+    },
+    "scenarioCoverage": {
+      "requiredFamilies": [
+        "network-aware-scheduler"
+      ]
+    },
+    "schedulerPairwiseComparisonEvidence": {
+      "enabled": true,
+      "description": "Reporting and diagnosis should expose paired default vs load-aware evidence and triplet default/load-aware/network-aware evidence for each logical scenario.",
+      "reportingProfilePath": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+      "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+      "expectedComparisonShape": "default_loadaware_netaware_triplets",
+      "requiredSchedulerModes": [
+        "DEFAULT",
+        "LOADAWARE",
+        "NETAWARE"
+      ]
+    },
+    "schedulerModeManifestPolicyValidation": {
+      "enabled": true,
+      "roots": [
+        "infra/k8s/compositions/network-aware-scheduler"
+      ],
+      "minimumInspectedFileCount": 1,
+      "fileExtensions": [
+        ".yaml",
+        ".yml",
+        ".json"
+      ],
+      "forbiddenLiteralPatterns": [
+        "nodeName:",
+        "kubernetes.io/hostname"
+      ],
+      "forbiddenPathFragments": [
+        "placement-variation",
+        "controlled-placement",
+        "node-pinning"
+      ],
+      "gateId": "network_aware_scheduler_manifest_policy_clean",
+      "title": "Network-aware scheduler manifests do not contain hard pod-placement controls.",
+      "implication": "Completion requires DEFAULT, LOADAWARE and NETAWARE placement to be produced by scheduler decisions rather than static pod pinning."
+    },
+    "networkAwareTelemetryEvidence": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C9/variants"
+      ],
+      "componentArtifactNames": {
+        "monAgent": [
+          "latest-mon-agent-manifest.json",
+          "latest-mon-agent-validation-snapshot.json"
+        ],
+        "mentat": [
+          "latest-mentat-observability-manifest.json",
+          "latest-mentat-validation-snapshot.json"
+        ],
+        "istio": [
+          "latest-istio-gateway-manifest.json"
+        ],
+        "rescheduling": [
+          "latest-rescheduling-manifest.json"
+        ],
+        "clusterLens": [
+          "cluster-lens-placement-summary.json",
+          "cluster-lens-capture-manifest.json"
+        ]
+      },
+      "minimumComponentsWithEvidence": 5,
+      "minimumArtifactCount": 5,
+      "requireJsonLoadable": true,
+      "requiredNodeAnnotationPrefixes": [
+        "network-latency.",
+        "packet-loss.",
+        "network-bandwidth."
+      ],
+      "requiredDeploymentAnnotationPrefixes": [
+        "traffic."
+      ],
+      "gatewayTrafficKey": "traffic.localai-gateway-istio",
+      "requiredExactGatewayTrafficKey": "traffic.localai-gateway-istio",
+      "gatewayTrafficAlternativesAreDiagnosticOnly": true,
+      "requireLatencyMatrixValidationEvidence": true,
+      "requiredLatencyMatrixValidationPathHint": "preRedeploymentSnapshot.annotationControlledLatencyMatrixValidation.status",
+      "componentAcceptedStatuses": {
+        "monAgent": [
+          "applied",
+          "captured",
+          "validated"
+        ],
+        "mentat": [
+          "captured",
+          "validated"
+        ],
+        "istio": [
+          "validated"
+        ],
+        "rescheduling": [
+          "captured",
+          "validated",
+          "executed"
+        ],
+        "clusterLens": [
+          "captured",
+          "partial"
+        ]
+      },
+      "minimumCompleteScenarioCount": 1,
+      "requireExactGatewayTrafficKeyInMasterDeployment": true,
+      "requireLatencyMatrixValidationStatus": "validated_for_L1_L2_L3_skipped_allowed_for_L0",
+      "gatewayTrafficRequiredRoleLabelValue": "master",
+      "gatewayTrafficRequiredOnlyForMasterRole": true,
+      "requireClusterLensPlacementEvidence": true,
+      "clusterLensPlacementEvidencePolicy": "Require at least one captured or partial cluster-lens placement evidence artifact in the network-aware telemetry evidence set so placement can be interpreted together with response-time metrics."
+    },
+    "networkAwareManifestPolicyValidation": {
+      "enabled": true,
+      "roots": [
+        "infra/k8s/compositions/network-aware-scheduler",
+        "infra/k8s/components/localai/tenant-labels",
+        "infra/k8s/components/localai/scheduler-mode",
+        "infra/k8s/components/istio/tenant-gateway"
+      ],
+      "minimumInspectedFileCount": 1,
+      "fileExtensions": [
+        ".yaml",
+        ".yml",
+        ".json"
+      ],
+      "requiredLiteralPatterns": [
+        "role: master",
+        "role: worker",
+        "group:",
+        "app:",
+        "istio-injection: enabled",
+        "mon-agent/enabled:"
+      ],
+      "forbiddenLiteralPatterns": [
+        "nodeName:",
+        "kubernetes.io/hostname"
+      ],
+      "requiredProfileFiles": [
+        "config/mon-agent/profiles/MA_NETWORK_AWARE.json",
+        "config/network-observability/profiles/NO_MENTAT_C9.json",
+        "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+        "config/scheduler/profiles/CS_C9_LOCALAI_RESOURCE_NETWORK_AWARE_SECOND_SCHEDULER.json"
+      ],
+      "requiredSchedulerPlugins": [
+        "LoadAwareResourcesBalancedAllocation",
+        "NetworkAwareLocalAi"
+      ],
+      "requiredGatewayTrafficKey": "traffic.localai-gateway-istio"
+    }
+  },
+  "decisionPolicy": {
+    "completedStatus": "completed",
+    "completedWithUnsupportedScenariosStatus": "completed_with_unsupported_scenarios",
+    "failedValidationStatus": "failed_validation",
+    "failedBenchmarkStatus": "failed_benchmark",
+    "failedReportingStatus": "failed_reporting",
+    "notCompletedStatus": "not_completed",
+    "dryRunStatus": "dry_run",
+    "allowUnsupportedScenariosWhenDocumented": true,
+    "unsupportedScenarioSignals": [
+      "unsupported",
+      "not_supported"
+    ],
+    "treatMissingNetworkAwareTelemetryAsValidationFailure": true
+  },
+  "campaignAwareEvaluation": {
+    "enabled": true,
+    "campaignType": "network_aware_scheduler",
+    "scenarioFamily": "network-aware-scheduler",
+    "expectedLogicalScenarioCount": 12,
+    "expectedVariantCount": 36,
+    "expectedSchedulerModes": [
+      "DEFAULT",
+      "LOADAWARE",
+      "NETAWARE"
+    ],
+    "minimumReplicasPerScenario": 3,
+    "requireGatewayRoutedTraffic": true,
+    "requireNetworkAwareTelemetryEvidence": true
+  },
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C9_NETWORK_AWARE_SCHEDULER.json",
+  "reportingProfilePath": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+  "referenceScenarioId": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+  "referenceScenarioByFamily": {
+    "network-aware-scheduler": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "network-aware-scheduler": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json"
+  },
+  "ignoreCycleFreezeProfileInProfileResolution": false
+}

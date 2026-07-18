@@ -1,0 +1,55 @@
+{
+    "schemaId": "CLUSTER_LIFECYCLE_POLICY_SCHEMA_V1",
+    "schemaVersion": "cluster-lifecycle-policy/v1",
+    "purpose": "Machine-readable contract for cluster lifecycle policies used by provider-backed and external-cluster experimental cycles.",
+    "requiredTopLevelFields": [
+        "schemaVersion",
+        "lifecyclePolicyId",
+        "policyName",
+        "policyCategory",
+        "clusterLifecycleMode",
+        "providerManagedLifecycle",
+        "provisioningRequired",
+        "destroyClusterAfterCycleDefault",
+        "commands",
+        "executionGuards",
+        "artifactPolicy",
+        "governance"
+    ],
+    "supportedClusterLifecycleModes": [
+        "external",
+        "reuse",
+        "ephemeral"
+    ],
+    "fieldGroups": {
+        "commands": [
+            "createCluster",
+            "refreshKubeconfig",
+            "deleteCluster",
+            "deleteTemplate"
+        ],
+        "executionGuards": [
+            "allowCreate",
+            "allowDelete",
+            "requireExplicitDeleteConfirmation",
+            "allowTemplateDeletion",
+            "failFastOnMissingProviderConfig"
+        ],
+        "artifactPolicy": [
+            "writeLifecycleManifest",
+            "writeProvisioningCommandManifest",
+            "writeDeleteCommandManifest",
+            "writeLogs",
+            "defaultLifecycleArtifactRootTemplate",
+            "defaultProvisioningLogRootTemplate",
+            "defaultDeleteLogRootTemplate"
+        ]
+    },
+    "governanceRules": [
+        "Every provider-backed cycle must declare a cluster lifecycle policy before provisioning is executed.",
+        "Reuse mode keeps the generated cluster available after the cycle unless an explicit destroy override is provided.",
+        "Ephemeral mode plans both cluster creation and explicit cluster deletion after the cycle.",
+        "External mode represents clusters whose lifecycle is not managed by the provider-backed pipeline.",
+        "Delete operations must never be inferred from provider availability alone; they require an explicit lifecycle policy and confirmation guard."
+    ]
+}

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "technicalDiagnosisProfileId": "TD_C1_PROVIDER_BACKED_BASELINE",
+  "profileId": "TD_C1_PROVIDER_BACKED_BASELINE",
+  "profileName": "C1 Provider-Backed Baseline Technical Diagnosis",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_baseline_technical_diagnosis",
+  "description": "Technical diagnosis profile for the provider-backed baseline cycle. It focuses on validating the first end-to-end provider-backed benchmark evidence before broader resource, node-count and placement comparisons are introduced.",
+  "cycleId": "C1",
+  "cycleConfigPath": "config/experimental-cycles/C1.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "outputRoot": "results/experimental-cycles/C1/diagnosis",
+  "diagnosisManifestSuffix": "_diagnosis.json",
+  "diagnosisTextSuffix": "_diagnosis.txt",
+  "familyOrder": [
+    "baseline"
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "validationSummaryRelativePath": "results/experimental-cycles/C1/observability/minimal/latest-minimal-observability-metrics.json",
+  "campaignResultsRoots": {
+    "baseline": "results/experimental-cycles/C1/benchmark/baseline"
+  },
+  "scenarioConfigRoots": {
+    "baseline": "config/scenarios/baseline"
+  },
+  "scenarioConfigFiles": {
+    "baseline": [
+      "config/scenarios/baseline/B1.json"
+    ]
+  },
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "workerImprovementThresholdPercent": 5,
+  "diminishingReturnThresholdPercent": 3,
+  "workloadStressThresholdPercent": 25,
+  "modelPenaltyThresholdPercent": 50,
+  "placementDifferenceThresholdPercent": 10,
+  "minimumScenarioSamples": 1,
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "acceptUnsupportedScenariosAsObserved": true,
+  "minimumUnsupportedReplicasPerScenario": 1
+}

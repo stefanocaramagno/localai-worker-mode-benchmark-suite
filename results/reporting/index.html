@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LocalAI Worker-Mode Benchmark Results</title>
+  <style>
+    :root { color-scheme: light; }
+    body { font-family: Arial, sans-serif; max-width: 1180px; margin: 32px auto; padding: 0 24px; line-height: 1.55; color: #202124; }
+    header { border-bottom: 1px solid #d9dce1; margin-bottom: 24px; padding-bottom: 16px; }
+    h1 { margin-bottom: 8px; }
+    h2 { margin-top: 30px; }
+    .subtitle { color: #5f6368; font-size: 1.05rem; }
+    .notice { border-left: 4px solid #5f6368; background: #f8f9fa; padding: 12px 16px; margin: 18px 0; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 18px 0; }
+    .card { border: 1px solid #d9dce1; border-radius: 8px; padding: 14px; background: #fff; }
+    .card .value { font-size: 1.55rem; font-weight: 700; margin-top: 4px; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 28px; font-size: 14px; display: block; overflow-x: auto; }
+    th, td { border: 1px solid #d0d0d0; padding: 8px 10px; vertical-align: top; }
+    th { background: #f2f2f2; }
+    code { background: #f6f6f6; padding: 1px 4px; }
+    a { color: #0645ad; }
+    .status-available, .status-missing { font-weight: 700; }
+    footer { border-top: 1px solid #d9dce1; margin-top: 32px; padding-top: 16px; color: #5f6368; font-size: 13px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>LocalAI Worker-Mode Benchmark Results</h1>
+  <div class="subtitle">Cycle-level benchmark reports across fixed-cluster and provider-backed executions</div>
+</header>
+<section>
+  <p>This page provides a compact entry point for reviewing benchmark reports across the available execution cycles. Each cycle is presented independently so that latency, throughput, resource pressure, placement, infrastructure size, latency injection, and multi-tenancy evidence can be interpreted within its own context.</p>
+  <div class="notice">Cross-cycle comparisons must account for the cross-cycle baseline, family-local reference scenarios, provider, and infrastructure profile documented in each cycle report. Scenario entries and unsupported entries summarize the available evidence and must be interpreted together with the corresponding cycle-level report.</div>
+</section>
+
+    <div class="cards">
+      <div class="card"><div>Available reports</div><div class="value">10</div></div>
+      <div class="card"><div>Registered cycles</div><div class="value">10</div></div>
+      <div class="card"><div>Scenario entries</div><div class="value">116</div></div>
+      <div class="card"><div>Unsupported entries</div><div class="value">12</div></div>
+    </div>
+    
+<section>
+  <h2>Cycle report index</h2>
+  <table><thead><tr><th>Cycle</th><th>Report profile</th><th>Provider</th><th>Infrastructure</th><th>Report availability</th><th>Scenarios</th><th>Unsupported</th><th>Generated at</th><th>Links</th></tr></thead><tbody><tr><td><code>C0</code></td><td><code>RP_C0_HISTORICAL_FIXED_CLUSTER</code></td><td>external-k3s-cluster</td><td>INFRA_C0_1CP_2W_8C16G</td><td>available</td><td>13</td><td>2</td><td>2026-06-19T17:46:12Z</td><td><a href="cycles/C0/index.html">Open report</a></td></tr>
+<tr><td><code>C1</code></td><td><code>RP_C1_PROVIDER_BACKED_BASELINE</code></td><td>proxmox-k3s</td><td>INFRA_C1_1CP_2W_8C16G</td><td>available</td><td>1</td><td>0</td><td>2026-06-19T17:46:34Z</td><td><a href="cycles/C1/index.html">Open report</a></td></tr>
+<tr><td><code>C2</code></td><td><code>RP_C2_RESOURCE_VARIATION</code></td><td>proxmox-k3s</td><td>INFRA_C2_1CP_2W_4C8G<br>INFRA_C2_1CP_2W_4C16G<br>INFRA_C2_1CP_2W_8C16G</td><td>available</td><td>3</td><td>2</td><td>2026-06-19T17:46:38Z</td><td><a href="cycles/C2/index.html">Open report</a></td></tr>
+<tr><td><code>C3</code></td><td><code>RP_C3_NODE_COUNT_VARIATION</code></td><td>proxmox-k3s</td><td>INFRA_C3_1CP_2W_8C16G<br>INFRA_C3_1CP_3W_8C16G<br>INFRA_C3_1CP_4W_8C16G</td><td>available</td><td>3</td><td>0</td><td>2026-06-19T17:46:44Z</td><td><a href="cycles/C3/index.html">Open report</a></td></tr>
+<tr><td><code>C4</code></td><td><code>RP_C4_PLACEMENT_VARIATION</code></td><td>proxmox-k3s</td><td>INFRA_C4_1CP_4W_8C16G</td><td>available</td><td>5</td><td>1</td><td>2026-06-19T17:46:54Z</td><td><a href="cycles/C4/index.html">Open report</a></td></tr>
+<tr><td><code>C5</code></td><td><code>RP_C5_LATENCY_INJECTION</code></td><td>proxmox-k3s</td><td>INFRA_C5_1CP_4W_8C16G</td><td>available</td><td>4</td><td>1</td><td>2026-06-19T17:47:11Z</td><td><a href="cycles/C5/index.html">Open report</a></td></tr>
+<tr><td><code>C6</code></td><td><code>RP_C6_MULTI_TENANCY</code></td><td>proxmox-k3s</td><td>INFRA_C6_1CP_4W_8C16G</td><td>available</td><td>4</td><td>1</td><td>2026-06-19T17:47:25Z</td><td><a href="cycles/C6/index.html">Open report</a></td></tr>
+<tr><td><code>C7</code></td><td><code>RP_C7_DEFAULT_SCHEDULER_BASELINE</code></td><td>proxmox-k3s</td><td>INFRA_C7_1CP_2W_8C16G<br>INFRA_C7_1CP_4W_8C16G<br>INFRA_C7_1CP_3W_8C16G</td><td>available</td><td>25</td><td>2</td><td>2026-06-19T17:47:51Z</td><td><a href="cycles/C7/index.html">Open report</a></td></tr>
+<tr><td><code>C8</code></td><td><code>RP_C8_RESOURCE_AWARE_SCHEDULER</code></td><td>proxmox-k3s</td><td>INFRA_C8_1CP_2W_8C16G<br>INFRA_C8_1CP_4W_8C16G</td><td>available</td><td>16</td><td>1</td><td>2026-06-19T17:50:31Z</td><td><a href="cycles/C8/index.html">Open report</a></td></tr>
+<tr><td><code>C9</code></td><td><code>RP_C9_NETWORK_AWARE_SCHEDULER</code></td><td>proxmox-k3s</td><td>INFRA_C9_1CP_4W_8C16G</td><td>available</td><td>42</td><td>2</td><td>2026-07-09T20:12:27Z</td><td><a href="cycles/C9/index.html">Open report</a></td></tr></tbody></table>
+</section>
+
+<footer>
+  <div>Reporting-site ID: <code>REPORTING_SITE_20260709T201358Z</code></div>
+  <div>Generated at UTC: <code>2026-07-09T20:13:58.330110Z</code></div>
+</footer>
+
+</body>
+</html>

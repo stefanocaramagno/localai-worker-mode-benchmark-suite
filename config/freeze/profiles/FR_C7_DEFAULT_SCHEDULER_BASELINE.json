@@ -1,0 +1,444 @@
+{
+  "schemaVersion": "freeze-profile/v1",
+  "freezeProfileId": "FR_C7_DEFAULT_SCHEDULER_BASELINE",
+  "profileId": "FR_C7_DEFAULT_SCHEDULER_BASELINE",
+  "profileName": "C7 Default Scheduler Baseline Freeze Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_default_scheduler_baseline_freeze",
+  "description": "Freeze profile for the provider-backed default-scheduler baseline campaign evidence package.",
+  "cycleId": "C7",
+  "cycleConfigPath": "config/experimental-cycles/C7.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "family": "default-scheduler",
+  "providerId": "proxmox-k3s",
+  "outputRoot": "results/experimental-cycles/C7/freeze",
+  "artifactSnapshotRoot": "results/experimental-cycles/C7/artifacts",
+  "cycleLockJsonPath": "results/experimental-cycles/C7/freeze/C7-cycle-lock.json",
+  "cycleLockTextPath": "results/experimental-cycles/C7/freeze/C7-cycle-lock.txt",
+  "latestManifestPath": "results/experimental-cycles/C7/freeze/latest-freeze-manifest.json",
+  "latestTextSummaryPath": "results/experimental-cycles/C7/freeze/latest-freeze-summary.txt",
+  "manifestSuffix": "_freeze_manifest.json",
+  "textSuffix": "_freeze_summary.txt",
+  "writeLatestAliases": true,
+  "preserveExistingSnapshotByDefault": true,
+  "forceRebuildRequiresExplicitFlag": true,
+  "completionGatePolicy": {
+    "requiredBeforeFreeze": true,
+    "manifestPath": "results/experimental-cycles/C7/completion-gate/latest-completion-gate-manifest.json",
+    "acceptedStatuses": [
+      "completed",
+      "completed_with_unsupported_scenarios"
+    ],
+    "dryRunMayBypassRuntimeEvidence": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C7.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "scenarioIndex": "config/scenarios/default-scheduler/DEFAULT_SCHEDULER_SCENARIOS_INDEX.json",
+    "scenarioDirectory": "config/scenarios/default-scheduler",
+    "latencyProfilesIndex": "config/latency/LATENCY_PROFILES_INDEX.json",
+    "tenancyProfilesIndex": "config/tenancy/TENANCY_PROFILES_INDEX.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "reportingProfile": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "reportingIndex": "config/reporting/REPORTING_INDEX.json",
+    "completionGateProfile": "config/completion-gate/profiles/CG_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "completionGateIndex": "config/completion-gate/COMPLETION_GATE_INDEX.json",
+    "freezeProfile": "config/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "freezeIndex": "config/freeze/FREEZE_INDEX.json",
+    "defaultSchedulerCompositions": "infra/k8s/compositions/default-scheduler",
+    "defaultSchedulerManifestValidator": "scripts/validation/scheduler/validate-default-scheduler-manifests.py",
+    "schedulerDecisionCaptureScript": "scripts/observability/scheduler/capture-scheduler-decisions.py",
+    "multiTenantLocustRunner": "scripts/load/multi-tenant/run-multi-tenant-locust.py",
+    "multiTenantLocustPowerShellWrapper": "scripts/load/multi-tenant/Start-MultiTenantLocust.ps1",
+    "multiTenantLocustBashWrapper": "scripts/load/multi-tenant/start-multi-tenant-locust.sh",
+    "locustWorkload": "load-tests/locust/locustfile.py",
+    "referenceScenarioConfig": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "executionRoot": "results/experimental-cycles/C7/execution",
+    "variantEvidenceRoot": "results/experimental-cycles/C7/variants",
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C7/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C7/benchmark/default-scheduler",
+    "latencyInjectionRoot": "results/experimental-cycles/C7/latency-injection",
+    "observabilityRoot": "results/experimental-cycles/C7/observability",
+    "diagnosisRoot": "results/experimental-cycles/C7/diagnosis",
+    "reportingRoot": "results/experimental-cycles/C7/reporting",
+    "completionGateManifest": "results/experimental-cycles/C7/completion-gate/latest-completion-gate-manifest.json",
+    "completionGateRoot": "results/experimental-cycles/C7/completion-gate"
+  },
+  "snapshotSources": [
+    {
+      "key": "cycleConfig",
+      "type": "file",
+      "source": "config/experimental-cycles/C7.json",
+      "destination": "configuration/experimental-cycle/C7.json",
+      "required": true
+    },
+    {
+      "key": "baselineConfig",
+      "type": "file",
+      "source": "config/scenarios/baseline/B1.json",
+      "destination": "configuration/scenarios/baseline/B1.json",
+      "required": true
+    },
+    {
+      "key": "scenarioIndex",
+      "type": "file",
+      "source": "config/scenarios/default-scheduler/DEFAULT_SCHEDULER_SCENARIOS_INDEX.json",
+      "destination": "configuration/scenarios/default-scheduler/DEFAULT_SCHEDULER_SCENARIOS_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "defaultSchedulerScenarios",
+      "type": "directory",
+      "source": "config/scenarios/default-scheduler",
+      "destination": "configuration/scenarios/default-scheduler",
+      "required": true
+    },
+    {
+      "key": "latencyProfiles",
+      "type": "directory",
+      "source": "config/latency",
+      "destination": "configuration/latency",
+      "required": true
+    },
+    {
+      "key": "tenancyProfiles",
+      "type": "directory",
+      "source": "config/tenancy",
+      "destination": "configuration/tenancy",
+      "required": true
+    },
+    {
+      "key": "infrastructureProfilesIndex",
+      "type": "file",
+      "source": "config/infrastructure/INFRA_PROFILES_INDEX.json",
+      "destination": "configuration/infrastructure/INFRA_PROFILES_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "INFRA_C7_1CP_2W_8C16G",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C7_1CP_2W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C7_1CP_2W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "INFRA_C7_1CP_3W_8C16G",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C7_1CP_3W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C7_1CP_3W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "INFRA_C7_1CP_4W_8C16G",
+      "type": "file",
+      "source": "config/infrastructure/profiles/INFRA_C7_1CP_4W_8C16G.json",
+      "destination": "configuration/infrastructure/profiles/INFRA_C7_1CP_4W_8C16G.json",
+      "required": true
+    },
+    {
+      "key": "providerBindingsIndex",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/PROXMOX_K3S_PROVIDER_BINDINGS_INDEX.json",
+      "required": true
+    },
+    {
+      "key": "BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S.json",
+      "required": true
+    },
+    {
+      "key": "BINDING_INFRA_C7_1CP_3W_8C16G_PROXMOX_K3S",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_3W_8C16G_PROXMOX_K3S.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_3W_8C16G_PROXMOX_K3S.json",
+      "required": true
+    },
+    {
+      "key": "BINDING_INFRA_C7_1CP_4W_8C16G_PROXMOX_K3S",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_4W_8C16G_PROXMOX_K3S.json",
+      "required": true
+    },
+    {
+      "key": "cluster.c7-1cp-2w-8c16g.example",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c7-1cp-2w-8c16g.example.yaml",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/examples/cluster.c7-1cp-2w-8c16g.example.yaml",
+      "required": true
+    },
+    {
+      "key": "cluster.c7-1cp-3w-8c16g.example",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c7-1cp-3w-8c16g.example.yaml",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/examples/cluster.c7-1cp-3w-8c16g.example.yaml",
+      "required": true
+    },
+    {
+      "key": "cluster.c7-1cp-4w-8c16g.example",
+      "type": "file",
+      "source": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c7-1cp-4w-8c16g.example.yaml",
+      "destination": "configuration/infrastructure/providers/proxmox-k3s/examples/cluster.c7-1cp-4w-8c16g.example.yaml",
+      "required": true
+    },
+    {
+      "key": "defaultSchedulerKubernetesCompositions",
+      "type": "directory",
+      "source": "infra/k8s/compositions/default-scheduler",
+      "destination": "configuration/scenarios/default-scheduler/kubernetes-compositions",
+      "required": true
+    },
+    {
+      "key": "locustWorkload",
+      "type": "file",
+      "source": "load-tests/locust/locustfile.py",
+      "destination": "configuration/scenarios/default-scheduler/workload/locustfile.py",
+      "required": true
+    },
+    {
+      "key": "multiTenantLocustRunner",
+      "type": "file",
+      "source": "scripts/load/multi-tenant/run-multi-tenant-locust.py",
+      "destination": "configuration/scenarios/default-scheduler/supporting-scripts/load/multi-tenant/run-multi-tenant-locust.py",
+      "required": true
+    },
+    {
+      "key": "multiTenantLocustPowerShellWrapper",
+      "type": "file",
+      "source": "scripts/load/multi-tenant/Start-MultiTenantLocust.ps1",
+      "destination": "configuration/scenarios/default-scheduler/supporting-scripts/load/multi-tenant/Start-MultiTenantLocust.ps1",
+      "required": true
+    },
+    {
+      "key": "multiTenantLocustBashWrapper",
+      "type": "file",
+      "source": "scripts/load/multi-tenant/start-multi-tenant-locust.sh",
+      "destination": "configuration/scenarios/default-scheduler/supporting-scripts/load/multi-tenant/start-multi-tenant-locust.sh",
+      "required": true
+    },
+    {
+      "key": "schedulerDecisionCaptureScript",
+      "type": "file",
+      "source": "scripts/observability/scheduler/capture-scheduler-decisions.py",
+      "destination": "configuration/scenarios/default-scheduler/supporting-scripts/observability/scheduler/capture-scheduler-decisions.py",
+      "required": true
+    },
+    {
+      "key": "defaultSchedulerManifestValidator",
+      "type": "file",
+      "source": "scripts/validation/scheduler/validate-default-scheduler-manifests.py",
+      "destination": "configuration/scenarios/default-scheduler/supporting-scripts/validation/scheduler/validate-default-scheduler-manifests.py",
+      "required": true
+    },
+    {
+      "key": "technicalDiagnosisProfile",
+      "type": "file",
+      "source": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "destination": "configuration/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "reportingProfile",
+      "type": "file",
+      "source": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "destination": "configuration/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "completionGateProfile",
+      "type": "file",
+      "source": "config/completion-gate/profiles/CG_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "destination": "configuration/completion-gate/profiles/CG_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "freezeProfile",
+      "type": "file",
+      "source": "config/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "destination": "configuration/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "required": true
+    },
+    {
+      "key": "campaignExecutionArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/execution",
+      "destination": "runtime/execution",
+      "required": true
+    },
+    {
+      "key": "variantEvidenceArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/variants",
+      "destination": "runtime/variants",
+      "required": true
+    },
+    {
+      "key": "schedulerDecisionArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/scheduler",
+      "destination": "runtime/observability/scheduler-decisions",
+      "required": true
+    },
+    {
+      "key": "multiTenantBenchmarkArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/benchmark/default-scheduler",
+      "destination": "runtime/benchmark/default-scheduler",
+      "required": true
+    },
+    {
+      "key": "latencyInjectionArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/latency-injection",
+      "destination": "runtime/variants/latency-injection",
+      "required": false
+    },
+    {
+      "key": "observabilityArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/observability",
+      "destination": "runtime/variants/observability",
+      "required": false
+    },
+    {
+      "key": "diagnosisArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/diagnosis",
+      "destination": "runtime/diagnosis",
+      "required": true
+    },
+    {
+      "key": "reportingArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/reporting",
+      "destination": "runtime/reporting",
+      "required": true
+    },
+    {
+      "key": "completionGateArtifacts",
+      "type": "directory",
+      "source": "results/experimental-cycles/C7/completion-gate",
+      "destination": "runtime/completion-gate",
+      "required": true
+    }
+  ],
+  "governance": {
+    "documentationPolicy": "Freeze outputs are retained evidence artifacts, not project documentation source files.",
+    "comparisonPolicy": "The frozen package must preserve C7 configuration, provider-backed infrastructure references, default-scheduler manifests, scheduler-decision evidence, tenant-scoped benchmark outputs, latency evidence, diagnosis, reporting and completion-gate outputs without freezing local credentials.",
+    "unsupportedScenarioPolicy": "Unsupported default-scheduler scenarios remain auditable evidence when documented by the completion gate, diagnosis or scenario-side runtime artifacts."
+  },
+  "artifactPolicy": {
+    "outputRoot": "results/experimental-cycles/C7/freeze",
+    "artifactSnapshotRoot": "results/experimental-cycles/C7/artifacts",
+    "cycleLockJson": "results/experimental-cycles/C7/freeze/C7-cycle-lock.json",
+    "cycleLockText": "results/experimental-cycles/C7/freeze/C7-cycle-lock.txt",
+    "latestManifestPath": "results/experimental-cycles/C7/freeze/latest-freeze-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C7/freeze/latest-freeze-summary.txt",
+    "manifestSuffix": "_freeze_manifest.json",
+    "textSuffix": "_freeze_summary.txt",
+    "writeLatestAliases": true,
+    "preserveExistingSnapshotByDefault": false,
+    "canonicalDirectories": [
+      "configuration",
+      "configuration/application-deployment",
+      "configuration/cluster-validation",
+      "configuration/completion-gate",
+      "configuration/experimental-cycle",
+      "configuration/freeze",
+      "configuration/infrastructure",
+      "configuration/latency",
+      "configuration/observability-minimal",
+      "configuration/placement",
+      "configuration/precheck",
+      "configuration/provisioning",
+      "configuration/reporting",
+      "configuration/scenarios",
+      "configuration/technical-diagnosis",
+      "configuration/tenancy",
+      "runtime",
+      "runtime/application",
+      "runtime/benchmark",
+      "runtime/completion-gate",
+      "runtime/diagnosis",
+      "runtime/execution",
+      "runtime/infrastructure",
+      "runtime/observability",
+      "runtime/reporting",
+      "runtime/variants"
+    ]
+  },
+  "primaryFrozenArtifacts": {
+    "reportingManifest": "runtime/reporting/reporting-manifest.json",
+    "reportMarkdown": "runtime/reporting/report.md",
+    "reportHtml": "runtime/reporting/index.html",
+    "scenarioSummaryCsv": "runtime/reporting/scenario-summary.csv",
+    "completionGateManifest": "runtime/completion-gate/latest-completion-gate-manifest.json",
+    "completionGateSummary": "runtime/completion-gate/latest-completion-gate-summary.txt",
+    "schedulerDecisionEvidenceRoot": "runtime/observability/scheduler-decisions",
+    "multiTenantBenchmarkRoot": "runtime/benchmark/default-scheduler",
+    "scenarioSideRuntimeEvidence": "runtime/variants",
+    "diagnosisJson": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.json",
+      "required": true,
+      "description": "Latest frozen campaign-level C7 technical diagnosis JSON."
+    },
+    "diagnosisSummary": {
+      "mode": "latest",
+      "root": "runtime/diagnosis",
+      "pattern": "*_diagnosis.txt",
+      "required": true,
+      "description": "Latest frozen campaign-level C7 technical diagnosis text diagnosis summary."
+    }
+  },
+  "infrastructureProfileIds": [
+    "INFRA_C7_1CP_2W_8C16G",
+    "INFRA_C7_1CP_3W_8C16G",
+    "INFRA_C7_1CP_4W_8C16G"
+  ],
+  "infrastructureProfilePaths": [
+    "config/infrastructure/profiles/INFRA_C7_1CP_2W_8C16G.json",
+    "config/infrastructure/profiles/INFRA_C7_1CP_3W_8C16G.json",
+    "config/infrastructure/profiles/INFRA_C7_1CP_4W_8C16G.json"
+  ],
+  "providerBindingIds": [
+    "BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S",
+    "BINDING_INFRA_C7_1CP_3W_8C16G_PROXMOX_K3S",
+    "BINDING_INFRA_C7_1CP_4W_8C16G_PROXMOX_K3S"
+  ],
+  "providerBindingPaths": [
+    "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_2W_8C16G_PROXMOX_K3S.json",
+    "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_3W_8C16G_PROXMOX_K3S.json",
+    "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C7_1CP_4W_8C16G_PROXMOX_K3S.json"
+  ],
+  "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+  "referenceScenarioByFamily": {
+    "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+  },
+  "frozenEvidenceClasses": [
+    "scenario_definitions",
+    "infrastructure_profiles",
+    "provider_bindings",
+    "default_scheduler_manifests",
+    "scheduler_decision_evidence",
+    "tenant_benchmark_artifacts",
+    "latency_artifacts",
+    "observability_artifacts",
+    "technical_diagnosis",
+    "reporting",
+    "completion_gate"
+  ]
+}

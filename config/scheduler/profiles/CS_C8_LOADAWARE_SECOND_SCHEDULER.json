@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "localai-custom-scheduler-profile/v1",
+  "schedulerProfileId": "CS_C8_LOADAWARE_SECOND_SCHEDULER",
+  "profileName": "C8 Load-Aware Resource Scheduler Integration Profile",
+  "profileStatus": "active",
+  "profileRole": "second_scheduler_installation_and_validation",
+  "purpose": "Install the scheduler-plugins chart as a second Kubernetes scheduler and validate the LoadAwareResourcesBalancedAllocation plugin before C8 resource-aware scheduler comparison variants.",
+  "cycleId": "C8",
+  "cycleConfigPath": "config/experimental-cycles/C8.json",
+  "kubeconfigPath": null,
+  "tooling": {
+    "kubectl": "kubectl",
+    "helm": "helm",
+    "schedulerPluginsRootPath": "../scheduler-plugins",
+    "chartPathFromSchedulerPluginsRoot": "manifests/install/charts/as-a-second-scheduler"
+  },
+  "helmRelease": {
+    "name": "scheduler-plugins",
+    "namespace": "scheduler-plugins",
+    "createNamespace": true,
+    "wait": true,
+    "timeoutSeconds": 240,
+    "atomic": false
+  },
+  "scheduler": {
+    "name": "scheduler-plugins-scheduler",
+    "image": "ghcr.io/unict-cclab/kube-scheduler:sophos-v0.2.4",
+    "replicaCount": 1,
+    "leaderElect": false,
+    "expectedDeploymentName": "scheduler-plugins-scheduler",
+    "expectedContainerName": "scheduler-plugins-scheduler"
+  },
+  "controller": {
+    "name": "scheduler-plugins-controller",
+    "image": "registry.k8s.io/scheduler-plugins/controller:v0.29.7",
+    "replicaCount": 1,
+    "expectedDeploymentName": "scheduler-plugins-controller"
+  },
+  "plugins": {
+    "enabled": [
+      "LoadAwareResourcesBalancedAllocation"
+    ],
+    "disabled": [],
+    "requiredEnabledPlugins": [
+      "LoadAwareResourcesBalancedAllocation"
+    ],
+    "pluginConfig": []
+  },
+  "placement": {
+    "schedulerPreferredNodeAffinity": {
+      "key": "nodepool",
+      "operator": "In",
+      "values": [
+        "management"
+      ],
+      "weight": 100
+    },
+    "controllerPreferredNodeAffinity": {
+      "key": "nodepool",
+      "operator": "In",
+      "values": [
+        "management"
+      ],
+      "weight": 100
+    },
+    "schedulerTolerations": [
+      {
+        "key": "nodepool",
+        "operator": "Equal",
+        "value": "management",
+        "effect": "NoSchedule"
+      }
+    ],
+    "controllerTolerations": [
+      {
+        "key": "nodepool",
+        "operator": "Equal",
+        "value": "management",
+        "effect": "NoSchedule"
+      }
+    ]
+  },
+  "validation": {
+    "namespace": "scheduler-validation",
+    "testDeploymentName": "scheduler-validation-pod",
+    "testImage": "registry.k8s.io/pause:3.9",
+    "testSchedulerName": "scheduler-plugins-scheduler",
+    "testLabels": {
+      "group": "scheduler-validation",
+      "app": "scheduler-validation-pod"
+    },
+    "testDeploymentAnnotations": {
+      "cpu-usage": "0",
+      "memory-usage": "0"
+    },
+    "podScheduledTimeoutSeconds": 120,
+    "rolloutTimeoutSeconds": 180,
+    "deleteTestWorkloadAfterValidation": true,
+    "requireSchedulerDeploymentAvailable": true,
+    "requireControllerDeploymentAvailable": true,
+    "requireSchedulerConfigPlugin": true,
+    "requireTestPodScheduled": true,
+    "requireConfiguredTolerations": true
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C8/scheduler/custom-scheduler",
+    "logsRoot": "results/experimental-cycles/C8/scheduler/custom-scheduler/logs",
+    "snapshotsRoot": "results/experimental-cycles/C8/scheduler/custom-scheduler/snapshots",
+    "manifestsRoot": "results/experimental-cycles/C8/scheduler/custom-scheduler/manifests",
+    "summariesRoot": "results/experimental-cycles/C8/scheduler/custom-scheduler/summaries",
+    "renderedValuesRoot": "results/experimental-cycles/C8/scheduler/custom-scheduler/rendered-values",
+    "latestManifestPath": "results/experimental-cycles/C8/scheduler/custom-scheduler/latest-custom-scheduler-manifest.json",
+    "latestSummaryPath": "results/experimental-cycles/C8/scheduler/custom-scheduler/latest-custom-scheduler-summary.txt",
+    "latestValidationSnapshotPath": "results/experimental-cycles/C8/scheduler/custom-scheduler/latest-custom-scheduler-validation-snapshot.json",
+    "writeLatestAliases": true
+  },
+  "decisionPolicy": {
+    "plannedStatus": "planned",
+    "installedStatus": "installed",
+    "validatedStatus": "validated",
+    "capturedStatus": "captured",
+    "uninstalledStatus": "uninstalled",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "requireHelmBeforeInstall": true,
+    "requireKubectlBeforeValidation": true,
+    "validateAfterInstallByDefault": true
+  },
+  "governance": {
+    "documentationPolicy": "This profile is operational configuration and not repository documentation.",
+    "schedulerBoundary": "The second scheduler is used only by workloads that explicitly set spec.schedulerName to scheduler-plugins-scheduler.",
+    "defaultSchedulerBoundary": "Workloads without spec.schedulerName continue to use the Kubernetes default scheduler.",
+    "resourceAwareScope": "The enabled plugin is resource-aware and is expected to consume cpu-usage and memory-usage annotations produced by the monitoring agent. Network-aware plugins are intentionally excluded from C8 resource-aware comparison variants.",
+    "schedulerImagePolicy": "The profile validates the effective rendered scheduler image rather than the upstream chart default, because chart defaults can lag behind the scheduler image selected by this benchmark suite."
+  },
+  "chartValidation": {
+    "enabled": true,
+    "failOnError": true,
+    "requiredChartFiles": [
+      "Chart.yaml",
+      "values.yaml",
+      "templates/configmap.yaml",
+      "templates/deployment.yaml",
+      "templates/rbac.yaml",
+      "templates/serviceaccount.yaml"
+    ],
+    "expectedChart": {
+      "name": "scheduler-plugins",
+      "version": "0.29.7",
+      "appVersion": "0.29.7",
+      "type": "application"
+    },
+    "expectedChartDefaults": {
+      "scheduler.name": "scheduler-plugins-scheduler",
+      "controller.name": "scheduler-plugins-controller",
+      "controller.image": "registry.k8s.io/scheduler-plugins/controller:v0.29.7"
+    },
+    "expectedRenderedValues": {
+      "exact": {
+        "scheduler.name": "scheduler-plugins-scheduler",
+        "scheduler.image": "ghcr.io/unict-cclab/kube-scheduler:sophos-v0.2.4",
+        "controller.name": "scheduler-plugins-controller",
+        "controller.image": "registry.k8s.io/scheduler-plugins/controller:v0.29.7",
+        "pluginConfig": []
+      },
+      "contains": {
+        "plugins.enabled": [
+          "LoadAwareResourcesBalancedAllocation"
+        ]
+      }
+    },
+    "requiredTemplateMarkers": [
+      {
+        "file": "templates/configmap.yaml",
+        "contains": [
+          "schedulerName: {{ .Values.scheduler.name }}",
+          "$.Values.plugins.enabled"
+        ]
+      },
+      {
+        "file": "templates/deployment.yaml",
+        "contains": [
+          "image: {{ .Values.scheduler.image }}",
+          "serviceAccountName: {{ .Values.scheduler.name }}"
+        ]
+      }
+    ],
+    "requiredSchedulerPluginSources": [
+      {
+        "path": "pkg/sophos/loadawareresourcesbalancedallocation/loadawareresourcesbalancedallocation.go",
+        "contains": [
+          "LoadAwareResourcesBalancedAllocation",
+          "GetAppCpuUsage",
+          "GetNodeCpuUsage",
+          "GetAppMemoryUsage",
+          "GetNodeMemoryUsage"
+        ]
+      }
+    ],
+    "upstreamDefaultPolicy": {
+      "schedulerImageDefault": "accepted_when_overridden_by_rendered_values",
+      "reason": "The upstream chart may retain an older default image; the benchmark suite validates the effective rendered scheduler image instead."
+    }
+  },
+  "chartPatchPolicy": {
+    "enabled": true,
+    "useTemporaryPatchedChart": true,
+    "preservePluginNameCase": true,
+    "enableSchedulerExtraEnv": false,
+    "patches": [
+      {
+        "patchId": "preserve_plugin_name_case",
+        "target": "templates/configmap.yaml",
+        "purpose": "Render plugin names exactly as provided by the profile, without Helm title-case transformation."
+      }
+    ]
+  }
+}

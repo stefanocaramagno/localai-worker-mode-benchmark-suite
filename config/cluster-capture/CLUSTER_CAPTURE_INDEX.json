@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "cluster-capture-index/v1",
+  "indexId": "CLUSTER_CAPTURE_INDEX",
+  "status": "active",
+  "description": "Registry of cluster-side capture profiles used by benchmark cycles and observability pipelines.",
+  "profilesRoot": "config/cluster-capture/profiles",
+  "schemaPath": "config/cluster-capture/schemas/CLUSTER_CAPTURE_PROFILE_SCHEMA_V1.json",
+  "defaultProfileId": "CS_STANDARD_CLUSTER_CAPTURE",
+  "profiles": [
+    {
+      "clusterCaptureProfileId": "CS_STANDARD_CLUSTER_CAPTURE",
+      "applicability": [
+        "standard_benchmark_run",
+        "resource_aware_scheduler_evaluation",
+        "minimal_observability_capture"
+      ],
+      "profilePath": "config/cluster-capture/profiles/CS_STANDARD_CLUSTER_CAPTURE.json",
+      "schemaPath": "config/cluster-capture/schemas/CLUSTER_CAPTURE_PROFILE_SCHEMA_V1.json",
+      "status": "active",
+      "role": "standard_cluster_side_capture"
+    },
+    {
+      "clusterCaptureProfileId": "CS_NETWORK_AWARE_SCHEDULER_CAPTURE",
+      "applicability": [
+        "network_aware_scheduler_evaluation",
+        "gateway_routed_multi_tenant_benchmark",
+        "telemetry_evidence_capture"
+      ],
+      "profilePath": "config/cluster-capture/profiles/CS_NETWORK_AWARE_SCHEDULER_CAPTURE.json",
+      "schemaPath": "config/cluster-capture/schemas/CLUSTER_CAPTURE_PROFILE_SCHEMA_V1.json",
+      "status": "active",
+      "role": "network_aware_scheduler_cluster_side_capture"
+    }
+  ],
+  "collectorScripts": {
+    "bash": "scripts/validation/cluster-side/collect-cluster-side-artifacts.sh",
+    "powershell": "scripts/validation/cluster-side/Collect-ClusterSideArtifacts.ps1"
+  },
+  "governanceRules": [
+    "Concrete cluster-side capture profiles must be stored under config/cluster-capture/profiles.",
+    "Profile references in cycle and observability configuration files must use repository-relative paths.",
+    "Profile names must describe capture semantics rather than the single cycle or group of cycles that currently uses them.",
+    "The standard profile is the default profile for generic cluster-side evidence.",
+    "The network-aware scheduler profile extends standard Kubernetes evidence with scheduler, tenant, routing and annotation snapshots."
+  ]
+}

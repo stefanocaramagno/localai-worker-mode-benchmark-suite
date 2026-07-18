@@ -1,0 +1,166 @@
+{
+  "scenarioId": "LI_L3_EXTREME",
+  "variantId": "LI_L3_EXTREME",
+  "referenceBaselineId": "B1",
+  "referenceScenarioId": "LI_L0_NONE",
+  "status": "active_provider_backed_latency_injection",
+  "purpose": "Provider-backed latency-injection scenario under fixed infrastructure, model, workload, LocalAI worker count and placement.",
+  "workerMode": "worker",
+  "modelScenario": "M1",
+  "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+  "workerScenario": "W4",
+  "resolvedWorkerCount": 4,
+  "workloadScenario": "WL2",
+  "resolvedWorkload": {
+    "users": 2,
+    "spawnRate": 1,
+    "runTime": "2m"
+  },
+  "namespaceManifest": "infra/k8s/compositions/foundation/namespace",
+  "storageManifest": "infra/k8s/compositions/foundation/storage",
+  "baseUrl": "http://localhost:8080",
+  "prompt": "Reply with only READY.",
+  "temperature": 0.1,
+  "requestTimeoutSeconds": 120,
+  "resultsRoot": "results/experimental-cycles/C5/benchmark/latency-injection",
+  "expectedActiveRpcWorkers": [
+    "localai-rpc-a",
+    "localai-rpc-b",
+    "localai-rpc-c",
+    "localai-rpc-d"
+  ],
+  "expectedInactiveRpcWorkers": [],
+  "infrastructureProfileId": "INFRA_C5_1CP_4W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C5_1CP_4W_8C16G.json",
+  "infrastructureRole": "fixed_provider_backed_latency_injection_infrastructure",
+  "associatedCycleId": "C5",
+  "providerId": "proxmox-k3s",
+  "providerBindingId": "BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S",
+  "providerBindingPath": "config/infrastructure/providers/proxmox-k3s/bindings/BINDING_INFRA_C5_1CP_4W_8C16G_PROXMOX_K3S.json",
+  "requiresApplicationDeploymentBeforeBenchmark": true,
+  "requiresMinimalObservabilityBeforeDiagnosis": true,
+  "precheckProfilesIndexPath": "config/precheck/PRECHECK_PROFILES_INDEX.json",
+  "family": "latency-injection",
+  "fixedDimensions": {
+    "infrastructureProfileId": "INFRA_C5_1CP_4W_8C16G",
+    "modelScenario": "M1",
+    "resolvedModelName": "llama-3.2-1b-instruct:q4_k_m",
+    "workerScenario": "W4",
+    "resolvedWorkerCount": 4,
+    "workloadScenario": "WL2",
+    "placementProfileId": "PL_SPREAD_WORKERS",
+    "resolvedPlacementType": "spread_workers_across_four_provider_worker_nodes",
+    "prompt": "Reply with only READY.",
+    "temperature": 0.1,
+    "workerVcpusPerNode": 8,
+    "workerMemoryGiBPerNode": 16
+  },
+  "variedDimensions": [
+    "latency profile"
+  ],
+  "selectionCriteria": [
+    "Keep infrastructure, model, workload, LocalAI worker count and placement fixed so the campaign isolates injected network latency.",
+    "Use the spread-workers placement to expose server-to-worker communication over multiple provider worker nodes.",
+    "Retain failed or unsupported latency-injection variants as instrumentation or network-sensitivity evidence when the requested latency profile cannot be applied or benchmarked."
+  ],
+  "lockRules": [
+    "Do not change infrastructure, model, workload, LocalAI worker count or placement inside this scenario.",
+    "Do not interpret latency effects without checking benchmark failures, timeouts, cluster-side artifacts and latency-injection manifests.",
+    "Use the scenario only within a declared latency-injection campaign or a documented derivative cycle."
+  ],
+  "scenarioLabel": "extreme injected latency",
+  "placementScenario": "PL_SPREAD_WORKERS",
+  "placementProfileId": "PL_SPREAD_WORKERS",
+  "placementProfilePath": "config/placement/profiles/PL_SPREAD_WORKERS.json",
+  "resolvedPlacementType": "spread_workers_across_four_provider_worker_nodes",
+  "topologyDir": "infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4",
+  "serverManifest": "infra/k8s/compositions/server/models/m1-provider-backed",
+  "expectedWorkerNodes": {
+    "localai-rpc-a": "genai-pb-worker-01",
+    "localai-rpc-b": "genai-pb-worker-02",
+    "localai-rpc-c": "genai-pb-worker-03",
+    "localai-rpc-d": "genai-pb-worker-04"
+  },
+  "expectedServerNode": "genai-pb-worker-02",
+  "outputSubdir": "LI_L3_EXTREME_official_locked",
+  "placementVariant": {
+    "variantId": "PLC_SPREAD_WORKERS",
+    "label": "spread workers",
+    "placementProfileId": "PL_SPREAD_WORKERS",
+    "serverNode": "genai-pb-worker-02",
+    "workerNodeMap": {
+      "localai-rpc-a": "genai-pb-worker-01",
+      "localai-rpc-b": "genai-pb-worker-02",
+      "localai-rpc-c": "genai-pb-worker-03",
+      "localai-rpc-d": "genai-pb-worker-04"
+    },
+    "expectedCommunicationDistance": "higher",
+    "expectedResourceContention": "lowest"
+  },
+  "applicationTopology": {
+    "localAiWorkerCount": 4,
+    "workerScenario": "W4",
+    "workerScenarioPath": "config/scenarios/pilot/worker-count/W4.json",
+    "topologyDir": "infra/k8s/compositions/topology/spread-genai-pb-4-worker-nodes-w4",
+    "serverManifest": "infra/k8s/compositions/server/models/m1-provider-backed",
+    "placementType": "spread_workers_across_four_provider_worker_nodes",
+    "placementScenario": "PL_SPREAD_WORKERS",
+    "placementScenarioPath": "config/placement/profiles/PL_SPREAD_WORKERS.json",
+    "expectedActiveRpcWorkers": [
+      "localai-rpc-a",
+      "localai-rpc-b",
+      "localai-rpc-c",
+      "localai-rpc-d"
+    ],
+    "expectedInactiveRpcWorkers": [],
+    "expectedWorkerNodes": {
+      "localai-rpc-a": "genai-pb-worker-01",
+      "localai-rpc-b": "genai-pb-worker-02",
+      "localai-rpc-c": "genai-pb-worker-03",
+      "localai-rpc-d": "genai-pb-worker-04"
+    },
+    "expectedServerNode": "genai-pb-worker-02"
+  },
+  "latencyProfileId": "L3_EXTREME",
+  "latencyProfilePath": "config/latency/profiles/L3_EXTREME.json",
+  "latencyVariant": {
+    "variantId": "LI_L3_EXTREME",
+    "label": "Extreme injected latency",
+    "latencyProfileId": "L3_EXTREME",
+    "enabled": true,
+    "delayMs": 600,
+    "jitterMs": 50,
+    "packetLossPercent": 0.0,
+    "networkInterface": "eth0",
+    "targetNodePolicy": "all_worker_nodes_from_infrastructure_profile"
+  },
+  "scenarioProfileId": "LI_L3_EXTREME",
+  "scenarioProfileName": "extreme injected latency",
+  "applicationDeploymentProfileId": "AD_C5_LI_L3_EXTREME",
+  "applicationDeploymentProfilePath": "results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/AD_LI_L3_EXTREME.json",
+  "minimalObservabilityProfileId": "MO_C5_LI_L3_EXTREME",
+  "minimalObservabilityProfilePath": "results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/MO_LI_L3_EXTREME.json",
+  "precheckProfileId": "TC_C5_LI_L3_EXTREME",
+  "precheckProfilePath": "results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/TC_LI_L3_EXTREME.json",
+  "runtimeGeneratedProfiles": {
+    "resolutionMode": "generated_at_runtime",
+    "generatedRuntimeConfigRoot": "results/experimental-cycles/C5/execution/generated-runtime-configs",
+    "applicationDeployment": {
+      "profileId": "AD_C5_LI_L3_EXTREME",
+      "path": "results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/AD_LI_L3_EXTREME.json",
+      "requiredBeforeBenchmark": true
+    },
+    "minimalObservability": {
+      "profileId": "MO_C5_LI_L3_EXTREME",
+      "path": "results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/MO_LI_L3_EXTREME.json",
+      "requiredBeforeDiagnosis": true
+    },
+    "precheck": {
+      "profileId": "TC_C5_LI_L3_EXTREME",
+      "path": "results/experimental-cycles/C5/execution/generated-runtime-configs/LI_L3_EXTREME/TC_LI_L3_EXTREME.json",
+      "requiredBeforeBenchmark": true
+    }
+  },
+  "scenarioProfileSchemaVersion": "1.0",
+  "scenarioProfileScope": "provider_backed_latency_injection"
+}

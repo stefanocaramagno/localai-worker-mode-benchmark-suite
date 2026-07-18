@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "provider-binding/proxmox-k3s/v1",
+  "providerBindingId": "BINDING_INFRA_C2_1CP_2W_4C16G_PROXMOX_K3S",
+  "providerId": "proxmox-k3s",
+  "providerType": "proxmox-k3s",
+  "bindingStatus": "defined",
+  "infrastructureProfileId": "INFRA_C2_1CP_2W_4C16G",
+  "sourceInfrastructureProfilePath": "config/infrastructure/profiles/INFRA_C2_1CP_2W_4C16G.json",
+  "materializationMode": "select_local_cluster_yaml",
+  "providerConfig": {
+    "format": "proxmox-k3s-v1.0.3-clusters-yaml",
+    "templatePath": "config/infrastructure/providers/proxmox-k3s/templates/cluster.proxmox-k3s.template.yaml.tmpl",
+    "examplePath": "config/infrastructure/providers/proxmox-k3s/examples/cluster.c2-1cp-2w-4c16g.example.yaml",
+    "localPath": "config/infrastructure/providers/proxmox-k3s/local/cluster.c2-1cp-2w-4c16g.local.yaml",
+    "recommendedKubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c2-1cp-2w-4c16g/kubeconfig"
+  },
+  "resolutionPolicy": {
+    "realExecutionConfigPreferenceOrder": [
+      "localPath"
+    ],
+    "reviewOrDryRunConfigPreferenceOrder": [
+      "examplePath",
+      "templatePath"
+    ],
+    "localConfigRequiredForCreateDelete": true,
+    "allowExampleForCreateDelete": false,
+    "failurePolicy": "fail_fast_when_required_provider_config_is_missing",
+    "selectionPrecedence": [
+      "explicitOverride",
+      "modeSpecificPreferenceOrder"
+    ],
+    "resolutionModes": {
+      "realExecution": {
+        "appliesWhen": "action in {provision,kubeconfig,destroy} and dryRun=false",
+        "preferenceOrder": [
+          "localPath"
+        ],
+        "forbiddenConfigKinds": [
+          "examplePath",
+          "templatePath"
+        ]
+      },
+      "reviewOrDryRun": {
+        "appliesWhen": "action=plan or dryRun=true",
+        "preferenceOrder": [
+          "examplePath",
+          "templatePath"
+        ],
+        "reviewSafe": true
+      }
+    }
+  },
+  "templateVariables": {
+    "clusterName": "genai-pb",
+    "kubeconfigPath": "./config/cluster-access/generated/proxmox-k3s/c2-1cp-2w-4c16g/kubeconfig",
+    "k3sVersion": "v1.35.3+k3s1",
+    "k3sExtraServerArgs": "--disable=traefik --disable=servicelb --disable-network-policy --embedded-registry",
+    "k3sExtraAgentArgs": "",
+    "template": {
+      "name": "ubuntu-24.04-template",
+      "proxmoxNode": "minis01",
+      "storage": "pool01",
+      "imageStorage": "local",
+      "bridge": "vmbr0",
+      "ipAddress": "192.168.1.140",
+      "gateway": "192.168.1.254",
+      "dns": "208.67.222.222",
+      "subnetMask": 24,
+      "os": "ubuntu-24.04",
+      "timeoutSeconds": 1800,
+      "vmidBase": 8200
+    },
+    "controlPlane": [
+      {
+        "logicalName": "control-plane-01",
+        "configuredName": "cp-01",
+        "expectedKubernetesNodeName": "genai-pb-cp-01",
+        "vcpus": 2,
+        "memoryMiB": 4096,
+        "storageGiB": 20,
+        "proxmoxNode": "minis02",
+        "ipAddress": "192.168.1.141"
+      }
+    ],
+    "workers": [
+      {
+        "logicalName": "worker-a",
+        "configuredName": "worker-01",
+        "expectedKubernetesNodeName": "genai-pb-worker-01",
+        "vcpus": 4,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "proxmoxNode": "minis03",
+        "ipAddress": "192.168.1.142",
+        "labels": [
+          "nodepool=workers"
+        ],
+        "taints": []
+      },
+      {
+        "logicalName": "worker-b",
+        "configuredName": "worker-02",
+        "expectedKubernetesNodeName": "genai-pb-worker-02",
+        "vcpus": 4,
+        "memoryMiB": 16384,
+        "storageGiB": 35,
+        "proxmoxNode": "minis04",
+        "ipAddress": "192.168.1.143",
+        "labels": [
+          "nodepool=workers"
+        ],
+        "taints": []
+      }
+    ],
+    "addonsYaml": "      monitoring:\n        enabled: false\n      mon_agent:\n        enabled: false\n      mentat:\n        enabled: false\n      istio:\n        enabled: false\n      chaos_mesh:\n        enabled: false",
+    "addons_yaml": "      monitoring:\n        enabled: false\n      mon_agent:\n        enabled: false\n      mentat:\n        enabled: false\n      istio:\n        enabled: false\n      chaos_mesh:\n        enabled: false"
+  },
+  "validation": {
+    "provisioningValidationProfilePath": null,
+    "expectedReadyNodeCount": 3,
+    "expectedControlPlaneNodes": [
+      "genai-pb-cp-01"
+    ],
+    "expectedWorkerNodes": [
+      "genai-pb-worker-01",
+      "genai-pb-worker-02"
+    ],
+    "expectedWorkerLabelSelector": "nodepool=workers",
+    "minimumRequiredOutcomeBeforeBenchmarking": "validated"
+  },
+  "lifecycleCompatibility": {
+    "supportedModes": [
+      "reuse",
+      "ephemeral"
+    ],
+    "recommendedMode": "ephemeral",
+    "destroyAfterCycleDefault": true,
+    "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+    "deleteRequiresExplicitConfirmation": true,
+    "templateDeletionAllowedByDefault": false
+  },
+  "governance": {
+    "doNotEmbedSecrets": true,
+    "doNotMakeProviderToolApplicationAware": true,
+    "providerToolBoundary": "proxmox-k3s creates and deletes K3s clusters; the benchmark suite resolves bindings and orchestrates workload execution.",
+    "comparisonPolicy": "Use infrastructureProfileId as the primary comparison key; identical node names do not imply equivalent resources or provisioning state.",
+    "vmidCollisionPolicy": "Use the declared VMID allocation policy and clean up partial provider-created VMs before retrying create operations with the same cluster_name."
+  },
+  "clusterLifecycle": {
+    "lifecyclePolicyId": "LC_EPHEMERAL_DELETE_CLUSTER",
+    "lifecyclePolicyPath": "config/infrastructure/lifecycle/policies/LC_EPHEMERAL_DELETE_CLUSTER.json",
+    "clusterLifecycleModeDefault": "ephemeral",
+    "destroyClusterAfterCycleDefault": true,
+    "lifecyclePoliciesIndexPath": "config/infrastructure/lifecycle/CLUSTER_LIFECYCLE_POLICIES_INDEX.json",
+    "lifecycleManifestRequired": true,
+    "lifecycleArtifactRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/lifecycle",
+    "provisioningLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/provisioning",
+    "deletionLogRootTemplate": "results/experimental-cycles/{cycleId}/infrastructure/deletion"
+  },
+  "provisioningIntegration": {
+    "provisioningIntegrationProfileId": null,
+    "provisioningIntegrationProfilePath": null,
+    "provisioningIntegrationIndexPath": "config/provisioning/PROVISIONING_INTEGRATION_INDEX.json",
+    "defaultAction": "provision",
+    "requiredBeforeClusterValidation": true,
+    "requiredBeforeApplicationDeployment": true,
+    "status": "runtime_generated_per_variant",
+    "profileGenerationMode": "generated_from_campaign_template",
+    "runtimeProfileSource": "cycle_variant_generation",
+    "runtimeProfileTemplateId": "PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE",
+    "runtimeProfileTemplatePath": "config/provisioning/templates/PI_PROVIDER_BACKED_PROVISIONING_TEMPLATE.json",
+    "generatedProfileNamingPolicy": "PI_<CYCLE_ID>_<VARIANT_ID>",
+    "generationScope": "per_variant",
+    "staticProfileRequired": false,
+    "notes": "Variant-scoped provisioning integration profiles are generated at campaign runtime from the provider-backed provisioning template."
+  },
+  "vmidAllocationPolicy": {
+    "policyId": "GENAI_PB_REUSABLE_VMID_RANGE_V1",
+    "policyPath": "config/infrastructure/providers/proxmox-k3s/vmid-allocation/GENAI_PB_REUSABLE_VMID_RANGE_V1.json",
+    "vmidBase": 8200,
+    "reservedRange": "8200-8299",
+    "allocationStrategy": "provider_next_free_from_vmid_base",
+    "partialClusterRetryPolicy": "delete_or_cleanup_generated_partial_cluster_before_retry"
+  }
+}

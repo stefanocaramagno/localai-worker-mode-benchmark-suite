@@ -1,0 +1,267 @@
+{
+  "schemaVersion": "localai-mon-agent-profile/v1",
+  "monAgentProfileId": "MA_NETWORK_AWARE",
+  "profileName": "Network-Aware mon-agent Integration Profile",
+  "profileStatus": "active",
+  "profileRole": "network_aware_scheduler_metrics_annotation_agent",
+  "purpose": "Use mon-agent v0.0.6 as the runtime annotation source for resource and network-aware scheduler workflows.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "kubeconfigPath": null,
+  "kubernetes": {
+    "kubectl": "kubectl",
+    "namespace": "observability",
+    "createNamespace": true,
+    "serviceAccountName": "mon-agent",
+    "deploymentName": "mon-agent"
+  },
+  "prometheus": {
+    "required": true,
+    "namespace": "observability",
+    "serviceName": "prometheus-stack-kube-prom-prometheus",
+    "port": 9090,
+    "url": "http://prometheus-stack-kube-prom-prometheus.observability:9090",
+    "requiredMetricFamilies": [
+      "node_cpu_seconds_total",
+      "node_memory_MemAvailable_bytes",
+      "kube_pod_labels",
+      "container_cpu_usage_seconds_total",
+      "container_memory_working_set_bytes",
+      "node_disk_read_bytes_total",
+      "node_disk_written_bytes_total",
+      "node_network_receive_bytes_total",
+      "node_network_transmit_bytes_total",
+      "container_fs_reads_bytes_total",
+      "container_fs_writes_bytes_total",
+      "container_network_receive_bytes_total",
+      "container_network_transmit_bytes_total",
+      "node_latency",
+      "node_latency_sum",
+      "node_latency_count",
+      "node_packet_loss_ratio",
+      "node_bandwidth_bytes_per_second",
+      "istio_requests_total",
+      "istio_request_bytes_sum",
+      "istio_response_bytes_sum",
+      "istio_tcp_sent_bytes_total",
+      "istio_tcp_received_bytes_total"
+    ],
+    "requiredScrapeSources": [
+      "node-exporter",
+      "kube-state-metrics",
+      "kubelet-cadvisor",
+      "Mentat",
+      "Istio"
+    ]
+  },
+  "namespaceSelection": {
+    "selector": "mon-agent/enabled=true",
+    "labelKey": "mon-agent/enabled",
+    "labelValue": "true",
+    "labelNamespacesOnApply": true,
+    "applicationNamespaces": [
+      "genai-tenant-a",
+      "genai-tenant-b",
+      "genai-tenant-c"
+    ],
+    "ignoreMissingApplicationNamespaces": false,
+    "requiresIstioInjectionLabel": true,
+    "istioInjectionLabelKey": "istio-injection",
+    "istioInjectionLabelValue": "enabled"
+  },
+  "monAgentDeployment": {
+    "installationMode": "provider_managed",
+    "providerAddon": "mon_agent",
+    "providerVersion": "v1.0.3",
+    "image": "ghcr.io/unict-cclab/mon-agent:v0.0.6",
+    "imagePullPolicy": "IfNotPresent",
+    "replicas": 1,
+    "scrapePeriodSeconds": 30,
+    "promqlRange": "5m",
+    "resources": {
+      "requests": {
+        "cpu": "50m",
+        "memory": "64Mi"
+      },
+      "limits": {
+        "cpu": "500m",
+        "memory": "256Mi"
+      }
+    },
+    "preferredNodeAffinity": {
+      "key": "nodepool",
+      "operator": "In",
+      "values": [
+        "management"
+      ],
+      "weight": 100
+    },
+    "tolerations": [
+      {
+        "key": "nodepool",
+        "operator": "Equal",
+        "value": "management",
+        "effect": "NoSchedule"
+      }
+    ],
+    "version": "v0.0.6",
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "runAsNonRoot": true,
+      "runAsUser": 65532,
+      "runAsGroup": 65532,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      }
+    }
+  },
+  "annotationValidation": {
+    "requiredNodeAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "requiredNodeAnnotationPrefixes": [
+      "network-latency.",
+      "network-bandwidth.",
+      "packet-loss."
+    ],
+    "requiredDeploymentAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "requiredDeploymentAnnotationPrefixes": [
+      "traffic."
+    ],
+    "requiredDeploymentLabels": [
+      "group",
+      "app",
+      "role"
+    ],
+    "skipDeploymentsWithZeroReplicas": true,
+    "requireAtLeastOneAnnotatedDeployment": false,
+    "waitTimeoutSeconds": 240,
+    "pollIntervalSeconds": 15,
+    "optionalNodeAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ],
+    "optionalNodeAnnotationPrefixes": [],
+    "optionalDeploymentAnnotations": [
+      "disk-throughput",
+      "network-throughput"
+    ],
+    "optionalDeploymentAnnotationPrefixes": [
+      "rps."
+    ],
+    "deploymentNames": [
+      "localai-server",
+      "localai-rpc-a",
+      "localai-rpc-b"
+    ],
+    "labelSelectorKey": "localai.benchmark/component",
+    "requireGroupAndAppLabels": true,
+    "requireSelectedDeployments": true,
+    "requireAllSelectedDeploymentsAnnotated": true,
+    "requireExpectedSelectedDeploymentCount": true,
+    "captureAllMatchingDynamicAnnotations": true,
+    "scenarioOverrides": "enabled_when_scenario_config_is_supplied",
+    "nodeSelectorLabels": {
+      "nodepool": "workers"
+    },
+    "requireWorkerNodeAnnotationsOnly": true,
+    "requiredGatewayTrafficKey": "traffic.localai-gateway-istio",
+    "requireExactGatewayTrafficKey": true,
+    "requireGatewayTrafficAnnotation": true,
+    "gatewayTrafficRequiredRoleLabelValue": "master",
+    "gatewayTrafficRequiredOnlyForMasterRole": true,
+    "gatewayTrafficAlternativeAnnotationGroups": [
+      [
+        "traffic.localai-gateway-istio"
+      ],
+      [
+        "traffic.istio-ingressgateway"
+      ],
+      [
+        "traffic.<peer-workload>"
+      ],
+      [
+        "rps.localai-gateway-istio"
+      ],
+      [
+        "rps.istio-ingressgateway"
+      ],
+      [
+        "rps.<peer-workload>"
+      ]
+    ]
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent",
+    "logsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent/logs",
+    "snapshotsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent/snapshots",
+    "manifestsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent/manifests",
+    "summariesRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent/summaries",
+    "renderedManifestsRoot": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent/rendered",
+    "latestManifestPath": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent/latest-mon-agent-manifest.json",
+    "latestSummaryPath": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent/latest-mon-agent-summary.txt",
+    "latestValidationSnapshotPath": "results/experimental-cycles/C9/variants/__profile_default__/network-aware-scheduler/mon-agent/latest-mon-agent-validation-snapshot.json",
+    "writeLatestAliases": true,
+    "perVariantOutputRootRequired": true,
+    "perVariantOutputRootPattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/mon-agent"
+  },
+  "decisionPolicy": {
+    "appliedStatus": "applied",
+    "validatedStatus": "validated",
+    "captureOnlyStatus": "captured",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "requirePrometheusServiceBeforeApply": true,
+    "requireAnnotationsForValidateAction": true,
+    "providerManagedDeployment": true,
+    "skipManifestApplyWhenProviderManaged": true,
+    "requireExistingDeploymentWhenProviderManaged": true
+  },
+  "governance": {
+    "documentationPolicy": "This profile is operational configuration and not repository documentation.",
+    "installationBoundary": "When the infrastructure provider installs mon-agent, this profile validates and captures the existing deployment instead of installing a divergent copy.",
+    "annotationBoundary": "CPU and memory annotations remain exact validation gates. Inter-node network annotations are validated on worker nodes only. Deployment traffic validation is role-aware: every selected LocalAI deployment must expose traffic.* telemetry, while the configured gateway traffic key is required on master deployments only.",
+    "schedulerCompatibility": "The expected scheduler inputs are node resource annotations, node peer-network annotations, deployment resource annotations and deployment peer-traffic annotations produced by mon-agent v0.0.6.",
+    "legacyAnnotationPolicy": "Legacy aggregate disk-bandwidth and network-bandwidth annotations are not required by this profile. The modern aggregate annotations are disk-throughput and network-throughput; peer bandwidth remains network-bandwidth.<destination-node>.",
+    "scenarioScopePolicy": "When a scenario config is supplied, application namespaces and expected LocalAI deployments are derived from that scenario instead of using the profile-wide fallback namespace list.",
+    "containerSecurityPolicy": "mon-agent runs as the numeric distroless non-root UID/GID 65532 so Kubernetes can verify runAsNonRoot deterministically at container creation time.",
+    "networkObservabilityDependency": "Mentat provides the upstream inter-node network metrics consumed by mon-agent before node network annotations are validated.",
+    "istioGatewayDependency": "Gateway-routed traffic provides the Istio source/destination workload metrics consumed by mon-agent for rps.<peer-workload> and traffic.<peer-workload> deployment annotations."
+  },
+  "networkObservability": {
+    "networkObservabilityProfileId": "NO_MENTAT_C9",
+    "networkObservabilityProfilePath": "config/network-observability/profiles/NO_MENTAT_C9.json",
+    "providerAddon": "mentat",
+    "expectedMetrics": [
+      "node_latency",
+      "node_packet_loss_ratio",
+      "node_bandwidth_bytes_per_second"
+    ],
+    "expectedNodeAnnotationPrefixes": [
+      "network-latency.",
+      "packet-loss.",
+      "network-bandwidth."
+    ]
+  },
+  "istioGatewayProfileId": "IG_LOCALAI_GATEWAY_ROUTED_C9",
+  "istioGatewayProfilePath": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+  "dependencies": {
+    "istioGateway": {
+      "profileId": "IG_LOCALAI_GATEWAY_ROUTED_C9",
+      "profilePath": "config/istio-gateway/profiles/IG_LOCALAI_GATEWAY_ROUTED_C9.json",
+      "trafficAccessMode": "istio_gateway_routed",
+      "requiresNamespaceLabel": "istio-injection=enabled",
+      "requiredMetricFamilies": [
+        "istio_requests_total",
+        "istio_request_bytes_sum",
+        "istio_response_bytes_sum"
+      ]
+    }
+  }
+}

@@ -1,0 +1,301 @@
+{
+  "schemaVersion": "completion-gate-profile/v1",
+  "completionGateProfileId": "CG_C7_DEFAULT_SCHEDULER_BASELINE",
+  "profileId": "CG_C7_DEFAULT_SCHEDULER_BASELINE",
+  "profileName": "C7 Default Scheduler Baseline Completion Gate Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_default_scheduler_baseline_completion_gate",
+  "description": "Completion gate profile for the provider-backed Kubernetes default-scheduler baseline campaign. It verifies that default-scheduler scenarios preserve no hard placement controls, capture scheduler decisions, retain tenant-scoped benchmark evidence, produce diagnosis and reporting artifacts, and remain ready for freeze.",
+  "cycleId": "C7",
+  "cycleConfigPath": "config/experimental-cycles/C7.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "providerId": "proxmox-k3s",
+  "outputRoot": "results/experimental-cycles/C7/completion-gate",
+  "manifestSuffix": "_completion_gate.json",
+  "textSuffix": "_completion_gate.txt",
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C7/completion-gate",
+    "latestManifestPath": "results/experimental-cycles/C7/completion-gate/latest-completion-gate-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C7/completion-gate/latest-completion-gate-summary.txt",
+    "writeLatestAliases": true
+  },
+  "requiredReferences": {
+    "cycleConfig": "config/experimental-cycles/C7.json",
+    "baselineConfig": "config/scenarios/baseline/B1.json",
+    "scenarioIndex": "config/scenarios/default-scheduler/DEFAULT_SCHEDULER_SCENARIOS_INDEX.json",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "technicalDiagnosisIndex": "config/technical-diagnosis/TECHNICAL_DIAGNOSIS_INDEX.json",
+    "reportingProfile": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "reportingIndex": "config/reporting/REPORTING_INDEX.json",
+    "defaultSchedulerManifestValidator": "scripts/validation/scheduler/validate-default-scheduler-manifests.py",
+    "schedulerDecisionCaptureScript": "scripts/observability/scheduler/capture-scheduler-decisions.py",
+    "multiTenantLocustRunner": "scripts/load/multi-tenant/run-multi-tenant-locust.py"
+  },
+  "runtimeEvidence": {
+    "campaignExecutionManifest": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "technicalDiagnosisRoot": "results/experimental-cycles/C7/diagnosis",
+    "reportingManifest": "results/experimental-cycles/C7/reporting/reporting-manifest.json",
+    "reportMarkdown": "results/experimental-cycles/C7/reporting/report.md",
+    "reportHtml": "results/experimental-cycles/C7/reporting/index.html",
+    "scenarioSummaryCsv": "results/experimental-cycles/C7/reporting/scenario-summary.csv",
+    "benchmarkRoots": [
+      "results/experimental-cycles/C7/benchmark/default-scheduler"
+    ],
+    "clusterSideRoots": [
+      "results/experimental-cycles/C7/variants",
+      "results/experimental-cycles/C7/scheduler"
+    ],
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C7/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C7/benchmark/default-scheduler",
+    "technicalDiagnosisProfile": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "reportingProfile": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+    "freezeProfile": "config/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json"
+  },
+  "requiredFamilies": [
+    "default-scheduler"
+  ],
+  "minimumReplicasPerScenario": 3,
+  "strictScenarioCoverage": true,
+  "acceptUnsupportedScenariosAsCovered": true,
+  "minimumUnsupportedReplicasPerScenario": 3,
+  "minimumMeasuredScenariosByFamily": {
+    "default-scheduler": 5
+  },
+  "maximumMeanResponseTimeCvPercent": 1000000,
+  "minimumFindings": 1,
+  "gates": {
+    "profileResolution": {
+      "enabled": true
+    },
+    "providerConfig": {
+      "enabled": false
+    },
+    "provisioning": {
+      "enabled": false
+    },
+    "clusterValidation": {
+      "enabled": false
+    },
+    "applicationDeployment": {
+      "enabled": false
+    },
+    "minimalObservability": {
+      "enabled": false
+    },
+    "defaultSchedulerManifestValidation": {
+      "enabled": true,
+      "roots": [
+        "infra/k8s/compositions/default-scheduler"
+      ],
+      "minimumInspectedFileCount": 1,
+      "fileExtensions": [
+        ".yaml",
+        ".yml",
+        ".json"
+      ],
+      "forbiddenLiteralPatterns": [
+        "nodeName:",
+        "kubernetes.io/hostname"
+      ],
+      "forbiddenPathFragments": [
+        "placement-variation",
+        "controlled-placement",
+        "node-pinning"
+      ]
+    },
+    "clusterValidationArtifacts": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C7/variants"
+      ],
+      "artifactNames": [
+        "latest-cluster-validation-manifest.json"
+      ],
+      "minimumArtifactCount": 1,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false
+    },
+    "applicationDeploymentArtifacts": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C7/variants"
+      ],
+      "artifactNames": [
+        "latest-localai-deployment-manifest.json"
+      ],
+      "minimumArtifactCount": 1,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false
+    },
+    "schedulerDecisionEvidence": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C7/scheduler"
+      ],
+      "artifactNames": [
+        "default-scheduler-decision-evidence.json",
+        "latest-default-scheduler-decision-evidence.json"
+      ],
+      "minimumArtifactCount": 1,
+      "maxArtifactsToInspect": 25,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": true,
+      "acceptedStatuses": [
+        "captured",
+        "captured_without_matching_pods"
+      ],
+      "requiredDottedPaths": [
+        "schemaVersion",
+        "scenario.scenarioId",
+        "placementClassification.schemaVersion",
+        "summary.scheduledPodCount"
+      ]
+    },
+    "multiTenantBenchmarkSummary": {
+      "enabled": true,
+      "roots": [
+        "results/experimental-cycles/C7/benchmark/default-scheduler"
+      ],
+      "artifactNames": [
+        "multi-tenant-summary.json",
+        "latest-multi-tenant-summary.json"
+      ],
+      "minimumArtifactCount": 1,
+      "maxArtifactsToInspect": 25,
+      "requireJsonLoadable": true,
+      "requireAcceptedStatus": false,
+      "requiredDottedPaths": [
+        "schemaVersion",
+        "scenarioId",
+        "tenantResults"
+      ]
+    },
+    "latencyEvidence": {
+      "enabled": true,
+      "scenarioIndexPath": "config/scenarios/default-scheduler/DEFAULT_SCHEDULER_SCENARIOS_INDEX.json",
+      "roots": [
+        "results/experimental-cycles/C7/variants",
+        "results/experimental-cycles/C7/latency-injection"
+      ],
+      "artifactNames": [
+        "latest-latency-injection-manifest.json",
+        "latency-profile-disabled.json"
+      ],
+      "minimumRuntimeArtifactCount": 0
+    },
+    "benchmarkArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C7/benchmark/default-scheduler"
+      ],
+      "patterns": [
+        "*_stats.csv",
+        "multi-tenant-summary.json",
+        "multi-tenant-summary.txt",
+        "*.json",
+        "*.csv",
+        "*.txt"
+      ]
+    },
+    "clusterSideArtifacts": {
+      "enabled": true,
+      "minimumArtifactCount": 1,
+      "roots": [
+        "results/experimental-cycles/C7/variants",
+        "results/experimental-cycles/C7/scheduler"
+      ],
+      "patterns": [
+        "*.json",
+        "*.txt",
+        "*.csv",
+        "*.log"
+      ]
+    },
+    "technicalDiagnosis": {
+      "enabled": true,
+      "acceptedClosureStatuses": [
+        "preliminary_diagnosis_available"
+      ],
+      "roots": [
+        "results/experimental-cycles/C7/diagnosis"
+      ],
+      "familyScope": "all",
+      "minimumFamiliesWithCoverage": 1,
+      "minimumFindings": 1
+    },
+    "reporting": {
+      "enabled": true,
+      "reportingRoot": "results/experimental-cycles/C7/reporting",
+      "manifestName": "reporting-manifest.json",
+      "markdownReportName": "report.md",
+      "htmlReportName": "index.html",
+      "scenarioSummaryCsvName": "scenario-summary.csv",
+      "chartsDirectoryName": "charts",
+      "sweepsDirectoryName": "sweeps",
+      "requiredSections": [
+        "Default-scheduler scenario context",
+        "Tenant traffic context",
+        "Scheduler decision table",
+        "Placement classification summary",
+        "Per-tenant benchmark metrics",
+        "Placement negative evidence",
+        "Scenario Summary",
+        "Metrics Summary",
+        "Main Findings"
+      ],
+      "requiredChartFamilies": [],
+      "requiredChartMetrics": [],
+      "requiredSweepReports": [
+        "default-scheduler"
+      ]
+    },
+    "freezeReadiness": {
+      "enabled": true,
+      "requireFreezeOutputsDeclared": false,
+      "requireFrozenArtifacts": false,
+      "requireFreezeProfileDeclared": true,
+      "requireFreezeProfileFile": false,
+      "freezeProfilePath": "config/freeze/profiles/FR_C7_DEFAULT_SCHEDULER_BASELINE.json"
+    },
+    "scenarioCoverage": {
+      "requiredFamilies": [
+        "default-scheduler"
+      ]
+    }
+  },
+  "decisionPolicy": {
+    "completedStatus": "completed",
+    "completedWithUnsupportedScenariosStatus": "completed_with_unsupported_scenarios",
+    "failedValidationStatus": "failed_validation",
+    "failedBenchmarkStatus": "failed_benchmark",
+    "failedReportingStatus": "failed_reporting",
+    "notCompletedStatus": "not_completed",
+    "unsupportedScenarioSignals": [
+      "unsupported",
+      "unsupported_under_current_constraints"
+    ],
+    "allowUnsupportedScenariosWhenDocumented": true,
+    "dryRunStatus": "dry_run"
+  },
+  "campaignAwareEvaluation": {
+    "enabled": true,
+    "variantEvidenceRoot": "results/experimental-cycles/C7/variants",
+    "benchmarkEvidenceRoot": "results/experimental-cycles/C7/benchmark/default-scheduler",
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C7/scheduler",
+    "campaignExecutionManifest": "results/experimental-cycles/C7/execution/latest-campaign-execution-manifest.json",
+    "retainUnsupportedScenarioEvidence": true
+  },
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C7_DEFAULT_SCHEDULER_BASELINE.json",
+  "reportingProfilePath": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+  "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+  "referenceScenarioByFamily": {
+    "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+  },
+  "ignoreCycleFreezeProfileInProfileResolution": true
+}

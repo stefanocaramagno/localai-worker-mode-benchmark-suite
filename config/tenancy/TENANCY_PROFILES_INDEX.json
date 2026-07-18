@@ -1,0 +1,41 @@
+{
+  "tenancyProfilesIndexId": "TENANCY_PROFILES_INDEX",
+  "status": "active",
+  "purpose": "Registry of LocalAI multi-tenant application-cluster topology profiles.",
+  "schemaPath": "config/tenancy/schemas/TENANCY_PROFILE_SCHEMA_V1.json",
+  "profiles": [
+    {
+      "tenancyProfileId": "TP_SINGLE_TENANT_REFERENCE",
+      "path": "config/tenancy/profiles/TP_SINGLE_TENANT_REFERENCE.json",
+      "status": "active",
+      "tenantCount": 1,
+      "benchmarkTenantId": "tenant-a"
+    },
+    {
+      "tenancyProfileId": "TP_TWO_TENANTS_SEPARATED",
+      "path": "config/tenancy/profiles/TP_TWO_TENANTS_SEPARATED.json",
+      "status": "active",
+      "tenantCount": 2,
+      "benchmarkTenantId": "tenant-a"
+    },
+    {
+      "tenancyProfileId": "TP_TWO_TENANTS_MIXED_MODELS",
+      "path": "config/tenancy/profiles/TP_TWO_TENANTS_MIXED_MODELS.json",
+      "status": "active",
+      "tenantCount": 2,
+      "benchmarkTenantId": "tenant-a"
+    },
+    {
+      "tenancyProfileId": "TP_TWO_TENANTS_SHARED_NODEPOOL",
+      "path": "config/tenancy/profiles/TP_TWO_TENANTS_SHARED_NODEPOOL.json",
+      "status": "active",
+      "tenantCount": 2,
+      "benchmarkTenantId": "tenant-a"
+    }
+  ],
+  "governanceRules": [
+    "Each tenancy profile declares namespace-scoped LocalAI application clusters and identifies the tenant used for benchmark measurement.",
+    "Co-tenant clusters are retained as explicit placement and contention evidence even when only the primary tenant is benchmarked.",
+    "C6 varies tenant topology and model mix while keeping the infrastructure profile and primary benchmark workload fixed."
+  ]
+}

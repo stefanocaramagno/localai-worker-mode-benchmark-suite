@@ -1,0 +1,216 @@
+{
+  "schemaVersion": "localai-application-deployment-profile/v1",
+  "applicationDeploymentProfileId": "AD_C1_PROVIDER_BACKED_BASELINE",
+  "profileName": "C1 Provider-Backed LocalAI Baseline Deployment",
+  "profileStatus": "active",
+  "profileRole": "canonical_provider_backed_baseline_localai_deployment",
+  "purpose": "Deploy the LocalAI server and RPC worker topology for the C1 provider-backed baseline after the generated K3s cluster has passed validation.",
+  "cycleId": "C1",
+  "cycleConfigPath": "config/experimental-cycles/C1.json",
+  "baselineId": "B1",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+  "infrastructureProfilePath": "config/infrastructure/profiles/INFRA_C1_1CP_2W_8C16G.json",
+  "providerId": "proxmox-k3s",
+  "clusterValidationProfileId": "CV_C1_PROVIDER_BACKED_BASELINE",
+  "clusterValidationProfilePath": "config/cluster-validation/profiles/CV_C1_PROVIDER_BACKED_BASELINE.json",
+  "deploymentTopology": {
+    "namespace": "localai-benchmark",
+    "kubeconfigPath": "config/cluster-access/generated/proxmox-k3s/c1-1cp-2w-8c16g/kubeconfig",
+    "kustomizeApplyOrder": [
+      {
+        "stepId": "namespace",
+        "path": "infra/k8s/compositions/foundation/namespace",
+        "kind": "kustomize",
+        "required": true
+      },
+      {
+        "stepId": "storage",
+        "path": "infra/k8s/compositions/foundation/storage",
+        "kind": "kustomize",
+        "required": true
+      },
+      {
+        "stepId": "rpc-worker-services",
+        "path": "infra/k8s/compositions/shared/rpc-workers-services",
+        "kind": "kustomize",
+        "required": true
+      },
+      {
+        "stepId": "server-model",
+        "path": "infra/k8s/compositions/server/models/m1-provider-backed",
+        "kind": "kustomize",
+        "required": true
+      },
+      {
+        "stepId": "worker-topology",
+        "path": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w2",
+        "kind": "kustomize",
+        "required": true
+      }
+    ],
+    "model": {
+      "scenarioId": "M1",
+      "scenarioPath": "config/scenarios/pilot/models/M1.json",
+      "modelName": "llama-3.2-1b-instruct:q4_k_m",
+      "serverManifest": "infra/k8s/compositions/server/models/m1-provider-backed"
+    },
+    "workerCount": {
+      "scenarioId": "W2",
+      "scenarioPath": "config/scenarios/pilot/worker-count/W2.json",
+      "count": 2,
+      "topologyDir": "infra/k8s/compositions/topology/colocated-genai-pb-worker-02-w2",
+      "expectedActiveRpcWorkers": [
+        "localai-rpc-a",
+        "localai-rpc-b"
+      ],
+      "expectedInactiveRpcWorkers": [
+        "localai-rpc-c",
+        "localai-rpc-d"
+      ]
+    },
+    "placement": {
+      "scenarioId": "PL_COLOCATED",
+      "scenarioPath": "config/placement/profiles/PL_COLOCATED.json",
+      "placementType": "colocated_genai_pb_worker_02",
+      "expectedWorkerNodes": {
+        "localai-rpc-a": "genai-pb-worker-02",
+        "localai-rpc-b": "genai-pb-worker-02"
+      },
+      "selectorMode": "provider_backed_reusable_node_name_compatibility",
+      "placementProfileId": "PL_COLOCATED",
+      "placementProfilePath": "config/placement/profiles/PL_COLOCATED.json",
+      "placementProfilesIndexPath": "config/placement/PLACEMENT_PROFILES_INDEX.json",
+      "strategy": "colocated",
+      "expectedServerNode": "genai-pb-worker-02",
+      "nodePoolLabel": {
+        "nodepool": "workers"
+      },
+      "profileResearchQuestion": "How does a compact LocalAI topology behave when communication distance is minimized but CPU and memory contention may increase?"
+    },
+    "workloadReference": {
+      "scenarioId": "WL2",
+      "scenarioPath": "config/scenarios/pilot/workload/WL2.json",
+      "users": 2,
+      "spawnRate": 1,
+      "runTime": "2m"
+    },
+    "expectedResources": {
+      "deployments": [
+        "localai-server",
+        "localai-rpc-a",
+        "localai-rpc-b"
+      ],
+      "inactiveDeployments": [
+        "localai-rpc-c",
+        "localai-rpc-d"
+      ],
+      "services": [
+        "localai-server",
+        "localai-rpc-a",
+        "localai-rpc-b",
+        "localai-rpc-c",
+        "localai-rpc-d"
+      ],
+      "configMaps": [
+        "localai-runtime-config"
+      ],
+      "persistentVolumeClaims": [
+        "localai-models-pvc"
+      ],
+      "rolloutTimeoutSeconds": 600,
+      "minimumReadyDeployments": 3
+    }
+  },
+  "preDeploymentGate": {
+    "enabled": true,
+    "requireLatestClusterValidationManifest": true,
+    "latestClusterValidationManifestPath": "results/experimental-cycles/C1/infrastructure/validation/latest-cluster-validation-manifest.json",
+    "acceptedClusterValidationStatuses": [
+      "validated"
+    ],
+    "requireCanProceedToApplicationDeployment": true,
+    "dryRunBypassesGate": true,
+    "skipAllowedForManualRecovery": true
+  },
+  "smokeValidation": {
+    "enabled": true,
+    "baseUrl": "http://localhost:8080",
+    "model": "llama-3.2-1b-instruct:q4_k_m",
+    "prompt": "Reply with only READY.",
+    "temperature": 0.1,
+    "requestTimeoutSeconds": 120,
+    "readinessTimeoutSeconds": 420,
+    "portForward": {
+      "enabled": true,
+      "namespace": "localai-benchmark",
+      "serviceName": "localai-server",
+      "localPort": 8080,
+      "remotePort": 8080,
+      "startupWaitSeconds": 5,
+      "maxRestartAttempts": 10,
+      "restartBackoffSeconds": 2
+    },
+    "requiredEndpoints": [
+      "/v1/models",
+      "/v1/chat/completions"
+    ],
+    "initialDelaySeconds": 20,
+    "readinessRequestTimeoutSeconds": 8,
+    "retryIntervalSeconds": 5,
+    "chatCompletionTimeoutSeconds": 180,
+    "chatCompletionMaxAttempts": 3,
+    "chatCompletionRetryIntervalSeconds": 10,
+    "maxTokens": 8,
+    "captureDiagnosticsOnFailure": true
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C1/application/deployment",
+    "logsRoot": "results/experimental-cycles/C1/application/deployment/logs",
+    "manifestsRoot": "results/experimental-cycles/C1/application/deployment/manifests",
+    "snapshotsRoot": "results/experimental-cycles/C1/application/deployment/snapshots",
+    "latestManifestPath": "results/experimental-cycles/C1/application/deployment/latest-localai-deployment-manifest.json",
+    "latestTextSummaryPath": "results/experimental-cycles/C1/application/deployment/latest-localai-deployment-summary.txt",
+    "latestSmokeResultPath": "results/experimental-cycles/C1/application/deployment/latest-smoke-result.json",
+    "writeLatestAliases": true
+  },
+  "decisionPolicy": {
+    "passedStatus": "deployed",
+    "smokeOnlyPassedStatus": "smoke_validated",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "minimumRequiredOutcomeBeforeBenchmarking": "deployed",
+    "acceptedStatusesBeforeBenchmarking": [
+      "deployed",
+      "smoke_validated"
+    ],
+    "stopBeforeBenchmarkOnFailure": true,
+    "smokeValidationRequiredBeforeBenchmark": true
+  },
+  "executionGuards": {
+    "dryRunSupported": true,
+    "realExecutionRequiresKubeconfig": true,
+    "realExecutionRequiresKubectl": true,
+    "realExecutionRequiresClusterValidationByDefault": true,
+    "kubectlApplyMustSucceed": true,
+    "rolloutStatusMustSucceed": true,
+    "smokeTestMustSucceed": true
+  },
+  "governance": {
+    "providerToolBoundary": "Application deployment consumes the validated kubeconfig produced by the provider workflow but does not modify proxmox-k3s.",
+    "documentationPolicy": "This profile is operational configuration and not project documentation.",
+    "comparisonPolicy": "Application deployment artifacts must be retained under the cycle-specific results tree before benchmark execution.",
+    "placementPolicy": "Deployment uses an explicit placement profile so that future placement-only comparisons can change topology without changing model, workload, or infrastructure.",
+    "minimalObservabilityPolicy": "Minimal observability evidence is collected from K3s, metrics-server, kubectl snapshots and Locust artifacts."
+  },
+  "minimalObservabilityProfileId": "MO_C1_PROVIDER_BACKED_BASELINE",
+  "minimalObservabilityProfilePath": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+  "postDeploymentObservability": {
+    "enabled": true,
+    "minimalObservabilityProfileId": "MO_C1_PROVIDER_BACKED_BASELINE",
+    "minimalObservabilityProfilePath": "config/observability-minimal/profiles/MO_C1_PROVIDER_BACKED_BASELINE.json",
+    "requiredBeforeBenchmarkDiagnosis": true,
+    "artifactRoot": "results/experimental-cycles/C1/observability/minimal",
+    "observabilityMode": "minimal_k3s_metrics_server"
+  }
+}

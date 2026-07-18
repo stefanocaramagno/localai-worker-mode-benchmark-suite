@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "reportingProfileId": "RP_C0_HISTORICAL_FIXED_CLUSTER",
+  "profileId": "RP_C0_HISTORICAL_FIXED_CLUSTER",
+  "profileName": "C0 Historical Fixed-Cluster Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "historical_fixed_cluster_reporting",
+  "description": "Stakeholder-facing reporting and visualization profile for the historical fixed-cluster LocalAI worker-mode characterization campaigns.",
+  "reportTitle": "C0 — Historical Fixed-Cluster Report",
+  "reportPurposeMarkdown": "This report provides a consolidated view of the historical fixed-cluster LocalAI worker-mode characterization evidence. It preserves the original benchmark families as reference evidence while the provider-backed pipeline evolves independently.",
+  "cycleId": "C0",
+  "cycleConfigPath": "config/experimental-cycles/C0.json",
+  "baselineId": "B0",
+  "baselineConfig": "config/scenarios/baseline/B0.json",
+  "outputRoot": "results/experimental-cycles/C0/reporting",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "chartsDirectoryName": "charts",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C0/diagnosis",
+  "preferDiagnosisContext": true,
+  "preferCsvMeasurementsForCharts": true,
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "campaignResultsRoots": {
+    "worker-count": "results/experimental-cycles/C0/benchmark/pilot-consolidated/worker-count",
+    "workload": "results/experimental-cycles/C0/benchmark/pilot-consolidated/workload",
+    "models": "results/experimental-cycles/C0/benchmark/pilot-consolidated/models",
+    "placement": "results/experimental-cycles/C0/benchmark/pilot-consolidated/placement"
+  },
+  "scenarioConfigRoots": {
+    "worker-count": "config/scenarios/pilot/worker-count",
+    "workload": "config/scenarios/pilot/workload",
+    "models": "config/scenarios/pilot/models",
+    "placement": "config/scenarios/pilot/placement"
+  },
+  "familyOrder": [
+    "worker-count",
+    "workload",
+    "models",
+    "placement"
+  ],
+  "familyDisplayNames": {
+    "worker-count": "Worker-Count",
+    "workload": "Workload",
+    "models": "Model",
+    "placement": "Placement"
+  },
+  "variedDimensionByFamily": {
+    "worker-count": "number of LocalAI RPC workers",
+    "workload": "synthetic client-side workload pattern",
+    "models": "model served by the LocalAI worker-mode cluster",
+    "placement": "Kubernetes placement strategy for LocalAI server and workers"
+  },
+  "fixedDimensionsByFamily": {
+    "worker-count": [
+      "baseline model",
+      "baseline workload",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "workload": [
+      "baseline model",
+      "baseline worker count",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "models": [
+      "baseline worker count",
+      "baseline workload",
+      "baseline placement",
+      "baseline protocol"
+    ],
+    "placement": [
+      "baseline model",
+      "baseline worker count",
+      "baseline workload",
+      "baseline protocol"
+    ]
+  },
+  "referenceScenarioByFamily": {
+    "worker-count": "W2",
+    "workload": "WL2",
+    "models": "M1",
+    "placement": "PL1"
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "notes": [
+    "Reporting is a static post-processing artifact: rerun the reporting launcher after producing new benchmark and diagnosis outputs.",
+    "The current global report is written directly under results/experimental-cycles/C0/reporting/ and managed artifacts are overwritten on each execution.",
+    "Optional archiving can preserve either the newly generated report package or the already generated current report under results/experimental-cycles/C0/reporting/archive/<reporting-id>/ without changing the stable current report path.",
+    "Each benchmark family also receives a dedicated report under results/experimental-cycles/C0/reporting/sweeps/<family>/.",
+    "Quantitative charts are generated from measurement CSV files whenever available; technical diagnosis is used as contextual and interpretative evidence.",
+    "Unsupported scenarios are reported explicitly and are not treated as measured performance regressions."
+  ],
+  "outputPolicy": {
+    "mode": "single_current_report_directory_with_optional_archive",
+    "managedOutputDirectory": "results/experimental-cycles/C0/reporting",
+    "globalReportDirectory": "results/experimental-cycles/C0/reporting",
+    "sweepReportsDirectory": "results/experimental-cycles/C0/reporting/sweeps",
+    "overwriteManagedArtifactsOnEachExecution": true,
+    "rationale": "The repository needs one stable stakeholder-facing reporting location for normal review and completion-gate checks. Optional timestamped archives are available only when historical report snapshots are explicitly required.",
+    "archiveDirectory": "results/experimental-cycles/C0/reporting/archive",
+    "archiveEnabledByDefault": false,
+    "archiveBehavior": "When enabled with generation archive mode, copy the newly generated current report artifacts to results/experimental-cycles/C0/reporting/archive/<reporting-id>/ after writing the stable current report. When enabled with current-report archive mode, copy the already existing managed artifacts from results/experimental-cycles/C0/reporting/ to results/experimental-cycles/C0/reporting/archive/<reporting-id>/ without regenerating them, using reporting-manifest.json as the authoritative source for the reporting identifier.",
+    "currentArchiveBehavior": "Archive-current mode does not regenerate measurement tables or charts. It copies index.html, report.md, scenario-summary.csv, reporting-manifest.json, charts/, and sweeps/ from the current reporting directory, explicitly excluding any existing archive/ directory."
+  },
+  "sweepsDirectoryName": "sweeps",
+  "archiveDirectoryName": "archive",
+  "reviewRequirements": [
+    "Provide synthetic charts instead of requiring technical reviewers to inspect raw CSV files manually.",
+    "Make the varied dimension and fixed dimensions explicit for every sweep.",
+    "Make latency, throughput and resource evidence readable at a glance.",
+    "Preserve the link between quantitative measurements and the technical diagnosis produced by the previous phase."
+  ],
+  "profileGovernance": {
+    "scope": "historical_fixed_cluster",
+    "cycleId": "C0",
+    "baselineId": "B0",
+    "status": "active_historical_profile",
+    "pathRole": "concrete_profile"
+  },
+  "reportingIdPrefix": "REP_C0",
+  "infrastructureSummaryMode": "historical_fixed_cluster",
+  "infrastructureSummarySemantics": {
+    "scope": "historical_fixed_cluster",
+    "interpretation": "The cycle is preserved as fixed-cluster historical evidence and is not materialized through a provider-backed lifecycle."
+  }
+}

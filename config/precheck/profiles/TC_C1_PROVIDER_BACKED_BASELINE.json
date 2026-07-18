@@ -1,0 +1,52 @@
+{
+  "profileId": "TC_C1_PROVIDER_BACKED_BASELINE",
+  "description": "Provider-backed benchmark technical pre-check profile for the C1 baseline on the proxmox-k3s generated cluster.",
+  "kubeconfig": "config/cluster-access/generated/proxmox-k3s/c1-1cp-2w-8c16g/kubeconfig",
+  "namespace": "localai-benchmark",
+  "expectedReadyNodes": [
+    "genai-pb-cp-01",
+    "genai-pb-worker-01",
+    "genai-pb-worker-02"
+  ],
+  "expectedWorkerNodes": [
+    "genai-pb-worker-01",
+    "genai-pb-worker-02"
+  ],
+  "allowedPodPhases": [
+    "Running",
+    "Succeeded"
+  ],
+  "minimumNamespacePods": 1,
+  "criticalWaitingReasons": [
+    "CrashLoopBackOff",
+    "ImagePullBackOff",
+    "ErrImagePull",
+    "CreateContainerConfigError",
+    "CreateContainerError",
+    "InvalidImageName"
+  ],
+  "maxTotalRestartsInNamespace": 0,
+  "requireMetricsApi": true,
+  "maxNodeCpuPercent": 95,
+  "maxNodeMemoryPercent": 95,
+  "defaultOutputRoot": "results/experimental-cycles/C1/precheck",
+  "serviceReadinessTimeoutSeconds": 420,
+  "serviceReadinessPollIntervalMilliseconds": 2000,
+  "serviceReadinessRequestTimeoutSeconds": 10,
+  "clusterReadinessPolicy": {
+    "type": "explicit_nodes",
+    "nodeSource": "provider_backed_infrastructure_profile",
+    "expectedReadyNodesSemantic": "All declared C1 provider-backed nodes must exist and be Ready before benchmark execution."
+  },
+  "workerPlacementPolicy": {
+    "type": "allowed_worker_node_set",
+    "allowedWorkerNodeSource": "provider_backed_worker_pool",
+    "allowColocatedPlacement": true,
+    "expectedApplicationPlacement": {
+      "localai-server": "genai-pb-worker-02",
+      "localai-rpc-a": "genai-pb-worker-02",
+      "localai-rpc-b": "genai-pb-worker-02"
+    },
+    "note": "The cluster must expose both provider-backed worker nodes, but the C1 co-located placement intentionally schedules the active LocalAI components on genai-pb-worker-02."
+  }
+}

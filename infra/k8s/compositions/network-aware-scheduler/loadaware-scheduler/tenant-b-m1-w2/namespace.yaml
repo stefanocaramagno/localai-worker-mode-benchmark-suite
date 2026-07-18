@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: genai-tenant-b
+  labels:
+    mon-agent/enabled: 'true'
+    istio-injection: enabled
+    localai.benchmark/tenant: tenant-b
+    localai.benchmark/scheduler-mode: loadaware-scheduler
+    localai.benchmark/traffic-access-mode: gateway-routed

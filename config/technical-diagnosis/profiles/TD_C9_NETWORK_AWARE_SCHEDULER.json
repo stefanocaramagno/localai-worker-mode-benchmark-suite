@@ -1,0 +1,347 @@
+{
+  "technicalDiagnosisProfileId": "TD_C9_NETWORK_AWARE_SCHEDULER",
+  "profileId": "TD_C9_NETWORK_AWARE_SCHEDULER",
+  "schemaVersion": "technical-diagnosis-profile/v1",
+  "profileName": "C9 Network-Aware Scheduler Technical Diagnosis Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_network_aware_scheduler_technical_diagnosis",
+  "description": "Technical diagnosis profile for the provider-backed network-aware scheduler campaign.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "validationSummaryRelativePath": "results/experimental-cycles/C9/diagnosis/latest-technical-diagnosis.json",
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "familyOrder": [
+    "network-aware-scheduler"
+  ],
+  "scenarioConfigRoots": {
+    "network-aware-scheduler": "config/scenarios/network-aware-scheduler"
+  },
+  "scenarioConfigFiles": {
+    "network-aware-scheduler": [
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L1_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L1_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L2_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L2_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L2_UNIFORM_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L2_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L3_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L3_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L3_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_1T_4N_L2_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_1T_4N_L2_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_1T_4N_L2_UNIFORM_M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L1_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L2_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L2_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L3_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_LOADAWARE_2T_4N_L3_DIFFERENTIATED_M1M2_W2.json",
+      "config/scenarios/network-aware-scheduler/NA_NETAWARE_2T_4N_L3_DIFFERENTIATED_M1M2_W2.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "network-aware-scheduler": "results/experimental-cycles/C9/benchmark/network-aware-scheduler"
+  },
+  "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C9/scheduler",
+  "schedulerDecisionEvidenceArtifactName": "network-aware-scheduler-decision-evidence.json",
+  "multiTenantSummaryArtifactName": "multi-tenant-summary.json",
+  "referenceScenarioByFamily": {
+    "network-aware-scheduler": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "network-aware-scheduler": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json"
+  },
+  "referenceScenarioId": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/network-aware-scheduler/NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+  "outputRoot": "results/experimental-cycles/C9/diagnosis",
+  "familyScope": "all",
+  "expectedFamilies": [
+    "network-aware-scheduler"
+  ],
+  "families": [
+    "network-aware-scheduler"
+  ],
+  "minimumScenarioSamples": 3,
+  "minimumFamiliesWithCoverageForClosure": 1,
+  "minimumFindingsForClosure": 1,
+  "clusterCpuPressureThresholdPercent": 85,
+  "clusterMemoryPressureThresholdPercent": 85,
+  "acceptUnsupportedScenariosAsObserved": true,
+  "minimumUnsupportedReplicasPerScenario": 3,
+  "fixedDimensionsByFamily": {
+    "network-aware-scheduler": [
+      "application=LocalAI worker-mode",
+      "worker-node-count=4",
+      "worker-count-per-tenant=W2",
+      "traffic-access=Istio gateway routed",
+      "hard-placement-controls=disabled",
+      "runtime-telemetry=mon-agent, Mentat and cluster-lens placement evidence"
+    ]
+  },
+  "variedDimensionByFamily": {
+    "network-aware-scheduler": "scheduler mode, latency profile, tenant count, tenant traffic profile and model mix"
+  },
+  "familyDisplayNames": {
+    "network-aware-scheduler": "C9 Network-Aware Scheduler"
+  },
+  "campaignAwareDiagnosis": {
+    "enabled": true,
+    "campaignExecutionManifest": "results/experimental-cycles/C9/execution/latest-campaign-execution-manifest.json",
+    "variantEvidenceRoot": "results/experimental-cycles/C9/variants",
+    "retainUnsupportedScenarioEvidence": true,
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C9/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C9/benchmark/network-aware-scheduler"
+  },
+  "interpretationPolicy": {
+    "minimumMeasuredVariantsForComparativeClaims": 3,
+    "treatUnsupportedAsEvidence": true,
+    "treatSchedulerNegativeEvidenceAsPrimaryEvidence": true,
+    "avoidOverstatingWeakSignals": true,
+    "primaryQuestion": "Whether the LocalAI resource/network-aware custom scheduler produces more appropriate placement or better latency behavior than Kubernetes default scheduling and resource-only load-aware scheduling when tenant traffic and inter-node latency differ.",
+    "latencyInjectionPolicy": "C9 includes L0 control scenarios and L1/L2 inter-group latency scenarios. Network-aware claims require telemetry evidence showing node latency annotations and gateway traffic annotations for the measured variant.",
+    "placementEvidencePolicy": "Cluster-lens placement evidence is treated as auxiliary diagnostic evidence and does not introduce additional final diagnosis closure statuses."
+  },
+  "defaultSchedulerBaseline": {
+    "referenceScenarioId": "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+    "scenarioOrdering": [
+      "NA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+      "NA_DEFAULT_1T_4N_L2_UNIFORM_M1_W2",
+      "NA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+      "NA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2",
+      "NA_DEFAULT_2T_4N_L1_DIFFERENTIATED_M1M1_W2",
+      "NA_DEFAULT_2T_4N_L1_DIFFERENTIATED_M1M2_W2",
+      "NA_DEFAULT_2T_4N_L1_UNIFORM_M1M1_W2",
+      "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+      "NA_DEFAULT_2T_4N_L2_DIFFERENTIATED_M1M2_W2",
+      "NA_DEFAULT_2T_4N_L2_UNIFORM_M1M1_W2",
+      "NA_DEFAULT_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2",
+      "NA_DEFAULT_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2",
+      "NA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2",
+      "NA_LOADAWARE_1T_4N_L2_UNIFORM_M1_W2",
+      "NA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+      "NA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2",
+      "NA_LOADAWARE_2T_4N_L1_DIFFERENTIATED_M1M1_W2",
+      "NA_LOADAWARE_2T_4N_L1_DIFFERENTIATED_M1M2_W2",
+      "NA_LOADAWARE_2T_4N_L1_UNIFORM_M1M1_W2",
+      "NA_LOADAWARE_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+      "NA_LOADAWARE_2T_4N_L2_DIFFERENTIATED_M1M2_W2",
+      "NA_LOADAWARE_2T_4N_L2_UNIFORM_M1M1_W2",
+      "NA_LOADAWARE_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2",
+      "NA_LOADAWARE_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2",
+      "NA_NETAWARE_1T_4N_L0_UNIFORM_M1_W2",
+      "NA_NETAWARE_1T_4N_L2_UNIFORM_M1_W2",
+      "NA_NETAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2",
+      "NA_NETAWARE_2T_4N_L0_UNIFORM_M1M1_W2",
+      "NA_NETAWARE_2T_4N_L1_DIFFERENTIATED_M1M1_W2",
+      "NA_NETAWARE_2T_4N_L1_DIFFERENTIATED_M1M2_W2",
+      "NA_NETAWARE_2T_4N_L1_UNIFORM_M1M1_W2",
+      "NA_NETAWARE_2T_4N_L2_DIFFERENTIATED_M1M1_W2",
+      "NA_NETAWARE_2T_4N_L2_DIFFERENTIATED_M1M2_W2",
+      "NA_NETAWARE_2T_4N_L2_UNIFORM_M1M1_W2",
+      "NA_NETAWARE_3T_4N_L1_DIFFERENTIATED_M1M1M1_W2",
+      "NA_NETAWARE_3T_4N_L2_DIFFERENTIATED_M1M1M1_W2"
+    ],
+    "minimumMeasuredVariantsForPerformanceComparison": 3,
+    "requiredEvidenceArtifacts": [
+      "network-aware-scheduler-decision-evidence.json",
+      "multi-tenant-summary.json"
+    ],
+    "placementCategoriesOfInterest": [
+      "server_worker_colocated",
+      "server_worker_split",
+      "tenant_interference_risk",
+      "fully_spread",
+      "resource_contention_risk",
+      "latency_sensitive_split",
+      "network_aware_scheduler_unclassified"
+    ],
+    "criticalPlacementCategories": [
+      "latency_sensitive_split",
+      "missing_server_pod",
+      "missing_worker_pods",
+      "unscheduled_pods"
+    ],
+    "warningPlacementCategories": [
+      "server_worker_split",
+      "tenant_interference_risk",
+      "resource_contention_risk",
+      "server_worker_partially_colocated"
+    ],
+    "trafficDifferentiationProfiles": [
+      "TR_2T_DIFFERENTIATED_MEDIUM",
+      "TR_3T_DIFFERENTIATED_MEDIUM"
+    ],
+    "latencyProfilesOfInterest": [
+      "L0_NONE",
+      "L1_INTER_GROUP_MODERATE",
+      "L2_INTER_GROUP_HIGH"
+    ],
+    "interpretation": "Measured variants are interpreted together with scheduler-decision evidence, node latency annotations, deployment gateway-traffic annotations, CPU/memory annotations and tenant-level offered-load configuration."
+  },
+  "schedulerModePairwiseDiagnosis": {
+    "enabled": true,
+    "family": "network-aware-scheduler",
+    "pairingKey": "logicalScenarioId",
+    "defaultRoleValue": "default",
+    "loadAwareRoleValue": "loadaware",
+    "networkAwareRoleValue": "netaware",
+    "tripletComparisonEnabled": true,
+    "latencyImprovementThresholdPercent": -5.0,
+    "latencyRegressionThresholdPercent": 5.0,
+    "throughputImprovementThresholdPercent": 5.0,
+    "throughputRegressionThresholdPercent": -5.0,
+    "resourceBalanceMetrics": [
+      "maxNodeCpuPercentObserved",
+      "maxNodeMemoryPercentObserved"
+    ],
+    "networkTelemetryMetrics": [
+      "network-latency.<node>",
+      "packet-loss.<node>",
+      "network-bandwidth.<node>",
+      "traffic.localai-gateway-istio"
+    ]
+  },
+  "diagnosisManifestSuffix": "_diagnosis.json",
+  "diagnosisTextSuffix": "_diagnosis.txt",
+  "networkAwareSchedulerEvidencePolicy": {
+    "enabled": true,
+    "family": "network-aware-scheduler",
+    "schedulerModes": [
+      "default",
+      "loadaware",
+      "netaware"
+    ],
+    "pairingKey": "logicalScenarioId",
+    "gatewayTrafficKey": "traffic.localai-gateway-istio",
+    "requiredPodLabels": [
+      "group",
+      "app",
+      "role"
+    ],
+    "requiredNodeAnnotationPrefixes": [
+      "network-latency.",
+      "packet-loss.",
+      "network-bandwidth."
+    ],
+    "requiredDeploymentAnnotationPrefixes": [
+      "traffic."
+    ],
+    "requiredSchedulerNameForCustomModes": "scheduler-plugins-scheduler",
+    "requiredNetworkAwarePlugin": "NetworkAwareLocalAi",
+    "requiredResourceAwarePlugin": "LoadAwareResourcesBalancedAllocation",
+    "gatewayTrafficRequiredRoleLabelValue": "master",
+    "gatewayTrafficRequiredOnlyForMasterRole": true,
+    "requiredGatewayTrafficKey": "traffic.localai-gateway-istio"
+  },
+  "networkAwareTripletDiagnosis": {
+    "enabled": true,
+    "family": "network-aware-scheduler",
+    "defaultRoleValue": "default",
+    "loadAwareRoleValue": "loadaware",
+    "networkAwareRoleValue": "netaware",
+    "metrics": [
+      "mean_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps",
+      "failure_count",
+      "success_rate_percent",
+      "max_node_cpu_percent",
+      "max_node_memory_percent"
+    ],
+    "latencyImprovementThresholdPercent": -5.0,
+    "latencyRegressionThresholdPercent": 5.0
+  },
+  "networkAwareTelemetryEvidenceRoots": {
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C9/scheduler",
+    "variantEvidenceRoot": "results/experimental-cycles/C9/variants",
+    "networkAwareRuntimePattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/{mon-agent,mentat,istio,telemetry-priming,rescheduling,cluster-lens}",
+    "clusterLensPlacementEvidencePattern": "results/experimental-cycles/C9/variants/<scenario-id>/network-aware-scheduler/cluster-lens"
+  },
+  "networkAwareTelemetryEvidencePolicy": {
+    "requiredGatewayTrafficKey": "traffic.localai-gateway-istio",
+    "requiredNodeAnnotationPrefixes": [
+      "network-latency.",
+      "packet-loss.",
+      "network-bandwidth."
+    ],
+    "requiredDeploymentAnnotationPrefixes": [
+      "traffic."
+    ],
+    "componentArtifactNames": {
+      "monAgent": [
+        "latest-mon-agent-manifest.json",
+        "latest-mon-agent-validation-snapshot.json"
+      ],
+      "mentat": [
+        "latest-mentat-observability-manifest.json",
+        "latest-mentat-validation-snapshot.json"
+      ],
+      "istio": [
+        "latest-istio-gateway-manifest.json"
+      ],
+      "rescheduling": [
+        "latest-rescheduling-manifest.json",
+        "latest-pre-redeployment-snapshot.json"
+      ],
+      "clusterLens": [
+        "cluster-lens-placement-summary.json",
+        "cluster-lens-capture-manifest.json"
+      ]
+    },
+    "componentAcceptedStatuses": {
+      "monAgent": [
+        "applied",
+        "captured",
+        "validated"
+      ],
+      "mentat": [
+        "captured",
+        "validated"
+      ],
+      "istio": [
+        "validated"
+      ],
+      "rescheduling": [
+        "captured",
+        "validated",
+        "executed"
+      ],
+      "clusterLens": [
+        "captured",
+        "partial"
+      ]
+    },
+    "gatewayTrafficRequiredRoleLabelValue": "master",
+    "gatewayTrafficRequiredOnlyForMasterRole": true,
+    "requireClusterLensPlacementEvidence": true
+  }
+}

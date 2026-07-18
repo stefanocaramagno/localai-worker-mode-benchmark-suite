@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "placement-profile/v1",
+  "placementProfileId": "PL_BALANCED_STATIC",
+  "profileName": "Balanced Static Placement",
+  "status": "active",
+  "profileRole": "balanced_static_profile",
+  "strategy": "balanced_static",
+  "placementIntent": "Distribute server and active RPC workers to keep related components reasonably close while avoiding excessive concentration of heavy containers.",
+  "researchQuestion": "Can a static balanced layout reduce the extremes of full co-location and full separation?",
+  "aliases": [],
+  "infrastructureCompatibility": {
+    "supportedInfrastructureProfiles": [
+      "INFRA_C3_1CP_3W_8C16G",
+      "INFRA_C3_1CP_4W_8C16G",
+      "INFRA_C4_1CP_4W_8C16G",
+      "INFRA_C5_1CP_4W_8C16G",
+      "INFRA_C6_1CP_4W_8C16G"
+    ],
+    "requiresWorkerNodePool": true,
+    "requiresControlPlaneExclusion": true,
+    "minimumWorkerNodes": 3,
+    "activeForProviderBackedBaseline": false,
+    "activeForProviderBackedPlacementVariation": true
+  },
+  "selectorPolicy": {
+    "selectorMode": "provider_backed_reusable_node_name_compatibility",
+    "currentCompatibilityMode": "kubernetes.io/hostname",
+    "preferredFutureMode": "label_based_node_pool",
+    "workerNodePoolLabel": {
+      "nodepool": "workers"
+    },
+    "controlPlaneExclusion": {
+      "key": "node-role.kubernetes.io/control-plane",
+      "operator": "DoesNotExist"
+    },
+    "rationale": "Stable node names are retained for compatibility with the current Kustomize overlays; label-based node-pool selection is the preferred direction for future generated clusters.",
+    "supportedInfrastructureWorkerCounts": [
+      3,
+      4
+    ],
+    "placementType": "balanced_static_resource_aware"
+  },
+  "serverPlacement": {
+    "component": "localai-server",
+    "expectedNode": "genai-pb-worker-02",
+    "selector": {
+      "kubernetes.io/hostname": "genai-pb-worker-02"
+    },
+    "nodePool": "workers",
+    "placementNotes": "The current server manifest is still node-name compatible; later topology profiles can replace this with a label-based selector."
+  },
+  "workerPlacement": {
+    "components": [
+      "localai-rpc-a",
+      "localai-rpc-b",
+      "localai-rpc-c",
+      "localai-rpc-d"
+    ],
+    "defaultWorkerNodeMap": {
+      "localai-rpc-a": "genai-pb-worker-01",
+      "localai-rpc-b": "genai-pb-worker-02",
+      "localai-rpc-c": "genai-pb-worker-03",
+      "localai-rpc-d": "genai-pb-worker-02"
+    },
+    "activeWorkerNodeMapByWorkerCount": {
+      "W4": {
+        "localai-rpc-a": "genai-pb-worker-01",
+        "localai-rpc-b": "genai-pb-worker-02",
+        "localai-rpc-c": "genai-pb-worker-03",
+        "localai-rpc-d": "genai-pb-worker-02"
+      }
+    },
+    "nodePoolPolicy": {
+      "nodePool": "workers",
+      "allowControlPlaneScheduling": false,
+      "preferredSelector": {
+        "nodepool": "workers"
+      }
+    },
+    "mappingSemantics": {
+      "activeWorkerNodeMapByWorkerCount": "Application-level worker-count mapping currently defined for W4. The active topology uses four LocalAI RPC workers and requires at least three provider-backed Kubernetes worker nodes.",
+      "defaultWorkerNodeMap": "Default mapping aligned with the active balanced-static W4 Kustomize overlay at infra/k8s/overlays/topology/placement/balanced-static-genai-pb-w4."
+    }
+  },
+  "kustomize": {
+    "implementationStatus": "active",
+    "currentBaselineTopologyPath": "infra/k8s/compositions/topology/balanced-static-genai-pb-w4",
+    "requiredFutureTargets": [
+      "optional lower-application-worker-count balanced static compositions if this placement must be evaluated below W4"
+    ],
+    "workerPlacementOverlayPath": "infra/k8s/overlays/topology/placement/balanced-static-genai-pb-w4",
+    "compositionByApplicationWorkerCount": {
+      "W4": "infra/k8s/compositions/topology/balanced-static-genai-pb-w4"
+    },
+    "compositionSelectionPolicy": {
+      "canonicalProviderBackedSelector": "compositionByApplicationWorkerCount",
+      "selectionRationale": "This placement profile defines a W4 static balanced layout over at least three provider-backed worker nodes. Infrastructure worker-node count is a compatibility constraint rather than the primary selector for this profile."
+    }
+  },
+  "expectedTradeoffs": {
+    "expectedBenefits": [
+      "avoids a fully compact topology",
+      "keeps at least one worker close to the server",
+      "supports a controlled hybrid comparison"
+    ],
+    "expectedRisks": [
+      "static balance may not reflect real-time resource pressure",
+      "the active worker map requires at least three provider-backed worker nodes",
+      "partial co-location remains because the server, localai-rpc-b and localai-rpc-d target genai-pb-worker-02"
+    ]
+  },
+  "evaluationFocus": [
+    "hybrid placement",
+    "network/resource compromise",
+    "static policy baseline"
+  ],
+  "constraints": [
+    "requires_at_least_three_provider_backed_worker_nodes",
+    "not_compatible_with_two_worker_node_infrastructure_profiles"
+  ],
+  "governance": {
+    "profileScope": "application_topology",
+    "doesNotChangeInfrastructure": true,
+    "doesNotChangeModel": true,
+    "doesNotChangeWorkload": true,
+    "documentationPolicy": "This profile is operational configuration.",
+    "comparisonPolicy": "Placement comparisons must keep infrastructure, model, workload, worker count, protocol, and metric collection fixed unless a cycle profile explicitly declares otherwise."
+  },
+  "placementType": "balanced_static_resource_aware",
+  "supportedInfrastructureWorkerCounts": [
+    3,
+    4
+  ]
+}

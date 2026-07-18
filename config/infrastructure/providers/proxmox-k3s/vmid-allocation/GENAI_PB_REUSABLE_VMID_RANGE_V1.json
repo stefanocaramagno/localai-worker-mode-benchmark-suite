@@ -1,0 +1,30 @@
+{
+    "policyId": "GENAI_PB_REUSABLE_VMID_RANGE_V1",
+    "schemaVersion": "proxmox-k3s-vmid-allocation-policy/v1",
+    "providerId": "proxmox-k3s",
+    "scope": "reusable_provider_backed_clusters",
+    "clusterName": "genai-pb",
+    "vmidBase": 8200,
+    "reservedRange": {
+        "start": 8200,
+        "end": 8299
+    },
+    "intendedUse": "Official provider-backed clusters that are created, validated, benchmarked, frozen, and optionally deleted before the next provider-backed cluster is materialized.",
+    "allocationStrategy": "proxmox-k3s_next_free_from_vmid_base",
+    "operationalRules": [
+        "Keep historical fixed-cluster VMIDs outside this range.",
+        "Delete partial provider-backed VMs before retrying a failed create operation with the same cluster_name.",
+        "Keep only one genai-pb provider-backed cluster active at a time unless cluster_name, IPs, and VMID range are intentionally changed.",
+        "Use the provider manifest and freeze artifacts, not VMID continuity, as the authoritative experiment record."
+    ],
+    "collisionAvoidance": {
+        "historicalClusterProtection": "The range is intentionally separated from the existing 8000-8019 environment observed during initial provider-backed testing.",
+        "partialProvisioningHandling": "If create fails after creating a subset of VMs, run the provider delete operation for cluster_name genai-pb or remove only the generated partial genai-pb VMs before retrying.",
+        "templatePolicy": "The ubuntu-24.04-template may remain at its existing VMID; vmidBase is still declared so newly generated environments have an explicit allocation boundary."
+    },
+    "expectedMaximumOfficialClusterSize": {
+        "controlPlaneNodes": 1,
+        "workerNodes": 4,
+        "maximumGeneratedClusterVMs": 5
+    }
+}

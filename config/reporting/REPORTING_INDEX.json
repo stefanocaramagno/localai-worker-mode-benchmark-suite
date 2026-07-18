@@ -1,0 +1,212 @@
+{
+  "reportingIndexId": "REPORTING_INDEX",
+  "status": "active",
+  "purpose": "Canonical registry for reporting profiles used by historical and provider-backed LocalAI worker-mode benchmark cycles.",
+  "defaultHistoricalProfileId": "RP_C0_HISTORICAL_FIXED_CLUSTER",
+  "defaultProviderBackedProfileId": "RP_C1_PROVIDER_BACKED_BASELINE",
+  "profiles": [
+    {
+      "reportingProfileId": "RP_C0_HISTORICAL_FIXED_CLUSTER",
+      "path": "config/reporting/profiles/RP_C0_HISTORICAL_FIXED_CLUSTER.json",
+      "role": "historical_fixed_cluster_reporting",
+      "cycleId": "C0",
+      "baselineId": "B0",
+      "outputRoot": "results/experimental-cycles/C0/reporting",
+      "status": "active",
+      "infrastructureProfileId": "INFRA_C0_1CP_2W_8C16G",
+      "providerId": "external-k3s-cluster"
+    },
+    {
+      "reportingProfileId": "RP_C1_PROVIDER_BACKED_BASELINE",
+      "path": "config/reporting/profiles/RP_C1_PROVIDER_BACKED_BASELINE.json",
+      "role": "provider_backed_baseline_reporting",
+      "cycleId": "C1",
+      "baselineId": "B1",
+      "infrastructureProfileId": "INFRA_C1_1CP_2W_8C16G",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C1/reporting",
+      "status": "active",
+      "mode": "provider_aware_baseline_reporting",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json"
+    },
+    {
+      "reportingProfileId": "RP_C2_RESOURCE_VARIATION",
+      "path": "config/reporting/profiles/RP_C2_RESOURCE_VARIATION.json",
+      "role": "provider_backed_resource_variation_reporting",
+      "cycleId": "C2",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C2/reporting",
+      "mode": "resource_variation_campaign_reporting",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "RV_8C16G",
+      "referenceScenarioConfigPath": "config/scenarios/resource-variation/RV_8C16G.json",
+      "referenceScenarioByFamily": {
+        "resource-variation": "RV_8C16G"
+      },
+      "referenceScenarioConfigByFamily": {
+        "resource-variation": "config/scenarios/resource-variation/RV_8C16G.json"
+      },
+      "status": "active"
+    },
+    {
+      "reportingProfileId": "RP_C3_NODE_COUNT_VARIATION",
+      "path": "config/reporting/profiles/RP_C3_NODE_COUNT_VARIATION.json",
+      "role": "provider_backed_node_count_variation_reporting",
+      "cycleId": "C3",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C3/reporting",
+      "mode": "node_count_variation_campaign_reporting",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "NC_2N",
+      "referenceScenarioConfigPath": "config/scenarios/node-count-variation/NC_2N.json",
+      "referenceScenarioByFamily": {
+        "node-count-variation": "NC_2N"
+      },
+      "status": "active",
+      "referenceScenarioConfigByFamily": {
+        "node-count-variation": "config/scenarios/node-count-variation/NC_2N.json"
+      }
+    },
+    {
+      "reportingProfileId": "RP_C4_PLACEMENT_VARIATION",
+      "path": "config/reporting/profiles/RP_C4_PLACEMENT_VARIATION.json",
+      "role": "provider_backed_placement_variation_reporting",
+      "cycleId": "C4",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C4/reporting",
+      "mode": "placement_variation_campaign_reporting",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C4_1CP_4W_8C16G",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "PLC_SPREAD_WORKERS",
+      "referenceScenarioConfigPath": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json",
+      "referenceScenarioByFamily": {
+        "placement-variation": "PLC_SPREAD_WORKERS"
+      },
+      "status": "active",
+      "referenceScenarioConfigByFamily": {
+        "placement-variation": "config/scenarios/placement-variation/PLC_SPREAD_WORKERS.json"
+      }
+    },
+    {
+      "path": "config/reporting/profiles/RP_C5_LATENCY_INJECTION.json",
+      "cycleId": "C5",
+      "family": "latency-injection",
+      "status": "active",
+      "reportingProfileId": "RP_C5_LATENCY_INJECTION",
+      "role": "provider_backed_latency_injection_reporting",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C5/reporting",
+      "mode": "latency_injection_campaign_reporting",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C5_1CP_4W_8C16G",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "LI_L0_NONE",
+      "referenceScenarioConfigPath": "config/scenarios/latency-injection/LI_L0_NONE.json",
+      "referenceScenarioByFamily": {
+        "latency-injection": "LI_L0_NONE"
+      },
+      "referenceScenarioConfigByFamily": {
+        "latency-injection": "config/scenarios/latency-injection/LI_L0_NONE.json"
+      }
+    },
+    {
+      "path": "config/reporting/profiles/RP_C6_MULTI_TENANCY.json",
+      "cycleId": "C6",
+      "family": "multi-tenancy",
+      "status": "active",
+      "reportingProfileId": "RP_C6_MULTI_TENANCY",
+      "role": "provider_backed_multi_tenancy_reporting",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C6/reporting",
+      "mode": "multi_tenancy_campaign_reporting",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileId": "INFRA_C6_1CP_4W_8C16G",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "MT_SINGLE_TENANT_REFERENCE",
+      "referenceScenarioConfigPath": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json",
+      "referenceScenarioByFamily": {
+        "multi-tenancy": "MT_SINGLE_TENANT_REFERENCE"
+      },
+      "referenceScenarioConfigByFamily": {
+        "multi-tenancy": "config/scenarios/multi-tenancy/MT_SINGLE_TENANT_REFERENCE.json"
+      }
+    },
+    {
+      "path": "config/reporting/profiles/RP_C7_DEFAULT_SCHEDULER_BASELINE.json",
+      "cycleId": "C7",
+      "family": "default-scheduler",
+      "status": "active",
+      "reportingProfileId": "RP_C7_DEFAULT_SCHEDULER_BASELINE",
+      "role": "provider_backed_default_scheduler_baseline_reporting",
+      "baselineId": "B1",
+      "outputRoot": "results/experimental-cycles/C7/reporting",
+      "mode": "default_scheduler_baseline_campaign_reporting",
+      "providerId": "proxmox-k3s",
+      "infrastructureProfileScope": "scenario_variant",
+      "baselineConfigPath": "config/scenarios/baseline/B1.json",
+      "referenceScenarioId": "DS_1T_4N_L0_UNIFORM_M1_W2",
+      "referenceScenarioConfigPath": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json",
+      "referenceScenarioByFamily": {
+        "default-scheduler": "DS_1T_4N_L0_UNIFORM_M1_W2"
+      },
+      "referenceScenarioConfigByFamily": {
+        "default-scheduler": "config/scenarios/default-scheduler/DS_1T_4N_L0_UNIFORM_M1_W2.json"
+      }
+    },
+    {
+      "reportingProfileId": "RP_C8_RESOURCE_AWARE_SCHEDULER",
+      "path": "config/reporting/profiles/RP_C8_RESOURCE_AWARE_SCHEDULER.json",
+      "role": "provider_backed_resource_aware_scheduler_reporting",
+      "cycleId": "C8",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C8/reporting",
+      "status": "active",
+      "mode": "resource_aware_scheduler_campaign_reporting",
+      "scenarioFamily": "resource-aware-scheduler",
+      "scenarioIndexPath": "config/scenarios/resource-aware-scheduler/RESOURCE_AWARE_SCHEDULER_SCENARIOS_INDEX.json"
+    },
+    {
+      "reportingProfileId": "RP_C9_NETWORK_AWARE_SCHEDULER",
+      "path": "config/reporting/profiles/RP_C9_NETWORK_AWARE_SCHEDULER.json",
+      "role": "provider_backed_network_aware_scheduler_reporting",
+      "cycleId": "C9",
+      "baselineId": "B1",
+      "providerId": "proxmox-k3s",
+      "outputRoot": "results/experimental-cycles/C9/reporting",
+      "status": "active",
+      "mode": "network_aware_scheduler_campaign_reporting",
+      "scenarioFamily": "network-aware-scheduler",
+      "scenarioIndexPath": "config/scenarios/network-aware-scheduler/NETWORK_AWARE_SCHEDULER_SCENARIOS_INDEX.json",
+      "infrastructureProfileId": "INFRA_C9_1CP_4W_8C16G"
+    }
+  ],
+  "selectionRules": [
+    "Use RP_C0_HISTORICAL_FIXED_CLUSTER only for historical consolidated pilot reporting.",
+    "Use RP_C1_PROVIDER_BACKED_BASELINE for C1 provider-backed reporting.",
+    "Provider-backed reporting must include infrastructure, provider, validation, deployment, minimal observability and scenario evidence when available.",
+    "Reporting outputs are generated artifacts and are not project documentation source files.",
+    "Generate the reporting site at any time to provide a stable static entry point, even when no cycle-scoped reports are available yet or only a subset of reports exists.",
+    "Reporting site generation must tolerate partial campaigns and mark missing cycle reports as unavailable rather than failed.",
+    "Use RP_C7_DEFAULT_SCHEDULER_BASELINE for C7 default-scheduler reporting, combining tenant-level metrics with runtime pod-to-node placement and placement-classification evidence.",
+    "Use RP_C9_NETWORK_AWARE_SCHEDULER for C9 network-aware scheduler reporting, including DEFAULT, LOADAWARE and NETAWARE paired logical-scenario comparisons."
+  ],
+  "reportingSite": {
+    "reportingSiteId": "REPORTING_SITE",
+    "configPath": "config/reporting/site/REPORTING_SITE.json",
+    "runner": "scripts/analysis/generate-reporting-site.py",
+    "powershellWrapper": "scripts/load/post/Start-ReportingSite.ps1",
+    "bashWrapper": "scripts/load/post/start-reporting-site.sh",
+    "outputRoot": "results/reporting",
+    "htmlIndexPath": "results/reporting/index.html",
+    "manifestPath": "results/reporting/reporting-site-manifest.json",
+    "cyclesDirectory": "results/reporting/cycles",
+    "status": "active",
+    "markdownReportPath": "results/reporting/report.md"
+  }
+}

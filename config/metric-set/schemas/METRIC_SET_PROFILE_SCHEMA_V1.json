@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "METRIC_SET_PROFILE_SCHEMA_V1.json",
+  "title": "Metric-set profiles profile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "profileId",
+    "description",
+    "clientMetrics",
+    "clusterMetrics",
+    "metricSetManifestSuffix",
+    "metricSetTextSuffix"
+  ],
+  "properties": {
+    "profileId": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "clientMetrics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "clusterMetrics": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metricSetManifestSuffix": {
+      "type": "string"
+    },
+    "metricSetTextSuffix": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "minimalObservabilityIndexPath": {
+      "type": "string"
+    },
+    "observabilityMode": {
+      "type": "string"
+    },
+    "artifactRequirements": {
+      "type": "object"
+    },
+    "qualityGates": {
+      "type": "object"
+    },
+    "minimalObservabilityBindingPolicy": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,269 @@
+{
+  "schemaVersion": "localai-rescheduling-profile/v1",
+  "reschedulingProfileId": "RS_C9_NETWORK_AWARE_TELEMETRY_PRIMED_REDEPLOYMENT",
+  "profileName": "C9 Network-Aware Telemetry-Primed Redeployment Profile",
+  "profileStatus": "active",
+  "profileRole": "network_aware_controlled_redeployment_after_runtime_telemetry_collection",
+  "purpose": "Capture gateway-routed traffic telemetry, network-aware annotations and placement evidence, recreate the selected LocalAI pods, wait for readiness, and capture post-redeployment evidence before the official measurement window.",
+  "cycleId": "C9",
+  "cycleConfigPath": "config/experimental-cycles/C9.json",
+  "kubeconfigPath": null,
+  "kubernetes": {
+    "kubectl": "kubectl"
+  },
+  "targetWorkloads": {
+    "namespaces": [
+      "genai-tenant-a",
+      "genai-tenant-b",
+      "genai-tenant-c"
+    ],
+    "deploymentNames": [
+      "localai-server",
+      "localai-rpc-a",
+      "localai-rpc-b"
+    ],
+    "labelSelector": "localai.benchmark/component",
+    "skipZeroReplicaDeployments": true,
+    "minimumSelectedDeployments": 1,
+    "requireExpectedSelectedDeploymentCount": true,
+    "scenarioOverrides": "enabled_when_scenario_config_is_supplied",
+    "requiredWorkloadLabels": [
+      "group",
+      "app",
+      "role"
+    ],
+    "masterRoleLabelValue": "master",
+    "workerRoleLabelValue": "worker"
+  },
+  "telemetryPriming": {
+    "enabled": true,
+    "waitSeconds": 90,
+    "expectedMonAgentScrapeCycles": 2,
+    "primingTrafficAccessMode": "istio_gateway_routed",
+    "reason": "Allow gateway-routed tenant traffic and network telemetry to refresh deployment and node annotations before triggering new scheduling decisions."
+  },
+  "annotationGate": {
+    "enabled": true,
+    "requiredNodeAnnotations": [
+      "cpu-usage",
+      "memory-usage",
+      "network-latency.<node>",
+      "packet-loss.<node>",
+      "network-bandwidth.<node>"
+    ],
+    "requiredDeploymentAnnotations": [
+      "cpu-usage",
+      "memory-usage"
+    ],
+    "alternativeDeploymentAnnotationGroups": [
+      [
+        "traffic.localai-gateway-istio"
+      ],
+      [
+        "traffic.istio-ingressgateway"
+      ],
+      [
+        "traffic.<peer-workload>"
+      ],
+      [
+        "rps.localai-gateway-istio"
+      ],
+      [
+        "rps.istio-ingressgateway"
+      ],
+      [
+        "rps.<peer-workload>"
+      ]
+    ],
+    "requireAllNodesAnnotated": true,
+    "requireAllSelectedDeploymentsAnnotated": true,
+    "requireAtLeastOneSelectedDeploymentAnnotated": false,
+    "failBeforeRestartWhenMissing": true,
+    "optionalNodeAnnotations": [
+      "disk-throughput",
+      "network-throughput",
+      "network-latency.<node>",
+      "packet-loss.<node>",
+      "network-bandwidth.<node>"
+    ],
+    "optionalDeploymentAnnotations": [
+      "disk-throughput",
+      "network-throughput",
+      "rps.<peer-workload>",
+      "traffic.<peer-workload>",
+      "traffic.localai-gateway-istio",
+      "traffic.istio-ingressgateway",
+      "rps.localai-gateway-istio",
+      "rps.istio-ingressgateway"
+    ],
+    "dynamicAnnotationSyntax": {
+      "<node>": "prefix_match_against_runtime_node_names",
+      "<peer-workload>": "prefix_match_against_runtime_workload_annotation_suffixes"
+    },
+    "requiredGatewayTrafficKey": "traffic.localai-gateway-istio",
+    "gatewayTrafficAlternativeAnnotationGroups": [
+      [
+        "traffic.localai-gateway-istio"
+      ],
+      [
+        "traffic.istio-ingressgateway"
+      ],
+      [
+        "traffic.<peer-workload>"
+      ],
+      [
+        "rps.localai-gateway-istio"
+      ],
+      [
+        "rps.istio-ingressgateway"
+      ],
+      [
+        "rps.<peer-workload>"
+      ]
+    ],
+    "requireGatewayTrafficAnnotation": true,
+    "nodeSelectorLabels": {
+      "nodepool": "workers"
+    },
+    "requireWorkerNodeAnnotationsOnly": true,
+    "requireExactGatewayTrafficKey": true,
+    "annotationControlledLatencyMatrixGate": {
+      "enabled": true,
+      "source": "scenario_latency_profile_path",
+      "requiredForProfiles": [
+        "L1_INTER_GROUP_MODERATE",
+        "L2_INTER_GROUP_HIGH",
+        "L3_INTER_GROUP_EXTREME"
+      ],
+      "latencyAnnotationPrefix": "network-latency.",
+      "latencyToleranceMs": 0.001,
+      "validateBeforeRedeployment": true,
+      "failBeforeRestartOnMismatch": true,
+      "reason": "Ensure the active node annotations expose the C9 inter-group latency matrix immediately before the controlled pod recreation that triggers scheduling.",
+      "reapplyBeforeRedeployment": true,
+      "reapplyScriptPath": "scripts/latency/apply-latency-profile.py",
+      "cycleConfigPath": "config/experimental-cycles/C9.json",
+      "reapplyTimeoutSeconds": 300,
+      "validateAfterReapplyBeforeRedeployment": true,
+      "maxReapplyAttempts": 5,
+      "delayAfterReapplySeconds": 1,
+      "delayBetweenAttemptsSeconds": 3,
+      "controlledAnnotationWindow": {
+        "enabled": true,
+        "maxAttempts": 5,
+        "delayAfterReapplySeconds": 1,
+        "delayBetweenAttemptsSeconds": 3,
+        "stabilityValidationDelaySeconds": 0,
+        "capturePhasePrefix": "pre_redeployment_latency_window",
+        "reason": "Converge the annotation-controlled C9 latency matrix immediately before controlled pod recreation so periodic telemetry refreshes cannot silently replace the scheduler input."
+      }
+    },
+    "gatewayTrafficRequiredRoleLabelValue": "master",
+    "gatewayTrafficRequiredOnlyForMasterRole": true
+  },
+  "redeploymentPolicy": {
+    "strategy": "delete_pods_serial",
+    "restartOrder": "namespace_then_master_then_workers",
+    "rolloutTimeoutSeconds": 600,
+    "postRestartStabilizationSeconds": 60,
+    "waitForRolloutCompletion": false,
+    "captureEventsAfterRestart": true,
+    "podDeletionTimeoutSeconds": 600,
+    "podReadinessPollSeconds": 5,
+    "reason": "Delete and recreate selected pods serially so that replacement pods are scheduled from current resource and network telemetry without creating temporary surge pods on capacity-constrained variants.",
+    "kubectlRetryPolicy": {
+      "enabled": true,
+      "maxAttempts": 5,
+      "delaySeconds": 5,
+      "commandTimeoutSeconds": 60,
+      "retryOnJsonParseError": false,
+      "reason": "Tolerate short-lived Kubernetes API server reachability interruptions during runtime polling without masking persistent readiness failures."
+    }
+  },
+  "measurementBoundary": {
+    "loadGeneratorControl": "external",
+    "officialMeasurementWindowStartsAfterThisProcedure": true,
+    "excludeFromMeasurement": [
+      "telemetry_priming_workload",
+      "telemetry_priming_wait",
+      "pre_redeployment_capture",
+      "serial_pod_deletion",
+      "pod_recreation_readiness_wait",
+      "post_redeployment_stabilization_wait",
+      "post_redeployment_capture"
+    ],
+    "reason": "Official benchmark measurement starts after telemetry priming, controlled pod recreation, readiness and post-redeployment evidence capture."
+  },
+  "artifactPolicy": {
+    "root": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling",
+    "logsRoot": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling/logs",
+    "snapshotsRoot": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling/snapshots",
+    "manifestsRoot": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling/manifests",
+    "summariesRoot": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling/summaries",
+    "latestManifestPath": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling/latest-rescheduling-manifest.json",
+    "latestSummaryPath": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling/latest-rescheduling-summary.txt",
+    "latestPreSnapshotPath": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling/latest-pre-redeployment-snapshot.json",
+    "latestPostSnapshotPath": "results/experimental-cycles/C9/variants/_scenario/network-aware-scheduler/rescheduling/latest-post-redeployment-snapshot.json",
+    "placeholderResolution": "The campaign runner passes the concrete variant output root at runtime.",
+    "writeLatestAliases": true,
+    "rootTemplate": "results/experimental-cycles/C9/variants/{scenarioId}/network-aware-scheduler/rescheduling"
+  },
+  "decisionPolicy": {
+    "plannedStatus": "planned",
+    "capturedStatus": "captured",
+    "executedStatus": "executed",
+    "validatedStatus": "validated",
+    "dryRunStatus": "dry_run",
+    "failedStatus": "failed",
+    "requireSelectedDeployments": true,
+    "requirePostRestartReadyPods": true,
+    "treatMissingNetworkTelemetryAsFailedValidation": true,
+    "treatMissingGatewayTrafficAsFailedValidation": true,
+    "treatLatencyMatrixMismatchAsFailedValidation": true
+  },
+  "governance": {
+    "documentationPolicy": "This profile is operational configuration and not repository documentation.",
+    "schedulerBoundary": "This procedure does not move running pods directly; it deletes selected pods in a controlled serial order so that the owning Deployment recreates them and the configured scheduler makes fresh placement decisions from current telemetry.",
+    "measurementBoundary": "Benchmark measurements must start only after telemetry priming, post-redeployment capture and stabilization have completed.",
+    "comparisonPolicy": "The same telemetry priming and redeployment procedure is used across default, load-aware and network-aware variants so scheduler mode remains the controlled variable.",
+    "annotationBoundary": "CPU, memory, exact gateway traffic key and inter-node network annotations are required before controlled rescheduling.",
+    "scenarioScopePolicy": "When a network-aware scenario config is supplied, target namespaces and expected LocalAI deployments are derived from that scenario so one-, two- and three-tenant variants are handled without stale namespace targets.",
+    "capacityBoundary": "The serial pod recreation strategy avoids temporary maxSurge pods and is suitable for dense variants where resource requests leave insufficient allocatable memory for RollingUpdate surge replicas.",
+    "gatewayTrafficBoundary": "The configured GATEWAY_TRAFFIC_KEY is the authoritative key for NETAWARE scoring; alternative traffic annotations are captured only as diagnostics.",
+    "latencyMatrixBoundary": "For C9 L1/L2/L3 inter-group profiles, the intended inter-group topology is materialized as node annotations and converged in a controlled validation window immediately before pod recreation so telemetry refreshes cannot silently change the scheduler input."
+  },
+  "networkAwareTelemetry": {
+    "enabled": true,
+    "gatewayTrafficKey": "traffic.localai-gateway-istio",
+    "trafficAnnotationPrefixes": [
+      "traffic.",
+      "rps."
+    ],
+    "nodeTelemetryAnnotationPrefixes": [
+      "network-latency.",
+      "packet-loss.",
+      "network-bandwidth."
+    ],
+    "requiredPodLabels": [
+      "group",
+      "app",
+      "role"
+    ],
+    "requiredDeploymentLabels": [
+      "group",
+      "app",
+      "role"
+    ],
+    "requiredSchedulerModes": [
+      "default",
+      "loadaware",
+      "networkaware"
+    ],
+    "officialTrafficAccessMode": "istio_gateway_routed",
+    "captureBeforeRedeployment": true,
+    "captureAfterRedeployment": true,
+    "requiredGatewayTrafficKey": "traffic.localai-gateway-istio",
+    "gatewayTrafficAlternativesAreDiagnosticOnly": true,
+    "annotationControlledLatencyMatrixValidation": "required_before_redeployment_for_L1_L2_L3_profiles"
+  }
+}

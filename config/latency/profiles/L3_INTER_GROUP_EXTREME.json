@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "latency-profile/v1",
+  "latencyProfileId": "L3_INTER_GROUP_EXTREME",
+  "profileId": "L3_INTER_GROUP_EXTREME",
+  "profileName": "Extreme inter-group latency for network-aware scheduling",
+  "profileStatus": "active",
+  "profileRole": "network_aware_inter_group_latency_profile",
+  "purpose": "Extreme C9 inter-group latency profile for a four-worker topology split into two low-latency worker groups with a very high cross-group cost.",
+  "enabled": true,
+  "latencyCategory": "inter_group_extreme",
+  "target": {
+    "targetNodePolicy": "inter_group_worker_nodes_from_infrastructure_profile",
+    "nodeRole": "worker",
+    "excludeControlPlane": true,
+    "workerGroups": [
+      {
+        "groupId": "worker-group-a",
+        "workerOrdinals": [
+          1,
+          2
+        ]
+      },
+      {
+        "groupId": "worker-group-b",
+        "workerOrdinals": [
+          3,
+          4
+        ]
+      }
+    ],
+    "intraGroupDelayMs": 0,
+    "interGroupDelayMs": 300,
+    "rationale": "Model a C9 network-aware topology with two internally close worker groups and a very high inter-group communication cost."
+  },
+  "networkEmulation": {
+    "tool": "annotation_controlled_inter_group_latency_matrix",
+    "mode": "inter_group_worker_latency_matrix",
+    "networkInterface": "eth0",
+    "delayMs": 300,
+    "jitterMs": 30,
+    "packetLossPercent": 0.0,
+    "correlationPercent": 0,
+    "distribution": "normal",
+    "intraGroupDelayMs": 0,
+    "interGroupDelayMs": 300,
+    "resetExistingQdiscBeforeApply": true,
+    "resetAfterBenchmark": true,
+    "telemetryVisibilityRequired": true,
+    "requiredNodeAnnotationPrefix": "network-latency.",
+    "annotationControl": {
+      "enabled": true,
+      "applyNodeAnnotations": true,
+      "latencyAnnotationPrefix": "network-latency.",
+      "packetLossAnnotationPrefix": "packet-loss.",
+      "bandwidthAnnotationPrefix": "network-bandwidth.",
+      "defaultIntraGroupBandwidthBytesPerSecond": 1000000000,
+      "defaultInterGroupBandwidthBytesPerSecond": 1000000000,
+      "resetRemovesGeneratedAnnotations": true,
+      "generatedAnnotationOwner": "localai.benchmark/network-aware-latency-profile"
+    }
+  },
+  "runtimeImplementation": {
+    "runner": "scripts/latency/apply-latency-profile.py",
+    "powershellWrapper": "scripts/latency/Apply-LatencyProfile.ps1",
+    "bashWrapper": "scripts/latency/apply-latency-profile.sh",
+    "kubernetesNamespace": "latency-control",
+    "jobImage": "docker.io/nicolaka/netshoot:latest",
+    "jobTimeoutSeconds": 180,
+    "cleanupJobsAfterCompletion": false,
+    "requiresPrivilegedPod": false,
+    "requiredLinuxCapabilities": [],
+    "dryRunSupported": true,
+    "implementationBoundary": "The runner materializes the declared inter-group latency matrix as node annotations consumed by NetworkAwareLocalAi. Before controlled rescheduling, the active node annotations must be validated against this profile so mon-agent refreshes cannot silently replace the intended C9 topology.",
+    "implementationMode": "annotation_controlled_inter_group_latency_matrix"
+  },
+  "safetyPolicy": {
+    "applyOnlyAfterClusterValidation": true,
+    "applyOnlyAfterApplicationDeployment": true,
+    "resetBeforeApply": true,
+    "resetAfterBenchmark": true,
+    "controlPlaneExcluded": true,
+    "failurePolicy": "fail_variant_before_rescheduling_if_inter_group_latency_matrix_annotations_do_not_match_the_configured_profile"
+  },
+  "methodologicalRole": {
+    "variedDimension": "inter-group latency profile",
+    "fixedDimensions": [
+      "infrastructure=1 control-plane and 4 worker nodes",
+      "worker topology=two worker groups",
+      "LocalAI worker count per tenant=W2",
+      "traffic access=Istio gateway routed",
+      "placement owner=scheduler mode"
+    ],
+    "interpretation": "This profile is a C9 network-aware extreme inter-group latency condition. The declared inter-group cost is materialized as node annotations consumed by NetworkAwareLocalAi; Mentat evidence remains a runtime observability cross-check for the underlying inter-node network state."
+  }
+}

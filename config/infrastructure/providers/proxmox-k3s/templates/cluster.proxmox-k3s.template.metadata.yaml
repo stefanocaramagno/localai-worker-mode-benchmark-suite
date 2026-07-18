@@ -1,0 +1,19 @@
+# Parseable metadata for the proxmox-k3s cluster configuration template.
+# The renderable provider configuration template is the .yaml.tmpl file referenced by renderable_template_path.
+
+schema_version: "proxmox-k3s-template-metadata/v1"
+status: "active_metadata"
+metadata_role: "provider_config_template_metadata"
+renderable_template_path: "config/infrastructure/providers/proxmox-k3s/templates/cluster.proxmox-k3s.template.yaml.tmpl"
+rendered_config_format: "proxmox-k3s-v1.0.3-clusters-yaml"
+usage_policy:
+  pass_to_provider: false
+  provider_config_path: "config/infrastructure/providers/proxmox-k3s/templates/cluster.proxmox-k3s.template.yaml.tmpl"
+  review_safe: true
+notes:
+  - "This file is intentionally valid YAML metadata."
+  - "Do not pass this metadata file to proxmox-k3s cluster create/cluster delete."
+  - "Provider bindings resolve the renderable template through templatePath."
+  - "Rendered cluster configurations must use the proxmox-k3s v1.0.3 clusters: list schema."
+  - "Template variables include k3s_taint_control_plane so rendered v1.0.3 cluster YAML can explicitly control the default control-plane taint policy."
+  - "Template variables include addons_yaml so rendered v1.0.3 cluster YAML can declare monitoring, mon-agent, Mentat, Istio and Chaos Mesh addon configuration."

@@ -1,0 +1,233 @@
+{
+  "schemaVersion": "reporting-profile/v1",
+  "profileId": "RP_C8_RESOURCE_AWARE_SCHEDULER",
+  "reportingProfileId": "RP_C8_RESOURCE_AWARE_SCHEDULER",
+  "profileName": "C8 Resource-Aware Scheduler Reporting Profile",
+  "profileStatus": "active",
+  "profileRole": "provider_backed_resource_aware_scheduler_reporting",
+  "description": "Reporting profile for the provider-backed resource-aware-scheduler campaign.",
+  "cycleId": "C8",
+  "cycleConfigPath": "config/experimental-cycles/C8.json",
+  "baselineId": "B1",
+  "baselineConfig": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisRoot": "results/experimental-cycles/C8/diagnosis",
+  "outputRoot": "results/experimental-cycles/C8/reporting",
+  "reportTitle": "C8 — Resource-Aware Scheduler Report",
+  "reportPurposeMarkdown": "This report compares Kubernetes default scheduling and the load-aware custom scheduler for paired LocalAI worker-mode scenarios. It summarizes performance, runtime placement, resource balance, annotation evidence and supported or unsupported outcomes.",
+  "familyOrder": [
+    "resource-aware-scheduler"
+  ],
+  "familyDisplayNames": {
+    "resource-aware-scheduler": "Resource-Aware Scheduler"
+  },
+  "scenarioConfigRoots": {
+    "resource-aware-scheduler": "config/scenarios/resource-aware-scheduler"
+  },
+  "scenarioConfigFiles": {
+    "resource-aware-scheduler": [
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_2N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_1T_2N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_1T_4N_L0_UNIFORM_M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_2N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_2N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_2N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_DIFFERENTIATED_M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_2T_4N_L0_UNIFORM_M1M2_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_2T_4N_L0_UNIFORM_M1M2_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_DEFAULT_3T_4N_L0_UNIFORM_M1M1M1_W2.json",
+      "config/scenarios/resource-aware-scheduler/RA_LOADAWARE_3T_4N_L0_UNIFORM_M1M1M1_W2.json"
+    ]
+  },
+  "campaignResultsRoots": {
+    "resource-aware-scheduler": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler"
+  },
+  "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C8/scheduler",
+  "schedulerDecisionEvidenceArtifactName": "resource-aware-scheduler-decision-evidence.json",
+  "multiTenantSummaryArtifactName": "multi-tenant-summary.json",
+  "referenceScenarioByFamily": {
+    "resource-aware-scheduler": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2"
+  },
+  "referenceScenarioConfigByFamily": {
+    "resource-aware-scheduler": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json"
+  },
+  "variedDimensionByFamily": {
+    "resource-aware-scheduler": "scheduler mode, tenant count, worker-node count, tenant traffic profile and model mix"
+  },
+  "fixedDimensionsByFamily": {
+    "resource-aware-scheduler": [
+      "application=LocalAI worker-mode",
+      "latency=L0_NONE",
+      "worker-count-per-tenant=W2",
+      "monitoring=enabled",
+      "mon-agent=enabled",
+      "hard-placement-controls=disabled",
+      "latency-injection=disabled",
+      "network-emulation=not-applied"
+    ]
+  },
+  "chartDefinitions": [
+    {
+      "metric": "mean_response_time_ms",
+      "title": "Mean response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p50_response_time_ms",
+      "title": "P50 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p95_response_time_ms",
+      "title": "P95 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "p99_response_time_ms",
+      "title": "P99 response time",
+      "unit": "ms"
+    },
+    {
+      "metric": "throughput_rps",
+      "title": "Throughput",
+      "unit": "requests/s"
+    },
+    {
+      "metric": "max_node_cpu_percent",
+      "title": "Maximum node CPU snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_node_memory_percent",
+      "title": "Maximum node memory snapshot",
+      "unit": "%"
+    },
+    {
+      "metric": "max_pod_cpu_millicores",
+      "title": "Maximum pod CPU snapshot",
+      "unit": "mCPU"
+    },
+    {
+      "metric": "max_pod_memory_mib",
+      "title": "Maximum pod memory snapshot",
+      "unit": "MiB"
+    }
+  ],
+  "chartsDirectoryName": "charts",
+  "sweepsDirectoryName": "sweeps",
+  "reportMarkdownName": "report.md",
+  "reportHtmlName": "index.html",
+  "summaryCsvName": "scenario-summary.csv",
+  "manifestName": "reporting-manifest.json",
+  "archiveDirectoryName": "archive",
+  "providerAwareContext": {
+    "cycleConfigPath": "config/experimental-cycles/C8.json",
+    "provisioningManifestPath": "results/experimental-cycles/C8/execution/latest-campaign-execution-manifest.json",
+    "clusterValidationManifestPath": "results/experimental-cycles/C8/execution/latest-campaign-execution-manifest.json",
+    "applicationDeploymentManifestPath": "results/experimental-cycles/C8/execution/latest-campaign-execution-manifest.json",
+    "minimalObservabilityManifestPath": "results/experimental-cycles/C8/execution/latest-campaign-execution-manifest.json",
+    "schedulerDecisionEvidenceRoot": "results/experimental-cycles/C8/scheduler",
+    "multiTenantBenchmarkRoot": "results/experimental-cycles/C8/benchmark/resource-aware-scheduler"
+  },
+  "notes": [
+    "C8 reports runtime resource-aware-scheduler behavior; pod placement must be interpreted from captured scheduler evidence rather than from predefined node assignments.",
+    "C8 intentionally disables latency injection and network emulation; latency metrics in this report are application response-time outcomes, not the result of an injected-latency sweep.",
+    "Tenant-level metrics are reported separately because differentiated traffic can affect tenants asymmetrically.",
+    "Unsupported scenarios are retained as infrastructure, scheduling or capacity-boundary evidence and are not interpreted as measured latency regressions.",
+    "Comparative claims should combine performance metrics with placement classification, resource-pressure, annotation and placement evidence."
+  ],
+  "requestTargetType": "POST",
+  "requestTargetName": "POST /v1/chat/completions",
+  "fallbackToAggregated": true,
+  "baselineConfigPath": "config/scenarios/baseline/B1.json",
+  "technicalDiagnosisProfileId": "TD_C8_RESOURCE_AWARE_SCHEDULER",
+  "technicalDiagnosisProfilePath": "config/technical-diagnosis/profiles/TD_C8_RESOURCE_AWARE_SCHEDULER.json",
+  "reportingContext": {
+    "campaignType": "resource_aware_scheduler",
+    "primaryQuestion": "Whether the load-aware custom scheduler produces more balanced or better-performing LocalAI worker-mode placements than Kubernetes default scheduling under paired L0 CPU/memory-aware scenarios.",
+    "fixedDimensions": [
+      "application=LocalAI worker-mode",
+      "latency=L0_NONE",
+      "hard-placement-controls=disabled",
+      "worker-count-per-tenant=W2",
+      "monitoring=enabled",
+      "mon-agent=enabled",
+      "request target=POST /v1/chat/completions",
+      "latency-injection=disabled",
+      "network-emulation=not-applied"
+    ],
+    "variedDimensions": [
+      "scheduler mode",
+      "tenant count",
+      "worker-node count",
+      "tenant traffic profile",
+      "model mix"
+    ]
+  },
+  "reportingIdPrefix": "REP_C8",
+  "infrastructureSummaryMode": "scenario_variant_scoped",
+  "infrastructureProfileScope": "scenario_variant",
+  "infrastructureSummarySemantics": {
+    "scope": "scenario",
+    "interpretation": "Infrastructure is scenario-scoped because C8 varies the number of provider worker nodes."
+  },
+  "referenceScenarioId": "RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2",
+  "referenceScenarioConfigPath": "config/scenarios/resource-aware-scheduler/RA_DEFAULT_1T_4N_L0_UNIFORM_M1_W2.json",
+  "defaultSchedulerReporting": {
+    "enabled": true,
+    "schedulerDecisionEvidenceRequired": true,
+    "multiTenantSummaryRequired": true,
+    "tenantLevelMetricsRequired": true,
+    "placementClassificationRequired": true,
+    "negativeEvidenceRequiredForSuboptimalPlacementClaims": true,
+    "placementCategoriesOfInterest": [
+      "server_worker_colocated",
+      "server_worker_split",
+      "tenant_interference_risk",
+      "fully_spread",
+      "resource_contention_risk",
+      "latency_sensitive_split",
+      "resource_aware_scheduler_unclassified"
+    ],
+    "criticalPlacementCategories": [
+      "latency_sensitive_split",
+      "missing_server_pod",
+      "missing_worker_pods",
+      "unscheduled_pods"
+    ],
+    "warningPlacementCategories": [
+      "server_worker_split",
+      "tenant_interference_risk",
+      "resource_contention_risk",
+      "server_worker_partially_colocated"
+    ]
+  },
+  "schedulerModePairwiseReporting": {
+    "enabled": true,
+    "family": "resource-aware-scheduler",
+    "pairingKey": "logicalScenarioId",
+    "defaultRoleValue": "default",
+    "loadAwareRoleValue": "loadaware",
+    "defaultVariantPrefix": "RA_DEFAULT_",
+    "loadAwareVariantPrefix": "RA_LOADAWARE_",
+    "metrics": [
+      "mean_response_time_ms",
+      "p95_response_time_ms",
+      "p99_response_time_ms",
+      "throughput_rps",
+      "failure_count",
+      "success_rate_percent",
+      "max_node_cpu_percent",
+      "max_node_memory_percent"
+    ]
+  },
+  "schedulerModeScope": {
+    "latencyInjectionEnabled": false,
+    "networkEmulation": "disabled",
+    "resourceAwareScope": "CPU and memory annotation-driven scheduling only"
+  }
+}
